@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_formula.R
 \name{model_formula}
 \alias{model_formula}
-\title{Write BUGS/JAGS model code}
+\title{Write bugs model code}
 \usage{
 model_formula(jags = TRUE)
 }
@@ -10,7 +10,7 @@ model_formula(jags = TRUE)
 \item{jags}{[boolean] If TRUE, write model code for JAGS. If FALSE, write model code for OPENBUGS.}
 }
 \value{
-For internal use only. No return, write on hard drive a textfile with BUGS/JAGS model code.
+For internal use only. No return, write on hard drive a textfile with bugs model code.
 }
 \description{
 ...

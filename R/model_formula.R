@@ -1,4 +1,4 @@
-#' @title Write BUGS/JAGS model code
+#' @title Write bugs model code
 #'
 #' @description
 #' ...
@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @return
-#' For internal use only. No return, write on hard drive a textfile with BUGS/JAGS model code.
+#' For internal use only. No return, write on hard drive a textfile with bugs model code.
 #'
 #' @examples
 #'
