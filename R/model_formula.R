@@ -3,7 +3,7 @@
 #' @description
 #' ...
 #'
-#' @param jags [boolean] If TRUE, write model code for JAGS. If FALSE, write model code for OPENBUGS.
+#' @param jags [bolean] If TRUE, write model code for JAGS. If FALSE, write model code for OPENBUGS.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.com}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
