@@ -83,7 +83,6 @@ inits_plus <- function(data, nc){
   }
 
 
-
   nc <- nc[1]
 
   if (!is.numeric(nc)) {
