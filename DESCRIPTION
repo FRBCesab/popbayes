@@ -1,0 +1,10 @@
+Package: popbayes
+Type: Package
+Title: ...
+Version: 1.0-0
+Date: 2019-10-28
+Encoding: UTF-8
+Author: Nicolas Casajus [cre, aut], Roger Pradel [aut]
+Maintainer: Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>
+Description: ...
+RoxygenNote: 6.1.1
