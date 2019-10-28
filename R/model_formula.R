@@ -3,14 +3,15 @@
 #' @description
 #' ...
 #'
-#' @param jags [boolean] If TRUE, write model code for JAGS. Of not for OPENBUGS.
+#' @param jags [boolean] If TRUE, write model code for JAGS. If FALSE, write model code for OPENBUGS.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.com}
+#' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
 #'
 #' @export
 #'
 #' @return
-#' ...
+#' For internal use only. No return, write on hard drive a textfile with BUGS/JAGS model code.
 #'
 #' @examples
 #'
@@ -19,6 +20,11 @@
 #' model_formula(jags = FALSE)
 
 model_formula <- function(jags = TRUE) {
+
+  if (!is.logical(jags)) {
+
+    stop("`jags` argument must be a boolean.")
+  }
 
   if (jags) {
 

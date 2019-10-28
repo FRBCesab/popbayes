@@ -7,10 +7,10 @@
 model_formula(jags = TRUE)
 }
 \arguments{
-\item{jags}{[boolean] If TRUE, write model code for JAGS. Of not for OPENBUGS.}
+\item{jags}{[boolean] If TRUE, write model code for JAGS. If FALSE, write model code for OPENBUGS.}
 }
 \value{
-...
+For internal use only. No return, write on hard drive a textfile with BUGS/JAGS model code.
 }
 \description{
 ...
@@ -23,4 +23,6 @@ model_formula(jags = FALSE)
 }
 \author{
 Nicolas CASAJUS, \email{nicolas.casajus@fondationbiodiversite.com}
+
+Roger PRADEL, \email{roger.pradel@cefe.cnrs.fr}
 }
