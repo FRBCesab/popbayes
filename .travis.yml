@@ -11,11 +11,9 @@ r_packages:
   - R2OpenBUGS
   - rjags
   - R2jags
-  - writexl
 
 before_install:
   - sudo apt-get install --yes jags g++-multilib
-  # - sudo apt-get --reinstall install libc6 libc6-dev
 
 before_script:
   - cd inst

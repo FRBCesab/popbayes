@@ -108,27 +108,13 @@ fit_trend <- function(
     xxx
   )
 
-  # write.table(cbind(ds[,c("date","Effcorr")], output_bugs$summary[1:k,c("mean","2.5%","97.5%")]),paste(dsname,modeloptions[[1]],modeloptions[[2]],".txt",sep = ''), row.names = FALSE, col.names = c("annee","EffCOR","mean","2.5%","97.5%"))
-  writexl::write_xlsx(
-    x    = xxx,
-    path = paste0(
-      paste(
-        dsname,
-        modeloptions[[1]],
-        modeloptions[[2]],
-        sep = "_"
-      ),
-      ".xlsx"
-    )
-  )
-
   save(
     output_bugs,
     file = paste0(
       paste(
         dsname,
-        modeloptions[[1]],
-        modeloptions[[2]],
+        modelopt[[1]],
+        modelopt[[2]],
         sep = "_"
       ),
       ".RData"
