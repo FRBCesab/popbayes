@@ -17,8 +17,10 @@ before_install:
   - sudo apt-get install --yes jags
 
 before_script:
-  - tar -zxvf inst/OpenBUGS-3.2.3.tar.gz
-  - cd inst/OpenBUGS-3.2.3
+  - cd inst
+  - tar -zxvf OpenBUGS-3.2.3.tar.gz
+  - cd OpenBUGS-3.2.3
   - ./configure
   - make
   - sudo make install
+  - cd ../..
