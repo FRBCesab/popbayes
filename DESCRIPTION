@@ -1,10 +1,19 @@
 Package: popbayes
 Type: Package
-Title: ...
+Title: popbayes
 Version: 1.0-0
 Date: 2019-10-28
-Encoding: UTF-8
 Author: Nicolas Casajus [cre, aut], Roger Pradel [aut]
 Maintainer: Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>
-Description: ...
+Description: popbayes
+URL: https://github.com/frbcesab/popbayes
+BugReports: https://github.com/frbcesab/popbayes/issues
+Depends: R (>= 3.4.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: R2OpenBUGS, rjags, R2jags, writexl
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
 RoxygenNote: 6.1.1
+NeedsCompilation: no
