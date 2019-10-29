@@ -20,10 +20,10 @@ install.packages("devtools", dependencies = TRUE)
 Then install the **popbayes** package:
 
 ```r
-### Install the < orthomap > package from GitHub
+### Install the < popbayes > package from GitHub
 devtools::install_github("frbcesab/popbayes")
 
-### Load the < orthomap > package
+### Load the < popbayes > package
 library(popbayes)
 ```
 
