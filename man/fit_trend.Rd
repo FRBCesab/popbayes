@@ -8,11 +8,11 @@ fit_trend(dsname = NULL, MCMCopt = list(ni = 50000, nt = 3, nb = 10000,
   nc = 2), modelopt = list(100, TRUE), jags = TRUE)
 }
 \arguments{
-\item{dsname}{[string] .}
+\item{dsname}{[string] the R object name containing data.}
 
-\item{MCMCopt}{[list] .}
+\item{MCMCopt}{[list] a list containing the number of iteration (ni), thin factor (nt), number of(nb). See below.}
 
-\item{modelopt}{[list] .}
+\item{modelopt}{[list] ....}
 
 \item{jags}{[bolean] If TRUE, write model bugs code for JAGS, otherwise for OpenBUGS.}
 }
@@ -24,7 +24,7 @@ For internal use only.
 }
 \examples{
 
-No example
+# No example
 }
 \author{
 Nicolas CASAJUS, \email{nicolas.casajus@fondationbiodiversite.fr}
