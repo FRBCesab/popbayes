@@ -6,7 +6,7 @@
 #' @param data [list] A named list of the data objects passed to the bugs model.
 #' @param nc [integer] Number of MCMC chains.
 #'
-#' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.com}
+#' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
 #'
 #' @export
@@ -16,7 +16,7 @@
 #'
 #' @examples
 #'
-#' No example
+#' # No example
 
 inits_plus <- function(data, nc){
 

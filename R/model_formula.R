@@ -3,99 +3,111 @@
 #' @description
 #' ...
 #'
-#' @param jags [bolean] If TRUE, write model code for JAGS. If FALSE, write model code for OPENBUGS.
+#' @param jags [bolean] If TRUE, write model bugs code for JAGS, otherwise for OpenBUGS.
 #'
-#' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.com}
+#' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
 #'
 #' @export
 #'
 #' @return
-#' For internal use only. No return, write on hard drive a textfile with bugs model code.
+#' For internal use only.
+#' No return. Write on hard drive a textfile with bugs model code.
 #'
 #' @examples
 #'
-#' model_formula(jags = TRUE)
-#'
-#' model_formula(jags = FALSE)
+#' model_formula(jags = TRUE)   # JAGS formulation
+#' model_formula(jags = FALSE)  # OpenBUGS formulation
+
+
 
 model_formula <- function(jags = TRUE) {
 
-  if (!is.logical(jags)) {
+  if (!is.logical(jags)) { stop("`jags` argument must be a boolean.") }
 
-    stop("`jags` argument must be a boolean.")
-  }
+
+  time   <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+
+
+  header <- "\n###    BUGS Model Formula    ###\n\n"
+  header <- c(header, "# ------------------------------")
 
   if (jags) {
 
-    header <- "
-  data {
-    c1 <- c[1]
-  }
-  "
+    header <- c(header, "# Program: JAGS")
+    header <- c(header, paste0("# Time   : ", time, ""))
+    header <- c(header, "# ------------------------------")
+    header <- c(header, "\n\n")
+    header <- c(header, "# Data formulation\n")
+    header <- c(header, "data {\n")
+    header <- c(header, "\tc1 <- c[1]")
+    header <- c(header, "}")
+    header <- c(header, "\n\n")
+
   } else {
 
-    header <- ""
+    header <- c(header, "# Program: OpenBUGS")
+    header <- c(header, paste0("# Time   : ", time, ""))
+    header <- c(header, "# ------------------------------")
+    header <- c(header, "\n")
 
   }
 
-  core <- "
-  model {
-    # initialisations of level of Confidence Intervals (could be allowed in entry for more flexibility)
-    # currently 95% CI are provided in entry
 
-    for (i in 1:k) {
-      sd[i] <- (h[i]-l[i])/3.93
-      prec[i] <- pow(sd[i],-2)
-    }
+  core <- ""
 
-    for (i in 1:(k-1)) {
-      lint[i] <- t[i+1]-t[i]
-    }
+  core <- c(core, "# Model formulation\n")
+  core <- c(core, "model {\n")
 
-    linttot <- t[k]-t[1]
-    minN1 <- c1 / 2
-    maxN1 <- c1 * 2
+  core <- c(core, "\t# Initialisation of level of CI95%")
+  core <- c(core, "\tfor (i in 1:k) {")
+  core <- c(core, "\t\tsd[i]   <- (h[i] - l[i]) / 3.93")
+  core <- c(core, "\t\tprec[i] <- pow(sd[i], -2)")
+  core <- c(core, "\t}\n")
 
-    # Priors and constraints
-    N[1] ~ dunif(minN1, maxN1)            # Prior for initial population size (N1 inconnue)
+  core <- c(core, "\tfor (i in 1:(k - 1)) {")
+  core <- c(core, "\t\tlint[i] <- t[i + 1] - t[i]")
+  core <- c(core, "\t}\n")
 
-    # Likelihood
-    # State process
-    logN[1]<-log(N[1])
-    rcand[1] ~ dnorm(0, 1)
-    r[1] <- min(rcand[1], rmax) # r cannot exceed rmax
-    rcum[1] <- lint[1]*r[1]
-    r2cum[1] <- rcum[1]*r[1]
-    logN[2] <- logN[1]+rcum[1]
-    N[2] <- exp(logN[2])
+  core <- c(core, "\tlinttot <- t[k] - t[1]\n")
+  core <- c(core, "\tminN1 <- c1 / 2")
+  core <- c(core, "\tmaxN1 <- c1 * 2\n")
 
-    for (i in 2:(k-1)){
-      rcand[i] ~ dnorm(r[i-1],lability) # conditions in year i should resemble those in year i-1
-      r[i] <- min(rcand[i], rmax) # but cannot exceed rmax
-      rcum[i] <- lint[i]*r[i]  # lint = longueur de l'intervalle : nb annees
-      r2cum[i] <- rcum[i]*r[i]
-      logN[i+1] <- logN[i]+rcum[i]
-      N[i+1] <- exp(logN[i+1])
-    }
+  core <- c(core, "\t# Priors and constraints")
+  core <- c(core, "\tN[1] ~ dunif(minN1, maxN1)\n")
 
-    # Observation process
-    for (i in 1:k) {
-      c[i] ~ dnorm(N[i],prec[i])
-    }
+  core <- c(core, "\t# Likelihood - State process")
+  core <- c(core, "\tlogN[1]  <- log(N[1])")
+  core <- c(core, "\trcand[1] ~ dnorm(0, 1)")
+  core <- c(core, "\tr[1]     <- min(rcand[1], rmax)")
+  core <- c(core, "\trcum[1]  <- lint[1] * r[1]")
+  core <- c(core, "\tr2cum[1] <- rcum[1] * r[1]")
+  core <- c(core, "\tlogN[2]  <- logN[1] + rcum[1]")
+  core <- c(core, "\tN[2]     <- exp(logN[2])\n")
 
-    # derived interesting quantities
-    meanr <- sum(rcum[])/linttot  # overall trend
-    sdr <- sqrt(sum(r2cum[])/linttot-meanr*meanr) # temporal variation in r
-    # cv <- sdr/meanr
-    vrrmax <- sdr/rmax
-  }
-  "
+  core <- c(core, "\tfor (i in 2:(k - 1)) {")
+  core <- c(core, "\t\trcand[i] ~ dnorm(r[i - 1], lability)")
+  core <- c(core, "\t\tr[i]        <- min(rcand[i], rmax)")
+  core <- c(core, "\t\trcum[i]     <- lint[i] * r[i]")
+  core <- c(core, "\t\tr2cum[i]    <- rcum[i] * r[i]")
+  core <- c(core, "\t\tlogN[i + 1] <- logN[i] + rcum[i]")
+  core <- c(core, "\t\tN[i + 1]    <- exp(logN[i + 1])")
+  core <- c(core, "\t}\n")
+
+  core <- c(core, "\t# Likelihood - Observation process")
+  core <- c(core, "\tfor (i in 1:k) {")
+  core <- c(core, "\t\tc[i] ~ dnorm(N[i], prec[i])")
+  core <- c(core, "\t}\n")
+
+  core <- c(core, "\t# derived interesting quantities")
+  core <- c(core, "\tmeanr  <- sum(rcum[]) / linttot")
+  core <- c(core, "\tsdr    <- sqrt(sum(r2cum[]) / linttot - meanr * meanr)")
+  core <- c(core, "\tvrrmax <- sdr / rmax\n")
+
+  core <- c(core, "}\n")
 
   txt <- c(header, core)
   txt <- paste0(txt, collapse = "\n")
 
-  sink("model.txt")
-  cat(txt, fill = TRUE)
-  sink()
+  cat(txt, file = "bugs_model.txt", append = FALSE, fill = TRUE)
 }

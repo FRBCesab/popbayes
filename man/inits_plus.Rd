@@ -19,10 +19,10 @@ For internal use only.
 }
 \examples{
 
-No example
+# No example
 }
 \author{
-Nicolas CASAJUS, \email{nicolas.casajus@fondationbiodiversite.com}
+Nicolas CASAJUS, \email{nicolas.casajus@fondationbiodiversite.fr}
 
 Roger PRADEL, \email{roger.pradel@cefe.cnrs.fr}
 }
