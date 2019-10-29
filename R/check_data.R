@@ -176,5 +176,5 @@ check_data <- function(
   data[data[ , "counts"] <= 1, "csup"] <- min(data[data[ , "counts"] > 0, "counts"])
 
 
-
+  return(data)
 }

@@ -100,7 +100,7 @@ inits_plus <- function(data, nc){
   r_cand_obs <- log(data$c[2:data$k]) - log(data$c[1:(data$k - 1)])
   l_interval <- data$t[2:data$k] - data$t[1:(data$k - 1)]
 
-  r_cand_obs[linterval != 0] <- r_cand_obs[l_interval != 0] / l_interval[l_interval != 0]
+  r_cand_obs[l_interval != 0] <- r_cand_obs[l_interval != 0] / l_interval[l_interval != 0]
 
   list_start <- list()
 
@@ -109,5 +109,5 @@ inits_plus <- function(data, nc){
     list_start[[i]] <- list(rcand = rnorm(length(r_cand_obs), r_cand_obs, 1))
   }
 
-  return(liststart)
+  return(list_start)
 }

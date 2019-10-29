@@ -24,6 +24,7 @@
 
 fit_trend <- function(
   dsname   = NULL,
+  rmax     = NULL,
   MCMCopt  = list(ni = 50000, nt = 3, nb = 10000, nc = 2),
   modelopt = list(100, TRUE),
   jags     = TRUE) {
@@ -38,12 +39,12 @@ fit_trend <- function(
   model_formula(jags = jags)
 
   data <- get(dsname)
-  date <- data$date
+  year <- data$year
   k    <- nrow(data)
 
   if (modelopt[[2]]) {
 
-    rmax <- log(1 + data$Rmax[1])
+    rmax <- log(1 + rmax)
 
   } else {
 
@@ -56,10 +57,10 @@ fit_trend <- function(
   nc <- MCMCopt[["nc"]]
 
   data_bugs <- list(
-    c        = as.vector(data$Effcorr),
-    h        = data$Cmaxcorr,
-    l        = data$Cinfcorr,
-    t        = date,
+    c        = as.vector(data$counts),
+    h        = data$csup,
+    l        = data$cinf,
+    t        = year,
     k        = k,
     rmax     = rmax,
     lability = modelopt[[1]]
