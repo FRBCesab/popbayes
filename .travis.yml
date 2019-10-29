@@ -1,0 +1,23 @@
+language: r
+warnings_are_errors: false
+sudo: required
+
+notifications:
+  email:
+    recipients:
+      - nicolas.casajus@fondationbiodiversite.fr
+
+r_packages:
+  - R2OpenBUGS
+  - rjags
+  - R2jags
+  - writexl
+
+before_install:
+  - sudo apt-get install --yes wget jags
+  - wget http://www.openbugs.net/w/OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz
+  - tar zxvf OpenBUGS-3.2.3.tar.gz
+  - cd OpenBUGS-3.2.3
+  - ./configure
+  - make
+  - sudo make install
