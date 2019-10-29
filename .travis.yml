@@ -17,11 +17,8 @@ before_install:
   - sudo apt-get install --yes jags
 
 before_script:
-  - wget http://www.openbugs.net/w/OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz
-  - ls -alH
-  - mv "OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz" OpenBUGS-3.2.3.tar.gz
-  - tar -zxvf /tmp/OpenBUGS-3.2.3.tar.gz
-  - cd /tmp/OpenBUGS-3.2.3
+  - tar -zxvf inst/OpenBUGS-3.2.3.tar.gz
+  - cd inst/OpenBUGS-3.2.3
   - ./configure
   - make
   - sudo make install
