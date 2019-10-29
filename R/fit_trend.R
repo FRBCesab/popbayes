@@ -4,8 +4,8 @@
 #' ...
 #'
 #' @param dsname [string] the R object name containing data.
-#' @param MCMCopt [list] a list containing the number of iteration (ni), thin factor (nt), number of(nb). See below.
-#' @param modelopt [list] ....
+#' @param MCMCopt [list] a list containing the number of iteration (ni), thin factor (nt), length of burn in (nb), i.e. number of iterations to discard at the beginning and the number of chains (nc).
+#' @param modelopt [list] a list of two vectors: the model smoothing factor and a boolean indicating if parameter r must be limited by rmax.
 #' @param jags [bolean] If TRUE, write model bugs code for JAGS, otherwise for OpenBUGS.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @return
-#' For internal use only.
+#' ...
 #'
 #' @examples
 #'
@@ -88,7 +88,7 @@ fit_trend <- function(
       data              = data_bugs,
       inits             = inits_plus(data_bugs, nc),
       parameters        = parameters,
-      model.file        = "trendbugs.txt",
+      model.file        = "bugs_model.txt",
       n.chains          = nc,
       n.thin            = nt,
       n.iter            = ni,

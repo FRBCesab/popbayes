@@ -10,14 +10,14 @@ fit_trend(dsname = NULL, MCMCopt = list(ni = 50000, nt = 3, nb = 10000,
 \arguments{
 \item{dsname}{[string] the R object name containing data.}
 
-\item{MCMCopt}{[list] a list containing the number of iteration (ni), thin factor (nt), number of(nb). See below.}
+\item{MCMCopt}{[list] a list containing the number of iteration (ni), thin factor (nt), length of burn in (nb), i.e. number of iterations to discard at the beginning and the number of chains (nc).}
 
-\item{modelopt}{[list] ....}
+\item{modelopt}{[list] a list of two vectors: the model smoothing factor and a boolean indicating if parameter r must be limited by rmax.}
 
 \item{jags}{[bolean] If TRUE, write model bugs code for JAGS, otherwise for OpenBUGS.}
 }
 \value{
-For internal use only.
+...
 }
 \description{
 ...
