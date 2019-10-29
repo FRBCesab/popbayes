@@ -1,6 +1,6 @@
 # popbayes
 
-[![Build Status](https://travis-ci.org/ahasverus/popbayes.svg?branch=master)](https://travis-ci.org/ahasverus/popbayes) [![](https://img.shields.io/badge/licence-GPLv3-8f10cb.svg)](http://www.gnu.org/licenses/gpl.html)
+[![Build Status](https://travis-ci.org/FRBCesab/popbayes.svg?branch=master)](https://travis-ci.org/FRBCesab/popbayes) [![](https://img.shields.io/badge/licence-GPLv3-8f10cb.svg)](http://www.gnu.org/licenses/gpl.html)
 
 Overview
 --------
