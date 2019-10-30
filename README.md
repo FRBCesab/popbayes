@@ -5,12 +5,12 @@
 Overview
 --------
 
-In construction
+In construction...
 
 Installation
 --------
 
-To install the package `popbayes` from GitHub, first install the package [`devtools``](http://cran.r-project.org/web/packages/devtools/index.html) from the CRAN.
+To install the package `popbayes` from GitHub, first install the package [`devtools`](http://cran.r-project.org/web/packages/devtools/index.html) from the CRAN.
 
 ```r
 ### Install the < devtools > package
