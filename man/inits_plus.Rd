@@ -12,10 +12,18 @@ inits_plus(data, nc)
 \item{nc}{[integer] Number of MCMC chains.}
 }
 \value{
+A list of nc lists (one per chain). Each list has exactly one element rcand, a vector of 
+random initial values of candidate relative rates of increase, one per > 0 interval.    
 For internal use only.
 }
 \description{
-...
+This function extracts the counts (c) and the corresponding dates (t) from the list of objects (data) 
+to be analyzed by the bugs model. It calculates the observed annual relative rate of increase (r_cand_obs)
+for each > 0 interval as the ratio of the change in log count divided by the interval length. 
+It then draws a random initial value of the candidate relative rate of increase (rcand) to be passed 
+to the bugs model as initial value by drawing in a normal distribution centered on the observed rate 
+(r_cand_obs) with a standard deviation of 1. 
+For each r_cand_obs, nc random values are drawn where nc (second argument) is the number of chains.
 }
 \examples{
 
