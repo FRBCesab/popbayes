@@ -49,7 +49,6 @@ model_formula <- function(jags = TRUE) {
     header <- c(header, "# Program: OpenBUGS")
     header <- c(header, paste0("# Time   : ", time, ""))
     header <- c(header, "# ------------------------------")
-    header <- c(header, "\tc1 <- c[1]")
     header <- c(header, "\n")
 
   }
@@ -70,6 +69,13 @@ model_formula <- function(jags = TRUE) {
   core <- c(core, "\t\tlint[i] <- t[i + 1] - t[i]")
   core <- c(core, "\t}\n")
   core <- c(core, "\tlinttot <- t[k] - t[1]\n")
+
+  if (!jags) {
+    
+    core <- c(core, "\tc1 <- c[1]")
+
+  } 
+    
   core <- c(core, "\tminN1 <- c1 / 2")
   core <- c(core, "\tmaxN1 <- c1 * 2\n")
 
