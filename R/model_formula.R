@@ -3,7 +3,7 @@
 #' @description
 #' ...
 #'
-#' @param jags [bolean] If TRUE, write model bugs code for JAGS, otherwise for OpenBUGS.
+#' @param jags [boolean] If TRUE, write model bugs code for JAGS, otherwise for OpenBUGS.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
@@ -49,6 +49,7 @@ model_formula <- function(jags = TRUE) {
     header <- c(header, "# Program: OpenBUGS")
     header <- c(header, paste0("# Time   : ", time, ""))
     header <- c(header, "# ------------------------------")
+    header <- c(header, "\tc1 <- c[1]")
     header <- c(header, "\n")
 
   }
@@ -68,7 +69,6 @@ model_formula <- function(jags = TRUE) {
   core <- c(core, "\tfor (i in 1:(k - 1)) {")
   core <- c(core, "\t\tlint[i] <- t[i + 1] - t[i]")
   core <- c(core, "\t}\n")
-
   core <- c(core, "\tlinttot <- t[k] - t[1]\n")
   core <- c(core, "\tminN1 <- c1 / 2")
   core <- c(core, "\tmaxN1 <- c1 * 2\n")
@@ -111,3 +111,4 @@ model_formula <- function(jags = TRUE) {
 
   cat(txt, file = "bugs_model.txt", append = FALSE, fill = TRUE)
 }
+
