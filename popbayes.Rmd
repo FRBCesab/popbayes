@@ -1,5 +1,5 @@
 ---
-title: "rmax"
+title: "package popbayes"
 author: "RPLP"
 date: "10/02/2020"
 output: html_document
@@ -9,39 +9,46 @@ output: html_document
 knitr::opts_chunk$set(echo = F)
 ```
 
-## Building of rmax table
+## Calculating rmax
 
 The demographic potential of a species is limited. The intrinsic rate of increase $rmax$ is the maximum increase in log population size that a species can attain in a year. According to Sinclair (2003), it is related to the body mass of adult females $W$  by the formula
 
 $$ 1.375*W^{-0.315} $$
 
-Body masses are found in the litterature in publications such as Kingdon & Hoffman (2013), Cornelis et al. (2014), Illius & Gordon (1992), Sinclair (1996), Suraud et al. (2012), or Foley & Fuast (2010). Alternatively, rmax can be obtained from specific demographic analyses. In the following table, we have listed the rmax values obtained with one or the other method giving precedence to specific analyses when available.  
+Body masses are found in the litterature in publications such as Kingdon & Hoffman (2013), Cornelis et al. (2014), Illius & Gordon (1992), Sinclair (1996), Suraud et al. (2012), or Foley & Fuast (2010). Alternatively, $rmax$ can be obtained from specific demographic analyses. In the following table, we have listed the $rmax$ values obtained with one or the other method giving precedence to specific analyses when available.  
 
 ```{r rmax}
-species <- c('Impala','Tiang','Blue wildebeest','Roan','Buffalo','Eland','Giraffe','Elephant')
+species_name <- c('Impala','Tiang','Blue wildebeest','Roan','Buffalo','Eland','Giraffe','Elephant')
 adult_female_body_mass <- c(55,127,230,250,400,450,702,2873)
-rmax <- 1.375 * adult_female_body_mass^(-0.315)
-names(rmax) <- species
-rmax['Eland'] <- 0.150 # Sinclair 1996
-as.data.frame(rmax)
-save(rmax, file = 'data/rmax.Rdata')
+species <- data.frame(adult_female_body_mass, row.names = species_name)
+species$rmax <- 1.375 * adult_female_body_mass^(-0.315)
+species['Eland','rmax'] <- 0.150 # Sinclair 1996
+species
 ```
 
 ## building conversion table
 
-Aerial and ground counts are not directly comparable because some species are better detected from the grounds and others from the air. It is generally considered that small light species are better detected from the ground while large dark species are better detected from the air. We took advantage of counts carried out in parallel using the two methods to calculate conversion factors to be applied to aerial counts in order to convert them to equivalent ground counts. This permits the use of both types of counts in a same series.
+Aerial and ground counts are not directly comparable because some species are better detected from the grounds and others from the air. It is generally considered that small light species are better detected from the ground while large dark species are better detected from the air. We took advantage of counts carried out in parallel using the two methods to calculate conversion factors to be applied to aerial counts to obtain ground count equivalents. This permits the mixing of the two types of counts within a same series. We also specify the prefered field method.
 
 ```{r conversionA2G}
 categories <- c('Medium-sized light and brown species (20-150kg)','Large light and brown species (>150kg)','Large dark (>150kg)','Giraffe','Elephant')
 short_name <- c('MLB','LLB','LD','Giraffe','Elephant')
 A2G <- c(6.747,2.302,0.561,3.011,0.659)
-conversion_A2G <- data.frame(categories ,A2G ,row.names = short_name)
+preferred_field_method <- c('G','A','A','A','A')
+conversion_A2G <- data.frame(categories, A2G, preferred_field_method, row.names = short_name)
 conversion_A2G
 save(conversion_A2G, file = 'data/conversion_A2G.Rdata')
 ```
 
 ## categorizing species
 
-We need to classify each species in one of the color/size categories.
+Now we put each species in one of the color/size categories.
 
-*yet to be done*
+```{r}
+
+species$category <- c('MLB','MLB','LLB','LLB','LD','LLB','Giraffe','Elephant')
+species
+save(species, file = 'data/species.Rdata')
+```
+
+
