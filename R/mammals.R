@@ -10,11 +10,11 @@
 #'   - location: protected area name
 #'   - species: species name
 #'   - year: year
-#'   - counts: species counts
-#'   - cinf: CI95% lower bound
-#'   - csup: CI95% upper bound
+#'   - count: species counts
+#'   - lower_bound: CI95% lower bound
+#'   - upper_bound: CI95% upper bound
 #'   - stat_method: S(ample), T(otal) or G(uesstimate)
-#'   - field_method: A(erial) or T(errestrial)
+#'   - field_method: A(erial) or G(round)
 #'   - cv: coefficient of variation of species count
 #'   - sd: standard deviation of species count
 #'   - var: variance of species count
