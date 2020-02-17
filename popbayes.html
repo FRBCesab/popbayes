@@ -375,7 +375,7 @@ summary {
 <h2>Calculating rmax</h2>
 <p>The demographic potential of a species is limited. The intrinsic rate of increase <span class="math inline">\(rmax\)</span> is the maximum increase in log population size that a species can attain in a year. According to Sinclair (2003), it is related to the body mass of adult females <span class="math inline">\(W\)</span> by the formula</p>
 <p><span class="math display">\[ 1.375*W^{-0.315} \]</span></p>
-<p>Body masses are found in the litterature in publications such as Kingdon &amp; Hoffman (2013), Cornelis et al. (2014), Illius &amp; Gordon (1992), Sinclair (1996), Suraud et al. (2012), or Foley &amp; Fuast (2010). Alternatively, <span class="math inline">\(rmax\)</span> can be obtained from specific demographic analyses. In the following table, we have listed the <span class="math inline">\(rmax\)</span> values obtained with one or the other method giving precedence to specific analyses when available.</p>
+<p>Body masses are found in the litterature in publications such as Kingdon &amp; Hoffman (2013), Cornelis et al. (2014), Illius &amp; Gordon (1992), Sinclair (1996), Suraud et al. (2012), or Foley &amp; Faust (2010). Alternatively, <span class="math inline">\(rmax\)</span> can be obtained from specific demographic analyses. In the following table, we have listed the <span class="math inline">\(rmax\)</span> values obtained with one or the other method giving precedence to specific analyses when available.</p>
 <pre><code>##                 adult_female_body_mass      rmax
 ## Impala                              55 0.3891244
 ## Tiang                              127 0.2989541
@@ -383,28 +383,28 @@ summary {
 ## Roan                               250 0.2415192
 ## Buffalo                            400 0.2082830
 ## Eland                              450 0.1500000
-## Giraffe                            702 0.1744643
-## Elephant                          2873 0.1119250</code></pre>
+## Giraffe                            702 0.1250000
+## Elephant                          2873 0.0700000</code></pre>
 </div>
 <div id="building-conversion-table" class="section level2">
 <h2>building conversion table</h2>
 <p>Aerial and ground counts are not directly comparable because some species are better detected from the grounds and others from the air. It is generally considered that small light species are better detected from the ground while large dark species are better detected from the air. We took advantage of counts carried out in parallel using the two methods to calculate conversion factors to be applied to aerial counts to obtain ground count equivalents. This permits the mixing of the two types of counts within a same series. We also specify the prefered field method.</p>
-<pre><code>##                                               categories   A2G
-## MLB      Medium-sized light and brown species (20-150kg) 6.747
-## LLB               Large light and brown species (&gt;150kg) 2.302
-## LD                                   Large dark (&gt;150kg) 0.561
-## Giraffe                                          Giraffe 3.011
-## Elephant                                        Elephant 0.659
+<pre><code>##                                         categories   A2G
+## MLB      Medium light and brown species (20-150kg) 6.747
+## LLB         Large light and brown species (&gt;150kg) 2.302
+## LD                             Large dark (&gt;150kg) 0.561
+## Giraffe                                    Giraffe 3.011
+## Elephant                                  Elephant 0.659
 ##          preferred_field_method
 ## MLB                           G
-## LLB                           A
+## LLB                           G
 ## LD                            A
 ## Giraffe                       A
 ## Elephant                      A</code></pre>
 </div>
 <div id="categorizing-species" class="section level2">
 <h2>categorizing species</h2>
-<p>Here we put each species in one of the color/size categories.</p>
+<p>Now we put each species in one of the color/size categories.</p>
 <pre><code>##                 adult_female_body_mass      rmax category
 ## Impala                              55 0.3891244      MLB
 ## Tiang                              127 0.2989541      MLB
@@ -412,8 +412,8 @@ summary {
 ## Roan                               250 0.2415192      LLB
 ## Buffalo                            400 0.2082830       LD
 ## Eland                              450 0.1500000      LLB
-## Giraffe                            702 0.1744643  Giraffe
-## Elephant                          2873 0.1119250 Elephant</code></pre>
+## Giraffe                            702 0.1250000  Giraffe
+## Elephant                          2873 0.0700000 Elephant</code></pre>
 </div>
 
 
