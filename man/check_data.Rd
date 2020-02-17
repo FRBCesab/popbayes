@@ -7,7 +7,7 @@
 check_data(data, conversion_fac = NULL)
 }
 \arguments{
-\item{data}{[data frame] data to be analysed (contains at the minimal counts, dates and count precision)}
+\item{data}{[data frame] data to be analysed (contains at the minimum counts, dates and count precision)}
 
 \item{conversion_fac}{[numeric] multiplicative factor to apply to ground counts n order to obtain equivalent aerial counts}
 }

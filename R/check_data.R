@@ -5,7 +5,7 @@
 #' and information of precision. This function checks that the data have the necessary information and are 
 #' in a suitable format for the function fit_trend.
 #'
-#' @param data [data frame] data to be analysed (contains at the minimal counts, dates and count precision)
+#' @param data [data frame] data to be analysed (contains at the minimum counts, dates and count precision)
 #' @param conversion_fac [numeric] multiplicative factor to apply to ground counts n order to obtain equivalent aerial counts
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
