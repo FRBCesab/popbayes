@@ -83,7 +83,7 @@ prepare_1series <- function(
   #!!!! prévoir les conflits de nom p.ex. cinf, csup?
   
   n <- nrow(data)
-  formatted_data <- data.frame(data, c = numeric(n), cinf = numeric(n), csup = numeric(n))
+  formatted_data <- data.frame(data, c = data$count, cinf = numeric(n), csup = numeric(n))
   
   #### checking presence of valid counts and dates  #### 
   
@@ -345,7 +345,7 @@ prepare_1series <- function(
     
     if (!iscategory) {
       
-      if (all(data$field_method == preferred_field_meth)) {
+      if (all(data$field_method == preferred_field_method)) {
         
         # not sure if something needs to be done (facteur à 1??) or signalled
         conversion_fac_A2G <- 1
