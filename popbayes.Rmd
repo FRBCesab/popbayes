@@ -19,32 +19,33 @@ Body masses are found in the litterature in publications such as Kingdon & Hoffm
 
 ```{r rmax}
 species_name <- c('Impala','Tiang','Blue wildebeest','Roan','Buffalo','Eland','Giraffe','Elephant')
-adult_female_body_mass <- c(55,127,230,250,400,450,702,2873)
+adult_female_body_mass <- c(55, 127, 230, 250, 400, 450, 702, 2873)
 species <- data.frame(adult_female_body_mass, row.names = species_name)
 species$rmax <- 1.375 * adult_female_body_mass^(-0.315)
 species['Eland','rmax'] <- 0.150 # Sinclair 1996
 species['Elephant','rmax'] <- 0.07 # Foley et Faust 2010
 species['Giraffe','rmax'] <- 0.125 # Suraud al (2012)
 species
+save(species, file = 'data/species.RData')
 ```
 
-## building conversion table
+## Building conversion table
 
-Aerial and ground counts are not directly comparable because some species are better detected from the grounds and others from the air. It is generally considered that small light species are better detected from the ground while large dark species are better detected from the air. We took advantage of counts carried out in parallel using the two methods to calculate conversion factors to be applied to aerial counts to obtain ground count equivalents. This permits the mixing of the two types of counts within a same series. We also specify the prefered field method.
+Aerial and ground counts are not directly comparable because some species are better detected from the ground and others from the air. It is generally considered that small light species are better detected from the ground while large dark species are better detected from the air. We took advantage of series of counts carried out in parallel using the two field methods to calculate conversion factors to be applied to aerial counts to obtain ground count equivalents. This permits reconciling the two types of counts within a mixed series. We also specify the preferred field method for each category of species.
 
 ```{r conversionA2G}
 categories <- c('Medium light and brown species (20-150kg)','Large light and brown species (>150kg)','Large dark (>150kg)','Giraffe','Elephant')
 short_name <- c('MLB','LLB','LD','Giraffe','Elephant')
-A2G <- c(6.747,2.302,0.561,3.011,0.659)
+A2G <- c(6.747, 2.302, 0.561, 3.011, 0.659)
 preferred_field_method <- c('G','G','A','A','A')
 conversion_A2G <- data.frame(categories, A2G, preferred_field_method, row.names = short_name)
 conversion_A2G
 save(conversion_A2G, file = 'data/conversion_A2G.Rdata')
 ```
 
-## categorizing species
+## Categorizing species
 
-Now we put each species in one of the color/size categories.
+Here we relate the species to a color/size category.
 
 ```{r}
 
