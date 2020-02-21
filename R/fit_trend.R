@@ -70,6 +70,8 @@ fit_trend <- function(
   k    <- nrow(data)
 
   if (modelopt[[2]]) {
+    
+    if (is.null(rmax)) stop("rmax is required")
 
     rmax <- log(1 + rmax)
 
