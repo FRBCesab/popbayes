@@ -1,6 +1,13 @@
 #' @title Example dataset for popbayes package
 #'
-#' @description ...
+#' @description A data set containing 4 series of counts. The series are identified by the unique combination of
+#' location and species. There is no information about the species category and demographic maximum potential, 
+#' nor a mention of the preferred field method. Of the 4 series,
+#'  - one is homogenous and made of 5 aerial sample counts,
+#'  - a second has 32 ground total counts and 1 aerial total count, hence statistically homogenous,
+#'  - a third (homogenous relative to the field method) has 15 aerial counts mixing sample and total counts,
+#'  - the last series has 17 counts with all combinations of sample/total and ground/aerial counts.
+#' Precision is provided for sample counts in the form of lower and upper bounds of 95% confidence intervals.  
 #'
 #' @docType data
 #'
