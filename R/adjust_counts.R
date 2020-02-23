@@ -58,7 +58,7 @@
 #' # No example
 
 
-prepare_1series <- function(
+adjust_counts <- function(
   data,
   category = NULL,
   preferred_field_method = NULL,
@@ -167,7 +167,7 @@ prepare_1series <- function(
   #### checking field stat_method is valid and precision is present for sampling counts ####
   
   isstat_method <- 'stat_method' %in% colnames(data)
-  
+      
   if (isstat_method) {
     
     if (!all(data$stat_method %in% valid_stat_meth)) {
@@ -290,9 +290,9 @@ prepare_1series <- function(
   # What is available?
   
   isfield_method <- 'field_method' %in% colnames(data)
-  ispreferred_field_method <- !is.null(preferred_field_method)
-  iscategory <- !is.null(category)
-  isconversion_factor <- !is.null(conversion_factor_A2G)
+  ispreferred_field_method <- !is.null(preferred_field_method) && !is.na(preferred_field_method)
+  iscategory <- !is.null(category) && !is.na(category)
+  isconversion_factor <- !is.null(conversion_factor_A2G) && !is.na(conversion_factor_A2G)
   
   # is this valid information?
   
