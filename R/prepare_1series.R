@@ -37,13 +37,13 @@
 #' 
 #' Conversion to the preferred method uses a category-specific coefficient of conversion, which is the 
 #' multiplicative factor to apply to an aerial count to get an equivalent ground count. The conversion 
-#' coefficient may be provided via the parameter 'conversion_fac_A2G'. Alternatively, it is defined internally   
+#' coefficient may be provided via the parameter 'conversion_factor_A2G'. Alternatively, it is defined internally   
 #' in the package.
 #'   
 #' @param data [data frame] data to be analysed (contains at the minimum counts, dates and count precisions)
 #' @param category [string] species category: MLB, LLB, LD, elephant, or Giraffe
 #' @param preferred_field_method [character] 'G' for ground or 'A' for aerial.
-#' @param conversion_fac_A2G [numeric] multiplicative factor to apply to aerial counts to obtain equivalent ground counts.
+#' @param conversion_factor_A2G [numeric] multiplicative factor to apply to aerial counts to obtain equivalent ground counts.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
@@ -62,7 +62,8 @@ prepare_1series <- function(
   data,
   category = NULL,
   preferred_field_method = NULL,
-  conversion_fac_A2G = NULL
+  conversion_factor_A2G = NULL,
+  ...
 ) {
   
   if (!is.data.frame(data)) {
@@ -79,8 +80,6 @@ prepare_1series <- function(
   valid_category <- c(
     "MLB","LLB","LD","Giraffe","Elephant"
   )
-  
-  #!!!! prévoir les conflits de nom p.ex. cinf, csup?
   
   n <- nrow(data)
   formatted_data <- data.frame(data, c = data$count, cinf = numeric(n), csup = numeric(n))
@@ -261,19 +260,20 @@ prepare_1series <- function(
             
             if (isstat_method) {
               
-              if (data$stat_method == 'T') {
+              if (data$stat_method[i] == 'T') {
                 
                 formatted_data$cinf[i] <- formatted_data$count[i] * 0.95
                 formatted_data$csup[i] <- formatted_data$count[i] * 1.20
-              }
-              
-              if (data$stat_method == 'G') {
-                
-                formatted_data$cinf[i] <- formatted_data$count[i] * 0.80
-                formatted_data$csup[i] <- formatted_data$count[i] * 1.20
               } else {
                 
-                stop("observation #", i,": in the absence of information on precision, statistical method must be 'G' or 'T'")
+                if (data$stat_method[i] == 'G') {
+                  
+                  formatted_data$cinf[i] <- formatted_data$count[i] * 0.80
+                  formatted_data$csup[i] <- formatted_data$count[i] * 1.20
+                } else {
+                  
+                  stop("observation #", i,": in the absence of information on precision, statistical method must be 'G' or 'T'")
+                }
               }
             } else {
               
@@ -292,7 +292,7 @@ prepare_1series <- function(
   isfield_method <- 'field_method' %in% colnames(data)
   ispreferred_field_method <- !is.null(preferred_field_method)
   iscategory <- !is.null(category)
-  isconversion_fac <- !is.null(conversion_fac_A2G)
+  isconversion_factor <- !is.null(conversion_factor_A2G)
   
   # is this valid information?
   
@@ -304,14 +304,14 @@ prepare_1series <- function(
     
     stop("invalid category. Allowed categories are ", valid_category)
   }
-  if (isconversion_fac) {
+  if (isconversion_factor) {
     
-    if (!is.numeric(conversion_fac_A2G)) {
+    if (!is.numeric(conversion_factor_A2G)) {
       
       stop("conversion factor must be numeric")
     } else {
       
-      if (conversion_fac_A2G <= 0) {
+      if (conversion_factor_A2G <= 0) {
         
         stop("conversion factor must be strictly positive")
       }
@@ -341,21 +341,20 @@ prepare_1series <- function(
   
   # determining conversion factor
   
-  if (!isconversion_fac) {
+  if (!isconversion_factor) {
     
     if (!iscategory) {
       
       if (all(data$field_method == preferred_field_method)) {
         
-        # not sure if something needs to be done (facteur à 1??) or signalled
-        conversion_fac_A2G <- 1
+        conversion_factor_A2G <- 1
       } else {
         
-        stop("at least one of the parameters 'category' and 'conversion_fac_A2G' is required")
+        stop("at least one of the parameters 'category' and 'conversion_factor_A2G' is required")
       }
     } else {
       
-      conversion_fac_A2G <- conversion_A2G[ category, "A2G"]
+      conversion_factor_A2G <- conversion_A2G[ category, "A2G"]
     }
   }
   
@@ -363,19 +362,19 @@ prepare_1series <- function(
   
   if (preferred_field_method == 'G') {
     
-    conversion_fac <- conversion_fac_A2G
+    conversion_factor <- conversion_factor_A2G
   } else {
     
-    conversion_fac <- 1/conversion_fac_A2G
+    conversion_factor <- 1/conversion_factor_A2G
   }
   
   if (!isfield_method) {
     
     warning("As no field method is specified, counts are assumed to be comparable and kept as they are.")
-    conversion_fac <- 1
+    conversion_factor <- 1
   }
   
-  formatted_data[data$field_method != preferred_field_method, c("c","cinf","csup")] <- formatted_data[data$field_method != preferred_field_method, c("c","cinf","csup")] * conversion_fac
+  formatted_data[data$field_method != preferred_field_method, c("c","cinf","csup")] <- formatted_data[data$field_method != preferred_field_method, c("c","cinf","csup")] * conversion_factor
 
   #### special cases ####
   
