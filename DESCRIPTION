@@ -1,19 +1,35 @@
 Package: popbayes
 Type: Package
+Version: 1.0.0
 Title: popbayes
-Version: 1.0-0
-Date: 2019-10-28
-Author: Nicolas Casajus [cre, aut], Roger Pradel [aut]
-Maintainer: Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>
-Description: popbayes
-URL: https://github.com/frbcesab/popbayes
+Description: To edit...
+Date: 2020-02-28
+Authors@R: c(
+    person(
+      given  = "Nicolas",
+      family = "Casajus",
+      email  = "nicolas.casajus@fondationbiodiversite.fr",
+      role   = c("aut", "cre")
+    ),
+    person(
+      given  = "Roger",
+      family = "Pradel",
+      email  = "roger.pradel@cefe.cnrs.fr",
+      role   = "aut"
+    ))
+URL: https://github.com/frbcesab/popbayes, https://frbcesab.github.io/popbayes
 BugReports: https://github.com/frbcesab/popbayes/issues
 Depends: R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: R2OpenBUGS, rjags, R2jags
-Suggests: knitr, rmarkdown
+Imports: 
+    R2OpenBUGS,
+    rjags,
+    R2jags
+Suggests:
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 NeedsCompilation: no
