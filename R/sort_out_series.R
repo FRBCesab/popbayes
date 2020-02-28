@@ -41,9 +41,6 @@
 #' in the package.
 #'   
 #' @param data [data frame] data to be analysed (contains at the minimum counts, dates and count precisions)
-#' @param category [string] species category: MLB, LLB, LD, elephant, or Giraffe
-#' @param preferred_field_method [character] 'G' for ground or 'A' for aerial.
-#' @param conversion_fac_A2G [numeric] multiplicative factor to apply to aerial counts to obtain equivalent ground counts.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
@@ -58,9 +55,7 @@
 #' # No example
 
 
-sort_out_series <- function(
-  data
-) {
+sort_out_series <- function(data) {
   
   if (!is.data.frame(data)) {
     

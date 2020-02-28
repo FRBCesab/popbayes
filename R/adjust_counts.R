@@ -1,8 +1,9 @@
 #' @title Prepare 1 count series for use by function fit_trend
 #'
 #' @description
-#' To be usable for the estimation of population trend, count data must be accompanied by dates collected and 
-#' information on precision. Two fields are compulsory:
+#' To be usable for the estimation of population trend, count data must be 
+#' accompanied by dates collected and information on precision.
+#' Two fields are compulsory:
 #'     - field 'count': contains the original counts
 #'     - field 'year': contains the date each count was taken (given as a year with decimal part e.g. 2019.33).
 #'     
