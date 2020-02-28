@@ -102,10 +102,10 @@ inits_plus <- function(data, nc){
   r_cand_obs[position] <- r_cand_obs[position] / l_interval[position]
 
   list_start <- list()
-
   for (i in 1:nc) {
-
-    list_start[[i]] <- list(rcand = stats::rnorm(length(r_cand_obs), r_cand_obs, 1))
+    list_start[[i]] <- list(
+      rcand = stats::rnorm(length(r_cand_obs), r_cand_obs, 1)
+    )
   }
 
   return(list_start)
