@@ -20,6 +20,8 @@ adjust_counts(
 \item{preferred_field_method}{[character] 'G' for ground or 'A' for aerial.}
 
 \item{conversion_factor_A2G}{[numeric] multiplicative factor to apply to aerial counts to obtain equivalent ground counts.}
+
+\item{...}{To edit...}
 }
 \value{
 a dataframe with the original data and additional fields required by function fit_trend (trend analysis)

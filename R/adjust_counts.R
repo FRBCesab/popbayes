@@ -45,6 +45,7 @@
 #' @param category [string] species category: MLB, LLB, LD, elephant, or Giraffe
 #' @param preferred_field_method [character] 'G' for ground or 'A' for aerial.
 #' @param conversion_factor_A2G [numeric] multiplicative factor to apply to aerial counts to obtain equivalent ground counts.
+#' @param ... To edit...
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
