@@ -72,7 +72,7 @@ conversion_A2G <- data.frame(
 )
 conversion_A2G
 
-save(conversion_A2G, file = "../data/conversion_A2G.Rdata")
+save(conversion_A2G, file = "../data/conversion_A2G.RData")
 ```
 
 ## Categorizing species
