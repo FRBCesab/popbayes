@@ -21,10 +21,7 @@
 #' # No example
 
 
-check_data <- function(
-  data,
-  conversion_fac = NULL
-) {
+check_data <- function(data, conversion_fac = NULL) {
 
 
   col_names <- c(
@@ -32,8 +29,8 @@ check_data <- function(
     "stat_method", "field_method",
     "location", "species", "year", "counts"
   )
-# remove 'which' in following line?
-  if (sum(which(colnames(data) %in% col_names)) < length(col_names)) {
+
+  if (sum(colnames(data) %in% col_names) < length(col_names)) {
 
     stop("...")
   }
@@ -43,7 +40,7 @@ check_data <- function(
 
 
 
-  # if (sum(which(data$c < 0)) > 0) {
+  # if (sum(data$c < 0) > 0) {
   #
   #   stop("Counts must be positive or zero.")
   #
@@ -52,8 +49,8 @@ check_data <- function(
   # not na counts
 
   if (
-    sum(which(is.na(data[ , "stat_method"]))) > 0 ||
-    sum(which(is.na(data[ , "field_method"]))) > 0
+    sum(is.na(data[ , "stat_method"])) > 0 ||
+    sum(is.na(data[ , "field_method"])) > 0
   ) {
 
     stop("...")
