@@ -1,47 +1,66 @@
-#' @title Run BUGS population model
+#' Run BUGS Population Model
 #'
-#' @description
-#' This is the main function of the package. It applies a Bayesian model to a count series in order to infer 
-#' the population trend over time. 
-#' The series of counts, extracted from a tibble or dataframe, the name of which is provided as an argument 
-#' (parameter dsname), must be accompanied by a 95% confidence interval in the form of 2 parallel series of the  
-#' lower and upper bounds, and the series of the times when each count was taken (in the same tibble or dataframe).
+#' This is the main function of the package. It applies a Bayesian model to a 
+#' count series in order to infer the population trend over time. The series of 
+#' counts, extracted from a tibble or data.frame, the name of which is provided 
+#' as an argument (parameter \code{dsname}), must be accompanied by a 95% 
+#' confidence interval in the form of 2 parallel series of the lower and upper 
+#' bounds, and the series of the times when each count was taken (in the same 
+#' tibble or data.frame).
 #' 
 #' There are two types of options: 
-#' - model options (parameter modelopt)
-#' - MCMC options (parameter MCMCopt)
+#' \itemize{
+#'   \item model options (parameter \code{modelopt});
+#'   \item MCMC options (parameter \code{MCMCopt}).
+#' }
 #' 
-#' A. model options are 2: 
-#' - a smoothing parameter, 
-#' - a logical indicating whether the population growth must remain limited by the species demographic potential. 
 #' 
-#' The smoothing parameter is actually the precision (the inverse of variance) of a normal distribution centered on 
-#' the current relative rate of increase r from which the next candidate relative rate of increase (see below) is drawn. 
-#' The highest this number, the tighter the link between successive relative rates of increase. The default 100
-#' corresponds to a moderate link.
+#' **A.** Model options are the following: 
 #' 
-#' The relative rate of increase is the change in log population size between two dates. The quantity actually 
-#' being modeled is the relative rate of increase per unit of time (usually one year). This quantity reflects 
-#' more directly the prevailing conditions than the population size itself, which is the reason why it has been chosen.
-#' When the second model option is set to True, the candidate rate of increase is compared to the maximum relative rate 
-#' of increase (parameter rmax) and replaced by rmax if greater.
+#' \itemize{
+#'   \item a smoothing parameter;
+#'   \item a logical indicating whether the population growth must remain 
+#'     limited by the species demographic potential. 
+#' }
 #' 
-#' B. MCMC options are the classical MCMC settings (see param MCMCopt below).
+#' The _smoothing parameter_ is actually the precision (inverse of variance) of 
+#' a normal distribution centered on the current relative rate of increase r 
+#' from which the next candidate relative rate of increase (see below) is drawn. 
+#' The highest this number, the tighter the link between successive relative 
+#' rates of increase. The default 100 corresponds to a moderate link.
+#' 
+#' The _relative rate of increase_ is the change in log population size between 
+#' two dates. The quantity actually being modeled is the relative rate of 
+#' increase per unit of time (usually one year). This quantity reflects more 
+#' directly the prevailing conditions than the population size itself, which is 
+#' the reason why it has been chosen.
+#' 
+#' When the second model option is set to \code{TRUE}, the candidate rate of 
+#' increase is compared to the maximum relative rate of increase (parameter 
+#' \code{rmax}) and replaced by rmax if greater.
+#' 
+#' **B.** MCMC options are the classical MCMC settings (see param MCMCopt below)
 #'
-#' @param dsname [string] the R object name containing data.
-#' @param rmax [numeric] the maximum relative rate of increase of the species i.e. maximum yearly change in log pop size.
-#' @param MCMCopt [list] a list containing the number of iteration (ni), thin factor (nt), length of burn in (nb), i.e. number of iterations to discard at the beginning and the number of chains (nc).
-#' @param modelopt [list] a list of two vectors: the model smoothing factor and a boolean indicating if parameter r must be limited by rmax.
-#' @param jags [boolean] If TRUE, write model bugs code for JAGS, otherwise for OpenBUGS.
+#' @param dsname A string. The R object name containing data.
+#' @param rmax A numeric. The maximum relative rate of increase of the species,
+#'   i.e. the maximum yearly change in log pop size.
+#' @param MCMCopt A list containing the number of iteration (\code{ni}), the 
+#'   thin factor (\code{nt}), the length of burn in (\code{nb}), i.e. the number 
+#'   of iterations to discard at the beginning, and the number of chains 
+#'   (\code{nc}).
+#' @param modelopt A list of two vectors: the model smoothing factor and a 
+#'   boolean indicating if parameter r must be limited by rmax.
+#' @param jags A boolean. If TRUE, write model bugs code for JAGS, otherwise for 
+#'   OpenBUGS.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
 #'
 #' @export
 #'
-#' @return
-#' the ouput of the Bayesian model as provided by Jags or Openbugs. Additionally, the function prints the results 
-#' to the console with the method of the package used to call JAGS or OpenBUGS.
+#' @return The ouput of the Bayesian model as provided by JAGS or OpenBUGS. 
+#'   Additionally, the function prints the results to the console with the 
+#'   method of the package used to call JAGS or OpenBUGS.
 #'
 #' @examples
 #'
@@ -51,8 +70,7 @@
 
 fit_trend <- function(dsname = NULL, rmax = NULL, 
                       MCMCopt = list(ni = 50000, nt = 3, nb = 10000, nc = 2),
-                      modelopt = list(100, TRUE),
-                      jags = TRUE) {
+                      modelopt = list(100, TRUE), jags = TRUE) {
 
   # remove NA (counts + time)
   # require
@@ -69,7 +87,9 @@ fit_trend <- function(dsname = NULL, rmax = NULL,
 
   if (modelopt[[2]]) {
     
-    if (is.null(rmax)) stop("rmax is required")
+    if (is.null(rmax)) {
+      stop("Argument `rmax`` is required.")
+    }
 
     rmax <- log(1 + rmax)
 
@@ -130,10 +150,7 @@ fit_trend <- function(dsname = NULL, rmax = NULL,
   print(output_bugs, digits = 3)
 
   xxx <- as.data.frame(output_bugs$BUGSoutput$summary)
-  xxx <- data.frame(
-    param = rownames(xxx),
-    xxx
-  )
+  xxx <- data.frame(param = rownames(xxx), xxx)
 
   save(
     output_bugs,

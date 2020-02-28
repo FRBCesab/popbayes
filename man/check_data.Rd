@@ -7,17 +7,20 @@
 check_data(data, conversion_fac = NULL)
 }
 \arguments{
-\item{data}{[data frame] data to be analysed (contains at the minimum counts, dates and count precision)}
+\item{data}{A data.frame. Data to be analysed (contains at the minimum counts, 
+dates and count precision)}
 
-\item{conversion_fac}{[numeric] multiplicative factor to apply to ground counts n order to obtain equivalent aerial counts}
+\item{conversion_fac}{A numeric. multiplicative factor to apply to ground 
+counts n order to obtain equivalent aerial counts}
 }
 \value{
 ...
 }
 \description{
-To be usable for the estimation of population trend, count data must be accompanied by dates collected 
-and information of precision. This function checks that the data have the necessary information and are 
-in a suitable format for the function fit_trend.
+To be usable for the estimation of population trend, count data must be 
+accompanied by dates collected and information of precision. This function 
+checks that the data have the necessary information and are in a suitable 
+format for the function fit_trend.
 }
 \examples{
 

@@ -1,12 +1,15 @@
 #' @title check count data
 #'
 #' @description
-#' To be usable for the estimation of population trend, count data must be accompanied by dates collected 
-#' and information of precision. This function checks that the data have the necessary information and are 
-#' in a suitable format for the function fit_trend.
+#' To be usable for the estimation of population trend, count data must be 
+#' accompanied by dates collected and information of precision. This function 
+#' checks that the data have the necessary information and are in a suitable 
+#' format for the function fit_trend.
 #'
-#' @param data [data frame] data to be analysed (contains at the minimum counts, dates and count precision)
-#' @param conversion_fac [numeric] multiplicative factor to apply to ground counts n order to obtain equivalent aerial counts
+#' @param data A data.frame. Data to be analysed (contains at the minimum counts, 
+#'   dates and count precision)
+#' @param conversion_fac A numeric. multiplicative factor to apply to ground 
+#'   counts n order to obtain equivalent aerial counts
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
@@ -119,7 +122,7 @@ check_data <- function(data, conversion_fac = NULL) {
 
             if (data[i, "cv"] <= 0) {
 
-              stop(paste0("`cv` must be strickly positive (observation #", i, ")."))
+              stop(paste0("`cv` must be > 0 (observation #", i, ")."))
             }
 
             data[i, "cinf"] <- data[i, "counts"] * (1 - 1.96 * data[i, "cv"])
@@ -131,7 +134,7 @@ check_data <- function(data, conversion_fac = NULL) {
 
               if (data[i, "sd"] <= 0) {
 
-                stop(paste0("`sd` must be strickly positive (observation #", i, ")."))
+                stop(paste0("`sd` must be > 0 (observation #", i, ")."))
               }
 
               data[i, "cinf"] <- data[i, "counts"] - 1.96 * data[i, "sd"]
@@ -143,7 +146,7 @@ check_data <- function(data, conversion_fac = NULL) {
 
                 if (data[i, "var"] <= 0) {
 
-                  stop(paste0("`var` must be strickly positive (observation #", i, ")."))
+                  stop(paste0("`var` must be > 0 (observation #", i, ")."))
                 }
 
                 data[i, "cinf"] <- data[i, "counts"] - 1.96 * sqrt(data[i, "var"])
@@ -173,7 +176,6 @@ check_data <- function(data, conversion_fac = NULL) {
 
   data[data[ , "counts"] <= 1, "cinf"] <- 0.01
   data[data[ , "counts"] <= 1, "csup"] <- min(data[data[ , "counts"] > 0, "counts"])
-
 
   return(data)
 }
