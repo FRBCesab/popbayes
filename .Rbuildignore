@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^\.travis\.yml$
+^inst/OpenBUGS-3\.2\.3\.tar\.gz$
