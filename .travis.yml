@@ -18,9 +18,9 @@ before_install:
 before_script:
   - WHR=pwd
   - wget "http://www.openbugs.net/w/OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz" -O /tmp/OpenBUGS-3.2.3.tar.gz
-  - tar -zxvf /tmp/OpenBUGS-3.2.3.tar.gz
-  - ls -al
-  - cd /tmp/OpenBUGS-3.2.3
+  - cd /tmp/
+  - tar -zxvf OpenBUGS-3.2.3.tar.gz
+  - cd OpenBUGS-3.2.3/
   - ./configure
   - make
   - sudo make install
