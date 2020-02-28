@@ -16,10 +16,11 @@ before_install:
   - sudo apt-get install --yes jags g++-multilib
 
 before_script:
-  - cd inst
-  - tar -zxvf OpenBUGS-3.2.3.tar.gz
-  - cd OpenBUGS-3.2.3
+  - WHR=pwd
+  - wget "http://www.openbugs.net/w/OpenBUGS_3_2_3?action=AttachFile&do=get&target=OpenBUGS-3.2.3.tar.gz"" -O /tmp/OpenBUGS-3.2.3.tar.gz
+  - tar -zxvf /tmp/OpenBUGS-3.2.3.tar.gz
+  - cd /tmp/OpenBUGS-3.2.3
   - ./configure
   - make
   - sudo make install
-  - cd ../..
+  - cd $WHR
