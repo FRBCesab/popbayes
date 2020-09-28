@@ -3,7 +3,7 @@
 #' @description
 #' ...
 #'
-#' @param model [string] a BUGS model obtained after running \code{popbayes::fit_trend()}.
+#' @param model [string] a BUGS model obtained after running \code{fit_trend()}.
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}
 #' @author Roger PRADEL, \email{roger.pradel@@cefe.cnrs.fr}
@@ -19,4 +19,6 @@
 
 
 
-plot_trend <- function(model) { }
+plot_trend <- function(model) {
+
+}

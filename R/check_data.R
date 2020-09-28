@@ -8,7 +8,7 @@
 #'
 #' @param data A data.frame. Data to be analysed (contains at the minimum counts, 
 #'   dates and count precision)
-#' @param conversion_fac A numeric. multiplicative factor to apply to ground 
+#' @param conversion_fac A numeric. Multiplicative factor to apply to ground 
 #'   counts n order to obtain equivalent aerial counts
 #'
 #' @author Nicolas CASAJUS, \email{nicolas.casajus@@fondationbiodiversite.fr}

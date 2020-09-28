@@ -88,7 +88,7 @@ fit_trend <- function(dsname = NULL, rmax = NULL,
   if (modelopt[[2]]) {
     
     if (is.null(rmax)) {
-      stop("Argument `rmax`` is required.")
+      stop("Argument `rmax` is required.")
     }
 
     rmax <- log(1 + rmax)
