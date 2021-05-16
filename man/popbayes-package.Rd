@@ -27,7 +27,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Roger Pradel \email{roger.pradel@cefe.cnrs.fr}
+  \item Roger Pradel \email{roger.pradel@cefe.cnrs.fr} (\href{https://orcid.org/0000-0002-2684-9251}{ORCID})
 }
 
 }
