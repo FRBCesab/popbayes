@@ -33,7 +33,7 @@ a field method to a preferred field method. The field method can be \code{A}
 add missing species. See \code{\link[=format_data]{format_data()}} for further information.
 }
 \examples{
-data(conversion_data)
+data("conversion_data")
 conversion_data
 }
 \keyword{datasets}
