@@ -1,6 +1,10 @@
+^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$
-^\.travis\.yml$
-^inst/OpenBUGS-3\.2\.3\.tar\.gz$
-^bugs_model\.txt$
+^README\.Rmd$
+^README\.html$
+^\.github$
+^popbayes\.Rproj$
+^_pkgdown\.yml$
+^cran-comments\.md$
+^_pkgdown\.yaml$

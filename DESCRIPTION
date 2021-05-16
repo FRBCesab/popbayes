@@ -1,9 +1,7 @@
 Package: popbayes
 Type: Package
-Version: 0.1.0
-Title: popbayes
-Description: To edit...
-Date: 2020-02-28
+Version: 0.1
+Title: Title in Title Case
 Authors@R: c(
     person(
       given  = "Nicolas",
@@ -17,19 +15,27 @@ Authors@R: c(
       email  = "roger.pradel@cefe.cnrs.fr",
       role   = "aut"
     ))
-URL: https://github.com/frbcesab/popbayes, https://frbcesab.github.io/popbayes
+Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad 
+    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
+    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
+    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id 
+    est laborum.
+URL: https://github.com/frbcesab/popbayes
 BugReports: https://github.com/frbcesab/popbayes/issues
-Depends: R (>= 3.5.0)
-License: GPL-3 | file LICENSE
+Depends: R (>= 3.2)
+License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
+NeedsCompilation: no
 Imports: 
-    R2OpenBUGS,
     rjags,
-    R2jags
-Suggests:
+    R2jags,
+    usethis
+Suggests: 
     knitr,
     rmarkdown
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
-NeedsCompilation: no

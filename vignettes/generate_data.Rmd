@@ -1,13 +1,20 @@
 ---
-title: "Package popbayes"
-author: "RPLP"
-date: "2020/02/10"
-output: html_document
+title: "Get species information"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Get species information}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>"
+)
 ```
+
+
 
 ## Calculating rmax
 
@@ -16,20 +23,22 @@ increase $rmax$ is the maximum increase in log population size that a species
 can attain in a year. According to Sinclair (2003), it is related to the body 
 mass of adult females $W$  by the formula:
 
+
 $$ 1.375*W^{-0.315} $$
 
-Body masses are found in the litterature in publications such as Kingdon & 
+
+Body masses are found in the literature in publications such as Kingdon & 
 Hoffman (2013), Cornelis _et al._ (2014), Illius & Gordon (1992), 
 Sinclair (1996), Suraud _et al._ (2012), or Foley & Faust (2010). 
 Alternatively, $rmax$ can be obtained from specific demographic analyses. In the 
 following table, we have listed the $rmax$ values obtained with one or the other 
 method giving precedence to specific analyses when available.  
 
-```{r rmax}
-species_name <- c(
-  "Impala", "Tiang", "Blue wildebeest", "Roan", 
-  "Buffalo", "Eland", "Giraffe", "Elephant"
-)
+
+
+```{r 'rmax'}
+species_name <- c("Impala", "Tiang", "Blue wildebeest", "Roan", "Buffalo", 
+                  "Eland", "Giraffe", "Elephant")
 
 adult_female_body_mass <- c(55, 127, 230, 250, 400, 450, 702, 2873)
 
@@ -43,6 +52,8 @@ species["Giraffe", "rmax"]  <- 0.125                 # Suraud et al. (2012)
 species
 ```
 
+
+
 ## Building conversion table
 
 Aerial and ground counts are not directly comparable because some species are 
@@ -54,38 +65,33 @@ conversion factors to be applied to aerial counts to obtain ground count
 equivalents. This permits reconciling the two types of counts within a mixed 
 series. We also specify the preferred field method for each category of species.
 
-```{r conversionA2G}
-categories <- c(
-  "Medium light and brown species (20-150kg)",
-  "Large light and brown species (>150kg)",
-  "Large dark (>150kg)",
-  "Giraffe",
-  "Elephant"
-)
-short_name             <- c("MLB", "LLB", "LD", "Giraffe", "Elephant")
-A2G                    <- c(6.747, 2.302, 0.561, 3.011, 0.659)
-preferred_field_method <- c("G","G","A","A","A")
 
-conversion_A2G <- data.frame(
-  categories, A2G, preferred_field_method, 
-  row.names = short_name
-)
-conversion_A2G
 
-save(conversion_A2G, file = "../data/conversion_A2G.RData")
+```{r 'conversion_fact'}
+categories <- c("Medium light and brown species (20-150kg)",
+                "Large light and brown species (>150kg)",
+                "Large dark (>150kg)", "Giraffe", "Elephant")
+
+short_names        <- c("MLB", "LLB", "LD", "Giraffe", "Elephant")
+conversion_facts   <- c(6.747, 2.302, 0.561, 3.011, 0.659)
+pref_field_methods <- c("G", "G", "A", "A", "A")
+
+category_info <- data.frame("category"          = categories,
+                            "acronym"           = short_names,
+                            "conversion_fact"   = conversion_facts, 
+                            "pref_field_method" = pref_field_methods)
+category_info
 ```
+
+
 
 ## Categorizing species
 
 Here we relate the species to a color/size category.
 
+
 ```{r}
-species$category <- c(
-  "MLB", "MLB", "LLB", "LLB", "LD", "LLB", "Giraffe", "Elephant"
-)
+species$"category" <- c("MLB", "MLB", "LLB", "LLB", "LD", "LLB", "Giraffe", 
+                        "Elephant")
 species
-
-save(species, file = "../data/species.RData")
 ```
-
-

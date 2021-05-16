@@ -1,20 +1,21 @@
 ---
-title: "popbayes: Estimating temporal trends in population size under a bayesian framework"
-author: "Nicolas Casajus and Roger Pradel"
-date: "`r Sys.Date()`"
-lang: english
-output:
-  rmarkdown::html_vignette:
-    toc: true
-    number_sections: true
+title: "Get started with popbayes"
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{An introduction of the package popbayes}
+  %\VignetteIndexEntry{Get started with popbayes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r eval=FALSE, echo=FALSE}
-options(markdown.HTML.stylesheet = "path/to/a/custom/style.css")
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment  = "#>"
+)
 ```
 
-In construction...
+
+```{r setup}
+# library(popbayes)
+```
+

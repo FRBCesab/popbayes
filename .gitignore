@@ -1,6 +1,21 @@
+# macOS files ----
 .DS_Store
-bugs_model.txt
-.Rproj.user
-conversion_table.csv
+
+# History files ----
 .Rhistory
-trendbugs.txt
+.Rapp.history
+
+# Session Data files ----
+.RData
+.Ruserdata
+
+# RStudio files ----
+*.Rproj
+.Rproj.user/
+
+# R Environment Variables ----
+.Renviron
+.Rprofile
+
+# User-specific files ----
+README.html

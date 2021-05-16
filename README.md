@@ -1,36 +1,74 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # popbayes
 
-[![Build Status](https://travis-ci.org/FRBCesab/popbayes.svg?branch=master)](https://travis-ci.org/FRBCesab/popbayes) [![](https://img.shields.io/badge/licence-GPLv3-8f10cb.svg)](http://www.gnu.org/licenses/gpl.html)
+<!-- badges: start -->
 
-Overview
---------
+[![R CMD
+Check](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml)
+[![Website
+deployment](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml)
+[![License: GPL (&gt;=
+2)](https://img.shields.io/badge/License-GPL%20%28%3E%3D%202%29-blue.svg)](https://choosealicense.com/licenses/gpl-2.0/)
+[![LifeCycle](man/figures/lifecycle/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Project Status:
+Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+<!-- badges: end -->
 
-In construction...
+The goal of the R package `popbayes` is to **{{ PLEASE ADD A FEW LINES
+}}**
 
-Installation
---------
+## Installation
 
-To install the package `popbayes` from GitHub, first install the package [`devtools`](http://cran.r-project.org/web/packages/devtools/index.html) from the CRAN.
+You can install the development version from
+[GitHub](https://github.com/) with:
 
-```r
-### Install the < devtools > package
-install.packages("devtools", dependencies = TRUE)
+``` r
+## Install 'remotes' package (if not already installed) ----
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+
+## Install dev version of 'popbayes' from GitHub ----
+remotes::install_github("frbcesab/popbayes", build_vignettes = TRUE)
 ```
 
-Then install the `popbayes` package:
+Then you can attach the package `popbayes`:
 
-```r
-### Install the < popbayes > package from GitHub
-devtools::install_github("frbcesab/popbayes", build_vignettes = TRUE)
-
-### Load the < popbayes > package
-library(popbayes)
+``` r
+library("popbayes")
 ```
 
-Getting started
---------
+## Overview
 
-```r
-### Browse the < popbayes > package vignette
-vignette(topic = "popbayes")
+Here is an overview of `popbayes` content: **{{ PLEASE ADD A FEW LINES
+}}**
+
+## Get started
+
+Please read the
+[Vignette](https://frbcesab.github.io/popbayes/articles/popbayes.html)
+
+## Citation
+
+Please cite this package as:
+
+> Casajus N. & Pradel R. (2021) popbayes: An R package to **{{ TITLE
+> }}**. R package version 0.1.
+
+You can also run:
+
+``` r
+citation("popbayes")
+
+## A BibTeX entry for LaTeX users is:
+## 
+## @Manual{,
+##   title  = {{popbayes}: {An} {R} package to ** TITLE **,
+##   author = {{Casajus N.}, and {Pradel R.}},
+##   year   = {2021},
+##   note   = {R package version 0.1},
+##   url    = {https://github.com/frbcesab/popbayes},
+## }
 ```
