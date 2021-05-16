@@ -534,7 +534,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
         stop("Some species listed in 'data' are missing from 'info'.")
       }
       
-      usethis::ui_done("Counts conversion information found in 'info'.")
+      usethis::ui_done("Conversion data found in 'info'.")
       
       conversion_data <- info[info$"species" %in% species_list, ]
       
@@ -600,7 +600,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
         
         conversion_data <- merge(pref_data, conv_data, by = "species")
         
-        usethis::ui_done("Conversion information found in 'data'.")
+        usethis::ui_done("Conversion data found in 'data'.")
       
       } else {                      ## Conversion data in popbayes
       
@@ -613,7 +613,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
         conversion_data <- conversion_data[conversion_data$"species" %in% 
                                            species_list, ]
         
-        usethis::ui_done("Conversion information found in 'popbayes'.")
+        usethis::ui_done("Conversion data found in 'popbayes'.")
       }
     }
     
