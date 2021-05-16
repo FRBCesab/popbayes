@@ -4,17 +4,17 @@ Version: 0.1
 Title: Title in Title Case
 Authors@R: c(
     person(
-      given  = "Nicolas",
-      family = "Casajus",
-      email  = "nicolas.casajus@fondationbiodiversite.fr",
-      role   = c("aut", "cre")
-    ),
+      given   = "Nicolas",
+      family  = "Casajus",
+      email   = "nicolas.casajus@fondationbiodiversite.fr",
+      role    = c("aut", "cre", "cph"),
+      comment = c(ORCID = "0000-0002-5537-5294")),
     person(
-      given  = "Roger",
-      family = "Pradel",
-      email  = "roger.pradel@cefe.cnrs.fr",
-      role   = "aut"
-    ))
+      given   = "Roger",
+      family  = "Pradel",
+      email   = "roger.pradel@cefe.cnrs.fr",
+      role    = "aut"),
+      comment = c(ORCID = "0000-0002-2684-9251")))
 Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
     eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad 
     minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
@@ -29,6 +29,7 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
+SystemRequirements: JAGS 4.x.y
 Imports: 
     rjags,
     R2jags,
