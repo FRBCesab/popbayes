@@ -1,0 +1,8 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  generate_data: generate_data.html
+  popbayes: popbayes.html
+last_built: 2021-05-16T19:44Z
+
