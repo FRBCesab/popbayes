@@ -725,7 +725,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   
   ## Detect series ----
   
-  series_infos <- get_series(data_renamed, quiet = FALSE)
+  series_infos <- get_series(data_renamed, quiet = TRUE)
   
   
   ## Split original data by series ----
@@ -740,21 +740,17 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
     sel_rows <- which(data_renamed$"location" == series_infos[i, "location"] &
                       data_renamed$"species"  == series_infos[i, "species"])
     
-    if (sum(data_renamed[sel_rows, "counts_orig"]) == 0 || 
-        length(sel_rows) < 4) {
+    data_sub <- zero_counts(data_renamed[sel_rows, ], na_rm)
+    
+    if (nrow(data_sub)) {
       
-      series_ignored <- series_ignored + 1
-      
-    } else {
-      
-      data_sub <- data_renamed[sel_rows, ]
       data_sub <- data_sub[order(data_sub$"year", decreasing = FALSE), ]
       rownames(data_sub) <- NULL
       
       if (!is.null(field_method)) {
         
         species_row <- which(conversion_data$"species" == 
-                             series_infos[i, "species"])
+                               series_infos[i, "species"])
         
         pref_field_method <- conversion_data[species_row, "pref_field_method"]
         conversion_fact   <- conversion_data[species_row, "conversion_fact"]
@@ -784,19 +780,15 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
     }
   }
   
-  
-  ## Removed series ----
-  
-  if (series_ignored > 0) {
-    
-    usethis::ui_oops(paste0("Deleting {usethis::ui_value(series_ignored)}",
-                            " series (with only zero counts or number of ", 
-                            "rows < 4)."))
-  }
-  
 
   if (length(data_series) == 0) {
-    stop("No series remaining. Check your data.")
+    
+    stop("No series detected. Check your data.")
+    
+  } else {
+    
+    usethis::ui_done(paste0("Detecting {usethis::ui_value(length(", 
+                            "data_series))} series."))
   }
   
   data_series

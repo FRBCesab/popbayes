@@ -324,6 +324,25 @@ get_series <- function(data, quiet = TRUE) {
 
 
 
+#' Convert counts
+#'
+#' This function converts counts (and lower and upper bounds 95% CI) based on
+#' the preferred field method and the species conversion factor.
+#' 
+#' **Important:** if the preferred field method is provided and the 
+#' `field_method` column is present in `data` counts are always converted to 
+#' the preferred field method.
+#'
+#' @param data a data frame. Counts dataset.
+#' 
+#' @param field_method a character of length 1. The column name in `data`.
+#' 
+#' @param conversion_data a data frame. Conversion data (see `conversion_data`).
+#'
+#' @return A data frame (same as `data`).
+#' 
+#' @noRd
+
 convert_counts <- function(data, field_method, conversion_data) {
   
   if (!is.null(field_method)) {
@@ -343,7 +362,7 @@ convert_counts <- function(data, field_method, conversion_data) {
       method_pref <- conversion_data[conv_row, "pref_field_method"]
       conv_fact   <- conversion_data[conv_row, "conversion_fact"]
       
-      conv_fact   <- ifelse(method_pref == "G", 1 / conv_fact, conv_fact)
+      conv_fact   <- ifelse(method_pref == "G", 1 / conv_fact, conv_fact)  ### Not sure !!!!
       conv_fact   <- ifelse(methods_used == method_pref, 1, conv_fact)
       
       data[series_rows, "counts_conv"]   <- 
@@ -360,4 +379,58 @@ convert_counts <- function(data, field_method, conversion_data) {
   data
 }
 
-zero_counts <- function() {}
+
+
+#' Special cases: zero counts
+#'
+#' For a counts series, identify zero counts.
+#' 
+#' If there is only zero counts, returns an error (`na_rm = FALSE`) or delete 
+#' series (`na_rm = TRUE`). 
+#' 
+#' If there is zero counts and non-zero counts, replaces 0 by the minimum 
+#' non-zero counts value (and replaces `lower_ci_conv` and `upper_ci_conv` by 
+#' the corresponding values).
+#'
+#' @param data a data frame
+#' 
+#' @param na_rm a logical. If TRUE delete rows. Otherwise return an error
+#'
+#' @return A data frame (same as `data`).
+#' 
+#' @noRd
+
+zero_counts <- function(data, na_rm) {
+  
+  pos <- which(data[ , "counts_conv"] == 0)
+  
+  if (length(pos)) {
+    
+    if (length(pos) == nrow(data)) {
+      
+      if (!na_rm) {
+        
+        stop("Some series has only zero counts. Check your data or ", 
+             "'use na_rm = TRUE'.")
+        
+      } else {
+        
+        return(data[-pos, ])
+      }
+      
+    } else {
+      
+      non_zero_counts <- data[-pos, ]
+      which_min_counts <- which.min(non_zero_counts[ , "counts_conv"])[1]
+      
+      data[pos, "counts_conv"]   <- non_zero_counts[which_min_counts, 
+                                                  "counts_conv"]
+      data[pos, "lower_ci_conv"] <- non_zero_counts[which_min_counts, 
+                                                  "lower_ci_conv"]
+      data[pos, "upper_ci_conv"] <- non_zero_counts[which_min_counts, 
+                                                  "upper_ci_conv"]
+    }
+  }
+  
+  data
+}
