@@ -1,0 +1,19 @@
+url: https://frbcesab.github.io/popbayes
+
+reference:
+- title: Datasets
+  contents:
+    - conversion_data
+    - rmax_data
+    - garamba
+    
+- title: Main functions
+  contents:
+    - format_data
+    - plot_series
+    - fit_trend
+
+- title: Additional functions
+  contents:
+    - find_series
+    - get_series_data

@@ -32,6 +32,26 @@
 
 
 
+#' Maximum population growth rates
+#' 
+#' @description
+#' This dataset contains for a list of species the maximum population growth 
+#' rate (i.e. the maximum yearly change in log population size).
+#'   
+#' @format A data frame with 15 rows (species) and the following two columns:
+#' \describe{
+#'   \item{species}{the species binomial name (same as in `conversion_data`)}
+#'   \item{rmax}{the maximum population growth rate}
+#' }
+#' 
+#' @examples 
+#' data("rmax_data")
+#' rmax_data
+
+"rmax_data"
+
+
+
 #' African large mammals survey in the Garamba National Park
 #' 
 #' @description

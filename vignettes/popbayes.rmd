@@ -9,13 +9,142 @@ vignette: >
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment  = "#>"
+  collapse   = TRUE,
+  comment    = "#>",
+  fig.width  = 7,
+  fig.height = 7,
+  out.width  = "100%",
+  dpi        = 300
 )
 ```
 
 
-```{r setup}
-# library(popbayes)
+```{r 'setup'}
+library("popbayes")
 ```
 
+
+## 1. The garamba dataset
+
+```{r 'load-data'}
+data("garamba")
+
+dim(garamba)
+```
+
+```{r 'explore-data-1'}
+head(garamba, 30)
+```
+
+```{r 'explore-data-2'}
+## Unique locations ----
+sort(unique(garamba$"location"))
+
+## Unique species ----
+sort(unique(garamba$"species"))
+
+## Unique years ----
+sort(unique(garamba$"year"))
+
+## Unique Stat methods ----
+sort(unique(garamba$"stat_method"))
+
+## Unique Field methods ----
+sort(unique(garamba$"field_method"))
+
+## Is there any NA counts ----
+sum(is.na(garamba$"counts"))
+```
+
+
+
+## 2. Formatting counts data
+
+
+```{r 'conversion-data', echo = -4}
+## Conversion data available in popbayes ----
+data("conversion_data")
+
+conversion_data
+```
+
+
+```{r 'format-data'}
+## Format data by popbayes ----
+garamba_formatted <- popbayes::format_data(data = garamba)
+```
+
+
+```{r 'explore-series'}
+## Class of the object ----
+class(garamba_formatted)
+
+## Number of elements (# locations x # species) ----
+length(garamba_formatted)
+
+## Get series names ---
+names(garamba_formatted)
+
+## Get series content ----
+names(garamba_formatted[[1]])
+```
+
+
+## 3. Exploring counts series
+
+```{r 'get-series-data-1'}
+## Extract all converted data ----
+converted_data <- popbayes::get_series_data(garamba_formatted, converted = TRUE)
+
+dim(converted_data)
+```
+
+```{r 'get-series-data-1-1'}
+head(converted_data, 15)
+```
+
+```{r 'get-series-data-2'}
+## Extract all original data ----
+original_data <- popbayes::get_series_data(garamba_formatted, converted = FALSE)
+
+dim(original_data)
+```
+
+```{r 'get-series-data-2-1'}
+head(original_data, 15)
+```
+
+
+
+
+```{r 'get-series'}
+## Retrieve series by species names ----
+a_buselaphus <- popbayes::find_series(garamba_formatted, species = "Alcelaphus buselaphus")
+```
+
+```{r 'get-series-data-3'}
+## Extract converted data for series with A. buselaphus ----
+popbayes::get_series_data(a_buselaphus, converted = TRUE)
+```
+
+```{r 'plot-series-1', fig.width=12, fig.height=6, out.width="100%"}
+## Explore series by name ----
+popbayes::plot_series(garamba_formatted, series = "garamba__alcelaphus_buselaphus")
+```
+
+```{r 'plot-series-2', fig.width=12, fig.height=6, out.width="100%"}
+## Explore series by index ----
+popbayes::plot_series(garamba_formatted, series = 2)
+```
+
+
+## 4. Fitting Bayesian model
+
+```{r 'rmax-data', echo = -4}
+## Rmax data available in popbayes ----
+data("rmax_data")
+
+rmax_data
+```
+
+...
