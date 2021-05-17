@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • popbayes</title>
+<title>Maximum population growth rates — rmax_data • popbayes</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Maximum population growth rates — rmax_data" />
+<meta property="og:description" content="This dataset contains for a list of species the maximum population growth
+rate (i.e. the maximum yearly change in log population size)." />
 
 
 
@@ -58,7 +60,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,110 +122,50 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Maximum population growth rates</h1>
+    <small class="dont-index">Source: <a href='https://github.com/frbcesab/popbayes/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <div class="hidden name"><code>rmax_data.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>This dataset contains for a list of species the maximum population growth
+rate (i.e. the maximum yearly change in log population size).</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='va'>rmax_data</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-datasets" class="hasAnchor"><a href="#section-datasets" class="anchor"></a>Datasets</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="conversion_data.html">conversion_data</a></code> </p>
-        </td>
-        <td><p>Counts conversion data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rmax_data.html">rmax_data</a></code> </p>
-        </td>
-        <td><p>Maximum population growth rates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="garamba.html">garamba</a></code> </p>
-        </td>
-        <td><p>African large mammals survey in the Garamba National Park</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-main-functions" class="hasAnchor"><a href="#section-main-functions" class="anchor"></a>Main functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="format_data.html">format_data()</a></code> </p>
-        </td>
-        <td><p>Format individual counts series</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_series.html">plot_series()</a></code> </p>
-        </td>
-        <td><p>Plot original vs converted counts (with confident interval)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fit_trend.html">fit_trend()</a></code> </p>
-        </td>
-        <td><p>Run BUGS population model</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-additional-functions" class="hasAnchor"><a href="#section-additional-functions" class="anchor"></a>Additional functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="find_series.html">find_series()</a></code> </p>
-        </td>
-        <td><p>Subset a series based on a location and/or a species</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_series_data.html">get_series_data()</a></code> </p>
-        </td>
-        <td><p>Extract original/converted data from a list</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 15 rows (species) and the following two columns:</p><dl>
+<dt>species</dt><dd><p>the species binomial name (same as in <code>conversion_data</code>)</p></dd>
+<dt>rmax</dt><dd><p>the maximum population growth rate</p></dd>
+
+</dl>
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"rmax_data"</span><span class='op'>)</span>
+<span class='va'>rmax_data</span>
+</div><div class='output co'>#&gt;                   species   rmax
+#&gt; 1      Aepyceros melampus 0.4010
+#&gt; 2   Alcelaphus buselaphus 0.2748
+#&gt; 3   Connochaetes taurinus 0.2679
+#&gt; 4      Damaliscus lunatus 0.2990
+#&gt; 5      Eudorcas rufifrons 0.5270
+#&gt; 6  Giraffa camelopardalis 0.1750
+#&gt; 7     Hippotragus equinus 0.2420
+#&gt; 8    Kobus ellipsiprymnus 0.2702
+#&gt; 9               Kobus kob 0.3802
+#&gt; 10     Loxodonta africana 0.1120
+#&gt; 11         Ourebia ourebi 0.5988
+#&gt; 12        Redunca redunca 0.4010
+#&gt; 13        Syncerus caffer 0.2080
+#&gt; 14  Tragelaphus derbianus 0.1500
+#&gt; 15   Tragelaphus scriptus 0.4487</div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
