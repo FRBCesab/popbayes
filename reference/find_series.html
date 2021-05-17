@@ -166,7 +166,7 @@ for the species at the location), otherwise the list will have a length &gt;= 1.
 
 <span class='co'>## Format dataset ----</span>
 <span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='format_data.html'>format_data</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>garamba</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span><span> Conversion data found in 'popbayes'.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Detecting </span><span style='color: #0000BB;'>10</span><span> series (with </span><span style='color: #0000BB;'>1</span><span> locations and </span><span style='color: #0000BB;'>10</span><span> species).</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span><span> Conversion data found in 'popbayes'.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Detecting </span><span style='color: #0000BB;'>10</span><span> series.</span></div><div class='input'>
 <span class='co'>## Get series names ----</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;  [1] "garamba__alcelaphus_buselaphus"  "garamba__giraffa_camelopardalis"
@@ -523,14 +523,14 @@ for the species at the location), otherwise the list will have a length &gt;= 1.
 #&gt;    location             species year stat_method field_method counts_conv
 #&gt; 1   Garamba Hippotragus equinus 1976           S            A  156.385752
 #&gt; 2   Garamba Hippotragus equinus 1983           S            A   39.530843
-#&gt; 3   Garamba Hippotragus equinus 1984           S            A    0.000000
+#&gt; 3   Garamba Hippotragus equinus 1984           S            A    3.475239
 #&gt; 4   Garamba Hippotragus equinus 1986           S            A   14.769765
 #&gt; 5   Garamba Hippotragus equinus 1991           S            A    5.647263
 #&gt; 6   Garamba Hippotragus equinus 1993           S            A   65.160730
 #&gt; 7   Garamba Hippotragus equinus 1995           S            A   35.186794
 #&gt; 8   Garamba Hippotragus equinus 1998           S            A    3.475239
-#&gt; 9   Garamba Hippotragus equinus 2000           S            A    0.000000
-#&gt; 10  Garamba Hippotragus equinus 2002           S            A    0.000000
+#&gt; 9   Garamba Hippotragus equinus 2000           S            A    3.475239
+#&gt; 10  Garamba Hippotragus equinus 2002           S            A    3.475239
 #&gt; 11  Garamba Hippotragus equinus 2003           S            A   24.761077
 #&gt; 12  Garamba Hippotragus equinus 2004           S            A  122.067767
 #&gt; 13  Garamba Hippotragus equinus 2012           T            A    4.778454
@@ -539,14 +539,14 @@ for the species at the location), otherwise the list will have a length &gt;= 1.
 #&gt;    lower_ci_conv upper_ci_conv field_method_conv
 #&gt; 1      0.0000000    386.620330                 G
 #&gt; 2     39.5308427     93.397046                 G
-#&gt; 3      0.0000000      0.000000                 G
+#&gt; 3      0.4344049      6.516073                 G
 #&gt; 4      3.9096438     25.629887                 G
 #&gt; 5      0.4344049     10.860122                 G
 #&gt; 6     65.1607298    175.933970                 G
 #&gt; 7      1.3032146     69.070374                 G
 #&gt; 8      0.4344049      6.516073                 G
-#&gt; 9      0.0000000      0.000000                 G
-#&gt; 10     0.0000000      0.000000                 G
+#&gt; 9      0.4344049      6.516073                 G
+#&gt; 10     0.4344049      6.516073                 G
 #&gt; 11    24.7610773     53.866203                 G
 #&gt; 12   122.0677672    314.509123                 G
 #&gt; 13     4.5395308      5.734144                 G
@@ -897,7 +897,7 @@ for the species at the location), otherwise the list will have a length &gt;= 1.
 #&gt; 4   Garamba Ourebia ourebi 1986           S            A   34.089225
 #&gt; 5   Garamba Ourebia ourebi 1991           S            A    5.780347
 #&gt; 6   Garamba Ourebia ourebi 1993           S            A   13.339262
-#&gt; 7   Garamba Ourebia ourebi 1995           S            A    0.000000
+#&gt; 7   Garamba Ourebia ourebi 1995           S            A    5.780347
 #&gt; 8   Garamba Ourebia ourebi 1998           S            A   13.191048
 #&gt; 9   Garamba Ourebia ourebi 2000           S            A    6.076775
 #&gt; 10  Garamba Ourebia ourebi 2002           S            A    5.780347
@@ -910,7 +910,7 @@ for the species at the location), otherwise the list will have a length &gt;= 1.
 #&gt; 4      20.749963     47.428487                 G
 #&gt; 5       1.778568      9.782125                 G
 #&gt; 6       4.891063     21.787461                 G
-#&gt; 7       0.000000      0.000000                 G
+#&gt; 7       1.778568      9.782125                 G
 #&gt; 8       7.410701     18.971395                 G
 #&gt; 9       3.260708      8.892841                 G
 #&gt; 10      1.185712     10.374981                 G
