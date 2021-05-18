@@ -42,8 +42,7 @@ library("popbayes")
 
 ## Overview
 
-Here is an overview of `popbayes` content: **{{ PLEASE ADD A FEW LINES
-}}**
+![](man/figures/popbayes-diagram.png)
 
 ## Get started
 
@@ -54,8 +53,8 @@ Please read the
 
 Please cite this package as:
 
-> Casajus N. & Pradel R. (2021) popbayes: An R package to **{{ TITLE
-> }}**. R package version 0.1.
+> Casajus N. & Pradel R. (2021) popbayes: Bayesian model to estimate
+> populations trend. R package version 0.1.
 
 You can also run:
 
@@ -65,7 +64,7 @@ citation("popbayes")
 ## A BibTeX entry for LaTeX users is:
 ## 
 ## @Manual{,
-##   title  = {{popbayes}: {An} {R} package to ** TITLE **,
+##   title  = {{popbayes}: {B}ayesian model to estimate populations trend,
 ##   author = {{Casajus N.}, and {Pradel R.}},
 ##   year   = {2021},
 ##   note   = {R package version 0.1},
