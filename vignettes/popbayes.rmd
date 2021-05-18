@@ -23,6 +23,7 @@ knitr::opts_chunk$set(
 library("popbayes")
 ```
 
+![](docs/popbayes-diagram.png){width=100%}
 
 ## 1. The garamba dataset
 
@@ -70,8 +71,9 @@ conversion_data
 
 
 ```{r 'format-data'}
+path <- tempdir()
 ## Format data by popbayes ----
-garamba_formatted <- popbayes::format_data(data = garamba)
+garamba_formatted <- popbayes::format_data(data = garamba, path = path)
 ```
 
 
@@ -82,8 +84,11 @@ class(garamba_formatted)
 ## Number of elements (# locations x # species) ----
 length(garamba_formatted)
 
-## Get series names ---
+## Get series names ----
 names(garamba_formatted)
+
+## alternatively... ----
+popbayes::list_series(path)
 
 ## Get series content ----
 names(garamba_formatted[[1]])
@@ -94,7 +99,7 @@ names(garamba_formatted[[1]])
 
 ```{r 'get-series-data-1'}
 ## Extract all converted data ----
-converted_data <- popbayes::get_series_data(garamba_formatted, converted = TRUE)
+converted_data <- popbayes::series_to_df(garamba_formatted, converted = TRUE)
 
 dim(converted_data)
 ```
@@ -105,7 +110,7 @@ head(converted_data, 15)
 
 ```{r 'get-series-data-2'}
 ## Extract all original data ----
-original_data <- popbayes::get_series_data(garamba_formatted, converted = FALSE)
+original_data <- popbayes::series_to_df(garamba_formatted, converted = FALSE)
 
 dim(original_data)
 ```
@@ -119,23 +124,19 @@ head(original_data, 15)
 
 ```{r 'get-series'}
 ## Retrieve series by species names ----
-a_buselaphus <- popbayes::find_series(garamba_formatted, species = "Alcelaphus buselaphus")
+a_buselaphus <- popbayes::filter_series(garamba_formatted, species = "Alcelaphus buselaphus")
 ```
 
 ```{r 'get-series-data-3'}
 ## Extract converted data for series with A. buselaphus ----
-popbayes::get_series_data(a_buselaphus, converted = TRUE)
+popbayes::series_to_df(a_buselaphus, converted = TRUE)
 ```
 
 ```{r 'plot-series-1', fig.width=12, fig.height=6, out.width="100%"}
 ## Explore series by name ----
-popbayes::plot_series(garamba_formatted, series = "garamba__alcelaphus_buselaphus")
+popbayes::plot_series("garamba__alcelaphus_buselaphus", path = path)
 ```
 
-```{r 'plot-series-2', fig.width=12, fig.height=6, out.width="100%"}
-## Explore series by index ----
-popbayes::plot_series(garamba_formatted, series = 2)
-```
 
 
 ## 4. Fitting Bayesian model
@@ -146,5 +147,29 @@ data("rmax_data")
 
 rmax_data
 ```
+
+
+```{r 'run-jags', eval = FALSE}
+a_buselaphus_bugs <- popbayes::fit_trend(a_buselaphus, path = path)
+```
+
+
+```{r 'diagnostic', echo = -1}
+a_buselaphus_bugs <- popbayes::read_bugs("garamba__alcelaphus_buselaphus", path = "docs/")
+diagnostic(a_buselaphus_bugs)
+```
+
+```{r 'plot-trend-1',  fig.width=12, fig.height=6, out.width="100%", eval = FALSE, echo = TRUE}
+popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = path)
+```
+
+```{r 'plot-trend-2',  fig.width=12, fig.height=6, out.width="100%", eval = TRUE, echo = FALSE}
+popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = "docs/")
+```
+
+<br />
+
+Other functions: `popbayes::read_series()`, `popbayes::list_series()`, 
+`popbayes::read_bugs()`, `popbayes::bugs_to_df()`.
 
 ...
