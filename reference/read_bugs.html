@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Import a list of BUGS outputs previously exported — read_bugs" />
 <meta property="og:description" content="This function imports a list of BUGS outputs previously exported by
-fit_trend(). Users can import one, several, or all model outputs." />
+fit_trend(). Users can import one, several, or all models." />
 
 
 
@@ -131,7 +131,7 @@ fit_trend(). Users can import one, several, or all model outputs." />
 
     <div class="ref-description">
     <p>This function imports a list of BUGS outputs previously exported by
-<code><a href='fit_trend.html'>fit_trend()</a></code>. Users can import one, several, or all model outputs.</p>
+<code><a href='fit_trend.html'>fit_trend()</a></code>. Users can import one, several, or all models.</p>
     </div>
 
     <pre class="usage"><span class='fu'>read_bugs</span><span class='op'>(</span>series <span class='op'>=</span> <span class='cn'>NULL</span>, path <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span></pre>
@@ -142,8 +142,9 @@ fit_trend(). Users can import one, several, or all model outputs." />
     <tr>
       <th>series</th>
       <td><p>a vector of characters. One or several counts series names.
-If <code>NULL</code> (default) all BUGS outputs will be imported. Users can run
-<code><a href='list_series.html'>list_series()</a></code> to get the correct spelling of counts series names.</p></td>
+If <code>NULL</code> (default) BUGS outputs for all counts series will be imported.
+Users can run <code><a href='list_series.html'>list_series()</a></code> to get the correct spelling of counts series
+names.</p></td>
     </tr>
     <tr>
       <th>path</th>

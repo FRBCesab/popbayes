@@ -47,7 +47,7 @@ This function formats individual counts series (passed through the argument
 data) by selecting and renaming columns, checking columns format and
 content, and removing missing data (if na_rm = TRUE). It converts the
 original data frame into a list of counts series that will be analyzed later
-by the function fit_trend() to estimate population size trend.
+by the function fit_trend() to estimate population trend.
 To be usable for the estimation of population trend, counts data must be
 accompanied by information on precision. The population trend model requires
 a 95% confident interval (CI).
@@ -58,18 +58,18 @@ measure of precision. Precision is preferably provided in the form of a 95%
 CI by means of two fields: lower_ci and upper_ci. It may also be given
 in the form of a standard deviation (sd), a variance (var), or a
 coefficient of variation (cv). If the fields lower_ci and upper_ci are
-both absent (or NA), fields sd, var, and cv are examined in this order.
-When one is found valid (no missing value), a 95% CI is derived assuming a
-normal distribution.
+both absent (or NA), fields sd, var, and cv are examined in this
+order. When one is found valid (no missing value), a 95% CI is derived
+assuming a normal distribution.
 The field stat_method must be present in the data frame data to indicate
-if counts are total counts ('T'), sampling ('S'), and/or
-guesstimate ('G') and to avoid misinterpretation of counts.
+if counts are total counts ('T'), sampling ('S'), or
+guesstimate ('G').
 If the series mixes aerial and ground counts, a field field_method must
 also be present and must contain either 'A' (aerial counts), or 'G'
 (ground counts). As all counts must refer to the same field method, a
 conversion will be performed to homogenize counts. This conversion is based
 on a preferred field method and a conversion factor both specific to
-a species/functional group. This conversion factor (a multiplicative factor)
+a species/category. This conversion factor (a multiplicative factor)
 will be apply to an aerial count to get an equivalent ground count (if the
 preferred field method is 'G') or to a ground count to get an equivalent
 aerial count (if the preferred field method is 'A').
@@ -174,29 +174,29 @@ functions.</p>
 <code>data</code>) by selecting and renaming columns, checking columns format and
 content, and removing missing data (if <code>na_rm = TRUE</code>). It converts the
 original data frame into a list of counts series that will be analyzed later
-by the function <code><a href='fit_trend.html'>fit_trend()</a></code> to estimate population size trend.</p>
+by the function <code><a href='fit_trend.html'>fit_trend()</a></code> to estimate population trend.</p>
 <p>To be usable for the estimation of population trend, counts data must be
 accompanied by information on precision. The population trend model requires
-a 95% confident interval (CI).</p>
-<p>If estimates are total counts or guesstimates, this function will construct
-boundaries of the 95% CI by applying the rules set out in <strong><em>???</em></strong>.</p>
-<p>If counts were estimated by a sampling method user needs to specify a
+a 95% confident interval (CI).
+If estimates are total counts or guesstimates, this function will construct
+boundaries of the 95% CI by applying the rules set out in <strong><em>???</em></strong>.
+If counts were estimated by a sampling method user needs to specify a
 measure of precision. Precision is preferably provided in the form of a 95%
 CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code>. It may also be given
 in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a
 coefficient of variation (<code>cv</code>). If the fields <code>lower_ci</code> and <code>upper_ci</code> are
-both absent (or NA), fields <code>sd</code>, <code>var</code>, and <code>cv</code> are examined in this order.
-When one is found valid (no missing value), a 95% CI is derived assuming a
-normal distribution.
+both absent (or <code>NA</code>), fields <code>sd</code>, <code>var</code>, and <code>cv</code> are examined in this
+order. When one is found valid (no missing value), a 95% CI is derived
+assuming a normal distribution.
 The field <code>stat_method</code> must be present in the data frame <code>data</code> to indicate
-if counts are <strong>total counts</strong> (<code>'T'</code>), <strong>sampling</strong> (<code>'S'</code>), and/or
-<strong>guesstimate</strong> (<code>'G'</code>) and to avoid misinterpretation of counts.</p>
+if counts are <strong>total counts</strong> (<code>'T'</code>), <strong>sampling</strong> (<code>'S'</code>), or
+<strong>guesstimate</strong> (<code>'G'</code>).</p>
 <p>If the series mixes aerial and ground counts, a field <code>field_method</code> must
 also be present and must contain either <code>'A'</code> (aerial counts), or <code>'G'</code>
 (ground counts). As all counts must refer to the same field method, a
 conversion will be performed to homogenize counts. This conversion is based
 on a <strong>preferred field method</strong> and a <strong>conversion factor</strong> both specific to
-a species/functional group. This conversion factor (a multiplicative factor)
+a species/category. This conversion factor (a multiplicative factor)
 will be apply to an aerial count to get an equivalent ground count (if the
 preferred field method is <code>'G'</code>) or to a ground count to get an equivalent
 aerial count (if the preferred field method is <code>'A'</code>).
@@ -235,7 +235,7 @@ obtained with one field method.</p>
       <th>data</th>
       <td><p>a data frame with at least five columns: <code>location</code>, <code>species</code>,
 <code>year</code>, <code>counts</code>, and <code>stat_method</code>.</p>
-<p>The <code>stat_method</code> field indicates the method used to estimate counts It
+<p>The <code>stat_method</code> field indicates the method used to estimate counts. It
 can contain: <code>T</code> (total counts), <code>G</code> (guesstimate), and/or <code>S</code> (sampling).</p>
 <p>If individuals counts were estimated by <strong>sampling</strong>, additional column(s)
 providing a measure of precision is also required (e.g. <code>lower_ci</code> and
@@ -257,8 +257,8 @@ information on the counts conversion.</p>
 columns: <code>species</code> (species name), <code>pref_field_method</code>,and
 <code>conversion_fact</code>. See above section <strong>Description</strong> for further
 information on these fields.
-Default is <code>NULL</code> (i.e. these informations must be present in <code>data</code>
-if required).</p></td>
+Default is <code>NULL</code> (i.e. these information must be present in <code>data</code>
+if not available in <code>popbayes</code>).</p></td>
     </tr>
     <tr>
       <th>year</th>
@@ -303,8 +303,8 @@ of the lower boundary of the 95% CI of the estimate (i.e. <code>counts</code>). 
 provided the upper boundary of the 95% CI (argument <code>upper_ci</code>) must be
 also provided. This argument is only required if some counts have been
 estimated by a sampling method. But user may prefer use other precision
-measures, e.g. standard deviation (argument <code>sd</code>), variance (<code>var</code>), or
-coefficient of variation (argument <code>cv</code>).
+measures, e.g. standard deviation (argument <code>sd</code>), variance (argument
+<code>var</code>), or coefficient of variation (argument <code>cv</code>).
 Default is <code>'lower_ci'</code>.</p></td>
     </tr>
     <tr>
@@ -382,35 +382,32 @@ Default is <code>FALSE</code> (returns an error to inform user if <code>NA</code
     <p>A n-elements list (where n is the number of counts series). The name
 of each element of this list is a combination of location and species.
 Each element of the list is a list with the following content:</p><ul>
-<li><p><em>location</em> a character. The name of the series site.</p></li>
-<li><p><em>species</em> a character. The name of the series species.</p></li>
-<li><p><em>years</em> a numerical vector. The year sequence of the series.</p></li>
-<li><p><em>n_years</em> an integer. The number of unique years.</p></li>
-<li><p><em>stat_methods</em> a character vector. The different stat methods
+<li><p><code>location</code> a character. The name of the series site.</p></li>
+<li><p><code>species</code> a character. The name of the series species.</p></li>
+<li><p><code>years</code> a numerical vector. The sequence of years of the series.</p></li>
+<li><p><code>n_years</code> an integer. The number of unique years.</p></li>
+<li><p><code>stat_methods</code> a character vector. The different stat methods
 of the series.</p></li>
-<li><p><em>field_methods</em> (optional) a character vector. The different
+<li><p><code>field_methods</code> (optional) a character vector. The different
 field methods of the series.</p></li>
-<li><p><em>pref_field_method</em> (optional) a character. The preferred
+<li><p><code>pref_field_method</code> (optional) a character. The preferred
 field method of the species (<code>'A'</code> or <code>'G'</code>).</p></li>
-<li><p><em>conversion_fact</em> (optional) a numeric. The conversion factor
+<li><p><code>conversion_fact</code> (optional) a numeric. The conversion factor
 of the species used to convert counts from a field method to its
 preferred field method.</p></li>
-<li><p><em>data_original</em> a data frame. Original data of the series with
-renamed columns.</p></li>
-<li><p><em>data_converted</em> a data frame. Data containing computed
+<li><p><code>data_original</code> a data frame. Original data of the series with
+renamed columns. Some rows can have been deleted (if <code>na_rm = TRUE</code>).</p></li>
+<li><p><code>data_converted</code> a data frame. Data containing computed
 boundaries of the 95% CI (<code>lower_ci_conv</code> and <code>upper_ci_conv</code>). If
 counts have been obtained by different field methods, contains also
 converted counts (<code>counts_conv</code>) based on the preferred field method and
 conversion factor of the species. This data frame will be used by the
-function <code><a href='fit_trend.html'>fit_trend()</a></code> (not the original dataset).</p></li>
+function <code><a href='fit_trend.html'>fit_trend()</a></code> to fit population models.</p></li>
 </ul>
 
 <p><strong>Note:</strong> Some original series can be discarded if one of these two
-conditions is met:</p><ul>
-<li><p>the series contains only zero counts;</p></li>
-<li><p>the series contains only a few counts (&lt; 4 years).</p></li>
-</ul>
-
+conditions is met: 1) the series contains only zero counts, and 2) the
+series contains only a few years (&lt; 4 years).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

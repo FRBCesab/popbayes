@@ -42,8 +42,10 @@
 <meta property="og:title" content="Counts conversion data — conversion_data" />
 <meta property="og:description" content="This dataset contains information to convert individual counts estimated from
 a field method to a preferred field method. The field method can be A
-(aerial counts) or G (ground counts). This dataset can be used by user to
-add missing species. See format_data() for further information." />
+(aerial counts) or G (ground counts). See format_data() for further
+information. User can take this dataset as a template to add information for
+missing species. Note that only species, pref_field_method, and
+conversion_fact are required." />
 
 
 
@@ -134,8 +136,10 @@ add missing species. See format_data() for further information." />
     <div class="ref-description">
     <p>This dataset contains information to convert individual counts estimated from
 a field method to a preferred field method. The field method can be <code>A</code>
-(aerial counts) or <code>G</code> (ground counts). This dataset can be used by user to
-add missing species. See <code><a href='format_data.html'>format_data()</a></code> for further information.</p>
+(aerial counts) or <code>G</code> (ground counts). See <code><a href='format_data.html'>format_data()</a></code> for further
+information. User can take this dataset as a template to add information for
+missing species. Note that only <code>species</code>, <code>pref_field_method</code>, and
+<code>conversion_fact</code> are required.</p>
     </div>
 
     <pre class="usage"><span class='va'>conversion_data</span></pre>
@@ -143,7 +147,8 @@ add missing species. See <code><a href='format_data.html'>format_data()</a></cod
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 15 rows (species) and the following columns:</p><dl>
+    <p>A data frame with 15 rows (African mammals species) and the following
+columns:</p><dl>
 <dt>order</dt><dd><p>the order of the species</p></dd>
 <dt>family</dt><dd><p>the family of the species</p></dd>
 <dt>species</dt><dd><p>the species binomial name</p></dd>
