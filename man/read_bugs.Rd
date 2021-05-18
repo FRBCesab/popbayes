@@ -8,8 +8,9 @@ read_bugs(series = NULL, path = ".")
 }
 \arguments{
 \item{series}{a vector of characters. One or several counts series names.
-If \code{NULL} (default) all BUGS outputs will be imported. Users can run
-\code{\link[=list_series]{list_series()}} to get the correct spelling of counts series names.}
+If \code{NULL} (default) BUGS outputs for all counts series will be imported.
+Users can run \code{\link[=list_series]{list_series()}} to get the correct spelling of counts series
+names.}
 
 \item{path}{a character. The directory in which BUGS outputs have been
 saved by the function \code{\link[=fit_trend]{fit_trend()}}.}
@@ -20,7 +21,7 @@ A n-elements list (where n is the number of counts series). See
 }
 \description{
 This function imports a list of BUGS outputs previously exported by
-\code{\link[=fit_trend]{fit_trend()}}. Users can import one, several, or all model outputs.
+\code{\link[=fit_trend]{fit_trend()}}. Users can import one, several, or all models.
 }
 \examples{
 \dontrun{

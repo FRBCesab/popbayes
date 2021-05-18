@@ -29,7 +29,7 @@ useful for users.
 data("garamba")
 
 ## Format dataset ----
-garamba_formatted <- fpopbayes::ormat_data(garamba)
+garamba_formatted <- popbayes::format_data(garamba)
 
 class(garamba_formatted)
 

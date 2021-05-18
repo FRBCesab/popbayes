@@ -15,8 +15,9 @@ A data frame with 15 rows (species) and the following two columns:
 rmax_data
 }
 \description{
-This dataset contains for a list of species the maximum population growth
-rate (i.e. the maximum yearly change in log population size).
+This dataset contains for a list of 15 African mammals species the maximum
+population growth rate (i.e. the maximum yearly change in log population
+size).
 }
 \examples{
 data("rmax_data")

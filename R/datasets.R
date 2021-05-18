@@ -3,10 +3,13 @@
 #' @description
 #' This dataset contains information to convert individual counts estimated from
 #' a field method to a preferred field method. The field method can be `A` 
-#' (aerial counts) or `G` (ground counts). This dataset can be used by user to
-#' add missing species. See [format_data()] for further information.
+#' (aerial counts) or `G` (ground counts). See [format_data()] for further 
+#' information. User can take this dataset as a template to add information for 
+#' missing species. Note that only `species`, `pref_field_method`, and 
+#' `conversion_fact` are required.
 #'   
-#' @format A data frame with 15 rows (species) and the following columns:
+#' @format A data frame with 15 rows (African mammals species) and the following
+#' columns:
 #' \describe{
 #'   \item{order}{the order of the species}
 #'   \item{family}{the family of the species}
@@ -35,8 +38,9 @@
 #' Maximum population growth rates
 #' 
 #' @description
-#' This dataset contains for a list of species the maximum population growth 
-#' rate (i.e. the maximum yearly change in log population size).
+#' This dataset contains for a list of 15 African mammals species the maximum 
+#' population growth rate (i.e. the maximum yearly change in log population 
+#' size).
 #'   
 #' @format A data frame with 15 rows (species) and the following two columns:
 #' \describe{
@@ -52,10 +56,10 @@
 
 
 
-#' African large mammals survey in the Garamba National Park
+#' African mammals survey in the Garamba National Park
 #' 
 #' @description
-#' This dataset contains individual counts of 10 African large mammals species
+#' This dataset contains individual counts of 10 African mammals species
 #' in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
 #' 2017.
 #'   

@@ -18,7 +18,8 @@ fit_trend(
 \item{model_opts}{a list of two vectors. The model smoothing factor
 (numeric) and a logical indicating if the parameter r must be limited by
 \code{rmax} (\code{TRUE}) or not (\code{FALSE}). If this second parameter is \code{TRUE}, the
-argument \code{rmax} cannot be NULL.}
+argument \code{rmax} cannot be NULL unless species are listed in \code{popbayes}
+(in \code{rmax_data}).}
 
 \item{mcmc_opts}{a list containing the number of iteration (\code{ni}), the thin
 factor (\code{nt}), the length of burn in (\code{nb}), i.e. the number of iterations
@@ -28,8 +29,8 @@ to discard at the beginning, and the number of chains (\code{nc}).}
 the maximum relative rate of increase of the species (\code{rmax}), i.e. the
 maximum yearly change in log pop size. See \code{?rmax_data} for a example.}
 
-\item{path}{a character. The directory to save model outputs.
-This directory must exist and can be an absolute or a relative path.}
+\item{path}{a character. The directory to save BUGS outputs (the same as in
+\code{\link[=format_data]{format_data()}}).}
 }
 \value{
 An n-elements list (where n is the number of counts series). Each
@@ -39,7 +40,11 @@ in the folder \code{path}).
 \description{
 This function applies a Bayesian model to counts series in order to infer
 the population trend over time. This function only works on the output of
-the \code{\link[=format_data]{format_data()}}.
+the \code{\link[=format_data]{format_data()}} or \code{\link[=filter_series]{filter_series()}}.
+
+\strong{Important:} This function uses \code{\link[R2jags:jags]{R2jags::jags()}} and the
+freeware \strong{JAGS} (\url{https://mcmc-jags.sourceforge.io/}) must be
+installed.
 
 There are two types of options: model options (argument \code{model_opts}) and
 MCMC options (argument \code{mcmc_opts}).

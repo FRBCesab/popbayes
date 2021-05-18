@@ -9,33 +9,31 @@
 #' `data`) by selecting and renaming columns, checking columns format and 
 #' content, and removing missing data (if `na_rm = TRUE`). It converts the 
 #' original data frame into a list of counts series that will be analyzed later
-#' by the function [fit_trend()] to estimate population size trend.
+#' by the function [fit_trend()] to estimate population trend.
 #' 
 #' To be usable for the estimation of population trend, counts data must be 
 #' accompanied by information on precision. The population trend model requires 
 #' a 95% confident interval (CI).
-#' 
 #' If estimates are total counts or guesstimates, this function will construct 
 #' boundaries of the 95% CI by applying the rules set out in **_???_**.
-#' 
 #' If counts were estimated by a sampling method user needs to specify a 
 #' measure of precision. Precision is preferably provided in the form of a 95% 
 #' CI by means of two fields: `lower_ci` and `upper_ci`. It may also be given 
 #' in the form of a standard deviation (`sd`), a variance (`var`), or a 
 #' coefficient of variation (`cv`). If the fields `lower_ci` and `upper_ci` are 
-#' both absent (or NA), fields `sd`, `var`, and `cv` are examined in this order.
-#' When one is found valid (no missing value), a 95% CI is derived assuming a 
-#' normal distribution. 
+#' both absent (or `NA`), fields `sd`, `var`, and `cv` are examined in this 
+#' order. When one is found valid (no missing value), a 95% CI is derived 
+#' assuming a normal distribution. 
 #' The field `stat_method` must be present in the data frame `data` to indicate
-#' if counts are **total counts** (`'T'`), **sampling** (`'S'`), and/or 
-#' **guesstimate** (`'G'`) and to avoid misinterpretation of counts.
+#' if counts are **total counts** (`'T'`), **sampling** (`'S'`), or 
+#' **guesstimate** (`'G'`).
 #' 
 #' If the series mixes aerial and ground counts, a field `field_method` must 
 #' also be present and must contain either `'A'` (aerial counts), or `'G'` 
 #' (ground counts). As all counts must refer to the same field method, a 
 #' conversion will be performed to homogenize counts. This conversion is based 
 #' on a **preferred field method** and a **conversion factor** both specific to 
-#' a species/functional group. This conversion factor (a multiplicative factor) 
+#' a species/category. This conversion factor (a multiplicative factor) 
 #' will be apply to an aerial count to get an equivalent ground count (if the
 #' preferred field method is `'G'`) or to a ground count to get an equivalent 
 #' aerial count (if the preferred field method is `'A'`).
@@ -51,7 +49,7 @@
 #' @param data a data frame with at least five columns: `location`, `species`, 
 #'   `year`, `counts`, and `stat_method`.
 #'   
-#'   The `stat_method` field indicates the method used to estimate counts It 
+#'   The `stat_method` field indicates the method used to estimate counts. It 
 #'   can contain: `T` (total counts), `G` (guesstimate), and/or `S` (sampling). 
 #' 
 #'   If individuals counts were estimated by **sampling**, additional column(s) 
@@ -74,8 +72,8 @@
 #'   columns: `species` (species name), `pref_field_method`,and 
 #'   `conversion_fact`. See above section **Description** for further 
 #'   information on these fields.
-#'   Default is `NULL` (i.e. these informations must be present in `data` 
-#'   if required).
+#'   Default is `NULL` (i.e. these information must be present in `data` 
+#'   if not available in `popbayes`).
 #' 
 #' @param location a character of length 1. The column name in `data` of the
 #'   site. This field is used to distinguish counts series from different sites
@@ -108,8 +106,8 @@
 #'   provided the upper boundary of the 95% CI (argument `upper_ci`) must be 
 #'   also provided. This argument is only required if some counts have been 
 #'   estimated by a sampling method. But user may prefer use other precision 
-#'   measures, e.g. standard deviation (argument `sd`), variance (`var`), or 
-#'   coefficient of variation (argument `cv`). 
+#'   measures, e.g. standard deviation (argument `sd`), variance (argument 
+#'   `var`), or coefficient of variation (argument `cv`). 
 #'   Default is `'lower_ci'`.
 #'   
 #' @param upper_ci (optional) a character of length 1. The column name in `data`
@@ -166,33 +164,32 @@
 #'   of each element of this list is a combination of location and species. 
 #'   Each element of the list is a list with the following content:
 #'   \itemize{
-#'   \item \emph{location} a character. The name of the series site.
-#'   \item \emph{species} a character. The name of the series species.
-#'   \item \emph{years} a numerical vector. The year sequence of the series.
-#'   \item \emph{n_years} an integer. The number of unique years.
-#'   \item \emph{stat_methods} a character vector. The different stat methods 
+#'   \item \code{location} a character. The name of the series site.
+#'   \item \code{species} a character. The name of the series species.
+#'   \item \code{years} a numerical vector. The sequence of years of the series.
+#'   \item \code{n_years} an integer. The number of unique years.
+#'   \item \code{stat_methods} a character vector. The different stat methods 
 #'     of the series.
-#'   \item \emph{field_methods} (optional) a character vector. The different 
+#'   \item \code{field_methods} (optional) a character vector. The different 
 #'     field methods of the series.
-#'   \item \emph{pref_field_method} (optional) a character. The preferred 
+#'   \item \code{pref_field_method} (optional) a character. The preferred 
 #'     field method of the species (`'A'` or `'G'`).
-#'   \item \emph{conversion_fact} (optional) a numeric. The conversion factor 
+#'   \item \code{conversion_fact} (optional) a numeric. The conversion factor 
 #'     of the species used to convert counts from a field method to its 
 #'     preferred field method.
-#'   \item \emph{data_original} a data frame. Original data of the series with 
-#'     renamed columns.
-#'   \item \emph{data_converted} a data frame. Data containing computed 
+#'   \item \code{data_original} a data frame. Original data of the series with 
+#'     renamed columns. Some rows can have been deleted (if `na_rm = TRUE`).
+#'   \item \code{data_converted} a data frame. Data containing computed 
 #'     boundaries of the 95% CI (`lower_ci_conv` and `upper_ci_conv`). If 
 #'     counts have been obtained by different field methods, contains also 
 #'     converted counts (`counts_conv`) based on the preferred field method and 
 #'     conversion factor of the species. This data frame will be used by the 
-#'     function [fit_trend()] (not the original dataset).
+#'     function [fit_trend()] to fit population models.
 #'   }
 #'   
 #'   **Note:** Some original series can be discarded if one of these two 
-#'   conditions is met:
-#'   - the series contains only zero counts;
-#'   - the series contains only a few counts (< 4 years).
+#'   conditions is met: 1) the series contains only zero counts, and 2) the 
+#'   series contains only a few years (< 4 years).
 #' 
 #' @export
 #'

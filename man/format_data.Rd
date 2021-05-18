@@ -28,7 +28,7 @@ format_data(
 \item{data}{a data frame with at least five columns: \code{location}, \code{species},
 \code{year}, \code{counts}, and \code{stat_method}.
 
-The \code{stat_method} field indicates the method used to estimate counts It
+The \code{stat_method} field indicates the method used to estimate counts. It
 can contain: \code{T} (total counts), \code{G} (guesstimate), and/or \code{S} (sampling).
 
 If individuals counts were estimated by \strong{sampling}, additional column(s)
@@ -51,8 +51,8 @@ Others fields can be present either in \code{data} or \code{info} (see below).}
 columns: \code{species} (species name), \code{pref_field_method},and
 \code{conversion_fact}. See above section \strong{Description} for further
 information on these fields.
-Default is \code{NULL} (i.e. these informations must be present in \code{data}
-if required).}
+Default is \code{NULL} (i.e. these information must be present in \code{data}
+if not available in \code{popbayes}).}
 
 \item{year}{a character of length 1. The column name in \code{data} of the year.
 This column \code{year} must be in the form 1999, 2000, etc. (numeric).
@@ -85,8 +85,8 @@ of the lower boundary of the 95\% CI of the estimate (i.e. \code{counts}). If
 provided the upper boundary of the 95\% CI (argument \code{upper_ci}) must be
 also provided. This argument is only required if some counts have been
 estimated by a sampling method. But user may prefer use other precision
-measures, e.g. standard deviation (argument \code{sd}), variance (\code{var}), or
-coefficient of variation (argument \code{cv}).
+measures, e.g. standard deviation (argument \code{sd}), variance (argument
+\code{var}), or coefficient of variation (argument \code{cv}).
 Default is \code{'lower_ci'}.}
 
 \item{upper_ci}{(optional) a character of length 1. The column name in \code{data}
@@ -144,35 +144,32 @@ A n-elements list (where n is the number of counts series). The name
 of each element of this list is a combination of location and species.
 Each element of the list is a list with the following content:
 \itemize{
-\item \emph{location} a character. The name of the series site.
-\item \emph{species} a character. The name of the series species.
-\item \emph{years} a numerical vector. The year sequence of the series.
-\item \emph{n_years} an integer. The number of unique years.
-\item \emph{stat_methods} a character vector. The different stat methods
+\item \code{location} a character. The name of the series site.
+\item \code{species} a character. The name of the series species.
+\item \code{years} a numerical vector. The sequence of years of the series.
+\item \code{n_years} an integer. The number of unique years.
+\item \code{stat_methods} a character vector. The different stat methods
 of the series.
-\item \emph{field_methods} (optional) a character vector. The different
+\item \code{field_methods} (optional) a character vector. The different
 field methods of the series.
-\item \emph{pref_field_method} (optional) a character. The preferred
+\item \code{pref_field_method} (optional) a character. The preferred
 field method of the species (\code{'A'} or \code{'G'}).
-\item \emph{conversion_fact} (optional) a numeric. The conversion factor
+\item \code{conversion_fact} (optional) a numeric. The conversion factor
 of the species used to convert counts from a field method to its
 preferred field method.
-\item \emph{data_original} a data frame. Original data of the series with
-renamed columns.
-\item \emph{data_converted} a data frame. Data containing computed
+\item \code{data_original} a data frame. Original data of the series with
+renamed columns. Some rows can have been deleted (if \code{na_rm = TRUE}).
+\item \code{data_converted} a data frame. Data containing computed
 boundaries of the 95\% CI (\code{lower_ci_conv} and \code{upper_ci_conv}). If
 counts have been obtained by different field methods, contains also
 converted counts (\code{counts_conv}) based on the preferred field method and
 conversion factor of the species. This data frame will be used by the
-function \code{\link[=fit_trend]{fit_trend()}} (not the original dataset).
+function \code{\link[=fit_trend]{fit_trend()}} to fit population models.
 }
 
 \strong{Note:} Some original series can be discarded if one of these two
-conditions is met:
-\itemize{
-\item the series contains only zero counts;
-\item the series contains only a few counts (< 4 years).
-}
+conditions is met: 1) the series contains only zero counts, and 2) the
+series contains only a few years (< 4 years).
 }
 \description{
 This function provides an easy way to get individual counts series ready to
@@ -183,33 +180,31 @@ This function formats individual counts series (passed through the argument
 \code{data}) by selecting and renaming columns, checking columns format and
 content, and removing missing data (if \code{na_rm = TRUE}). It converts the
 original data frame into a list of counts series that will be analyzed later
-by the function \code{\link[=fit_trend]{fit_trend()}} to estimate population size trend.
+by the function \code{\link[=fit_trend]{fit_trend()}} to estimate population trend.
 
 To be usable for the estimation of population trend, counts data must be
 accompanied by information on precision. The population trend model requires
 a 95\% confident interval (CI).
-
 If estimates are total counts or guesstimates, this function will construct
 boundaries of the 95\% CI by applying the rules set out in \strong{\emph{???}}.
-
 If counts were estimated by a sampling method user needs to specify a
 measure of precision. Precision is preferably provided in the form of a 95\%
 CI by means of two fields: \code{lower_ci} and \code{upper_ci}. It may also be given
 in the form of a standard deviation (\code{sd}), a variance (\code{var}), or a
 coefficient of variation (\code{cv}). If the fields \code{lower_ci} and \code{upper_ci} are
-both absent (or NA), fields \code{sd}, \code{var}, and \code{cv} are examined in this order.
-When one is found valid (no missing value), a 95\% CI is derived assuming a
-normal distribution.
+both absent (or \code{NA}), fields \code{sd}, \code{var}, and \code{cv} are examined in this
+order. When one is found valid (no missing value), a 95\% CI is derived
+assuming a normal distribution.
 The field \code{stat_method} must be present in the data frame \code{data} to indicate
-if counts are \strong{total counts} (\code{'T'}), \strong{sampling} (\code{'S'}), and/or
-\strong{guesstimate} (\code{'G'}) and to avoid misinterpretation of counts.
+if counts are \strong{total counts} (\code{'T'}), \strong{sampling} (\code{'S'}), or
+\strong{guesstimate} (\code{'G'}).
 
 If the series mixes aerial and ground counts, a field \code{field_method} must
 also be present and must contain either \code{'A'} (aerial counts), or \code{'G'}
 (ground counts). As all counts must refer to the same field method, a
 conversion will be performed to homogenize counts. This conversion is based
 on a \strong{preferred field method} and a \strong{conversion factor} both specific to
-a species/functional group. This conversion factor (a multiplicative factor)
+a species/category. This conversion factor (a multiplicative factor)
 will be apply to an aerial count to get an equivalent ground count (if the
 preferred field method is \code{'G'}) or to a ground count to get an equivalent
 aerial count (if the preferred field method is \code{'A'}).

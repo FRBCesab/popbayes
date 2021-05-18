@@ -3,7 +3,7 @@
 \docType{data}
 \name{garamba}
 \alias{garamba}
-\title{African large mammals survey in the Garamba National Park}
+\title{African mammals survey in the Garamba National Park}
 \format{
 A data frame with 141 rows (counts) and the following 8 columns:
 \describe{
@@ -26,7 +26,7 @@ A data frame with 141 rows (counts) and the following 8 columns:
 garamba
 }
 \description{
-This dataset contains individual counts of 10 African large mammals species
+This dataset contains individual counts of 10 African mammals species
 in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
 2017.
 }

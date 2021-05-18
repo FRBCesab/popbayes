@@ -196,7 +196,11 @@ model_formula <- function(path = ".") {
 #' @description
 #' This function applies a Bayesian model to counts series in order to infer 
 #' the population trend over time. This function only works on the output of 
-#' the [format_data()].
+#' the [format_data()] or [filter_series()].
+#' 
+#' **Important:** This function uses [R2jags::jags()] and the 
+#' freeware **JAGS** (\url{https://mcmc-jags.sourceforge.io/}) must be 
+#' installed.
 #' 
 #' There are two types of options: model options (argument `model_opts`) and 
 #' MCMC options (argument `mcmc_opts`).
@@ -234,7 +238,8 @@ model_formula <- function(path = ".") {
 #' @param model_opts a list of two vectors. The model smoothing factor 
 #'   (numeric) and a logical indicating if the parameter r must be limited by 
 #'   `rmax` (`TRUE`) or not (`FALSE`). If this second parameter is `TRUE`, the
-#'   argument `rmax` cannot be NULL.
+#'   argument `rmax` cannot be NULL unless species are listed in `popbayes`
+#'   (in `rmax_data`).
 #' 
 #' @param mcmc_opts a list containing the number of iteration (`ni`), the thin 
 #'   factor (`nt`), the length of burn in (`nb`), i.e. the number of iterations 
@@ -244,8 +249,8 @@ model_formula <- function(path = ".") {
 #'   the maximum relative rate of increase of the species (`rmax`), i.e. the 
 #'   maximum yearly change in log pop size. See `?rmax_data` for a example.
 #'   
-#' @param path a character. The directory to save model outputs. 
-#'   This directory must exist and can be an absolute or a relative path.
+#' @param path a character. The directory to save BUGS outputs (the same as in 
+#'   [format_data()]). 
 #'   
 #' @export
 #'
@@ -477,11 +482,12 @@ fit_trend <- function(data, model_opts = list(100, TRUE),
 #'
 #' @description 
 #' This function imports a list of BUGS outputs previously exported by 
-#' [fit_trend()]. Users can import one, several, or all model outputs.
+#' [fit_trend()]. Users can import one, several, or all models.
 #'
 #' @param series a vector of characters. One or several counts series names. 
-#'   If `NULL` (default) all BUGS outputs will be imported. Users can run
-#'   [list_series()] to get the correct spelling of counts series names.
+#'   If `NULL` (default) BUGS outputs for all counts series will be imported.
+#'   Users can run [list_series()] to get the correct spelling of counts series 
+#'   names.
 #'    
 #' @param path a character. The directory in which BUGS outputs have been 
 #'   saved by the function [fit_trend()].
@@ -611,9 +617,9 @@ bugs_to_df <- function(data) {
 #'
 #' @description
 #' From the output of the function [fit_trend()] (or [read_bugs()]), this 
-#' function checks if the estimation of all parameters of one (or several 
-#' BUGS models) has converged. This diagnostic is performed by comparing the 
-#' `Rhat` value of parameters to a `threshold` (default is `1.1`). If some 
+#' function checks if the estimation of all parameters of one (or several) 
+#' BUGS model has converged. This diagnostic is performed by comparing the 
+#' `Rhat` value of each parameter to a `threshold` (default is `1.1`). If some 
 #' `Rhat` values are greater than this threshold (no convergence), a message
 #' listing problematic models is displayed.
 #'

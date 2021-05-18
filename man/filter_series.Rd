@@ -18,9 +18,10 @@ A subset of \code{data}, i.e. a named list.
 }
 \description{
 From the output of the function \code{\link[=format_data]{format_data()}}, this function subsets the
-list of series based on a species name and/or a site. It both the species and
-the location are provided, the resulting list will have a length of 1 (data
-for the species at the location), otherwise the list will have a length >= 1.
+list of counts series based on a species name and/or a site. If both the
+species and the location are provided, the resulting list will have a length
+of 1 (data for the species at the location), otherwise the list will have a
+length >= 1.
 }
 \examples{
 \dontrun{

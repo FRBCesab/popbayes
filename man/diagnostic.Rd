@@ -14,9 +14,9 @@ diagnostic(data, threshold = 1.1)
 }
 \description{
 From the output of the function \code{\link[=fit_trend]{fit_trend()}} (or \code{\link[=read_bugs]{read_bugs()}}), this
-function checks if the estimation of all parameters of one (or several
-BUGS models) has converged. This diagnostic is performed by comparing the
-\code{Rhat} value of parameters to a \code{threshold} (default is \code{1.1}). If some
+function checks if the estimation of all parameters of one (or several)
+BUGS model has converged. This diagnostic is performed by comparing the
+\code{Rhat} value of each parameter to a \code{threshold} (default is \code{1.1}). If some
 \code{Rhat} values are greater than this threshold (no convergence), a message
 listing problematic models is displayed.
 }

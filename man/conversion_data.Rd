@@ -5,7 +5,8 @@
 \alias{conversion_data}
 \title{Counts conversion data}
 \format{
-A data frame with 15 rows (species) and the following columns:
+A data frame with 15 rows (African mammals species) and the following
+columns:
 \describe{
 \item{order}{the order of the species}
 \item{family}{the family of the species}
@@ -29,8 +30,10 @@ conversion_data
 \description{
 This dataset contains information to convert individual counts estimated from
 a field method to a preferred field method. The field method can be \code{A}
-(aerial counts) or \code{G} (ground counts). This dataset can be used by user to
-add missing species. See \code{\link[=format_data]{format_data()}} for further information.
+(aerial counts) or \code{G} (ground counts). See \code{\link[=format_data]{format_data()}} for further
+information. User can take this dataset as a template to add information for
+missing species. Note that only \code{species}, \code{pref_field_method}, and
+\code{conversion_fact} are required.
 }
 \examples{
 data("conversion_data")

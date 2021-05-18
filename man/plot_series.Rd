@@ -10,8 +10,7 @@ plot_series(series, title = TRUE, path = ".", path_fig = ".", save = FALSE)
 \item{series}{a character of length 1. The counts series names (can be
 retrieved by running \code{\link[=list_series]{list_series()}}).}
 
-\item{title}{a logical. If \code{TRUE} (default) a title (series name) is added
-on the top-right of the plot.}
+\item{title}{a logical. If \code{TRUE} (default) a title (series name) is added.}
 
 \item{path}{a character. The directory in which counts series have been
 saved by the function \code{\link[=format_data]{format_data()}}.}
