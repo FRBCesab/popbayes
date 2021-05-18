@@ -4,10 +4,16 @@
     <loc>https://frbcesab.github.io/popbayes/index.html</loc>
   </url>
   <url>
+    <loc>https://frbcesab.github.io/popbayes/reference/bugs_to_df.html</loc>
+  </url>
+  <url>
     <loc>https://frbcesab.github.io/popbayes/reference/conversion_data.html</loc>
   </url>
   <url>
-    <loc>https://frbcesab.github.io/popbayes/reference/find_series.html</loc>
+    <loc>https://frbcesab.github.io/popbayes/reference/diagnostic.html</loc>
+  </url>
+  <url>
+    <loc>https://frbcesab.github.io/popbayes/reference/filter_series.html</loc>
   </url>
   <url>
     <loc>https://frbcesab.github.io/popbayes/reference/fit_trend.html</loc>
@@ -19,16 +25,28 @@
     <loc>https://frbcesab.github.io/popbayes/reference/garamba.html</loc>
   </url>
   <url>
-    <loc>https://frbcesab.github.io/popbayes/reference/get_series_data.html</loc>
+    <loc>https://frbcesab.github.io/popbayes/reference/list_series.html</loc>
   </url>
   <url>
     <loc>https://frbcesab.github.io/popbayes/reference/plot_series.html</loc>
   </url>
   <url>
+    <loc>https://frbcesab.github.io/popbayes/reference/plot_trend.html</loc>
+  </url>
+  <url>
     <loc>https://frbcesab.github.io/popbayes/reference/popbayes-package.html</loc>
   </url>
   <url>
+    <loc>https://frbcesab.github.io/popbayes/reference/read_bugs.html</loc>
+  </url>
+  <url>
+    <loc>https://frbcesab.github.io/popbayes/reference/read_series.html</loc>
+  </url>
+  <url>
     <loc>https://frbcesab.github.io/popbayes/reference/rmax_data.html</loc>
+  </url>
+  <url>
+    <loc>https://frbcesab.github.io/popbayes/reference/series_to_df.html</loc>
   </url>
   <url>
     <loc>https://frbcesab.github.io/popbayes/articles/generate_data.html</loc>

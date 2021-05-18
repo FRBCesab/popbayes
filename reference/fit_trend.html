@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run BUGS population model — fit_trend • popbayes</title>
+<title>Fit a Bayesian model to estimate population size trend — fit_trend • popbayes</title>
 
 
 <!-- jquery -->
@@ -39,32 +39,33 @@
 
 
 
-<meta property="og:title" content="Run BUGS population model — fit_trend" />
-<meta property="og:description" content="This is the main function of the package. It applies a Bayesian model to a count series in order to infer
-the population trend over time.
-The series of counts, extracted from a tibble or dataframe, the name of which is provided as an argument
-(parameter dsname), must be accompanied by a 95% confidence interval in the form of 2 parallel series of the
-lower and upper bounds, and the series of the times when each count was taken (in the same tibble or dataframe).
-There are two types of options:
-model options (parameter modelopt)
-MCMC options (parameter MCMCopt)
+<meta property="og:title" content="Fit a Bayesian model to estimate population size trend — fit_trend" />
+<meta property="og:description" content="This function applies a Bayesian model to counts series in order to infer
+the population trend over time. This function only works on the output of
+the format_data().
+There are two types of options: model options (argument model_opts) and
+MCMC options (argument mcmc_opts).
+A. Model options
+a smoothing factor: the precision (the inverse of variance) of a normal
+distribution centered on the current relative rate of increase r from which
+the next candidate relative rate of increase (see below) is drawn.
+The highest this number, the tighter the link between successive relative
+rates of increase. The default 100 corresponds to a moderate link.
+a logical indicating whether the population growth must remain limited by
+the species demographic potential (provided by the argument rmax).
 
 
-A. model options are 2:
-a smoothing parameter,
-a logical indicating whether the population growth must remain limited by the species demographic potential.
-
-
-The smoothing parameter is actually the precision (the inverse of variance) of a normal distribution centered on
-the current relative rate of increase r from which the next candidate relative rate of increase (see below) is drawn.
-The highest this number, the tighter the link between successive relative rates of increase. The default 100
-corresponds to a moderate link.
-The relative rate of increase is the change in log population size between two dates. The quantity actually
-being modeled is the relative rate of increase per unit of time (usually one year). This quantity reflects
-more directly the prevailing conditions than the population size itself, which is the reason why it has been chosen.
-When the second model option is set to True, the candidate rate of increase is compared to the maximum relative rate
-of increase (parameter rmax) and replaced by rmax if greater.
-B. MCMC options are the classical MCMC settings (see param MCMCopt below)." />
+The relative rate of increase is the change in log population size between
+two dates. The quantity actually being modeled is the relative rate of
+increase per unit of time (usually one year). This quantity reflects more
+directly the prevailing conditions than the population size itself, which is
+the reason why it has been chosen.
+When the second model option is set to TRUE, the candidate rate of
+increase is compared to the maximum relative rate of increase
+(parameter rmax) and replaced by rmax if greater.
+B. MCMC options
+Classical Markov chain Monte Carlo (MCMC) settings (see argument mcmc_opts
+below)." />
 
 
 
@@ -147,75 +148,108 @@ B. MCMC options are the classical MCMC settings (see param MCMCopt below)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run BUGS population model</h1>
-    <small class="dont-index">Source: <a href='https://github.com/frbcesab/popbayes/blob/master/R/fit_trend.R'><code>R/fit_trend.R</code></a></small>
+    <h1>Fit a Bayesian model to estimate population size trend</h1>
+    <small class="dont-index">Source: <a href='https://github.com/frbcesab/popbayes/blob/master/R/bugs-funs.R'><code>R/bugs-funs.R</code></a></small>
     <div class="hidden name"><code>fit_trend.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is the main function of the package. It applies a Bayesian model to a count series in order to infer
-the population trend over time.
-The series of counts, extracted from a tibble or dataframe, the name of which is provided as an argument
-(parameter dsname), must be accompanied by a 95% confidence interval in the form of 2 parallel series of the
-lower and upper bounds, and the series of the times when each count was taken (in the same tibble or dataframe).</p>
-<p>There are two types of options:</p><ul>
-<li><p>model options (parameter modelopt)</p></li>
-<li><p>MCMC options (parameter MCMCopt)</p></li>
+    <p>This function applies a Bayesian model to counts series in order to infer
+the population trend over time. This function only works on the output of
+the <code><a href='format_data.html'>format_data()</a></code>.</p>
+<p>There are two types of options: model options (argument <code>model_opts</code>) and
+MCMC options (argument <code>mcmc_opts</code>).</p>
+<p><strong>A. Model options</strong></p><ul>
+<li><p>a smoothing factor: the precision (the inverse of variance) of a normal
+distribution centered on the current relative rate of increase r from which
+the next candidate relative rate of increase (see below) is drawn.
+The highest this number, the tighter the link between successive relative
+rates of increase. The default <code>100</code> corresponds to a moderate link.</p></li>
+<li><p>a logical indicating whether the population growth must remain limited by
+the species demographic potential (provided by the argument <code>rmax</code>).</p></li>
 </ul>
 
-<p>A. model options are 2:</p><ul>
-<li><p>a smoothing parameter,</p></li>
-<li><p>a logical indicating whether the population growth must remain limited by the species demographic potential.</p></li>
-</ul>
-
-<p>The smoothing parameter is actually the precision (the inverse of variance) of a normal distribution centered on
-the current relative rate of increase r from which the next candidate relative rate of increase (see below) is drawn.
-The highest this number, the tighter the link between successive relative rates of increase. The default 100
-corresponds to a moderate link.</p>
-<p>The relative rate of increase is the change in log population size between two dates. The quantity actually
-being modeled is the relative rate of increase per unit of time (usually one year). This quantity reflects
-more directly the prevailing conditions than the population size itself, which is the reason why it has been chosen.
-When the second model option is set to True, the candidate rate of increase is compared to the maximum relative rate
-of increase (parameter rmax) and replaced by rmax if greater.</p>
-<p>B. MCMC options are the classical MCMC settings (see param MCMCopt below).</p>
+<p>The relative rate of increase is the change in log population size between
+two dates. The quantity actually being modeled is the relative rate of
+increase per unit of time (usually one year). This quantity reflects more
+directly the prevailing conditions than the population size itself, which is
+the reason why it has been chosen.</p>
+<p>When the second model option is set to <code>TRUE</code>, the candidate rate of
+increase is compared to the maximum relative rate of increase
+(parameter <code>rmax</code>) and replaced by <code>rmax</code> if greater.</p>
+<p><strong>B. MCMC options</strong></p>
+<p>Classical Markov chain Monte Carlo (MCMC) settings (see argument <code>mcmc_opts</code>
+below).</p>
     </div>
 
     <pre class="usage"><span class='fu'>fit_trend</span><span class='op'>(</span>
-  dsname <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>data</span>,
+  model_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
+  mcmc_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ni <span class='op'>=</span> <span class='fl'>50000</span>, nt <span class='op'>=</span> <span class='fl'>3</span>, nb <span class='op'>=</span> <span class='fl'>10000</span>, nc <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
   rmax <span class='op'>=</span> <span class='cn'>NULL</span>,
-  MCMCopt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ni <span class='op'>=</span> <span class='fl'>50000</span>, nt <span class='op'>=</span> <span class='fl'>3</span>, nb <span class='op'>=</span> <span class='fl'>10000</span>, nc <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
-  modelopt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
+  path <span class='op'>=</span> <span class='st'>"."</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>dsname</th>
-      <td><p>a string. the R object name containing data.</p></td>
+      <th>data</th>
+      <td><p>a named list. The output of <code><a href='format_data.html'>format_data()</a></code> or <code><a href='filter_series.html'>filter_series()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>model_opts</th>
+      <td><p>a list of two vectors. The model smoothing factor
+(numeric) and a logical indicating if the parameter r must be limited by
+<code>rmax</code> (<code>TRUE</code>) or not (<code>FALSE</code>). If this second parameter is <code>TRUE</code>, the
+argument <code>rmax</code> cannot be NULL.</p></td>
+    </tr>
+    <tr>
+      <th>mcmc_opts</th>
+      <td><p>a list containing the number of iteration (<code>ni</code>), the thin
+factor (<code>nt</code>), the length of burn in (<code>nb</code>), i.e. the number of iterations
+to discard at the beginning, and the number of chains (<code>nc</code>).</p></td>
     </tr>
     <tr>
       <th>rmax</th>
-      <td><p>a numeric. the maximum relative rate of increase of the species i.e. maximum yearly change in log pop size.</p></td>
+      <td><p>a data frame with two columns: the species name (<code>species</code>) and
+the maximum relative rate of increase of the species (<code>rmax</code>), i.e. the
+maximum yearly change in log pop size. See <code><a href='rmax_data.html'>?rmax_data</a></code> for a example.</p></td>
     </tr>
     <tr>
-      <th>MCMCopt</th>
-      <td><p>a list. a list containing the number of iteration (ni), thin factor (nt), length of burn in (nb), i.e. number of iterations to discard at the beginning and the number of chains (nc).</p></td>
-    </tr>
-    <tr>
-      <th>modelopt</th>
-      <td><p>a list. a list of two vectors: the model smoothing factor and a boolean indicating if parameter r must be limited by rmax.</p></td>
+      <th>path</th>
+      <td><p>a character. The directory to save model outputs.
+This directory must exist and can be an absolute or a relative path.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The ouput of the Bayesian model as provided by Jags or Openbugs. Additionally, the function prints the results
-to the console with the method of the package used to call JAGS or OpenBUGS.</p>
+    <p>An n-elements list (where n is the number of counts series). Each
+element of the list is a BUGS outputs as provided by JAGS (also written
+in the folder <code>path</code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## ADD AN EXAMPLE</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"garamba"</span><span class='op'>)</span>
+
+<span class='co'>## Format counts series ----</span>
+<span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='format_data.html'>format_data</a></span><span class='op'>(</span><span class='va'>garamba</span><span class='op'>)</span>
+
+<span class='co'>## Select one counts series (optional) ----</span>
+<span class='va'>a_buselaphus</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='filter_series.html'>filter_series</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span>, 
+                                        species <span class='op'>=</span> <span class='st'>"Alcelaphus buselaphus"</span><span class='op'>)</span>
+<span class='co'>## Fit population trend ----</span>
+<span class='va'>a_buselaphus_mod</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>fit_trend</span><span class='op'>(</span><span class='va'>a_buselaphus</span><span class='op'>)</span>
+
+<span class='co'>## Check for convergence ----</span>
+<span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='diagnostic.html'>diagnostic</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span>, threshold <span class='op'>=</span> <span class='fl'>1.1</span><span class='op'>)</span>
+
+<span class='co'>## Plot estimated population trend ----</span>
+<span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='plot_trend.html'>plot_trend</a></span><span class='op'>(</span>series <span class='op'>=</span> <span class='st'>"garamba__alcelaphus_buselaphus"</span><span class='op'>)</span>
+
+<span class='co'>## Plot MCMC traceplot ----</span>
+<span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/traceplot.html'>traceplot</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, ask <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>
