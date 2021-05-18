@@ -11,9 +11,15 @@ reference:
   contents:
     - format_data
     - plot_series
+    - filter_series
     - fit_trend
+    - diagnostic
+    - plot_trend
 
 - title: Additional functions
   contents:
-    - find_series
-    - get_series_data
+    - list_series
+    - read_series
+    - read_bugs
+    - series_to_df
+    - bugs_to_df
