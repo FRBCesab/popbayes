@@ -16,8 +16,8 @@ deployment](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml/
 Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
-The goal of the R package `popbayes` is to **{{ PLEASE ADD A FEW LINES
-}}**
+The goal of the R package `popbayes` is to estimate population trends
+from counts series
 
 ## Installation
 

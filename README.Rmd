@@ -28,7 +28,7 @@ popbayes
 <!-- badges: end -->
 
 
-The goal of the R package `popbayes` is to **{{ PLEASE ADD A FEW LINES }}**
+The goal of the R package `popbayes` is to estimate population trends from counts series
 
 
 
