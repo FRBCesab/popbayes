@@ -1,22 +1,22 @@
-#' Format individual counts series
+#' Format counts series
 #'
 #' @description
-#' This function provides an easy way to get individual counts series ready to
+#' This function provides an easy way to get counts series ready to
 #' be analyzed by the package `popbayes`. It must be used prior to all other 
 #' functions.
 #' 
-#' This function formats individual counts series (passed through the argument 
+#' This function formats the counts series (passed through the argument 
 #' `data`) by selecting and renaming columns, checking columns format and 
 #' content, and removing missing data (if `na_rm = TRUE`). It converts the 
 #' original data frame into a list of counts series that will be analyzed later
-#' by the function [fit_trend()] to estimate population trend.
+#' by the function [fit_trend()] to estimate population trends.
 #' 
-#' To be usable for the estimation of population trend, counts data must be 
+#' To be usable for the estimation of population trends, counts must be 
 #' accompanied by information on precision. The population trend model requires 
 #' a 95% confident interval (CI).
 #' If estimates are total counts or guesstimates, this function will construct 
 #' boundaries of the 95% CI by applying the rules set out in **_???_**.
-#' If counts were estimated by a sampling method user needs to specify a 
+#' If counts were estimated by a sampling method the user needs to specify a 
 #' measure of precision. Precision is preferably provided in the form of a 95% 
 #' CI by means of two fields: `lower_ci` and `upper_ci`. It may also be given 
 #' in the form of a standard deviation (`sd`), a variance (`var`), or a 
@@ -28,15 +28,17 @@
 #' if counts are **total counts** (`'T'`), **sampling** (`'S'`), or 
 #' **guesstimate** (`'G'`).
 #' 
-#' If the series mixes aerial and ground counts, a field `field_method` must 
+#' If a series mixes aerial and ground counts, a field `field_method` must 
 #' also be present and must contain either `'A'` (aerial counts), or `'G'` 
-#' (ground counts). As all counts must refer to the same field method, a 
-#' conversion will be performed to homogenize counts. This conversion is based 
-#' on a **preferred field method** and a **conversion factor** both specific to 
-#' a species/category. This conversion factor (a multiplicative factor) 
-#' will be apply to an aerial count to get an equivalent ground count (if the
-#' preferred field method is `'G'`) or to a ground count to get an equivalent 
-#' aerial count (if the preferred field method is `'A'`).
+#' (ground counts). As all counts must eventually refer to the same field method 
+#' for a correct estimation of trend, a conversion will be performed to  
+#' homogenize counts. This conversion is based on a **preferred field method**
+#' and a **conversion factor** both specific to a species/category. 
+#' The preferred field method specifies the conversion direction. The conversion 
+#' factor is the multiplicative factor that must be applied to an aerial count  
+#' to get an equivalent ground count. (Note that if the preferred field method 
+#' is `'A'`, ground counts will be divided by the conversion factor to get an 
+#' equivalent aerial count.)
 #' These two parameters, named `pref_field_method` and `conversion_fact`, can 
 #' be present in the data frame `data` or in the data frame `info`.
 #' Alternatively, the package `popbayes` provides their values for some 
@@ -52,7 +54,7 @@
 #'   The `stat_method` field indicates the method used to estimate counts. It 
 #'   can contain: `T` (total counts), `G` (guesstimate), and/or `S` (sampling). 
 #' 
-#'   If individuals counts were estimated by **sampling**, additional column(s) 
+#'   If individual counts were estimated by **sampling**, additional column(s) 
 #'   providing a measure of precision is also required (e.g. `lower_ci` and 
 #'   `upper_ci`, or `sd`, `cv`, `var`). Precision metrics can be different 
 #'   between counts. For instance, some sampling counts can have a `sd` value 
@@ -75,33 +77,33 @@
 #'   Default is `NULL` (i.e. these information must be present in `data` 
 #'   if not available in `popbayes`).
 #' 
-#' @param location a character of length 1. The column name in `data` of the
+#' @param location a character string. The column name in `data` of the
 #'   site. This field is used to distinguish counts series from different sites
 #'   (if required) and to create an unique series name.
 #'   Default is `'location'`.
 #'   
-#' @param species a character of length 1. The column name in `data` (and 
+#' @param species a character string. The column name in `data` (and 
 #'   in `info` if provided) of the species. This field is used to distinguish 
 #'   counts series for different species (if required) and to create an unique 
 #'   series name.
 #'   Default is `'species'`.
 #'   
-#' @param year a character of length 1. The column name in `data` of the year.
+#' @param year a character string. The column name in `data` of the year.
 #'   This column `year` must be in the form 1999, 2000, etc. (numeric).
 #'   Default is `'year'`.
 #'   
-#' @param counts a character of length 1. The column name in `data` of the
+#' @param counts a character string. The column name in `data` of the
 #'   number of individuals. This column must be numerical.
 #'   Default is `'counts'`.
 #'  
-#' @param stat_method a character of length 1. The column name in `data` of 
+#' @param stat_method a character string. The column name in `data` of 
 #'   the method used to estimate individuals counts. It can contain `'T'` 
 #'   (total counts), `'G'` (guesstimate), and/or `'S'` (sampling). If some 
 #'   counts are coded as `'S'`, precision column(s) must also be provided (see 
 #'   below).
 #'   Default is `'stat_method'`. 
 #' 
-#' @param lower_ci (optional) a character of length 1. The column name in `data`
+#' @param lower_ci (optional) a character string. The column name in `data`
 #'   of the lower boundary of the 95% CI of the estimate (i.e. `counts`). If 
 #'   provided the upper boundary of the 95% CI (argument `upper_ci`) must be 
 #'   also provided. This argument is only required if some counts have been 
@@ -110,32 +112,32 @@
 #'   `var`), or coefficient of variation (argument `cv`). 
 #'   Default is `'lower_ci'`.
 #'   
-#' @param upper_ci (optional) a character of length 1. The column name in `data`
+#' @param upper_ci (optional) a character string. The column name in `data`
 #'   of the upper boundary of the 95% CI of the estimate (i.e. `counts`). If 
 #'   provided the lower boundary of the 95% CI (argument `lower_ci`) must be 
 #'   also provided.
 #'   Default is `'upper_ci'`.
 #'   
-#' @param sd (optional) a character of length 1. The column name in `data` of 
+#' @param sd (optional) a character string. The column name in `data` of 
 #'   the standard deviation of the estimate.
 #'   Default is `NULL`.
 #'   
-#' @param var (optional) a character of length 1. The column name in `data` of 
+#' @param var (optional) a character string. The column name in `data` of 
 #'   the variance of the estimate.
 #'   Default is `NULL`.
 #'    
-#' @param cv (optional) a character of length 1. The column name in `data` of 
+#' @param cv (optional) a character string. The column name in `data` of 
 #'   the coefficient of variation of the estimate.
 #'   Default is `NULL`.
 #'   
-#' @param field_method (optional) a character of length 1. The column name in 
+#' @param field_method (optional) a character string. The column name in 
 #'   `data` of the field method used to count individuals. Counts can be ground 
 #'   counts (coded as `'G'`) or aerial counts (coded as `'A'`). This argument 
 #'   is optional if individuals have been counted by the same method. See above 
 #'   section **Description** for further information on the counts conversion.
 #'   Default is `'field_method'`.
 #'   
-#' @param pref_field_method (optional) a character of length 1. The column name
+#' @param pref_field_method (optional) a character string. The column name
 #'   in `data` of the preferred field method of the species. This argument is
 #'   only required is `field_method` is not NULL (i.e. individuals have been 
 #'   counted by different methods). Alternatively this value can be passed in
@@ -144,7 +146,7 @@
 #'   conversion.
 #'   Default is `NULL`.
 #' 
-#' @param conversion_fact (optional) a character of length 1. The column name
+#' @param conversion_fact (optional) a character string. The column name
 #'   in `data` of the counts conversion factor of the species. This argument is
 #'   only required is `field_method` is not NULL (i.e. individuals have been 
 #'   counted by different methods). Alternatively this value can be passed in
@@ -229,7 +231,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   ## Check Location field ----
   
   if (!is.character(location) || length(location) != 1) {
-    stop("Argument 'location' must be a column name (character of length 1).")
+    stop("Argument 'location' must be a column name (character string).")
   }
   
   if (!(location %in% colnames(data))) {
@@ -249,7 +251,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   ## Check Species field ----
   
   if (!is.character(species) || length(species) != 1) {
-    stop("Argument 'species' must be a column name (character of length 1).")
+    stop("Argument 'species' must be a column name (character string).")
   }
   
   if (!(species %in% colnames(data))) {
@@ -269,7 +271,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   ## Check Year field ----
   
   if (!is.character(year) || length(year) != 1) {
-    stop("Argument 'year' must be a column name (character of length 1).")
+    stop("Argument 'year' must be a column name (character string).")
   }
   
   if (!(year %in% colnames(data))) {
@@ -289,7 +291,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   ## Check Counts field ----
   
   if (!is.character(counts) || length(counts) != 1) {
-    stop("Argument 'counts' must be a column name (character of length 1).")
+    stop("Argument 'counts' must be a column name (character string).")
   }
   
   if (!(counts %in% colnames(data))) {
@@ -349,7 +351,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   if (!is.null(lower_ci)) {
     
     if (!is.character(lower_ci) || length(lower_ci) != 1) {
-      stop("Argument 'lower_ci' must be a column name (character of length 1).")
+      stop("Argument 'lower_ci' must be a column name (character string).")
     }
     
     if (!(lower_ci %in% colnames(data))) {
@@ -369,7 +371,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   if (!is.null(upper_ci)) {
     
     if (!is.character(upper_ci) || length(upper_ci) != 1) {
-      stop("Argument 'upper_ci' must be a column name (character of length 1).")
+      stop("Argument 'upper_ci' must be a column name (character string).")
     }
     
     if (!(upper_ci %in% colnames(data))) {
@@ -389,7 +391,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   if (!is.null(sd)) {
     
     if (!is.character(sd) || length(sd) != 1) {
-      stop("Argument 'sd' must be a column name (character of length 1).")
+      stop("Argument 'sd' must be a column name (character string).")
     }
     
     if (!(sd %in% colnames(data))) {
@@ -409,7 +411,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   if (!is.null(var)) {
     
     if (!is.character(var) || length(var) != 1) {
-      stop("Argument 'var' must be a column name (character of length 1).")
+      stop("Argument 'var' must be a column name (character string).")
     }
     
     if (!(var %in% colnames(data))) {
@@ -429,7 +431,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   if (!is.null(cv)) {
     
     if (!is.character(cv) || length(cv) != 1) {
-      stop("Argument 'cv' must be a column name (character of length 1).")
+      stop("Argument 'cv' must be a column name (character string).")
     }
     
     if (!(cv %in% colnames(data))) {
@@ -554,7 +556,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
         if (!is.character(pref_field_method) || 
             length(pref_field_method) != 1) {
           stop("Argument 'pref_field_method' must be a column name ", 
-               "(character of length 1).")
+               "(character string).")
         }
         
         if (!(pref_field_method %in% colnames(data))) {
@@ -570,7 +572,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
         if (!is.character(conversion_fact) || 
             length(conversion_fact) != 1) {
           stop("Argument 'conversion_fact' must be a column name ", 
-               "(character of length 1).")
+               "(character string).")
         }
         
         if (!(conversion_fact %in% colnames(data))) {
@@ -837,7 +839,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
 #' Remove rows or return error if NA counts detected
 #'
 #' @param data a data frame
-#' @param col a character of length 1 (column to inspect)
+#' @param col a character string(column to inspect)
 #' @param na_rm a logical. If TRUE delete rows. Otherwise return an error
 #'
 #' @return A data frame (same as `data`).
@@ -1127,7 +1129,7 @@ compute_ci <- function(data, precision_cols) {
 #'
 #' @param data a data frame. Counts dataset.
 #' 
-#' @param field_method a character of length 1. The column name in `data`.
+#' @param field_method a character string. The column name in `data`.
 #' 
 #' @param conversion_data a data frame. Conversion data (see `conversion_data`).
 #'
