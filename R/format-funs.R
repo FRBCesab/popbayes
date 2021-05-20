@@ -89,7 +89,8 @@
 #'   Default is `'species'`.
 #'   
 #' @param year a character string. The column name in `data` of the year.
-#'   This column `year` must be in the form 1999, 2000, etc. (numeric).
+#'   This column `year` must be in the form 1999, 2000, etc. (numeric), with
+#'   possibly a decimal part.
 #'   Default is `'year'`.
 #'   
 #' @param counts a character string. The column name in `data` of the
@@ -308,6 +309,13 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   }
   
   
+  ## Check Logical ----
+  
+  if (!is.logical(na_rm)) {
+    stop("Argument 'na_rm' must be a TRUE or FALSE.")
+  }
+  
+  
   ## Detect and delete (or error) NA in counts ----
   
   data <- is_na_counts(data, counts, na_rm)
@@ -320,8 +328,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   ## Check Stat Method field ----
   
   if (!is.character(stat_method) || length(stat_method) != 1) {
-    stop("Argument 'stat_method' must be a column name (character of length ",
-         "1).")
+    stop("Argument 'stat_method' must be a column name (character string).")
   }
   
   if (!(stat_method %in% colnames(data))) {
@@ -348,7 +355,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   
   ## Check precision columns ----
   
-  if (!is.null(lower_ci)) {
+  if (!missing(lower_ci)) {
     
     if (!is.character(lower_ci) || length(lower_ci) != 1) {
       stop("Argument 'lower_ci' must be a column name (character string).")
@@ -358,6 +365,9 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
       stop("The column '", lower_ci, "' (argument lower_ci) is absent ", 
            "from 'data'. Please check the spelling.")
     }
+  }
+  
+  if (lower_ci %in% colnames(data)) {
     
     if (!is.numeric(data[ , lower_ci])) {
       stop("The column '", lower_ci, "' must be numeric.")
@@ -368,7 +378,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
     }
   }
   
-  if (!is.null(upper_ci)) {
+  if (!missing(upper_ci)) {
     
     if (!is.character(upper_ci) || length(upper_ci) != 1) {
       stop("Argument 'upper_ci' must be a column name (character string).")
@@ -378,6 +388,9 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
       stop("The column '", upper_ci, "' (argument upper_ci) is absent ", 
            "from 'data'. Please check the spelling.")
     }
+  }
+  
+  if (upper_ci %in% colnames(data)) {
     
     if (!is.numeric(data[ , upper_ci])) {
       stop("The column '", upper_ci, "' must be numeric.")
@@ -387,7 +400,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
       stop("The column '", upper_ci, "' must be positive (or zero).")
     }
   }
-  
+
   if (!is.null(sd)) {
     
     if (!is.character(sd) || length(sd) != 1) {
@@ -453,7 +466,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   
   if ("S" %in% data[ , stat_method]) {
     
-    if (is.null(lower_ci) && is.null(upper_ci) && is.null(sd) && is.null(cv) && 
+    if (!(lower_ci %in% colnames(data) && upper_ci %in% colnames(data)) && is.null(sd) && is.null(cv) && 
         is.null(var)) {
       
       stop("No valid measure of precision is available for sampling counts. ", 
@@ -461,29 +474,24 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
            "information.")
     }
     
-    if (!is.null(lower_ci) && is.null(upper_ci)) {
-      stop("You must provide both lower and upper CI.")
-    }
-    
-    if (is.null(lower_ci) && !is.null(upper_ci)) {
-      stop("You must provide both lower and upper CI.")
-    }
   }
   
   
   ## Check Field Method field (optional) ----
   
-  if (!is.null(field_method)) {
+  if (!missing(field_method)) {
     
     if (!is.character(field_method) || length(field_method) != 1) {
-      stop("Argument 'field_method' must be a column name (character of ",
-           "length 1).")
+      stop("Argument 'field_method' must be a column name (character string).")
     }
     
     if (!(field_method %in% colnames(data))) {
       stop("The column '", field_method, "' (argument field_method) is ", 
            "absent from 'data'. Please check the spelling.")
     }
+  }
+    
+  if (field_method %in% colnames(data)) {
     
     valid_field_methods <- c("G", "A")
     
@@ -501,7 +509,8 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
            "Allowed values are: ", valid_field_methods_msg, ".")
     }
   }
-  
+    
+    
   
   ## Check Info dataset ----
   
@@ -525,13 +534,6 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
     if (any(is.na(info))) {
       stop("The dataset 'info' cannot contain NA.")
     }
-  }
-  
-  
-  ## Check Logical ----
-  
-  if (!is.logical(na_rm)) {
-    stop("Argument 'na_rm' must be a TRUE or FALSE.")
   }
   
   
