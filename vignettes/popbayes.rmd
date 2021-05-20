@@ -18,135 +18,509 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-```{r 'setup'}
+```{r 'setup', echo = FALSE}
 library("popbayes")
 ```
 
-![](docs/popbayes-diagram.png){width=100%}
+The goal of the R package `popbayes` is to fit population trend over time under
+a Bayesian framework. Population size is considered as individuals counts 
+(not densities) collected at different dates. The package can deal with multiple
+species surveyed at different locations but each **counts series** (one species 
+at one location) will be processed independently.
 
-## 1. The garamba dataset
+The strength of `popbayes` is to take into account counts collected by different 
+type of surveys (aerial vs ground surveys) estimated by different census methods 
+(total counts, guesstimates [i.e. expert estimation], and sampling).
+
+
+
+<br />
+
+**Before using this package, users need to install the freeware 
+[JAGS](https://mcmc-jags.sourceforge.io/).**
+
+<br />
+
+
+The workflow of `popbayes` consists in three main steps:
+
+1. Formatting data (`format_data()`)
+2. Fitting trend model (`fit_trend()`)
+3. Visualizing results (`plot_trend()`)
+
+The package also provides a lot of functions to handle individuals counts series 
+and model outputs. The following figure shows a more complete usage of the 
+workflow.
+
+
+<br />
+
+
+```{r, echo = FALSE, out.width = "100%", fig.cap = "Framework of the popbayes package", fig.align = 'center'}
+knitr::include_graphics("docs/popbayes-diagram.png")
+```
+
+
+<br />
+
+
+
+## The Garamba dataset
+
+
+
+The package `popbayes` comes with an example dataset: `garamba`. It contains 
+individuals counts for 10 African mammals species surveyed in the Garamba 
+National Park (Democratic Republic of the Congo) from 1976 to 2017.
+
+
+<br />
 
 ```{r 'load-data'}
 data("garamba")
-
-dim(garamba)
 ```
 
-```{r 'explore-data-1'}
-head(garamba, 30)
-```
+<br />
 
-```{r 'explore-data-2'}
-## Unique locations ----
-sort(unique(garamba$"location"))
-
-## Unique species ----
-sort(unique(garamba$"species"))
-
-## Unique years ----
-sort(unique(garamba$"year"))
-
-## Unique Stat methods ----
-sort(unique(garamba$"stat_method"))
-
-## Unique Field methods ----
-sort(unique(garamba$"field_method"))
-
-## Is there any NA counts ----
-sum(is.na(garamba$"counts"))
+```{r 'print-data', echo = FALSE}
+knitr::kable(head(garamba, 15), caption = "The Garamba dataset (first rows)", 
+             align = c("c", "l", "c", "c", "c", "r", "r", "r"))
 ```
 
 
+<br />
 
-## 2. Formatting counts data
+
+This dataset has a typical structure with a location field (`location`), a 
+species name field (`species`), a date field (`year`), and an individuals counts
+field (`counts`). 
 
 
-```{r 'conversion-data', echo = -4}
-## Conversion data available in popbayes ----
+<br />
+
+**Statistical method**
+
+A fourth field is **mandatory**: `stat_method`. This column specifies the 
+sampling method used to estimate individuals counts. This can be `T` for total 
+counts, `G` for guesstimate (i.e. expert estimation), or `S` for sampling method.
+
+To be usable by the Bayesian model, individuals counts data must be accompanied 
+by information on precision expressed as a 95% confident interval. If:
+
+- counts are `T` or `G`, users **do not need** to provide any information on 
+counts precision. This confident interval will be computed by the 
+function `format_data()` following these two equations:
+
+$$ CI_{(T)} = [\ 0.95 \times counts\ ; 1.20 \times counts\ ] $$
+$$ CI_{(G)} = [\ 0.80 \times counts\ ; 1.20 \times counts\ ] $$
+
+- counts are `S`, users **need to specify** a measure of precision. Precision 
+is preferably provided in the form of a 95% CI by means of two fields: `lower_ci` 
+and `upper_ci` (as in the `garamba` dataset). Alternatively it may also be given 
+in the form of a standard deviation (`sd`), a variance (`var`), or a 
+coefficient of variation (`cv`). Note that precision metrics can be different 
+between counts. For instance, some `S` counts can have an `sd` value and others 
+`lower_ci` and `upper_ci`. In that case three precision columns will be required
+(`lower_ci`, `upper_ci`, and `sd`). 
+
+
+<br />
+
+**Field method**
+
+Another **optional** column, `field_method`, can be provided. It refers to the 
+type of survey used to collect data. This can be `A` for aerial survey or `G` for 
+ground survey. This information is required if counts in a same series come 
+from different methods (both `A` and `G`).
+
+The detectability of a species is strongly dependent on the survey method and
+each species has its own _preferred field method_. So it is recommended to provide
+the column `field_method` if counts have been collected under the non-preferred 
+field method of the species (even if a series has the same `field_method`).
+
+
+<br />
+
+**Counts conversion**
+
+The function `format_data()` will convert counts data (and 95% CI values) to their 
+equivalent in the preferred field method of the species. To do so, users 
+**need to provide** two counts conversion information:
+
+- `pref_field_method`: the preferred field method of the species (`A` or `G`)
+- `conversion_fact`: a multiplicative factor used to convert counts data
+
+The package `popbayes` provides the `conversion_data` dataset. It contains
+these two information for 15 African mammals species.
+
+
+<br />
+
+```{r 'load-data-2'}
 data("conversion_data")
-
-conversion_data
 ```
 
+<br />
+
+```{r 'print-data-2', echo = FALSE}
+knitr::kable(conversion_data[ , c(3, 6, 7, 8)], caption = "Counts conversion data available in popbayes", 
+             align = c("l", "c", "c", "r"))
+```
+
+<br />
+
+If users work with these species, the package `popbayes` will retrieve the values
+of `pref_field_method` and `conversion_fact` from this dataset. But if some species
+are absent from this dataset, users **need to provide** their values when running
+`format_data()`. These values can be added in the counts dataset (Garamba) but 
+we recommend to create an additional table and to pass it to the function 
+`format_data()` with the argument `info`.
+
+Let's take an example and let's assume that _Alcelaphus buselaphus_ is absent 
+from `conversion_data`.
+
+
+```{r 'create-info'}
+## Remove Alcelaphus buselaphus (for the example) ----
+info <- conversion_data[-2, c("species", "pref_field_method", "conversion_fact")]
+
+## Add new species ----
+conversion_info <- data.frame("species"           = "Alcelaphus buselaphus",
+                              "pref_field_method" = "G",
+                              "conversion_fact"   = 2.302)
+
+## Append new species ----
+conversion_info <- rbind(info, conversion_info)
+conversion_info
+```
+
+<br />
+
+How to find the counts conversion factor of a species? The dataset `conversion_data` 
+contains the field `category`. The counts conversion factor is in fact specific 
+to a group of species rather than a species. Theses species categories are based on 
+the detectability of the species.
+
+The package `popbayes` lists five species categories:
+
+- **MLB**: Medium-sized Light and Brown species (20-150kg)
+- **LLB**: Large Light and Brown species (>150kg)
+- **LD**: Large Dark (>150kg)
+- **Elephant**
+- **Giraffe**
+
+
+
+<br />
+
+
+
+## Checking data
+
+
+Before going any further, let's check the Garamba dataset. In particular we need 
+to check `location` and `species` spelling, `year` and `counts` field format, 
+and the `stat_method` and `field_method` categories.
+
+
+<br />
+
+**Check `location` field**
+
+```{r 'check-location'}
+unique(garamba$"location")
+
+sum(is.na(garamba$"location"))   # Is there any missing values?
+```
+
+Field **`location`** can be either a `character` or a `factor`. It **cannot** 
+contain any `NA` values.
+
+
+<br />
+
+**Check `species` field**
+
+```{r 'check-species'}
+unique(garamba$"species")
+
+sum(is.na(garamba$"species"))   # Is there any missing values?
+
+## Are there species absent from the 'conversion_data' popbayes dataset?
+garamba_species <- unique(garamba$"species")
+garamba_species[which(!(garamba_species %in% conversion_data$"species"))]
+```
+
+Field **`species`** can be either a `character` or a `factor`. It **cannot** 
+contain any `NA` values.
+
+
+<br />
+
+**Check `year` field**
+
+```{r 'check-year'}
+is.numeric(garamba$"year")     # Are years in a numerical format?
+
+sum(is.na(garamba$"year"))     # Is there any missing values?
+
+range(garamba$"year")          # What is the temporal extent?
+```
+
+Field **`year`** must be a `numeric`. It **cannot** contain any `NA` values.
+
+<br />
+
+If you have a date (e.g. '2021/05/19') you need to convert it into a numeric 
+format. For instance:
+
+```{r 'convert-date'}
+## Convert a character to a date object ----
+x <- as.Date("2021/05/19")
+x
+
+## Convert a date to a numeric (number of days since 1970/01/01) ----
+x <- as.numeric(x)
+x
+
+## Check ----
+as.Date(x, origin = as.Date("1970/01/01"))
+```
+
+Others methods exist to convert a `date` to a `numeric` format. You may prefer 
+computing the number of days since the first date of your survey. It's up to you.
+
+
+<br />
+
+**Check `counts` field**
+
+```{r 'check-counts'}
+is.numeric(garamba$"counts")   # Are counts in a numerical format?
+
+range(garamba$"counts")        # What is the values range?
+
+sum(is.na(garamba$"counts"))   # Is there any missing values?
+```
+
+Field **`counts`** must be a **positive** `numeric` (zero counts are allowed).
+You can deal with `NA` counts later in the `format_data()` function.
+
+
+<br />
+
+**Check `stat_method` field**
+
+```{r 'check-stat'}
+unique(garamba$"stat_method")
+
+sum(is.na(garamba$"stat_method"))   # Is there any missing values?
+```
+
+Field **`stat_method`** can be either a `character` or a `factor`. It **must**
+contain only `T`, `G`, or `S` categories and **cannot** contain any `NA` values.
+
+
+<br />
+
+**Check `field_method` field**
+
+```{r 'check-field'}
+unique(garamba$"field_method")
+
+sum(is.na(garamba$"field_method"))   # Is there any missing values?
+```
+
+Field **`field_method`** can be either a `character` or a `factor`. It **must**
+contain only `A`, or `T` categories and **cannot** contain any `NA` values.
+
+
+
+<br />
+
+
+
+## Formatting data
+
+This first `popbayes` function we will used is `format_data()`. This function 
+provides an easy way to get individuals counts series ready to be analyzed by 
+the package. It must be **used prior to** all other functions.
+
+
+<br />
+
+First let's define the path (relative or absolute) to save objects/results.
+
+```{r 'define-path-1', eval = TRUE, echo = FALSE}
+path <- tempdir()
+```
+
+```{r 'define-path-2', eval = FALSE, echo = TRUE}
+path <- "the_folder_to_store_outputs"
+```
+
+
+<br />
+
+The function `format_data()` has many arguments to provide columns names in the
+users dataset like `location`, `species`, `lower_ci`, etc. By default columns
+names are the same as in the Garamba dataset. If your location field
+is "site", you'll need to use the argument `location` as follow: 
+`location = "site"`.
+
+
+<br />
 
 ```{r 'format-data'}
-path <- tempdir()
-## Format data by popbayes ----
 garamba_formatted <- popbayes::format_data(data = garamba, path = path)
 ```
 
+<br />
+
+
+As said above if you have to add your own counts conversion data you will use
+the argument `info`.
+
+<br />
+
+Let's explore the output.
 
 ```{r 'explore-series'}
 ## Class of the object ----
 class(garamba_formatted)
 
-## Number of elements (# locations x # species) ----
+## Number of elements (i.e. number of counts series) ----
 length(garamba_formatted)
 
 ## Get series names ----
-names(garamba_formatted)
-
-## alternatively... ----
 popbayes::list_series(path)
-
-## Get series content ----
-names(garamba_formatted[[1]])
 ```
 
+<br />
 
-## 3. Exploring counts series
+Let's work with the counts series `"garamba__alcelaphus_buselaphus"`. We can use
+the function `filter_series()`.
 
-```{r 'get-series-data-1'}
-## Extract all converted data ----
-converted_data <- popbayes::series_to_df(garamba_formatted, converted = TRUE)
-
-dim(converted_data)
+```{r 'filter-series'}
+## Retrieve series by species and location ----
+a_buselaphus <- popbayes::filter_series(data     = garamba_formatted, 
+                                        species  = "Alcelaphus buselaphus",
+                                        location = "Garamba")
 ```
 
-```{r 'get-series-data-1-1'}
-head(converted_data, 15)
+<br />
+
+Let's display the series content.
+
+```{r 'print-series'}
+print(a_buselaphus)
 ```
 
-```{r 'get-series-data-2'}
-## Extract all original data ----
-original_data <- popbayes::series_to_df(garamba_formatted, converted = FALSE)
+<br />
 
-dim(original_data)
-```
+The first elements of the list provide a summary of the counts series.
 
-```{r 'get-series-data-2-1'}
-head(original_data, 15)
-```
+If we compare the two last data frame (`data_original` and `data_converted`), 
+there are not identical. The function `format_data()` has **1)** computed the 
+95% CI boundaries for total counts (coded `T` in the column `stat_method`), and 
+**2)** converted all counts (and CI boundaries) to their equivalent in the 
+preferred field method (from `A` to `G`) by applying the conversion factor of 
+`2.302`.
 
+The Bayesian model will use counts and precision measures from the `data_converted`
+data frame.
 
+<br />
 
+Before fitting the model we can visualize the counts series with `plot_series()`.
 
-```{r 'get-series'}
-## Retrieve series by species names ----
-a_buselaphus <- popbayes::filter_series(garamba_formatted, species = "Alcelaphus buselaphus")
-```
-
-```{r 'get-series-data-3'}
-## Extract converted data for series with A. buselaphus ----
-popbayes::series_to_df(a_buselaphus, converted = TRUE)
-```
+<br />
 
 ```{r 'plot-series-1', fig.width=12, fig.height=6, out.width="100%"}
-## Explore series by name ----
 popbayes::plot_series("garamba__alcelaphus_buselaphus", path = path)
 ```
+
+<br />
+
+
+
+The function `format_data()` has also exported series lists as `.RData` files in the
+`path` folder. This folder contains sub-folders named after series names (one by series)
+in which one `*_data.RData` file has been created.
+
+
+```{r 'list-folder-1', echo = TRUE, eval = FALSE}
+list.files(path, recursive = TRUE)
+```
+
+```{r 'list-folder-2', echo = FALSE, eval = TRUE}
+list.files(path, recursive = TRUE, pattern = "^garamba__")
+```
+
+
+<br />
+
+These `*_data.RData` files (counts serires) can be imported later by running the 
+function `read_series()`.
+
+
+```{r 'read-series', eval = FALSE}
+a_buselaphus <- popbayes::read_series("garamba__alcelaphus_buselaphus", path = path)
+```
+
+
+<br />
 
 
 
 ## 4. Fitting Bayesian model
 
-```{r 'rmax-data', echo = -4}
-## Rmax data available in popbayes ----
-data("rmax_data")
 
-rmax_data
+The demographic potential of a species is limited. The intrinsic rate of 
+increase `rmax` is the maximum increase in log population size that a species 
+can attain in a year.
+
+We strongly recommend providing these `rmax` values while estimating population 
+trend to limit yearly population growth estimated by the model.
+
+According to Sinclair (2003), `rmax` is related to the body mass of adult 
+females `W`  by the formula:
+
+$$ rmax = 1.375 \times W^{-0.315} $$
+
+Body masses are found in the literature in publications such as Kingdon & 
+Hoffman (2013), Cornelis _et al._ (2014), Illius & Gordon (1992), 
+Sinclair (1996), Suraud _et al._ (2012), or Foley & Faust (2010). 
+Alternatively, `rmax` can be obtained from previous demographic analyses.
+
+<br />
+
+The package `popbayes` provides the `rmax` values for the same 15 African mammals
+species listed previously. These values are available in the dataset `rmax_data`.
+
+<br />
+
+```{r 'rmax-data'}
+data("rmax_data")
 ```
+
+
+**!!! BOOKMARK !!!**
+
+
+<br />
+
+```{r 'print-data-3', echo = FALSE}
+knitr::kable(rmax_data, caption = "Rmax data available in popbayes", 
+             align = c("l", "r"))
+```
+
+
+
+
+
+
+
 
 
 ```{r 'run-jags', eval = FALSE}
