@@ -355,7 +355,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   
   ## Check precision columns ----
   
-  if (!missing(lower_ci)) {
+  if (!is.null(lower_ci)) {
     
     if (!is.character(lower_ci) || length(lower_ci) != 1) {
       stop("Argument 'lower_ci' must be a column name (character string).")
@@ -365,9 +365,6 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
       stop("The column '", lower_ci, "' (argument lower_ci) is absent ", 
            "from 'data'. Please check the spelling.")
     }
-  }
-  
-  if (lower_ci %in% colnames(data)) {
     
     if (!is.numeric(data[ , lower_ci])) {
       stop("The column '", lower_ci, "' must be numeric.")
@@ -378,7 +375,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
     }
   }
   
-  if (!missing(upper_ci)) {
+  if (!is.null(upper_ci)) {
     
     if (!is.character(upper_ci) || length(upper_ci) != 1) {
       stop("Argument 'upper_ci' must be a column name (character string).")
@@ -388,9 +385,6 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
       stop("The column '", upper_ci, "' (argument upper_ci) is absent ", 
            "from 'data'. Please check the spelling.")
     }
-  }
-  
-  if (upper_ci %in% colnames(data)) {
     
     if (!is.numeric(data[ , upper_ci])) {
       stop("The column '", upper_ci, "' must be numeric.")
@@ -400,7 +394,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
       stop("The column '", upper_ci, "' must be positive (or zero).")
     }
   }
-
+  
   if (!is.null(sd)) {
     
     if (!is.character(sd) || length(sd) != 1) {
