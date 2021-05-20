@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-
+```{r 'setup', echo = FALSE}
+library("popbayes")
+```
 
 The goal of the R package `popbayes` is to fit population trend over time under
 a Bayesian framework. Population size is considered as individuals counts 
