@@ -92,237 +92,540 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/frbcesab/popbayes">"popbayes"</a></span><span class="op">)</span></code></pre></div>
-<p><img src="docs/popbayes-diagram.png" style="width:100.0%"></p>
+<p>The goal of the R package <code>popbayes</code> is to fit population trend over time under a Bayesian framework. Population size is considered as individuals counts (not densities) collected at different dates. The package can deal with multiple species surveyed at different locations but each <strong>counts series</strong> (one species at one location) will be processed independently.</p>
+<p>The strength of <code>popbayes</code> is to take into account counts collected by different type of surveys (aerial vs ground surveys) estimated by different census methods (total counts, guesstimates [i.e. expert estimation], and sampling).</p>
+<p><br></p>
+<p><strong>Before using this package, users need to install the freeware <a href="https://mcmc-jags.sourceforge.io/">JAGS</a>.</strong></p>
+<p><br></p>
+<p>The workflow of <code>popbayes</code> consists in three main steps:</p>
+<ol style="list-style-type: decimal">
+<li>Formatting data (<code><a href="../reference/format_data.html">format_data()</a></code>)</li>
+<li>Fitting trend model (<code><a href="../reference/fit_trend.html">fit_trend()</a></code>)</li>
+<li>Visualizing results (<code><a href="../reference/plot_trend.html">plot_trend()</a></code>)</li>
+</ol>
+<p>The package also provides a lot of functions to handle individuals counts series and model outputs. The following figure shows a more complete usage of the workflow.</p>
+<p><br></p>
+<div class="figure" style="text-align: center">
+<img src="docs/popbayes-diagram.png" alt="Framework of the popbayes package" width="100%"><p class="caption">
+Framework of the popbayes package
+</p>
+</div>
+<p><br></p>
 <div id="the-garamba-dataset" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-garamba-dataset" class="anchor"></a>1. The garamba dataset</h2>
+<a href="#the-garamba-dataset" class="anchor"></a>The Garamba dataset</h2>
+<p>The package <code>popbayes</code> comes with an example dataset: <code>garamba</code>. It contains individuals counts for 10 African mammals species surveyed in the Garamba National Park (Democratic Republic of the Congo) from 1976 to 2017.</p>
+<p><br></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"garamba"</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<table class="table">
+<caption>The Garamba dataset (first rows)</caption>
+<thead><tr class="header">
+<th align="center">location</th>
+<th align="left">species</th>
+<th align="center">year</th>
+<th align="center">stat_method</th>
+<th align="center">field_method</th>
+<th align="right">counts</th>
+<th align="right">lower_ci</th>
+<th align="right">upper_ci</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1976</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">7750</td>
+<td align="right">6280</td>
+<td align="right">9220</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1983</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1932</td>
+<td align="right">1120</td>
+<td align="right">2744</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1984</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1224</td>
+<td align="right">782</td>
+<td align="right">1666</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1986</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1705</td>
+<td align="right">1116</td>
+<td align="right">2294</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1991</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">987</td>
+<td align="right">663</td>
+<td align="right">1311</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1993</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">3444</td>
+<td align="right">1290</td>
+<td align="right">5598</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1995</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">2819</td>
+<td align="right">1620</td>
+<td align="right">4018</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">1998</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1685</td>
+<td align="right">1287</td>
+<td align="right">2083</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">2000</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1169</td>
+<td align="right">945</td>
+<td align="right">1393</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">2002</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1139</td>
+<td align="right">907</td>
+<td align="right">1371</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">2003</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1595</td>
+<td align="right">1142</td>
+<td align="right">2048</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">2004</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">1204</td>
+<td align="right">811</td>
+<td align="right">1597</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">2012</td>
+<td align="center">T</td>
+<td align="center">A</td>
+<td align="right">552</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">2014</td>
+<td align="center">T</td>
+<td align="center">A</td>
+<td align="right">698</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">2017</td>
+<td align="center">T</td>
+<td align="center">A</td>
+<td align="right">1051</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>This dataset has a typical structure with a location field (<code>location</code>), a species name field (<code>species</code>), a date field (<code>year</code>), and an individuals counts field (<code>counts</code>).</p>
+<p><br></p>
+<p><strong>Statistical method</strong></p>
+<p>A fourth field is <strong>mandatory</strong>: <code>stat_method</code>. This column specifies the sampling method used to estimate individuals counts. This can be <code>T</code> for total counts, <code>G</code> for guesstimate (i.e. expert estimation), or <code>S</code> for sampling method.</p>
+<p>To be usable by the Bayesian model, individuals counts data must be accompanied by information on precision expressed as a 95% confident interval. If:</p>
+<ul>
+<li>counts are <code>T</code> or <code>G</code>, users <strong>do not need</strong> to provide any information on counts precision. This confident interval will be computed by the function <code><a href="../reference/format_data.html">format_data()</a></code> following these two equations:</li>
+</ul>
+<p><span class="math display">\[ CI_{(T)} = [\ 0.95 \times counts\ ; 1.20 \times counts\ ] \]</span> <span class="math display">\[ CI_{(G)} = [\ 0.80 \times counts\ ; 1.20 \times counts\ ] \]</span></p>
+<ul>
+<li>counts are <code>S</code>, users <strong>need to specify</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts can have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case three precision columns will be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>).</li>
+</ul>
+<p><br></p>
+<p><strong>Field method</strong></p>
+<p>Another <strong>optional</strong> column, <code>field_method</code>, can be provided. It refers to the type of survey used to collect data. This can be <code>A</code> for aerial survey or <code>G</code> for ground survey. This information is required if counts in a same series come from different methods (both <code>A</code> and <code>G</code>).</p>
+<p>The detectability of a species is strongly dependent on the survey method and each species has its own <em>preferred field method</em>. So it is recommended to provide the column <code>field_method</code> if counts have been collected under the non-preferred field method of the species (even if a series has the same <code>field_method</code>).</p>
+<p><br></p>
+<p><strong>Counts conversion</strong></p>
+<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> will convert counts data (and 95% CI values) to their equivalent in the preferred field method of the species. To do so, users <strong>need to provide</strong> two counts conversion information:</p>
+<ul>
+<li>
+<code>pref_field_method</code>: the preferred field method of the species (<code>A</code> or <code>G</code>)</li>
+<li>
+<code>conversion_fact</code>: a multiplicative factor used to convert counts data</li>
+</ul>
+<p>The package <code>popbayes</code> provides the <code>conversion_data</code> dataset. It contains these two information for 15 African mammals species.</p>
+<p><br></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"garamba"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">)</span>
-<span class="co">#&gt; [1] 141   8</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"conversion_data"</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<table class="table">
+<caption>Counts conversion data available in popbayes</caption>
+<thead><tr class="header">
+<th align="left">species</th>
+<th align="center">category</th>
+<th align="center">pref_field_method</th>
+<th align="right">conversion_fact</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Aepyceros melampus</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="even">
+<td align="left">Alcelaphus buselaphus</td>
+<td align="center">LLB</td>
+<td align="center">G</td>
+<td align="right">2.302</td>
+</tr>
+<tr class="odd">
+<td align="left">Connochaetes taurinus</td>
+<td align="center">LLB</td>
+<td align="center">G</td>
+<td align="right">2.302</td>
+</tr>
+<tr class="even">
+<td align="left">Damaliscus lunatus</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="odd">
+<td align="left">Eudorcas rufifrons</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="even">
+<td align="left">Hippotragus equinus</td>
+<td align="center">LLB</td>
+<td align="center">G</td>
+<td align="right">2.302</td>
+</tr>
+<tr class="odd">
+<td align="left">Kobus ellipsiprymnus</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="even">
+<td align="left">Kobus kob</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="odd">
+<td align="left">Ourebia ourebi</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="even">
+<td align="left">Redunca redunca</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="odd">
+<td align="left">Syncerus caffer</td>
+<td align="center">LD</td>
+<td align="center">A</td>
+<td align="right">0.561</td>
+</tr>
+<tr class="even">
+<td align="left">Tragelaphus derbianus</td>
+<td align="center">LLB</td>
+<td align="center">G</td>
+<td align="right">2.302</td>
+</tr>
+<tr class="odd">
+<td align="left">Tragelaphus scriptus</td>
+<td align="center">MLB</td>
+<td align="center">G</td>
+<td align="right">6.747</td>
+</tr>
+<tr class="even">
+<td align="left">Giraffa camelopardalis</td>
+<td align="center">Giraffe</td>
+<td align="center">A</td>
+<td align="right">3.011</td>
+</tr>
+<tr class="odd">
+<td align="left">Loxodonta africana</td>
+<td align="center">Elephant</td>
+<td align="center">A</td>
+<td align="right">0.659</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>If users work with these species, the package <code>popbayes</code> will retrieve the values of <code>pref_field_method</code> and <code>conversion_fact</code> from this dataset. But if some species are absent from this dataset, users <strong>need to provide</strong> their values when running <code><a href="../reference/format_data.html">format_data()</a></code>. These values can be added in the counts dataset (Garamba) but we recommend to create an additional table and to pass it to the function <code><a href="../reference/format_data.html">format_data()</a></code> with the argument <code>info</code>.</p>
+<p>Let’s take an example and let’s assume that <em>Alcelaphus buselaphus</em> is absent from <code>conversion_data</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">garamba</span>, <span class="fl">30</span><span class="op">)</span>
-<span class="co">#&gt;    location                species year stat_method field_method counts</span>
-<span class="co">#&gt; 1   Garamba  Alcelaphus buselaphus 1976           S            A   7750</span>
-<span class="co">#&gt; 2   Garamba  Alcelaphus buselaphus 1983           S            A   1932</span>
-<span class="co">#&gt; 3   Garamba  Alcelaphus buselaphus 1984           S            A   1224</span>
-<span class="co">#&gt; 4   Garamba  Alcelaphus buselaphus 1986           S            A   1705</span>
-<span class="co">#&gt; 5   Garamba  Alcelaphus buselaphus 1991           S            A    987</span>
-<span class="co">#&gt; 6   Garamba  Alcelaphus buselaphus 1993           S            A   3444</span>
-<span class="co">#&gt; 7   Garamba  Alcelaphus buselaphus 1995           S            A   2819</span>
-<span class="co">#&gt; 8   Garamba  Alcelaphus buselaphus 1998           S            A   1685</span>
-<span class="co">#&gt; 9   Garamba  Alcelaphus buselaphus 2000           S            A   1169</span>
-<span class="co">#&gt; 10  Garamba  Alcelaphus buselaphus 2002           S            A   1139</span>
-<span class="co">#&gt; 11  Garamba  Alcelaphus buselaphus 2003           S            A   1595</span>
-<span class="co">#&gt; 12  Garamba  Alcelaphus buselaphus 2004           S            A   1204</span>
-<span class="co">#&gt; 13  Garamba  Alcelaphus buselaphus 2012           T            A    552</span>
-<span class="co">#&gt; 14  Garamba  Alcelaphus buselaphus 2014           T            A    698</span>
-<span class="co">#&gt; 15  Garamba  Alcelaphus buselaphus 2017           T            A   1051</span>
-<span class="co">#&gt; 16  Garamba Giraffa camelopardalis 1976           S            A    350</span>
-<span class="co">#&gt; 17  Garamba Giraffa camelopardalis 1983           S            A    175</span>
-<span class="co">#&gt; 18  Garamba Giraffa camelopardalis 1984           S            A    237</span>
-<span class="co">#&gt; 19  Garamba Giraffa camelopardalis 1986           S            A    153</span>
-<span class="co">#&gt; 20  Garamba Giraffa camelopardalis 1991           S            A    346</span>
-<span class="co">#&gt; 21  Garamba Giraffa camelopardalis 1993           S            A    347</span>
-<span class="co">#&gt; 22  Garamba Giraffa camelopardalis 1995           S            A    178</span>
-<span class="co">#&gt; 23  Garamba Giraffa camelopardalis 1998           S            A    144</span>
-<span class="co">#&gt; 24  Garamba Giraffa camelopardalis 2000           S            A    118</span>
-<span class="co">#&gt; 25  Garamba Giraffa camelopardalis 2002           S            A     62</span>
-<span class="co">#&gt; 26  Garamba Giraffa camelopardalis 2003           S            A     62</span>
-<span class="co">#&gt; 27  Garamba Giraffa camelopardalis 2004           S            A    185</span>
-<span class="co">#&gt; 28  Garamba Giraffa camelopardalis 2012           T            A     11</span>
-<span class="co">#&gt; 29  Garamba Giraffa camelopardalis 2014           T            A     42</span>
-<span class="co">#&gt; 30  Garamba Giraffa camelopardalis 2017           T            A     42</span>
-<span class="co">#&gt;    lower_ci upper_ci</span>
-<span class="co">#&gt; 1      6280     9220</span>
-<span class="co">#&gt; 2      1120     2744</span>
-<span class="co">#&gt; 3       782     1666</span>
-<span class="co">#&gt; 4      1116     2294</span>
-<span class="co">#&gt; 5       663     1311</span>
-<span class="co">#&gt; 6      1290     5598</span>
-<span class="co">#&gt; 7      1620     4018</span>
-<span class="co">#&gt; 8      1287     2083</span>
-<span class="co">#&gt; 9       945     1393</span>
-<span class="co">#&gt; 10      907     1371</span>
-<span class="co">#&gt; 11     1142     2048</span>
-<span class="co">#&gt; 12      811     1597</span>
-<span class="co">#&gt; 13       NA       NA</span>
-<span class="co">#&gt; 14       NA       NA</span>
-<span class="co">#&gt; 15       NA       NA</span>
-<span class="co">#&gt; 16      100      600</span>
-<span class="co">#&gt; 17       12      338</span>
-<span class="co">#&gt; 18       93      381</span>
-<span class="co">#&gt; 19       13      293</span>
-<span class="co">#&gt; 20      143      549</span>
-<span class="co">#&gt; 21      347      766</span>
-<span class="co">#&gt; 22      178      388</span>
-<span class="co">#&gt; 23       71      217</span>
-<span class="co">#&gt; 24       54      182</span>
-<span class="co">#&gt; 25       49       75</span>
-<span class="co">#&gt; 26       62      137</span>
-<span class="co">#&gt; 27       33      337</span>
-<span class="co">#&gt; 28       NA       NA</span>
-<span class="co">#&gt; 29       NA       NA</span>
-<span class="co">#&gt; 30       NA       NA</span></code></pre></div>
+<code class="sourceCode R"><span class="co">## Remove Alcelaphus buselaphus (for the example) ----</span>
+<span class="va">info</span> <span class="op">&lt;-</span> <span class="va">conversion_data</span><span class="op">[</span><span class="op">-</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"pref_field_method"</span>, <span class="st">"conversion_fact"</span><span class="op">)</span><span class="op">]</span>
+
+<span class="co">## Add new species ----</span>
+<span class="va">conversion_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"species"</span>           <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span>,
+                              <span class="st">"pref_field_method"</span> <span class="op">=</span> <span class="st">"G"</span>,
+                              <span class="st">"conversion_fact"</span>   <span class="op">=</span> <span class="fl">2.302</span><span class="op">)</span>
+
+<span class="co">## Append new species ----</span>
+<span class="va">conversion_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">info</span>, <span class="va">conversion_info</span><span class="op">)</span>
+<span class="va">conversion_info</span>
+<span class="co">#&gt;                   species pref_field_method conversion_fact</span>
+<span class="co">#&gt; 1      Aepyceros melampus                 G           6.747</span>
+<span class="co">#&gt; 3   Connochaetes taurinus                 G           2.302</span>
+<span class="co">#&gt; 4      Damaliscus lunatus                 G           6.747</span>
+<span class="co">#&gt; 5      Eudorcas rufifrons                 G           6.747</span>
+<span class="co">#&gt; 6     Hippotragus equinus                 G           2.302</span>
+<span class="co">#&gt; 7    Kobus ellipsiprymnus                 G           6.747</span>
+<span class="co">#&gt; 8               Kobus kob                 G           6.747</span>
+<span class="co">#&gt; 9          Ourebia ourebi                 G           6.747</span>
+<span class="co">#&gt; 10        Redunca redunca                 G           6.747</span>
+<span class="co">#&gt; 11        Syncerus caffer                 A           0.561</span>
+<span class="co">#&gt; 12  Tragelaphus derbianus                 G           2.302</span>
+<span class="co">#&gt; 13   Tragelaphus scriptus                 G           6.747</span>
+<span class="co">#&gt; 14 Giraffa camelopardalis                 A           3.011</span>
+<span class="co">#&gt; 15     Loxodonta africana                 A           0.659</span>
+<span class="co">#&gt; 16  Alcelaphus buselaphus                 G           2.302</span></code></pre></div>
+<p><br></p>
+<p>How to find the counts conversion factor of a species? The dataset <code>conversion_data</code> contains the field <code>category</code>. The counts conversion factor is in fact specific to a group of species rather than a species. Theses species categories are based on the detectability of the species.</p>
+<p>The package <code>popbayes</code> lists five species categories:</p>
+<ul>
+<li>
+<strong>MLB</strong>: Medium-sized Light and Brown species (20-150kg)</li>
+<li>
+<strong>LLB</strong>: Large Light and Brown species (&gt;150kg)</li>
+<li>
+<strong>LD</strong>: Large Dark (&gt;150kg)</li>
+<li><strong>Elephant</strong></li>
+<li><strong>Giraffe</strong></li>
+</ul>
+<p><br></p>
+</div>
+<div id="checking-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#checking-data" class="anchor"></a>Checking data</h2>
+<p>Before going any further, let’s check the Garamba dataset. In particular we need to check <code>location</code> and <code>species</code> spelling, <code>year</code> and <code>counts</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
+<p><br></p>
+<p><strong>Check <code>location</code> field</strong></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Unique locations ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"location"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"location"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Garamba"</span>
 
-<span class="co">## Unique species ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"species"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"location"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="co">#&gt; [1] 0</span></code></pre></div>
+<p>Field <strong><code>location</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p><br></p>
+<p><strong>Check <code>species</code> field</strong></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"species"</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "Alcelaphus buselaphus"  "Giraffa camelopardalis" "Hippotragus equinus"   </span>
 <span class="co">#&gt;  [4] "Kobus ellipsiprymnus"   "Kobus kob"              "Loxodonta africana"    </span>
 <span class="co">#&gt;  [7] "Ourebia ourebi"         "Redunca redunca"        "Syncerus caffer"       </span>
 <span class="co">#&gt; [10] "Tragelaphus scriptus"</span>
 
-<span class="co">## Unique years ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  [1] 1976 1983 1984 1986 1991 1993 1995 1998 2000 2002 2003 2004 2012 2014 2017</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"species"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="co">#&gt; [1] 0</span>
 
-<span class="co">## Unique Stat methods ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"stat_method"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">## Are there species absent from the 'conversion_data' popbayes dataset?</span>
+<span class="va">garamba_species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"species"</span><span class="op">)</span>
+<span class="va">garamba_species</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">garamba_species</span> <span class="op">%in%</span> <span class="va">conversion_data</span><span class="op">$</span><span class="st">"species"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+<span class="co">#&gt; character(0)</span></code></pre></div>
+<p>Field <strong><code>species</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p><br></p>
+<p><strong>Check <code>year</code> field</strong></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span>     <span class="co"># Are years in a numerical format?</span>
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span><span class="op">)</span>     <span class="co"># Is there any missing values?</span>
+<span class="co">#&gt; [1] 0</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span>          <span class="co"># What is the temporal extent?</span>
+<span class="co">#&gt; [1] 1976 2017</span></code></pre></div>
+<p>Field <strong><code>year</code></strong> must be a <code>numeric</code>. It <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p><br></p>
+<p>If you have a date (e.g. ‘2021/05/19’) you need to convert it into a numeric format. For instance:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Convert a character to a date object ----</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/05/19"</span><span class="op">)</span>
+<span class="va">x</span>
+<span class="co">#&gt; [1] "2021-05-19"</span>
+
+<span class="co">## Convert a date to a numeric (number of days since 1970/01/01) ----</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="va">x</span>
+<span class="co">#&gt; [1] 18766</span>
+
+<span class="co">## Check ----</span>
+<span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">x</span>, origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1970/01/01"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "2021-05-19"</span></code></pre></div>
+<p>Others methods exist to convert a <code>date</code> to a <code>numeric</code> format. You may prefer computing the number of days since the first date of your survey. It’s up to you.</p>
+<p><br></p>
+<p><strong>Check <code>counts</code> field</strong></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>   <span class="co"># Are counts in a numerical format?</span>
+<span class="co">#&gt; [1] TRUE</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>        <span class="co"># What is the values range?</span>
+<span class="co">#&gt; [1]     0 53312</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="co">#&gt; [1] 0</span></code></pre></div>
+<p>Field <strong><code>counts</code></strong> must be a <strong>positive</strong> <code>numeric</code> (zero counts are allowed). You can deal with <code>NA</code> counts later in the <code><a href="../reference/format_data.html">format_data()</a></code> function.</p>
+<p><br></p>
+<p><strong>Check <code>stat_method</code> field</strong></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"stat_method"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S" "T"</span>
 
-<span class="co">## Unique Field methods ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"field_method"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"stat_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="co">#&gt; [1] 0</span></code></pre></div>
+<p>Field <strong><code>stat_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>T</code>, <code>G</code>, or <code>S</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p><br></p>
+<p><strong>Check <code>field_method</code> field</strong></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"field_method"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "A"</span>
 
-<span class="co">## Is there any NA counts ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"field_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
+<p>Field <strong><code>field_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>A</code>, or <code>T</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p><br></p>
 </div>
-<div id="formatting-counts-data" class="section level2">
+<div id="formatting-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#formatting-counts-data" class="anchor"></a>2. Formatting counts data</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Conversion data available in popbayes ----</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"conversion_data"</span><span class="op">)</span>
-
-<span class="co">#&gt;           order       family                species             english</span>
-<span class="co">#&gt; 1  Artiodactyla      Bovidae     Aepyceros melampus              Impala</span>
-<span class="co">#&gt; 2  Artiodactyla      Bovidae  Alcelaphus buselaphus          Hartebeest</span>
-<span class="co">#&gt; 3  Artiodactyla      Bovidae  Connochaetes taurinus     Blue wildebeest</span>
-<span class="co">#&gt; 4  Artiodactyla      Bovidae     Damaliscus lunatus               Tiang</span>
-<span class="co">#&gt; 5  Artiodactyla      Bovidae     Eudorcas rufifrons Red-fronted gazelle</span>
-<span class="co">#&gt; 6  Artiodactyla      Bovidae    Hippotragus equinus       Roan Antelope</span>
-<span class="co">#&gt; 7  Artiodactyla      Bovidae   Kobus ellipsiprymnus           Waterbuck</span>
-<span class="co">#&gt; 8  Artiodactyla      Bovidae              Kobus kob                 Kob</span>
-<span class="co">#&gt; 9  Artiodactyla      Bovidae         Ourebia ourebi               Oribi</span>
-<span class="co">#&gt; 10 Artiodactyla      Bovidae        Redunca redunca      Bohor reedbuck</span>
-<span class="co">#&gt; 11 Artiodactyla      Bovidae        Syncerus caffer     African Buffalo</span>
-<span class="co">#&gt; 12 Artiodactyla      Bovidae  Tragelaphus derbianus         Giant eland</span>
-<span class="co">#&gt; 13 Artiodactyla      Bovidae   Tragelaphus scriptus            Bushbuck</span>
-<span class="co">#&gt; 14 Artiodactyla   Giraffidae Giraffa camelopardalis             Giraffe</span>
-<span class="co">#&gt; 15  Proboscidea Elephantidae     Loxodonta africana    Savanna Elephant</span>
-<span class="co">#&gt;              french category pref_field_method conversion_fact</span>
-<span class="co">#&gt; 1            Impala      MLB                 G           6.747</span>
-<span class="co">#&gt; 2            Bubale      LLB                 G           2.302</span>
-<span class="co">#&gt; 3         Gnou bleu      LLB                 G           2.302</span>
-<span class="co">#&gt; 4              Topi      MLB                 G           6.747</span>
-<span class="co">#&gt; 5  Gazelle Rufifron      MLB                 G           6.747</span>
-<span class="co">#&gt; 6       Hippotrague      LLB                 G           2.302</span>
-<span class="co">#&gt; 7      Cobe Defassa      MLB                 G           6.747</span>
-<span class="co">#&gt; 8    Cobe de Buffon      MLB                 G           6.747</span>
-<span class="co">#&gt; 9            Ourebi      MLB                 G           6.747</span>
-<span class="co">#&gt; 10          Redunca      MLB                 G           6.747</span>
-<span class="co">#&gt; 11           Buffle       LD                 A           0.561</span>
-<span class="co">#&gt; 12   Eland de derby      LLB                 G           2.302</span>
-<span class="co">#&gt; 13    Guib Harnache      MLB                 G           6.747</span>
-<span class="co">#&gt; 14           Girafe  Giraffe                 A           3.011</span>
-<span class="co">#&gt; 15         Elephant Elephant                 A           0.659</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## Format data by popbayes ----</span>
-<span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">garamba</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span>
+<a href="#formatting-data" class="anchor"></a>Formatting data</h2>
+<p>This first <code>popbayes</code> function we will used is <code><a href="../reference/format_data.html">format_data()</a></code>. This function provides an easy way to get individuals counts series ready to be analyzed by the package. It must be <strong>used prior to</strong> all other functions.</p>
+<p><br></p>
+<p>First let’s define the path (relative or absolute) to save objects/results.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"the_folder_to_store_outputs"</span></code></pre></div>
+<p><br></p>
+<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has many arguments to provide columns names in the users dataset like <code>location</code>, <code>species</code>, <code>lower_ci</code>, etc. By default columns names are the same as in the Garamba dataset. If your location field is “site”, you’ll need to use the argument <code>location</code> as follow: <code>location = "site"</code>.</p>
+<p><br></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">garamba</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span>
 <span class="co">#&gt; ✔ Conversion data found in 'popbayes'.</span>
 <span class="co">#&gt; ✔ Detecting 10 series</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><br></p>
+<p>As said above if you have to add your own counts conversion data you will use the argument <code>info</code>.</p>
+<p><br></p>
+<p>Let’s explore the output.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Class of the object ----</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span>
 <span class="co">#&gt; [1] "list"</span>
 
-<span class="co">## Number of elements (# locations x # species) ----</span>
+<span class="co">## Number of elements (i.e. number of counts series) ----</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span>
 <span class="co">#&gt; [1] 10</span>
 
 <span class="co">## Get series names ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "garamba__alcelaphus_buselaphus"  "garamba__giraffa_camelopardalis"</span>
-<span class="co">#&gt;  [3] "garamba__hippotragus_equinus"    "garamba__kobus_ellipsiprymnus"  </span>
-<span class="co">#&gt;  [5] "garamba__kobus_kob"              "garamba__loxodonta_africana"    </span>
-<span class="co">#&gt;  [7] "garamba__ourebia_ourebi"         "garamba__redunca_redunca"       </span>
-<span class="co">#&gt;  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"</span>
-
-<span class="co">## alternatively... ----</span>
 <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/list_series.html">list_series</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "garamba__alcelaphus_buselaphus"  "garamba__giraffa_camelopardalis"</span>
 <span class="co">#&gt;  [3] "garamba__hippotragus_equinus"    "garamba__kobus_ellipsiprymnus"  </span>
 <span class="co">#&gt;  [5] "garamba__kobus_kob"              "garamba__loxodonta_africana"    </span>
 <span class="co">#&gt;  [7] "garamba__ourebia_ourebi"         "garamba__redunca_redunca"       </span>
-<span class="co">#&gt;  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"</span>
-
-<span class="co">## Get series content ----</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt;  [1] "location"          "species"           "years"            </span>
-<span class="co">#&gt;  [4] "n_years"           "stat_methods"      "field_methods"    </span>
-<span class="co">#&gt;  [7] "pref_field_method" "conversion_fact"   "data_original"    </span>
-<span class="co">#&gt; [10] "data_converted"</span></code></pre></div>
-</div>
-<div id="exploring-counts-series" class="section level2">
-<h2 class="hasAnchor">
-<a href="#exploring-counts-series" class="anchor"></a>3. Exploring counts series</h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Extract all converted data ----</span>
-<span class="va">converted_data</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/series_to_df.html">series_to_df</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, converted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">converted_data</span><span class="op">)</span>
-<span class="co">#&gt; [1] 141   9</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">converted_data</span>, <span class="fl">15</span><span class="op">)</span>
-<span class="co">#&gt;    location               species year stat_method field_method counts_conv</span>
-<span class="co">#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A   17840.500</span>
-<span class="co">#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A    4447.464</span>
-<span class="co">#&gt; 3   Garamba Alcelaphus buselaphus 1984           S            A    2817.648</span>
-<span class="co">#&gt; 4   Garamba Alcelaphus buselaphus 1986           S            A    3924.910</span>
-<span class="co">#&gt; 5   Garamba Alcelaphus buselaphus 1991           S            A    2272.074</span>
-<span class="co">#&gt; 6   Garamba Alcelaphus buselaphus 1993           S            A    7928.088</span>
-<span class="co">#&gt; 7   Garamba Alcelaphus buselaphus 1995           S            A    6489.338</span>
-<span class="co">#&gt; 8   Garamba Alcelaphus buselaphus 1998           S            A    3878.870</span>
-<span class="co">#&gt; 9   Garamba Alcelaphus buselaphus 2000           S            A    2691.038</span>
-<span class="co">#&gt; 10  Garamba Alcelaphus buselaphus 2002           S            A    2621.978</span>
-<span class="co">#&gt; 11  Garamba Alcelaphus buselaphus 2003           S            A    3671.690</span>
-<span class="co">#&gt; 12  Garamba Alcelaphus buselaphus 2004           S            A    2771.608</span>
-<span class="co">#&gt; 13  Garamba Alcelaphus buselaphus 2012           T            A    1270.704</span>
-<span class="co">#&gt; 14  Garamba Alcelaphus buselaphus 2014           T            A    1606.796</span>
-<span class="co">#&gt; 15  Garamba Alcelaphus buselaphus 2017           T            A    2419.402</span>
-<span class="co">#&gt;    lower_ci_conv upper_ci_conv field_method_conv</span>
-<span class="co">#&gt; 1      14456.560     21224.440                 G</span>
-<span class="co">#&gt; 2       2578.240      6316.688                 G</span>
-<span class="co">#&gt; 3       1800.164      3835.132                 G</span>
-<span class="co">#&gt; 4       2569.032      5280.788                 G</span>
-<span class="co">#&gt; 5       1526.226      3017.922                 G</span>
-<span class="co">#&gt; 6       2969.580     12886.596                 G</span>
-<span class="co">#&gt; 7       3729.240      9249.436                 G</span>
-<span class="co">#&gt; 8       2962.674      4795.066                 G</span>
-<span class="co">#&gt; 9       2175.390      3206.686                 G</span>
-<span class="co">#&gt; 10      2087.914      3156.042                 G</span>
-<span class="co">#&gt; 11      2628.884      4714.496                 G</span>
-<span class="co">#&gt; 12      1866.922      3676.294                 G</span>
-<span class="co">#&gt; 13      1207.169      1524.845                 G</span>
-<span class="co">#&gt; 14      1526.456      1928.155                 G</span>
-<span class="co">#&gt; 15      2298.432      2903.282                 G</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Extract all original data ----</span>
-<span class="va">original_data</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/series_to_df.html">series_to_df</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, converted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">original_data</span><span class="op">)</span>
-<span class="co">#&gt; [1] 141   8</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">original_data</span>, <span class="fl">15</span><span class="op">)</span>
+<span class="co">#&gt;  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"</span></code></pre></div>
+<p><br></p>
+<p>Let’s work with the counts series <code>"garamba__alcelaphus_buselaphus"</code>. We can use the function <code><a href="../reference/filter_series.html">filter_series()</a></code>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Retrieve series by species and location ----</span>
+<span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_series.html">filter_series</a></span><span class="op">(</span>data     <span class="op">=</span> <span class="va">garamba_formatted</span>, 
+                                        species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span>,
+                                        location <span class="op">=</span> <span class="st">"Garamba"</span><span class="op">)</span>
+<span class="co">#&gt; ✔ Found 1 series with 'Alcelaphus buselaphus' and 'Garamba'.</span></code></pre></div>
+<p><br></p>
+<p>Let’s display the series content.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">a_buselaphus</span><span class="op">)</span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus</span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$location</span>
+<span class="co">#&gt; [1] "Garamba"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$species</span>
+<span class="co">#&gt; [1] "Alcelaphus buselaphus"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$years</span>
+<span class="co">#&gt;  [1] 1976 1983 1984 1986 1991 1993 1995 1998 2000 2002 2003 2004 2012 2014 2017</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$n_years</span>
+<span class="co">#&gt; [1] 15</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$stat_methods</span>
+<span class="co">#&gt; [1] "S" "T"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$field_methods</span>
+<span class="co">#&gt; [1] "A"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$pref_field_method</span>
+<span class="co">#&gt; [1] "G"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$conversion_fact</span>
+<span class="co">#&gt; [1] 2.302</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$data_original</span>
 <span class="co">#&gt;    location               species year stat_method field_method counts_orig</span>
 <span class="co">#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A        7750</span>
 <span class="co">#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A        1932</span>
@@ -354,14 +657,9 @@
 <span class="co">#&gt; 12           811          1597</span>
 <span class="co">#&gt; 13            NA            NA</span>
 <span class="co">#&gt; 14            NA            NA</span>
-<span class="co">#&gt; 15            NA            NA</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Retrieve series by species names ----</span>
-<span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_series.html">filter_series</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, species <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span>
-<span class="co">#&gt; ✔ Found 1 series with 'Alcelaphus buselaphus'.</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Extract converted data for series with A. buselaphus ----</span>
-<span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/series_to_df.html">series_to_df</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, converted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; 15            NA            NA</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $garamba__alcelaphus_buselaphus$data_converted</span>
 <span class="co">#&gt;    location               species year stat_method field_method counts_conv</span>
 <span class="co">#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A   17840.500</span>
 <span class="co">#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A    4447.464</span>
@@ -394,40 +692,126 @@
 <span class="co">#&gt; 13      1207.169      1524.845                 G</span>
 <span class="co">#&gt; 14      1526.456      1928.155                 G</span>
 <span class="co">#&gt; 15      2298.432      2903.282                 G</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Explore series by name ----</span>
-<span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_series.html">plot_series</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<p>The first elements of the list provide a summary of the counts series.</p>
+<p>If we compare the two last data frame (<code>data_original</code> and <code>data_converted</code>), there are not identical. The function <code><a href="../reference/format_data.html">format_data()</a></code> has <strong>1)</strong> computed the 95% CI boundaries for total counts (coded <code>T</code> in the column <code>stat_method</code>), and <strong>2)</strong> converted all counts (and CI boundaries) to their equivalent in the preferred field method (from <code>A</code> to <code>G</code>) by applying the conversion factor of <code>2.302</code>.</p>
+<p>The Bayesian model will use counts and precision measures from the <code>data_converted</code> data frame.</p>
+<p><br></p>
+<p>Before fitting the model we can visualize the counts series with <code><a href="../reference/plot_series.html">plot_series()</a></code>.</p>
+<p><br></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_series.html">plot_series</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><img src="popbayes_files/figure-html/plot-series-1-1.png" width="100%"></p>
+<p><br></p>
+<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has also exported series lists as <code>.RData</code> files in the <code>path</code> folder. This folder contains sub-folders named after series names (one by series) in which one <code>*_data.RData</code> file has been created.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">path</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>#&gt;  [1] "garamba__alcelaphus_buselaphus/garamba__alcelaphus_buselaphus_data.RData"  
+#&gt;  [2] "garamba__giraffa_camelopardalis/garamba__giraffa_camelopardalis_data.RData"
+#&gt;  [3] "garamba__hippotragus_equinus/garamba__hippotragus_equinus_data.RData"      
+#&gt;  [4] "garamba__kobus_ellipsiprymnus/garamba__kobus_ellipsiprymnus_data.RData"    
+#&gt;  [5] "garamba__kobus_kob/garamba__kobus_kob_data.RData"                          
+#&gt;  [6] "garamba__loxodonta_africana/garamba__loxodonta_africana_data.RData"        
+#&gt;  [7] "garamba__ourebia_ourebi/garamba__ourebia_ourebi_data.RData"                
+#&gt;  [8] "garamba__redunca_redunca/garamba__redunca_redunca_data.RData"              
+#&gt;  [9] "garamba__syncerus_caffer/garamba__syncerus_caffer_data.RData"              
+#&gt; [10] "garamba__tragelaphus_scriptus/garamba__tragelaphus_scriptus_data.RData"</code></pre>
+<p><br></p>
+<p>These <code>*_data.RData</code> files (counts serires) can be imported later by running the function <code><a href="../reference/read_series.html">read_series()</a></code>.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/read_series.html">read_series</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
+<p><br></p>
 </div>
 <div id="fitting-bayesian-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fitting-bayesian-model" class="anchor"></a>4. Fitting Bayesian model</h2>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Rmax data available in popbayes ----</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"rmax_data"</span><span class="op">)</span>
-
-<span class="co">#&gt;                   species   rmax</span>
-<span class="co">#&gt; 1      Aepyceros melampus 0.4010</span>
-<span class="co">#&gt; 2   Alcelaphus buselaphus 0.2748</span>
-<span class="co">#&gt; 3   Connochaetes taurinus 0.2679</span>
-<span class="co">#&gt; 4      Damaliscus lunatus 0.2990</span>
-<span class="co">#&gt; 5      Eudorcas rufifrons 0.5270</span>
-<span class="co">#&gt; 6  Giraffa camelopardalis 0.1750</span>
-<span class="co">#&gt; 7     Hippotragus equinus 0.2420</span>
-<span class="co">#&gt; 8    Kobus ellipsiprymnus 0.2702</span>
-<span class="co">#&gt; 9               Kobus kob 0.3802</span>
-<span class="co">#&gt; 10     Loxodonta africana 0.1120</span>
-<span class="co">#&gt; 11         Ourebia ourebi 0.5988</span>
-<span class="co">#&gt; 12        Redunca redunca 0.4010</span>
-<span class="co">#&gt; 13        Syncerus caffer 0.2080</span>
-<span class="co">#&gt; 14  Tragelaphus derbianus 0.1500</span>
-<span class="co">#&gt; 15   Tragelaphus scriptus 0.4487</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>The demographic potential of a species is limited. The intrinsic rate of increase <code>rmax</code> is the maximum increase in log population size that a species can attain in a year.</p>
+<p>We strongly recommend providing these <code>rmax</code> values while estimating population trend to limit yearly population growth estimated by the model.</p>
+<p>According to Sinclair (2003), <code>rmax</code> is related to the body mass of adult females <code>W</code> by the formula:</p>
+<p><span class="math display">\[ rmax = 1.375 \times W^{-0.315} \]</span></p>
+<p>Body masses are found in the literature in publications such as Kingdon &amp; Hoffman (2013), Cornelis <em>et al.</em> (2014), Illius &amp; Gordon (1992), Sinclair (1996), Suraud <em>et al.</em> (2012), or Foley &amp; Faust (2010). Alternatively, <code>rmax</code> can be obtained from previous demographic analyses.</p>
+<p><br></p>
+<p>The package <code>popbayes</code> provides the <code>rmax</code> values for the same 15 African mammals species listed previously. These values are available in the dataset <code>rmax_data</code>.</p>
+<p><br></p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"rmax_data"</span><span class="op">)</span></code></pre></div>
+<p><strong>!!! BOOKMARK !!!</strong></p>
+<p><br></p>
+<table class="table">
+<caption>Rmax data available in popbayes</caption>
+<thead><tr class="header">
+<th align="left">species</th>
+<th align="right">rmax</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Aepyceros melampus</td>
+<td align="right">0.4010</td>
+</tr>
+<tr class="even">
+<td align="left">Alcelaphus buselaphus</td>
+<td align="right">0.2748</td>
+</tr>
+<tr class="odd">
+<td align="left">Connochaetes taurinus</td>
+<td align="right">0.2679</td>
+</tr>
+<tr class="even">
+<td align="left">Damaliscus lunatus</td>
+<td align="right">0.2990</td>
+</tr>
+<tr class="odd">
+<td align="left">Eudorcas rufifrons</td>
+<td align="right">0.5270</td>
+</tr>
+<tr class="even">
+<td align="left">Giraffa camelopardalis</td>
+<td align="right">0.1750</td>
+</tr>
+<tr class="odd">
+<td align="left">Hippotragus equinus</td>
+<td align="right">0.2420</td>
+</tr>
+<tr class="even">
+<td align="left">Kobus ellipsiprymnus</td>
+<td align="right">0.2702</td>
+</tr>
+<tr class="odd">
+<td align="left">Kobus kob</td>
+<td align="right">0.3802</td>
+</tr>
+<tr class="even">
+<td align="left">Loxodonta africana</td>
+<td align="right">0.1120</td>
+</tr>
+<tr class="odd">
+<td align="left">Ourebia ourebi</td>
+<td align="right">0.5988</td>
+</tr>
+<tr class="even">
+<td align="left">Redunca redunca</td>
+<td align="right">0.4010</td>
+</tr>
+<tr class="odd">
+<td align="left">Syncerus caffer</td>
+<td align="right">0.2080</td>
+</tr>
+<tr class="even">
+<td align="left">Tragelaphus derbianus</td>
+<td align="right">0.1500</td>
+</tr>
+<tr class="odd">
+<td align="left">Tragelaphus scriptus</td>
+<td align="right">0.4487</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">a_buselaphus_bugs</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/diagnostic.html">diagnostic</a></span><span class="op">(</span><span class="va">a_buselaphus_bugs</span><span class="op">)</span>
 <span class="co">#&gt; ✔ All models have converged.</span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_trend.html">plot_trend</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><img src="popbayes_files/figure-html/plot-trend-2-1.png" width="100%"></p>
 <p><br></p>
