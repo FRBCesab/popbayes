@@ -473,19 +473,17 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   
   ## Check Field Method field (optional) ----
   
-  if (!missing(field_method)) {
+  if (!is.null(field_method)) {
     
     if (!is.character(field_method) || length(field_method) != 1) {
-      stop("Argument 'field_method' must be a column name (character string).")
+      stop("Argument 'field_method' must be a column name (character of ",
+           "length 1).")
     }
     
     if (!(field_method %in% colnames(data))) {
       stop("The column '", field_method, "' (argument field_method) is ", 
            "absent from 'data'. Please check the spelling.")
     }
-  }
-    
-  if (field_method %in% colnames(data)) {
     
     valid_field_methods <- c("G", "A")
     
@@ -503,8 +501,8 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
            "Allowed values are: ", valid_field_methods_msg, ".")
     }
   }
-    
-    
+  
+  
   
   ## Check Info dataset ----
   
