@@ -831,10 +831,10 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
 #' Remove rows or return error if NA counts detected
 #'
 #' @param data a data frame
-#' @param col a character string(column to inspect)
-#' @param na_rm a logical. If TRUE delete rows. Otherwise return an error
+#' @param col a character string (column to inspect)
+#' @param na_rm a logical. If TRUE, deletes rows. Otherwise, returns an error
 #'
-#' @return A data frame (same as `data`).
+#' @return A data frame (same as `data` with possibly some rows removed).
 #' 
 #' @noRd
 
@@ -866,9 +866,9 @@ is_na_counts <- function(data, col, na_rm) {
 #'
 #' - Check for missing precision values: if neither ci, sd, var, cv are found, 
 #'   returns an error (`na_rm = FALSE`) or deletes rows (`na_rm = TRUE`).
-#' - Check for CI boundaries: lower and upper boundaries are requires. If not, 
+#' - Check for CI boundaries: lower and upper boundaries are required. If not, 
 #'   returns an error.
-#' - Check CI boundaries values: if lower_ci > estimate or upper_ci < estimate,
+#' - Check CI boundaries values: if lower_ci > count or upper_ci < count,
 #'   returns an error.
 #'
 #' @param data a data frame
@@ -897,14 +897,14 @@ is_na_precision <- function(data, precision_cols, na_rm) {
   }
   
   
-  ## Remove or stop is missing precision values for S ----
+  ## Remove or stop if missing precision values for S ----
   
   if (sum(is_na_precision)) {
     
     if (!na_rm) {
       
-      stop("Precision column(s) cannot contain NA for sampling counts. If you ", 
-           "want to remove missing values please use 'na_rm = TRUE'.")
+      stop("Precision column(s) cannot all be NA for sampling counts. If you ", 
+           "want to remove counts missing precision information, please use 'na_rm = TRUE'.")
       
     } else {
       
@@ -946,14 +946,14 @@ is_na_precision <- function(data, precision_cols, na_rm) {
                                    })
           
           if (sum(is_na_precision)) {
-            stop("Both lower and upper CI are required if others precision ", 
-                 "information are not provided.")
+            stop("Unless another type of precision information is provided, both ", 
+                 "lower and upper CI bounds are required.")
           }
           
         } else {
           
-          stop("Both lower and upper CI are required if others precision ", 
-               "information are not provided.")
+          stop("Unless another type of precision information is provided, both ", 
+               "lower and upper CI bounds are required.")
         }
       }
     }
@@ -970,14 +970,14 @@ is_na_precision <- function(data, precision_cols, na_rm) {
                      data[sampling_rows, "counts_orig"])
       
       if (length(pos)) {
-        stop("Some lower CI values are greater than estimation.")
+        stop("At least one CI lower bound is greater than the corresponding count")
       }
       
       
       pos <- which(data[sampling_rows, "lower_ci_orig"] < 0)
       
       if (length(pos)) {
-        stop("Lower CI values must be positive.")
+        stop("CI lower bounds must be positive.")
       }
     }
     
@@ -988,7 +988,7 @@ is_na_precision <- function(data, precision_cols, na_rm) {
                      data[sampling_rows, "counts_orig"])
       
       if (length(pos)) {
-        stop("Some upper CI values are lesser than estimation.")
+        stop("At least one CI upper bound is smaller than the corresponding count.")
       }
       
       
@@ -1007,12 +1007,12 @@ is_na_precision <- function(data, precision_cols, na_rm) {
 
 #' Compute 95% confident interval boundaries
 #'
-#' - Always computes CI boundaries for T and G
-#' - Derives CI boundaries for S from SD, VAR, or CV, unless CI boundaries are
-#'   provided
+#' - Always computes CI bounds for stat methods T and G
+#' - Derives CI bounds for stat method S from SD, VAR, or CV, unless CI bounds 
+#'   are provided
 #'
 #' @param data a data frame
-#' @param precision_cols a character vector (column names of precision 
+#' @param precision_cols a character vector (names of columns with precision 
 #'   information, i.e. `'lower_ci_orig'`, `'sd_orig'`, etc.)
 #'
 #' @return A data frame identical to `data` with two additional columns: 
@@ -1112,11 +1112,11 @@ compute_ci <- function(data, precision_cols) {
 
 #' Convert counts
 #'
-#' This function converts counts (and lower and upper bounds 95% CI) based on
+#' This function converts counts (and 95% CI lower and upper bounds) based on
 #' the preferred field method and the species conversion factor.
 #' 
 #' **Important:** if the preferred field method is provided and the 
-#' `field_method` column is present in `data` counts are always converted to 
+#' `field_method` column is present in `data`, counts are always converted toward 
 #' the preferred field method.
 #'
 #' @param data a data frame. Counts dataset.
@@ -1171,16 +1171,17 @@ convert_counts <- function(data, field_method, conversion_data) {
 #'
 #' For a counts series, identify zero counts.
 #' 
-#' If there is only zero counts, returns an error (`na_rm = FALSE`) or delete 
+#' If there are only zero counts, returns an error (`na_rm = FALSE`) or delete 
 #' series (`na_rm = TRUE`). 
 #' 
-#' If there is zero counts and non-zero counts, replaces 0 by the minimum 
-#' non-zero counts value (and replaces `lower_ci_conv` and `upper_ci_conv` by 
+#' If there are zero and non-zero counts, replaces 0 counts by the smaller 
+#' non-zero count (and replaces `lower_ci_conv` and `upper_ci_conv` by 
 #' the corresponding values).
 #'
 #' @param data a data frame
 #' 
-#' @param na_rm a logical. If TRUE delete rows. Otherwise return an error
+#' @param na_rm a logical. If TRUE delete series with all 0 counts. Otherwise, 
+#' return an error.
 #'
 #' @return A data frame (same as `data`).
 #' 
@@ -1196,7 +1197,7 @@ zero_counts <- function(data, na_rm) {
       
       if (!na_rm) {
         
-        stop("Some series has only zero counts. Check your data or ", 
+        stop("Some series have only zero counts. Check your data or ", 
              "'use na_rm = TRUE'.")
         
       } else {
