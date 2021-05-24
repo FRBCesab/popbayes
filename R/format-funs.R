@@ -37,7 +37,7 @@
 #' The preferred field method specifies the conversion direction. The conversion 
 #' factor is the multiplicative factor that must be applied to an aerial count  
 #' to get an equivalent ground count. (Note that if the preferred field method 
-#' is `'A'`, ground counts will be divided by the conversion factor to get an 
+#' is `'A'`, ground counts will be divided by the conversion factor to get the 
 #' equivalent aerial count.)
 #' These two parameters, named `pref_field_method` and `conversion_fact`, can 
 #' be present in the data frame `data` or in the data frame `info`.
@@ -106,7 +106,7 @@
 #' 
 #' @param lower_ci (optional) a character string. The column name in `data`
 #'   of the lower boundary of the 95% CI of the estimate (i.e. `counts`). If 
-#'   provided the upper boundary of the 95% CI (argument `upper_ci`) must be 
+#'   provided, the upper boundary of the 95% CI (argument `upper_ci`) must be 
 #'   also provided. This argument is only required if some counts have been 
 #'   estimated by a sampling method. But user may prefer use other precision 
 #'   measures, e.g. standard deviation (argument `sd`), variance (argument 
@@ -115,7 +115,7 @@
 #'   
 #' @param upper_ci (optional) a character string. The column name in `data`
 #'   of the upper boundary of the 95% CI of the estimate (i.e. `counts`). If 
-#'   provided the lower boundary of the 95% CI (argument `lower_ci`) must be 
+#'   provided, the lower boundary of the 95% CI (argument `lower_ci`) must be 
 #'   also provided.
 #'   Default is `'upper_ci'`.
 #'   
@@ -141,7 +141,7 @@
 #' @param pref_field_method (optional) a character string. The column name
 #'   in `data` of the preferred field method of the species. This argument is
 #'   only required is `field_method` is not NULL (i.e. individuals have been 
-#'   counted by different methods). Alternatively this value can be passed in
+#'   counted by different methods). Alternatively, this value can be passed in
 #'   `info`(or internally retrieved if the species is listed in the package). 
 #'   See above section **Description** for further information on the counts 
 #'   conversion.
@@ -149,26 +149,25 @@
 #' 
 #' @param conversion_fact (optional) a character string. The column name
 #'   in `data` of the counts conversion factor of the species. This argument is
-#'   only required is `field_method` is not NULL (i.e. individuals have been 
+#'   only required if `field_method` is not NULL (i.e. individuals have been 
 #'   counted by different methods). Alternatively this value can be passed in
 #'   `info` (or internally retrieved if the species is listed in the package).
 #'   See above section **Description** for further information on the counts 
 #'   conversion.
 #'   Default is `NULL`.
 #'   
-#' @param path a character. The directory to save formatted data. 
+#' @param path a character string. The directory to save formatted data. 
 #'   This directory must exist and can be an absolute or a relative path.
 #' 
-#' @param na_rm a logical. If `TRUE` counts and precision measures (for 
-#'   sampling counts) with `NA` values will be removed.
+#' @param na_rm a logical. If `TRUE`, counts with `NA` values will be removed.
 #'   Default is `FALSE` (returns an error to inform user if `NA` are detected).
 #'
-#' @return A n-elements list (where n is the number of counts series). The name 
+#' @return An n-elements list (where n is the number of counts series). The name 
 #'   of each element of this list is a combination of location and species. 
 #'   Each element of the list is a list with the following content:
 #'   \itemize{
-#'   \item \code{location} a character. The name of the series site.
-#'   \item \code{species} a character. The name of the series species.
+#'   \item \code{location} a character string. The name of the series site.
+#'   \item \code{species} a character string. The name of the series species.
 #'   \item \code{years} a numerical vector. The sequence of years of the series.
 #'   \item \code{n_years} an integer. The number of unique years.
 #'   \item \code{stat_methods} a character vector. The different stat methods 
@@ -178,10 +177,9 @@
 #'   \item \code{pref_field_method} (optional) a character. The preferred 
 #'     field method of the species (`'A'` or `'G'`).
 #'   \item \code{conversion_fact} (optional) a numeric. The conversion factor 
-#'     of the species used to convert counts from a field method to its 
-#'     preferred field method.
+#'     of the species used to convert counts to its preferred field method.
 #'   \item \code{data_original} a data frame. Original data of the series with 
-#'     renamed columns. Some rows can have been deleted (if `na_rm = TRUE`).
+#'     renamed columns. Some rows may have been deleted (if `na_rm = TRUE`).
 #'   \item \code{data_converted} a data frame. Data containing computed 
 #'     boundaries of the 95% CI (`lower_ci_conv` and `upper_ci_conv`). If 
 #'     counts have been obtained by different field methods, contains also 
@@ -1222,3 +1220,4 @@ zero_counts <- function(data, na_rm) {
   
   data
 }
+
