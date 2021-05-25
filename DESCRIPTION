@@ -1,7 +1,7 @@
 Package: popbayes
 Type: Package
 Version: 0.1
-Title: Bayesian Model to Estimate Populations Trend
+Title: Bayesian Model to Estimate Population Trends from Counts Series
 Authors@R: c(
     person(
       given   = "Nicolas",
@@ -15,13 +15,12 @@ Authors@R: c(
       email   = "roger.pradel@cefe.cnrs.fr",
       role    = "aut",
       comment = c(ORCID = "0000-0002-2684-9251")))
-Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad 
-    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
-    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id 
-    est laborum.
+Description: This package infers the trends of one or several populations 
+      over time from series of counts. It does so by accounting for count 
+      precisions (provided or inferred based on expert knowledge, e.g. for
+      guesstimates), smoothing the population rate of increase over time, 
+      and accounting for the maximum demographic potential of species.
+      Inference is carried out in a Bayesian framework.
 URL: https://github.com/frbcesab/popbayes
 BugReports: https://github.com/frbcesab/popbayes/issues
 Depends: R (>= 3.5)
