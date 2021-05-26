@@ -22,9 +22,8 @@
 #'     \code{LD} for Large Dark (>150kg), \code{Elephant}, and \code{Giraffe}}
 #'   \item{pref_field_method}{the preferred field method of the species. One of 
 #'     \code{A} for Aerial counts, and \code{G} for Ground counts}
-#'   \item{conversion_fact}{the conversion factor (corresponding to the 
-#'     detectability category) used to convert counts to the preferred field 
-#'     method}
+#'   \item{conversion_fact}{the conversion multiplicative factor (corresponding  
+#'     to the detectability category) used to convert aerial to ground counts}
 #' }
 #' 
 #' @examples 
@@ -38,7 +37,7 @@
 #' Maximum population growth rates
 #' 
 #' @description
-#' This dataset contains for a list of 15 African mammals species the maximum 
+#' This dataset contains for a list of 15 African mammal species the maximum 
 #' population growth rate (i.e. the maximum yearly change in log population 
 #' size).
 #'   
@@ -59,7 +58,7 @@
 #' African mammals survey in the Garamba National Park
 #' 
 #' @description
-#' This dataset contains individual counts of 10 African mammals species
+#' This dataset contains individual counts of 10 African mammal species
 #' in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
 #' 2017.
 #'   
@@ -74,9 +73,9 @@
 #'   \item{field_method}{the field method used to collect data. One of 
 #'     \code{A} (aerial counts), and \code{G} (ground counts)}
 #'   \item{counts}{number of individuals}
-#'   \item{lower_ci}{lower boundary of the 95% confident interval of the counts
+#'   \item{lower_ci}{lower boundary of the 95% confidence interval of the counts
 #'     (only for sampling counts)}
-#'   \item{upper_ci}{upper boundary of the 95% confident interval of the counts
+#'   \item{upper_ci}{upper boundary of the 95% confidence interval of the counts
 #'     (only for sampling counts)}
 #' }
 #' 

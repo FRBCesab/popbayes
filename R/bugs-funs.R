@@ -14,7 +14,7 @@
 #'
 #' @param data a list created by [fit_trend()].
 #' 
-#' @param nc an positive integer. The number of MCMC chains.
+#' @param nc a positive integer. The number of MCMC chains.
 #'
 #' @return A list of `nc` lists (one per chain). Each list has exactly one 
 #' element `rcand`, i.e. a vector of random initial values of candidate 
@@ -194,7 +194,7 @@ model_formula <- function(path = ".") {
 #' Fit a Bayesian model to estimate population size trend
 #'
 #' @description
-#' This function applies a Bayesian model to counts series in order to infer 
+#' This function applies a Bayesian model to count series in order to infer 
 #' the population trend over time. This function only works on the output of 
 #' the [format_data()] or [filter_series()].
 #' 
@@ -241,21 +241,21 @@ model_formula <- function(path = ".") {
 #'   argument `rmax` cannot be NULL unless species are listed in `popbayes`
 #'   (in `rmax_data`).
 #' 
-#' @param mcmc_opts a list containing the number of iteration (`ni`), the thin 
-#'   factor (`nt`), the length of burn in (`nb`), i.e. the number of iterations 
-#'   to discard at the beginning, and the number of chains (`nc`).
+#' @param mcmc_opts a list containing the number of iteration (`ni`), the  
+#'   thinning factor (`nt`), the length of burn in (`nb`), i.e. the number of 
+#'   iterations to discard at the beginning, and the number of chains (`nc`).
 #'   
 #' @param rmax a data frame with two columns: the species name (`species`) and 
 #'   the maximum relative rate of increase of the species (`rmax`), i.e. the 
-#'   maximum yearly change in log pop size. See `?rmax_data` for a example.
+#'   maximum yearly change in log pop size. See `?rmax_data` for an example.
 #'   
-#' @param path a character. The directory to save BUGS outputs (the same as in 
-#'   [format_data()]). 
+#' @param path a character string. The directory to save BUGS outputs (the same 
+#'   as in [format_data()]). 
 #'   
 #' @export
 #'
-#' @return An n-elements list (where n is the number of counts series). Each
-#'   element of the list is a BUGS outputs as provided by JAGS (also written 
+#' @return An n-element list (where n is the number of count series). Each
+#'   element of the list is a BUGS output as provided by JAGS (also written 
 #'   in the folder `path`).
 #'
 #' @examples
@@ -378,7 +378,7 @@ fit_trend <- function(data, model_opts = list(100, TRUE),
     if (!is.null(rmax)) { # rmax data frame provided by users
       
       if (!is.data.frame(rmax)) {
-        stop("Argument 'rmax' must be a two-columns data frame.")
+        stop("Argument 'rmax' must be a two-column data frame.")
       }
       
       valid_rmax_names <- c("species", "rmax")
@@ -386,7 +386,7 @@ fit_trend <- function(data, model_opts = list(100, TRUE),
       valid_rmax_names_msg <- paste0("'", valid_rmax_names_msg, "'")
       
       if (any(!(colnames(rmax) %in% valid_rmax_names))) {
-        stop("Invalid columns names in 'rmax'. ",
+        stop("Invalid column names in 'rmax'. ",
              "'rmax' must contain the following two columns: ", 
              valid_rmax_names_msg, ".")
       }
@@ -484,15 +484,15 @@ fit_trend <- function(data, model_opts = list(100, TRUE),
 #' This function imports a list of BUGS outputs previously exported by 
 #' [fit_trend()]. Users can import one, several, or all models.
 #'
-#' @param series a vector of characters. One or several counts series names. 
-#'   If `NULL` (default) BUGS outputs for all counts series will be imported.
-#'   Users can run [list_series()] to get the correct spelling of counts series 
+#' @param series a vector of character strings. One or several count series names. 
+#'   If `NULL` (default) BUGS outputs for all count series will be imported.
+#'   Users can run [list_series()] to get the correct spelling of count series 
 #'   names.
 #'    
-#' @param path a character. The directory in which BUGS outputs have been 
+#' @param path a character string. The directory in which BUGS outputs have been 
 #'   saved by the function [fit_trend()].
 #'
-#' @return A n-elements list (where n is the number of counts series). See
+#' @return An n-element list (where n is the number of count series). See
 #'   [fit_trend()] for further information.
 #' 
 #' @export
@@ -637,7 +637,7 @@ bugs_to_df <- function(data) {
 #' ## Get counts series names ----
 #' popbayes::list_series()
 #' 
-#' ## Import BUGS outputs for one counts series ----
+#' ## Import BUGS outputs for one count series ----
 #' bugs <- popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus")
 #' 
 #' ## Check for convergence ----
@@ -671,7 +671,7 @@ diagnostic <- function(data, threshold = 1.1) {
     no_converged <- names(bugs)[pos]
     
     usethis::ui_oops(paste0("Some parameters have not converged for the ", 
-                            "following counts series: ", 
+                            "following count series: ", 
                             "{usethis::ui_value(no_converged)}."))
     
   } else {
