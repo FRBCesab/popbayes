@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   generate_data: generate_data.html
   popbayes: popbayes.html
-last_built: 2021-05-25T15:00Z
+last_built: 2021-05-28T15:01Z
 urls:
   reference: https://frbcesab.github.io/popbayes/reference
   article: https://frbcesab.github.io/popbayes/articles
