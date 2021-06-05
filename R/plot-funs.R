@@ -53,7 +53,7 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
   }
   
   if (!is.character(series) || length(series) != 1) {
-    stop("Argument 'series' must be character of length 1 (one series name).")
+    stop("Argument 'series' must be character string (one series name).")
   }
   
   if (!dir.exists(file.path(path, series))) {
