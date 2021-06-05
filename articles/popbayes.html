@@ -92,18 +92,18 @@
 
     
     
-<p>The goal of the R package <code>popbayes</code> is to fit population trend over time under a Bayesian framework. Population size is considered as individuals counts (not densities) collected at different dates. The package can deal with multiple species surveyed at different locations but each <strong>counts series</strong> (one species at one location) will be processed independently.</p>
-<p>The strength of <code>popbayes</code> is to take into account counts collected by different type of surveys (aerial vs ground surveys) estimated by different census methods (total counts, guesstimates [i.e. expert estimation], and sampling).</p>
+<p>The goal of the R package <code>popbayes</code> is to fit population trajectories over time from counts of individuals collected at various dates and with a variety of methods. It does so under a Bayesian framework where the primary quantity being modeled is the rate of increase between successive years (or any other time unit for that matter, the one used for date). The package can deal with multiple species and multiple locations presented in a single data set, but each <strong>count series</strong> made of the counts relative to one species at one location will be processed independently.</p>
+<p>The strength of <code>popbayes</code> is to handle, in a single series, counts collected under different types of surveys (aerial vs ground surveys), and estimated by different census methods (total counts, sampling counts, and even guesstimates [i.e. expert estimates]).</p>
 <p><br></p>
 <p><strong>Before using this package, users need to install the freeware <a href="https://mcmc-jags.sourceforge.io/">JAGS</a>.</strong></p>
 <p><br></p>
 <p>The workflow of <code>popbayes</code> consists in three main steps:</p>
 <ol style="list-style-type: decimal">
 <li>Formatting data (<code><a href="../reference/format_data.html">format_data()</a></code>)</li>
-<li>Fitting trend model (<code><a href="../reference/fit_trend.html">fit_trend()</a></code>)</li>
+<li>Fitting trends (<code><a href="../reference/fit_trend.html">fit_trend()</a></code>)</li>
 <li>Visualizing results (<code><a href="../reference/plot_trend.html">plot_trend()</a></code>)</li>
 </ol>
-<p>The package also provides a lot of functions to handle individuals counts series and model outputs. The following figure shows a more complete usage of the workflow.</p>
+<p>The package also provides a lot of functions to handle individual count series and model outputs. The following figure shows a more complete usage of the workflow.</p>
 <p><br></p>
 <div class="figure" style="text-align: center">
 <img src="docs/popbayes-diagram.png" alt="Framework of the popbayes package" width="100%"><p class="caption">
@@ -114,13 +114,13 @@ Framework of the popbayes package
 <div id="the-garamba-dataset" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-garamba-dataset" class="anchor"></a>The Garamba dataset</h2>
-<p>The package <code>popbayes</code> comes with an example dataset: <code>garamba</code>. It contains individuals counts for 10 African mammals species surveyed in the Garamba National Park (Democratic Republic of the Congo) from 1976 to 2017.</p>
+<p>The package <code>popbayes</code> comes with an example dataset: <code>garamba</code>. It contains counts of individuals from 10 African mammal species surveyed in the Garamba National Park (Democratic Republic of the Congo) from 1976 to 2017.</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"garamba"</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 <table class="table">
-<caption>The Garamba dataset (first rows)</caption>
+<caption>The Garamba dataset (first 20 rows)</caption>
 <thead><tr class="header">
 <th align="center">location</th>
 <th align="left">species</th>
@@ -282,41 +282,94 @@ Framework of the popbayes package
 <td align="right">NA</td>
 <td align="right">NA</td>
 </tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Giraffa camelopardalis</td>
+<td align="center">1976</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">350</td>
+<td align="right">100</td>
+<td align="right">600</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Giraffa camelopardalis</td>
+<td align="center">1983</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">175</td>
+<td align="right">12</td>
+<td align="right">338</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Giraffa camelopardalis</td>
+<td align="center">1984</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">237</td>
+<td align="right">93</td>
+<td align="right">381</td>
+</tr>
+<tr class="odd">
+<td align="center">Garamba</td>
+<td align="left">Giraffa camelopardalis</td>
+<td align="center">1986</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">153</td>
+<td align="right">13</td>
+<td align="right">293</td>
+</tr>
+<tr class="even">
+<td align="center">Garamba</td>
+<td align="left">Giraffa camelopardalis</td>
+<td align="center">1991</td>
+<td align="center">S</td>
+<td align="center">A</td>
+<td align="right">346</td>
+<td align="right">143</td>
+<td align="right">549</td>
+</tr>
 </tbody>
 </table>
 <p><br></p>
-<p>This dataset has a typical structure with a location field (<code>location</code>), a species name field (<code>species</code>), a date field (<code>year</code>), and an individuals counts field (<code>counts</code>).</p>
+<p>This dataset has a typical structure with a location field (<code>location</code>), a species name field (<code>species</code>), a date field (<code>year</code>), and a count field (<code>counts</code>).</p>
+<p>A file with a similar structure in Excel format can be imported in R with…</p>
 <p><br></p>
 <p><strong>Statistical method</strong></p>
-<p>A fourth field is <strong>mandatory</strong>: <code>stat_method</code>. This column specifies the sampling method used to estimate individuals counts. This can be <code>T</code> for total counts, <code>G</code> for guesstimate (i.e. expert estimation), or <code>S</code> for sampling method.</p>
-<p>To be usable by the Bayesian model, individuals counts data must be accompanied by information on precision expressed as a 95% confident interval. If:</p>
+<p>In addition to the fields <code>location</code>, <code>species</code>, <code>year</code>, and <code>counts</code>, a fourth field is <strong>mandatory</strong>: <code>stat_method</code>. This field specifies the census method that produced the count. It can be <code>T</code> for a total count, <code>G</code> for a guesstimate (i.e. expert estimate), or <code>S</code> for a sampling count.</p>
+<p>To be usable by the Bayesian model, individual counts are to be accompanied by information on precision in the form of a 95% confidence interval. If counts are :</p>
 <ul>
-<li>counts are <code>T</code> or <code>G</code>, users <strong>do not need</strong> to provide any information on counts precision. This confident interval will be computed by the function <code><a href="../reference/format_data.html">format_data()</a></code> following these two equations:</li>
+<li>
+<code>T</code> or <code>G</code>, a confidence interval will be computed automatically by the function <code><a href="../reference/format_data.html">format_data()</a></code> according respectively to the following formulas:</li>
 </ul>
 <p><span class="math display">\[ CI_{(T)} = [\ 0.95 \times counts\ ; 1.20 \times counts\ ] \]</span> <span class="math display">\[ CI_{(G)} = [\ 0.80 \times counts\ ; 1.20 \times counts\ ] \]</span></p>
 <ul>
-<li>counts are <code>S</code>, users <strong>need to specify</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts can have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case three precision columns will be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>).</li>
+<li>
+<code>S</code>, users <strong>need to specify</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively, it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts may have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case, three precision columns would be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>).</li>
 </ul>
 <p><br></p>
 <p><strong>Field method</strong></p>
-<p>Another <strong>optional</strong> column, <code>field_method</code>, can be provided. It refers to the type of survey used to collect data. This can be <code>A</code> for aerial survey or <code>G</code> for ground survey. This information is required if counts in a same series come from different methods (both <code>A</code> and <code>G</code>).</p>
-<p>The detectability of a species is strongly dependent on the survey method and each species has its own <em>preferred field method</em>. So it is recommended to provide the column <code>field_method</code> if counts have been collected under the non-preferred field method of the species (even if a series has the same <code>field_method</code>).</p>
+<p>Another <strong>optional</strong> column, <code>field_method</code>, may be provided. It refers to the type of survey used to collect data. This can be <code>A</code> for aerial survey or <code>G</code> for ground survey. This column becomes mandatory as soon as both field methods are present in a series.</p>
+<p>The detectability of a species is indeed strongly dependent on the survey method and each species has its own <em>preferred field method</em>, the one that is assumed to provide estimates closer to the truth. So, even if a series is homogeneous relative to the <code>field method</code>, it is recommended to provide the column <code>field_method</code> if counts have been collected under the not preferred field method. That will force conversion towards the <em>preferred field method</em>.</p>
 <p><br></p>
-<p><strong>Counts conversion</strong></p>
-<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> will convert counts data (and 95% CI values) to their equivalent in the preferred field method of the species. To do so, users <strong>need to provide</strong> two counts conversion information:</p>
+<p><strong>Count conversion</strong></p>
+<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> will convert counts (and 95% CI bounds) into their equivalent in the preferred field method for the species. To this aim, two pieces of information are required :</p>
 <ul>
 <li>
-<code>pref_field_method</code>: the preferred field method of the species (<code>A</code> or <code>G</code>)</li>
+<code>pref_field_method</code>: the preferred field method for the species (<code>A</code> or <code>G</code>)</li>
 <li>
-<code>conversion_fact</code>: a multiplicative factor used to convert counts data</li>
+<code>conversion_fact</code>: the multiplicative factor used to convert an aerial count into an equivalent ground count.</li>
 </ul>
-<p>The package <code>popbayes</code> provides the <code>conversion_data</code> dataset. It contains these two information for 15 African mammals species.</p>
+<p>The package <code>popbayes</code> provides the <code>conversion_data</code> data set, which contains these two pieces of information for 15 African mammal species.</p>
 <p><br></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"conversion_data"</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 <table class="table">
-<caption>Counts conversion data available in popbayes</caption>
+<caption>Species with count conversion information in popbayes</caption>
 <thead><tr class="header">
 <th align="left">species</th>
 <th align="center">category</th>
@@ -417,22 +470,24 @@ Framework of the popbayes package
 </tbody>
 </table>
 <p><br></p>
-<p>If users work with these species, the package <code>popbayes</code> will retrieve the values of <code>pref_field_method</code> and <code>conversion_fact</code> from this dataset. But if some species are absent from this dataset, users <strong>need to provide</strong> their values when running <code><a href="../reference/format_data.html">format_data()</a></code>. These values can be added in the counts dataset (Garamba) but we recommend to create an additional table and to pass it to the function <code><a href="../reference/format_data.html">format_data()</a></code> with the argument <code>info</code>.</p>
-<p>Let’s take an example and let’s assume that <em>Alcelaphus buselaphus</em> is absent from <code>conversion_data</code>.</p>
+<p>If users work only with species in this table, the package <code>popbayes</code> can automatically retrieve the values of <code>pref_field_method</code> and <code>conversion_fact</code> from the <code>conversion_data</code> data set. But for other species, users <strong>need to provide</strong> the information themselves when running <code><a href="../reference/format_data.html">format_data()</a></code>. These values can be provided as additional columns of the count data set. Care must then be taken that the same value is consistently repeated for each count of the same species. For users with sufficient command of R, we recommend rather to create an independent additional table similar to <code>conversion_data</code> and to pass it to the function <code><a href="../reference/format_data.html">format_data()</a></code> as the argument <code>info</code>.</p>
+<p><strong>Note</strong>: Currently <code><a href="../reference/format_data.html">format_data()</a></code> takes its information for count conversion from <strong>one source only</strong> with priority given to <code>info</code>, then to additional columns in data (if <code>info</code> is not provided), and eventually to the <code>conversion_data</code> table of the package (when the other two sources are missing). That means that the source with the highest priority must be complete with respect to the species present in data, as it will be used exclusively to any other source. If, say, you use <code>info</code>, you cannot expect <code><a href="../reference/format_data.html">format_data()</a></code> to retrieve conversion information for a species undocumented in <code>info</code> from the <code>conversion_data</code> table of the package. However, you can easily construct <code>info</code> from a copy of <code>conversion_data</code>, which additionally provides a ready template. It suffices to add any species not already in <code>conversion_data</code> as shown below.<br>
+Let’s assume that we have counts of <em>Taurotragus oryx</em> and <em>Taurotragus derbianus</em> in addition to other species present in the package <code>conversion_data</code> table. We can construct <code>info</code> as follows.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Remove Alcelaphus buselaphus (for the example) ----</span>
-<span class="va">info</span> <span class="op">&lt;-</span> <span class="va">conversion_data</span><span class="op">[</span><span class="op">-</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"pref_field_method"</span>, <span class="st">"conversion_fact"</span><span class="op">)</span><span class="op">]</span>
+<code class="sourceCode R"><span class="co">## Extract the relevant columns of the package table "conversion_data" ----</span>
+<span class="va">info_from_package</span> <span class="op">&lt;-</span> <span class="va">conversion_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"pref_field_method"</span>, <span class="st">"conversion_fact"</span><span class="op">)</span><span class="op">]</span>
 
-<span class="co">## Add new species ----</span>
-<span class="va">conversion_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"species"</span>           <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span>,
+<span class="co">## Add the new species ----</span>
+<span class="va">new_conversion_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"species"</span>           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Taurotragus oryx"</span>,<span class="st">"Taurotragus derbianus"</span><span class="op">)</span>,
                               <span class="st">"pref_field_method"</span> <span class="op">=</span> <span class="st">"G"</span>,
                               <span class="st">"conversion_fact"</span>   <span class="op">=</span> <span class="fl">2.302</span><span class="op">)</span>
 
-<span class="co">## Append new species ----</span>
-<span class="va">conversion_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">info</span>, <span class="va">conversion_info</span><span class="op">)</span>
-<span class="va">conversion_info</span>
+<span class="co">## Append the new species ----</span>
+<span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">info_from_package</span>, <span class="va">new_conversion_info</span><span class="op">)</span>
+<span class="va">info</span>
 <span class="co">#&gt;                   species pref_field_method conversion_fact</span>
 <span class="co">#&gt; 1      Aepyceros melampus                 G           6.747</span>
+<span class="co">#&gt; 2   Alcelaphus buselaphus                 G           2.302</span>
 <span class="co">#&gt; 3   Connochaetes taurinus                 G           2.302</span>
 <span class="co">#&gt; 4      Damaliscus lunatus                 G           6.747</span>
 <span class="co">#&gt; 5      Eudorcas rufifrons                 G           6.747</span>
@@ -446,10 +501,10 @@ Framework of the popbayes package
 <span class="co">#&gt; 13   Tragelaphus scriptus                 G           6.747</span>
 <span class="co">#&gt; 14 Giraffa camelopardalis                 A           3.011</span>
 <span class="co">#&gt; 15     Loxodonta africana                 A           0.659</span>
-<span class="co">#&gt; 16  Alcelaphus buselaphus                 G           2.302</span></code></pre></div>
+<span class="co">#&gt; 16       Taurotragus oryx                 G           2.302</span>
+<span class="co">#&gt; 17  Taurotragus derbianus                 G           2.302</span></code></pre></div>
 <p><br></p>
-<p>How to find the counts conversion factor of a species? The dataset <code>conversion_data</code> contains the field <code>category</code>. The counts conversion factor is in fact specific to a group of species rather than a species. Theses species categories are based on the detectability of the species.</p>
-<p>The package <code>popbayes</code> lists five species categories:</p>
+<p>If you do not have conversion information of your own for a new species, you can rely on the conversion information of species with similar characteristics. The package popbayes distinguishes five categories of species:</p>
 <ul>
 <li>
 <strong>MLB</strong>: Medium-sized Light and Brown species (20-150kg)</li>
@@ -460,19 +515,21 @@ Framework of the popbayes package
 <li><strong>Elephant</strong></li>
 <li><strong>Giraffe</strong></li>
 </ul>
+<p>The field <code>category</code> of the <code>conversion_data</code> table indicates which species belong to each.</p>
 <p><br></p>
 </div>
 <div id="checking-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#checking-data" class="anchor"></a>Checking data</h2>
-<p>Before going any further, let’s check the Garamba dataset. In particular we need to check <code>location</code> and <code>species</code> spelling, <code>year</code> and <code>counts</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
+<p>The first thing that the function <code>format data()</code> does is to check the validity of the content of the different fields of the count data set. Here we will do that manually on the Garamba dataset for illustration purposes.</p>
+<p>In particular, we need to check <code>location</code> and <code>species</code> spelling, <code>year</code> and <code>counts</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
 <p><br></p>
 <p><strong>Check <code>location</code> field</strong></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"location"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Garamba"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"location"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"location"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
 <p>Field <strong><code>location</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>cannot</strong> contain any <code>NA</code> values.</p>
 <p><br></p>
@@ -484,7 +541,7 @@ Framework of the popbayes package
 <span class="co">#&gt;  [7] "Ourebia ourebi"         "Redunca redunca"        "Syncerus caffer"       </span>
 <span class="co">#&gt; [10] "Tragelaphus scriptus"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"species"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"species"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span>
 
 <span class="co">## Are there species absent from the 'conversion_data' popbayes dataset?</span>
@@ -498,14 +555,14 @@ Framework of the popbayes package
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span>     <span class="co"># Are years in a numerical format?</span>
 <span class="co">#&gt; [1] TRUE</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span><span class="op">)</span>     <span class="co"># Is there any missing values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span><span class="op">)</span>     <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"year"</span><span class="op">)</span>          <span class="co"># What is the temporal extent?</span>
 <span class="co">#&gt; [1] 1976 2017</span></code></pre></div>
-<p>Field <strong><code>year</code></strong> must be a <code>numeric</code>. It <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p>Field <strong><code>year</code></strong> must be a <code>numeric</code>. It <strong>cannot</strong> contain any <code>NA</code> values. This said, the time unit is arbitrary, and fractional values of years (or another unit) are allowed. As long as numeric values are entered, the package will work.</p>
 <p><br></p>
-<p>If you have a date (e.g. ‘2021/05/19’) you need to convert it into a numeric format. For instance:</p>
+<p>On the other hand, if you have a date format (e.g. ‘2021/05/19’), you need to convert it to a numeric format. For instance:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Convert a character to a date object ----</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2021/05/19"</span><span class="op">)</span>
@@ -520,26 +577,26 @@ Framework of the popbayes package
 <span class="co">## Check ----</span>
 <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">x</span>, origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"1970/01/01"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "2021-05-19"</span></code></pre></div>
-<p>Others methods exist to convert a <code>date</code> to a <code>numeric</code> format. You may prefer computing the number of days since the first date of your survey. It’s up to you.</p>
+<p>Other methods exist to convert a <code>date</code> to a <code>numeric</code> format. You may prefer computing the number of days since the first date of your survey. It’s up to you.</p>
 <p><br></p>
 <p><strong>Check <code>counts</code> field</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>   <span class="co"># Are counts in a numerical format?</span>
 <span class="co">#&gt; [1] TRUE</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>        <span class="co"># What is the values range?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>        <span class="co"># What is the range of values?</span>
 <span class="co">#&gt; [1]     0 53312</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
-<p>Field <strong><code>counts</code></strong> must be a <strong>positive</strong> <code>numeric</code> (zero counts are allowed). You can deal with <code>NA</code> counts later in the <code><a href="../reference/format_data.html">format_data()</a></code> function.</p>
+<p>Field <strong><code>counts</code></strong> must be a <strong>positive</strong> <code>numeric</code> (zero counts are allowed). <code>NA</code> counts cannot be used for fitting trends. The <code><a href="../reference/format_data.html">format_data()</a></code> function (see below) has an option for dropping them.</p>
 <p><br></p>
 <p><strong>Check <code>stat_method</code> field</strong></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"stat_method"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "S" "T"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"stat_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"stat_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
 <p>Field <strong><code>stat_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>T</code>, <code>G</code>, or <code>S</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
 <p><br></p>
@@ -548,7 +605,7 @@ Framework of the popbayes package
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"field_method"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "A"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"field_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Is there any missing values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"field_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
 <p>Field <strong><code>field_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>A</code>, or <code>T</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
 <p><br></p>
@@ -556,20 +613,20 @@ Framework of the popbayes package
 <div id="formatting-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#formatting-data" class="anchor"></a>Formatting data</h2>
-<p>This first <code>popbayes</code> function we will used is <code><a href="../reference/format_data.html">format_data()</a></code>. This function provides an easy way to get individuals counts series ready to be analyzed by the package. It must be <strong>used prior to</strong> all other functions.</p>
+<p>This first <code>popbayes</code> function to use is <code><a href="../reference/format_data.html">format_data()</a></code>. This function provides an easy way to get individual count series ready to be analyzed by the package. It must be <strong>used prior to</strong> all other functions.</p>
 <p><br></p>
-<p>First let’s define the path (relative or absolute) to save objects/results.</p>
+<p>First let’s define the path (relative or absolute) to save objects/results, namely the formatted count series that can be extracted from the data set.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"the_folder_to_store_outputs"</span></code></pre></div>
 <p><br></p>
-<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has many arguments to provide columns names in the users dataset like <code>location</code>, <code>species</code>, <code>lower_ci</code>, etc. By default columns names are the same as in the Garamba dataset. If your location field is “site”, you’ll need to use the argument <code>location</code> as follow: <code>location = "site"</code>.</p>
+<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has many arguments to provide the names of the columns in the user’s dataset that contain <code>location</code>, <code>species</code>, <code>lower_ci</code>, etc. By default column names are the same as in the Garamba dataset. If your location field, say, is “site”, you’ll need to use the argument <code>location</code> as follows : <code>location = "site"</code>.</p>
 <p><br></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">garamba</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span>
 <span class="co">#&gt; ✔ Conversion data found in 'popbayes'.</span>
 <span class="co">#&gt; ✔ Detecting 10 series</span></code></pre></div>
 <p><br></p>
-<p>As said above if you have to add your own counts conversion data you will use the argument <code>info</code>.</p>
+<p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method and the conversion factor as this : <code>pref_field_method =  "column_with_preferred_field_method"</code> and <code>conversion_fact = "column_with_conversion_factor"</code>, or alternatively use the argument <code>info</code> : <code>info = "dataframe_with_conversion_info"</code>.</p>
 <p><br></p>
 <p>Let’s explore the output.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -693,17 +750,17 @@ Framework of the popbayes package
 <span class="co">#&gt; 14      1526.456      1928.155                 G</span>
 <span class="co">#&gt; 15      2298.432      2903.282                 G</span></code></pre></div>
 <p><br></p>
-<p>The first elements of the list provide a summary of the counts series.</p>
-<p>If we compare the two last data frame (<code>data_original</code> and <code>data_converted</code>), there are not identical. The function <code><a href="../reference/format_data.html">format_data()</a></code> has <strong>1)</strong> computed the 95% CI boundaries for total counts (coded <code>T</code> in the column <code>stat_method</code>), and <strong>2)</strong> converted all counts (and CI boundaries) to their equivalent in the preferred field method (from <code>A</code> to <code>G</code>) by applying the conversion factor of <code>2.302</code>.</p>
+<p>The first elements of the list provide a summary of the count series.</p>
+<p>If we compare the two last data frames (<code>data_original</code> and <code>data_converted</code>), they are not identical. The function <code><a href="../reference/format_data.html">format_data()</a></code> has <strong>1)</strong> computed 95% CI boundaries for total counts (coded <code>T</code> in the column <code>stat_method</code>), and <strong>2)</strong> converted all counts (and CI boundaries) to their equivalent in the preferred field method (from <code>A</code> to <code>G</code>) by applying the conversion factor of <code>2.302</code>.</p>
 <p>The Bayesian model will use counts and precision measures from the <code>data_converted</code> data frame.</p>
 <p><br></p>
-<p>Before fitting the model we can visualize the counts series with <code><a href="../reference/plot_series.html">plot_series()</a></code>.</p>
+<p>Before fitting the model we can visualize the count series with <code><a href="../reference/plot_series.html">plot_series()</a></code>.</p>
 <p><br></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_series.html">plot_series</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><img src="popbayes_files/figure-html/plot-series-1-1.png" width="100%"></p>
 <p><br></p>
-<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has also exported series lists as <code>.RData</code> files in the <code>path</code> folder. This folder contains sub-folders named after series names (one by series) in which one <code>*_data.RData</code> file has been created.</p>
+<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has also exported the count series as <code>.RData</code> files in the <code>path</code> folder where they have been dispatched into sub-folders, one per series.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="va">path</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt;  [1] "garamba__alcelaphus_buselaphus/garamba__alcelaphus_buselaphus_data.RData"  
@@ -717,7 +774,7 @@ Framework of the popbayes package
 #&gt;  [9] "garamba__syncerus_caffer/garamba__syncerus_caffer_data.RData"              
 #&gt; [10] "garamba__tragelaphus_scriptus/garamba__tragelaphus_scriptus_data.RData"</code></pre>
 <p><br></p>
-<p>These <code>*_data.RData</code> files (counts serires) can be imported later by running the function <code><a href="../reference/read_series.html">read_series()</a></code>.</p>
+<p>These <code>*_data.RData</code> files (count series) can be imported later by running the function <code><a href="../reference/read_series.html">read_series()</a></code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/read_series.html">read_series</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><br></p>
