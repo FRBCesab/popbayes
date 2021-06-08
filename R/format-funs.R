@@ -145,7 +145,7 @@
 #'   `info`(or internally retrieved if the species is listed in the package). 
 #'   See above section **Description** for further information on the counts 
 #'   conversion.
-#'   Default is `NULL`.
+#'   Default is `pref_field_method`.
 #' 
 #' @param conversion_fact (optional) a character string. The column name
 #'   in `data` of the counts conversion factor of the species. This argument is
@@ -154,7 +154,7 @@
 #'   `info` (or internally retrieved if the species is listed in the package).
 #'   See above section **Description** for further information on the counts 
 #'   conversion.
-#'   Default is `NULL`.
+#'   Default is `conversion_fact`.
 #'   
 #' @param path a character string. The directory to save formatted data. 
 #'   This directory must exist and can be an absolute or a relative path.
@@ -196,7 +196,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' data("garamba")
+#' ## Load Garamba dataset ----
+#' file_path <- system.file("extdata", "garamba_survey.csv", 
+#'                          package = "popbayes")
+#'                          
+#' garamba <- read.csv(file = file_path)
 #' 
 #' ## Format dataset ----
 #' garamba_formatted <- popbayes::format_data(garamba)
@@ -212,8 +216,10 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
                         location = "location", species = "species", 
                         stat_method = "stat_method", lower_ci = "lower_ci", 
                         upper_ci = "upper_ci", sd = NULL, var = NULL, cv = NULL, 
-                        field_method = "field_method", pref_field_method = NULL,
-                        conversion_fact = NULL, path = ".", na_rm = FALSE) {
+                        field_method = "field_method", 
+                        pref_field_method = "pref_field_method",
+                        conversion_fact = "conversion_fact", path = ".", 
+                        na_rm = FALSE) {
   
   
   ## Check Data dataset ----

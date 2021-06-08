@@ -33,7 +33,11 @@ This function plots a panel of two graphics for one count series
 }
 \examples{
 \dontrun{
-data("garamba")
+## Load Garamba dataset ----
+file_path <- system.file("extdata", "garamba_survey.csv", 
+                         package = "popbayes")
+                         
+garamba <- read.csv(file = file_path)
 
 ## Format dataset ----
 garamba_formatted <- popbayes::format_data(data = garamba)

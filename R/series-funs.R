@@ -66,7 +66,11 @@ get_series <- function(data, quiet = TRUE) {
 #'
 #' @examples
 #' \dontrun{
-#' data("garamba")
+#' ## Load Garamba dataset ----
+#' file_path <- system.file("extdata", "garamba_survey.csv", 
+#'                          package = "popbayes")
+#'                          
+#' garamba <- read.csv(file = file_path)
 #' 
 #' ## Format dataset ----
 #' garamba_formatted <- popbayes::format_data(garamba)
@@ -221,7 +225,11 @@ filter_series <- function(data, species = NULL, location = NULL) {
 #'
 #' @examples
 #' \dontrun{
-#' data("garamba")
+#' ## Load Garamba dataset ----
+#' file_path <- system.file("extdata", "garamba_survey.csv", 
+#'                          package = "popbayes")
+#'                          
+#' garamba <- read.csv(file = file_path)
 #' 
 #' ## Format dataset ----
 #' garamba_formatted <- popbayes::format_data(garamba)
@@ -359,7 +367,11 @@ read_series <- function(series = NULL, path = ".") {
 #'
 #' @examples
 #' \dontrun{
-#' data("garamba")
+#' ## Load Garamba dataset ----
+#' file_path <- system.file("extdata", "garamba_survey.csv", 
+#'                          package = "popbayes")
+#'                          
+#' garamba <- read.csv(file = file_path)
 #' 
 #' ## Format dataset ----
 #' garamba_formatted <- format_data(garamba)

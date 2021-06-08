@@ -28,7 +28,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' data("garamba")
+#' ## Load Garamba dataset ----
+#' file_path <- system.file("extdata", "garamba_survey.csv", 
+#'                          package = "popbayes")
+#'                          
+#' garamba <- read.csv(file = file_path)
 #' 
 #' ## Format dataset ----
 #' garamba_formatted <- popbayes::format_data(data = garamba)
@@ -253,7 +257,11 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
 #'
 #' @examples
 #' \dontrun{
-#' data("garamba")
+#' ## Load Garamba dataset ----
+#' file_path <- system.file("extdata", "garamba_survey.csv", 
+#'                          package = "popbayes")
+#'                          
+#' garamba <- read.csv(file = file_path)
 #' 
 #' ## Format count series ----
 #' garamba_formatted <- popbayes::format_data(garamba)

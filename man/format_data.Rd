@@ -18,8 +18,8 @@ format_data(
   var = NULL,
   cv = NULL,
   field_method = "field_method",
-  pref_field_method = NULL,
-  conversion_fact = NULL,
+  pref_field_method = "pref_field_method",
+  conversion_fact = "conversion_fact",
   path = ".",
   na_rm = FALSE
 )
@@ -122,7 +122,7 @@ counted by different methods). Alternatively, this value can be passed in
 \code{info}(or internally retrieved if the species is listed in the package).
 See above section \strong{Description} for further information on the counts
 conversion.
-Default is \code{NULL}.}
+Default is \code{pref_field_method}.}
 
 \item{conversion_fact}{(optional) a character string. The column name
 in \code{data} of the counts conversion factor of the species. This argument is
@@ -131,7 +131,7 @@ counted by different methods). Alternatively this value can be passed in
 \code{info} (or internally retrieved if the species is listed in the package).
 See above section \strong{Description} for further information on the counts
 conversion.
-Default is \code{NULL}.}
+Default is \code{conversion_fact}.}
 
 \item{path}{a character string. The directory to save formatted data.
 This directory must exist and can be an absolute or a relative path.}
@@ -218,7 +218,11 @@ obtained with one field method.
 }
 \examples{
 \dontrun{
-data("garamba")
+## Load Garamba dataset ----
+file_path <- system.file("extdata", "garamba_survey.csv", 
+                         package = "popbayes")
+                         
+garamba <- read.csv(file = file_path)
 
 ## Format dataset ----
 garamba_formatted <- popbayes::format_data(garamba)
