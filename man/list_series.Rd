@@ -4,7 +4,7 @@
 \alias{list_series}
 \title{Retrieve the count series names}
 \usage{
-list_series(path)
+list_series(path = ".")
 }
 \arguments{
 \item{path}{a character string. The directory in which count series have been

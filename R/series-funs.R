@@ -314,7 +314,8 @@ read_series <- function(series = NULL, path = ".") {
   ## All available series names ----
   
   series_names <- strsplit(filenames, .Platform$"file.sep")
-  series_names <- unlist(lapply(series_names, function(x) x[1]))
+  series_names <- unlist(lapply(series_names, function(x) x[length(x)]))
+  series_names <- gsub("_data\\.RData", "", series_names)
 
   
   if (!is.null(series)) {
@@ -367,7 +368,7 @@ read_series <- function(series = NULL, path = ".") {
 #' popbayes::list_series()
 #' }
 
-list_series <- function(path) {
+list_series <- function(path = ".") {
   
   if (!dir.exists(path)) {
     stop("The directory '", path, "' does not exist.")
@@ -383,7 +384,8 @@ list_series <- function(path) {
   ## All available series names ----
   
   series_names <- strsplit(filenames, .Platform$"file.sep")
-  series_names <- unlist(lapply(series_names, function(x) x[1]))
+  series_names <- unlist(lapply(series_names, function(x) x[length(x)]))
+  series_names <- gsub("_data\\.RData", "", series_names)
   
   series_names
 }
