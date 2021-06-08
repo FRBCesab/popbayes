@@ -2,7 +2,7 @@
 % Please edit documentation in R/series-funs.R
 \name{series_to_df}
 \alias{series_to_df}
-\title{Extract original/converted counts series data from a list}
+\title{Extract original/converted count series data from a list}
 \usage{
 series_to_df(data, converted = TRUE)
 }

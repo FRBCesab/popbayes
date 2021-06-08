@@ -7,16 +7,16 @@
 read_bugs(series = NULL, path = ".")
 }
 \arguments{
-\item{series}{a vector of characters. One or several counts series names.
-If \code{NULL} (default) BUGS outputs for all counts series will be imported.
-Users can run \code{\link[=list_series]{list_series()}} to get the correct spelling of counts series
+\item{series}{a vector of character strings. One or several count series names.
+If \code{NULL} (default) BUGS outputs for all count series will be imported.
+Users can run \code{\link[=list_series]{list_series()}} to get the correct spelling of count series
 names.}
 
-\item{path}{a character. The directory in which BUGS outputs have been
+\item{path}{a character string. The directory in which BUGS outputs have been
 saved by the function \code{\link[=fit_trend]{fit_trend()}}.}
 }
 \value{
-A n-elements list (where n is the number of counts series). See
+An n-element list (where n is the number of count series). See
 \code{\link[=fit_trend]{fit_trend()}} for further information.
 }
 \description{

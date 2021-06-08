@@ -16,9 +16,9 @@ A data frame with 141 rows (counts) and the following 8 columns:
 \item{field_method}{the field method used to collect data. One of
 \code{A} (aerial counts), and \code{G} (ground counts)}
 \item{counts}{number of individuals}
-\item{lower_ci}{lower boundary of the 95\% confident interval of the counts
+\item{lower_ci}{lower boundary of the 95\% confidence interval of the counts
 (only for sampling counts)}
-\item{upper_ci}{upper boundary of the 95\% confident interval of the counts
+\item{upper_ci}{upper boundary of the 95\% confidence interval of the counts
 (only for sampling counts)}
 }
 }
@@ -26,7 +26,7 @@ A data frame with 141 rows (counts) and the following 8 columns:
 garamba
 }
 \description{
-This dataset contains individual counts of 10 African mammals species
+This dataset contains individual counts of 10 African mammal species
 in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
 2017.
 }

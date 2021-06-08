@@ -2,26 +2,26 @@
 % Please edit documentation in R/series-funs.R
 \name{filter_series}
 \alias{filter_series}
-\title{Subset a counts series list based on location and/or species}
+\title{Extract the count series corresponding to a location and/or a species in a list}
 \usage{
 filter_series(data, species = NULL, location = NULL)
 }
 \arguments{
-\item{data}{a named list. The output of the function \code{\link[=format_data]{format_data()}}.}
+\item{data}{a named list. The output of function \code{\link[=format_data]{format_data()}}.}
 
-\item{species}{a character of length 1. A species name.}
+\item{species}{a character string. A species name.}
 
-\item{location}{a character of length 1. A site name.}
+\item{location}{a character string. A site name.}
 }
 \value{
 A subset of \code{data}, i.e. a named list.
 }
 \description{
-From the output of the function \code{\link[=format_data]{format_data()}}, this function subsets the
-list of counts series based on a species name and/or a site. If both the
-species and the location are provided, the resulting list will have a length
-of 1 (data for the species at the location), otherwise the list will have a
-length >= 1.
+This function identifies the count series relative to a species and/or
+a location in a named list like the output of function \code{\link[=format_data]{format_data()}}. If
+both species and location are provided, the series of counts of the species
+at the specified location is extracted. Otherwise, all series corresponding
+to the specified criterion (species or location) are extracted.
 }
 \examples{
 \dontrun{

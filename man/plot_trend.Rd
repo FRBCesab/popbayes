@@ -7,16 +7,16 @@
 plot_trend(series, title = TRUE, path = ".", path_fig = ".", save = FALSE)
 }
 \arguments{
-\item{series}{a character of length 1. The counts series name (can be
+\item{series}{a character string. The count series name (can be
 retrieved by running \code{\link[=list_series]{list_series()}}).}
 
 \item{title}{a logical. If \code{TRUE} (default) a title (series name) is added.}
 
-\item{path}{a character. The directory in which counts series (and BUGS
+\item{path}{a character. The directory in which count series (and BUGS
 outputs) have been saved by the function \code{\link[=format_data]{format_data()}} (and by
 \code{\link[=fit_trend]{fit_trend()}}).}
 
-\item{path_fig}{a character. The directory to save the plot
+\item{path_fig}{a character. The directory where to save the plot
 (if \code{save = TRUE}). This directory must exist and can be an absolute or a
 relative path.}
 
@@ -38,10 +38,10 @@ year. Dark bars are real estimated r.
 \dontrun{
 data("garamba")
 
-## Format counts series ----
+## Format count series ----
 garamba_formatted <- popbayes::format_data(garamba)
 
-## Select one counts series (optional) ----
+## Select one count series (optional) ----
 a_buselaphus <- popbayes::filter_series(garamba_formatted, 
                                         species = "Alcelaphus buselaphus")
 ## Fit population trend ----

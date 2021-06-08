@@ -2,25 +2,25 @@
 % Please edit documentation in R/series-funs.R
 \name{read_series}
 \alias{read_series}
-\title{Import a list of counts series previously exported}
+\title{Import a list of count series previously exported}
 \usage{
 read_series(series = NULL, path = ".")
 }
 \arguments{
-\item{series}{a vector of characters. One or several counts series names to
-be imported. If \code{NULL} (default) all available counts series will be
+\item{series}{a vector of character strings. One or several count series names
+to be imported. If \code{NULL} (default), all available count series will be
 imported.}
 
-\item{path}{a character. The directory in which counts series have been
+\item{path}{a character string. The directory in which count series have been
 saved by the function \code{\link[=format_data]{format_data()}}.}
 }
 \value{
-A n-elements list (where n is the number of counts series). See
+An n-element list (where n is the number of count series). See
 \code{\link[=format_data]{format_data()}} for further information.
 }
 \description{
-This function imports a list of counts series data previously exported by
-\code{\link[=format_data]{format_data()}}. Users can import one, several, or all counts series data.
+This function imports a list of count series data previously exported by
+\code{\link[=format_data]{format_data()}}. Users can import one, several, or all count series data.
 }
 \examples{
 \dontrun{

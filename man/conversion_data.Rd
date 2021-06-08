@@ -19,9 +19,8 @@ columns:
 \code{LD} for Large Dark (>150kg), \code{Elephant}, and \code{Giraffe}}
 \item{pref_field_method}{the preferred field method of the species. One of
 \code{A} for Aerial counts, and \code{G} for Ground counts}
-\item{conversion_fact}{the conversion factor (corresponding to the
-detectability category) used to convert counts to the preferred field
-method}
+\item{conversion_fact}{the conversion multiplicative factor (corresponding
+to the detectability category) used to convert aerial to ground counts}
 }
 }
 \usage{

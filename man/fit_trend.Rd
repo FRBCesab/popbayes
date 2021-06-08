@@ -21,24 +21,24 @@ fit_trend(
 argument \code{rmax} cannot be NULL unless species are listed in \code{popbayes}
 (in \code{rmax_data}).}
 
-\item{mcmc_opts}{a list containing the number of iteration (\code{ni}), the thin
-factor (\code{nt}), the length of burn in (\code{nb}), i.e. the number of iterations
-to discard at the beginning, and the number of chains (\code{nc}).}
+\item{mcmc_opts}{a list containing the number of iteration (\code{ni}), the
+thinning factor (\code{nt}), the length of burn in (\code{nb}), i.e. the number of
+iterations to discard at the beginning, and the number of chains (\code{nc}).}
 
 \item{rmax}{a data frame with two columns: the species name (\code{species}) and
 the maximum relative rate of increase of the species (\code{rmax}), i.e. the
-maximum yearly change in log pop size. See \code{?rmax_data} for a example.}
+maximum yearly change in log pop size. See \code{?rmax_data} for an example.}
 
-\item{path}{a character. The directory to save BUGS outputs (the same as in
-\code{\link[=format_data]{format_data()}}).}
+\item{path}{a character string. The directory to save BUGS outputs (the same
+as in \code{\link[=format_data]{format_data()}}).}
 }
 \value{
-An n-elements list (where n is the number of counts series). Each
-element of the list is a BUGS outputs as provided by JAGS (also written
+An n-element list (where n is the number of count series). Each
+element of the list is a BUGS output as provided by JAGS (also written
 in the folder \code{path}).
 }
 \description{
-This function applies a Bayesian model to counts series in order to infer
+This function applies a Bayesian model to count series in order to infer
 the population trend over time. This function only works on the output of
 the \code{\link[=format_data]{format_data()}} or \code{\link[=filter_series]{filter_series()}}.
 

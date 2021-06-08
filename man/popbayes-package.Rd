@@ -4,15 +4,14 @@
 \name{popbayes-package}
 \alias{popbayes}
 \alias{popbayes-package}
-\title{popbayes: Bayesian Model to Estimate Populations Trend}
+\title{popbayes: Bayesian Model to Estimate Population Trends from Counts Series}
 \description{
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
-    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad 
-    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex 
-    ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
-    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat 
-    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id 
-    est laborum.
+This package infers the trends of one or several populations 
+      over time from series of counts. It does so by accounting for count 
+      precisions (provided or inferred based on expert knowledge, e.g. for
+      guesstimates), smoothing the population rate of increase over time, 
+      and accounting for the maximum demographic potential of species.
+      Inference is carried out in a Bayesian framework.
 }
 \seealso{
 Useful links:

@@ -25,7 +25,7 @@ listing problematic models is displayed.
 ## Get counts series names ----
 popbayes::list_series()
 
-## Import BUGS outputs for one counts series ----
+## Import BUGS outputs for one count series ----
 bugs <- popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus")
 
 ## Check for convergence ----
