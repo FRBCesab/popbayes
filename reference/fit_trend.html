@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Fit a Bayesian model to estimate population size trend — fit_trend" />
-<meta property="og:description" content="This function applies a Bayesian model to counts series in order to infer
+<meta property="og:description" content="This function applies a Bayesian model to count series in order to infer
 the population trend over time. This function only works on the output of
 the format_data() or filter_series().
 Important: This function uses R2jags::jags() and the
@@ -157,7 +157,7 @@ below)." />
     </div>
 
     <div class="ref-description">
-    <p>This function applies a Bayesian model to counts series in order to infer
+    <p>This function applies a Bayesian model to count series in order to infer
 the population trend over time. This function only works on the output of
 the <code><a href='format_data.html'>format_data()</a></code> or <code><a href='filter_series.html'>filter_series()</a></code>.</p>
 <p><strong>Important:</strong> This function uses <code><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>R2jags::jags()</a></code> and the
@@ -213,27 +213,27 @@ argument <code>rmax</code> cannot be NULL unless species are listed in <code>pop
     </tr>
     <tr>
       <th>mcmc_opts</th>
-      <td><p>a list containing the number of iteration (<code>ni</code>), the thin
-factor (<code>nt</code>), the length of burn in (<code>nb</code>), i.e. the number of iterations
-to discard at the beginning, and the number of chains (<code>nc</code>).</p></td>
+      <td><p>a list containing the number of iteration (<code>ni</code>), the
+thinning factor (<code>nt</code>), the length of burn in (<code>nb</code>), i.e. the number of
+iterations to discard at the beginning, and the number of chains (<code>nc</code>).</p></td>
     </tr>
     <tr>
       <th>rmax</th>
       <td><p>a data frame with two columns: the species name (<code>species</code>) and
 the maximum relative rate of increase of the species (<code>rmax</code>), i.e. the
-maximum yearly change in log pop size. See <code><a href='rmax_data.html'>?rmax_data</a></code> for a example.</p></td>
+maximum yearly change in log pop size. See <code><a href='rmax_data.html'>?rmax_data</a></code> for an example.</p></td>
     </tr>
     <tr>
       <th>path</th>
-      <td><p>a character. The directory to save BUGS outputs (the same as in
-<code><a href='format_data.html'>format_data()</a></code>).</p></td>
+      <td><p>a character string. The directory to save BUGS outputs (the same
+as in <code><a href='format_data.html'>format_data()</a></code>).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An n-elements list (where n is the number of counts series). Each
-element of the list is a BUGS outputs as provided by JAGS (also written
+    <p>An n-element list (where n is the number of count series). Each
+element of the list is a BUGS output as provided by JAGS (also written
 in the folder <code>path</code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Subset a counts series list based on location and/or species — filter_series • popbayes</title>
+<title>Extract the count series corresponding to a location and/or a species in a list — filter_series • popbayes</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,12 @@
 
 
 
-<meta property="og:title" content="Subset a counts series list based on location and/or species — filter_series" />
-<meta property="og:description" content="From the output of the function format_data(), this function subsets the
-list of counts series based on a species name and/or a site. If both the
-species and the location are provided, the resulting list will have a length
-of 1 (data for the species at the location), otherwise the list will have a
-length &amp;gt;= 1." />
+<meta property="og:title" content="Extract the count series corresponding to a location and/or a species in a list — filter_series" />
+<meta property="og:description" content="This function identifies the count series relative to a species and/or
+a location in a named list like the output of function format_data(). If
+both species and location are provided, the series of counts of the species
+at the specified location is extracted. Otherwise, all series corresponding
+to the specified criterion (species or location) are extracted." />
 
 
 
@@ -127,17 +127,17 @@ length &amp;gt;= 1." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Subset a counts series list based on location and/or species</h1>
+    <h1>Extract the count series corresponding to a location and/or a species in a list</h1>
     <small class="dont-index">Source: <a href='https://github.com/frbcesab/popbayes/blob/master/R/series-funs.R'><code>R/series-funs.R</code></a></small>
     <div class="hidden name"><code>filter_series.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>From the output of the function <code><a href='format_data.html'>format_data()</a></code>, this function subsets the
-list of counts series based on a species name and/or a site. If both the
-species and the location are provided, the resulting list will have a length
-of 1 (data for the species at the location), otherwise the list will have a
-length &gt;= 1.</p>
+    <p>This function identifies the count series relative to a species and/or
+a location in a named list like the output of function <code><a href='format_data.html'>format_data()</a></code>. If
+both species and location are provided, the series of counts of the species
+at the specified location is extracted. Otherwise, all series corresponding
+to the specified criterion (species or location) are extracted.</p>
     </div>
 
     <pre class="usage"><span class='fu'>filter_series</span><span class='op'>(</span><span class='va'>data</span>, species <span class='op'>=</span> <span class='cn'>NULL</span>, location <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
@@ -147,15 +147,15 @@ length &gt;= 1.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>a named list. The output of the function <code><a href='format_data.html'>format_data()</a></code>.</p></td>
+      <td><p>a named list. The output of function <code><a href='format_data.html'>format_data()</a></code>.</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p>a character of length 1. A species name.</p></td>
+      <td><p>a character string. A species name.</p></td>
     </tr>
     <tr>
       <th>location</th>
-      <td><p>a character of length 1. A site name.</p></td>
+      <td><p>a character string. A site name.</p></td>
     </tr>
     </table>
 

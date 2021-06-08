@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format individual counts series — format_data • popbayes</title>
+<title>Format counts series — format_data • popbayes</title>
 
 
 <!-- jquery -->
@@ -39,21 +39,21 @@
 
 
 
-<meta property="og:title" content="Format individual counts series — format_data" />
-<meta property="og:description" content="This function provides an easy way to get individual counts series ready to
+<meta property="og:title" content="Format counts series — format_data" />
+<meta property="og:description" content="This function provides an easy way to get counts series ready to
 be analyzed by the package popbayes. It must be used prior to all other
 functions.
-This function formats individual counts series (passed through the argument
+This function formats the counts series (passed through the argument
 data) by selecting and renaming columns, checking columns format and
 content, and removing missing data (if na_rm = TRUE). It converts the
 original data frame into a list of counts series that will be analyzed later
-by the function fit_trend() to estimate population trend.
-To be usable for the estimation of population trend, counts data must be
+by the function fit_trend() to estimate population trends.
+To be usable for the estimation of population trends, counts must be
 accompanied by information on precision. The population trend model requires
 a 95% confident interval (CI).
 If estimates are total counts or guesstimates, this function will construct
 boundaries of the 95% CI by applying the rules set out in ???.
-If counts were estimated by a sampling method user needs to specify a
+If counts were estimated by a sampling method the user needs to specify a
 measure of precision. Precision is preferably provided in the form of a 95%
 CI by means of two fields: lower_ci and upper_ci. It may also be given
 in the form of a standard deviation (sd), a variance (var), or a
@@ -64,15 +64,17 @@ assuming a normal distribution.
 The field stat_method must be present in the data frame data to indicate
 if counts are total counts ('T'), sampling ('S'), or
 guesstimate ('G').
-If the series mixes aerial and ground counts, a field field_method must
+If a series mixes aerial and ground counts, a field field_method must
 also be present and must contain either 'A' (aerial counts), or 'G'
-(ground counts). As all counts must refer to the same field method, a
-conversion will be performed to homogenize counts. This conversion is based
-on a preferred field method and a conversion factor both specific to
-a species/category. This conversion factor (a multiplicative factor)
-will be apply to an aerial count to get an equivalent ground count (if the
-preferred field method is 'G') or to a ground count to get an equivalent
-aerial count (if the preferred field method is 'A').
+(ground counts). As all counts must eventually refer to the same field method
+for a correct estimation of trend, a conversion will be performed to
+homogenize counts. This conversion is based on a preferred field method
+and a conversion factor both specific to a species/category.
+The preferred field method specifies the conversion direction. The conversion
+factor is the multiplicative factor that must be applied to an aerial count
+to get an equivalent ground count. (Note that if the preferred field method
+is 'A', ground counts will be divided by the conversion factor to get the
+equivalent aerial count.)
 These two parameters, named pref_field_method and conversion_fact, can
 be present in the data frame data or in the data frame info.
 Alternatively, the package popbayes provides their values for some
@@ -161,26 +163,26 @@ obtained with one field method." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format individual counts series</h1>
+    <h1>Format counts series</h1>
     <small class="dont-index">Source: <a href='https://github.com/frbcesab/popbayes/blob/master/R/format-funs.R'><code>R/format-funs.R</code></a></small>
     <div class="hidden name"><code>format_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function provides an easy way to get individual counts series ready to
+    <p>This function provides an easy way to get counts series ready to
 be analyzed by the package <code>popbayes</code>. It must be used prior to all other
 functions.</p>
-<p>This function formats individual counts series (passed through the argument
+<p>This function formats the counts series (passed through the argument
 <code>data</code>) by selecting and renaming columns, checking columns format and
 content, and removing missing data (if <code>na_rm = TRUE</code>). It converts the
 original data frame into a list of counts series that will be analyzed later
-by the function <code><a href='fit_trend.html'>fit_trend()</a></code> to estimate population trend.</p>
-<p>To be usable for the estimation of population trend, counts data must be
+by the function <code><a href='fit_trend.html'>fit_trend()</a></code> to estimate population trends.</p>
+<p>To be usable for the estimation of population trends, counts must be
 accompanied by information on precision. The population trend model requires
 a 95% confident interval (CI).
 If estimates are total counts or guesstimates, this function will construct
 boundaries of the 95% CI by applying the rules set out in <strong><em>???</em></strong>.
-If counts were estimated by a sampling method user needs to specify a
+If counts were estimated by a sampling method the user needs to specify a
 measure of precision. Precision is preferably provided in the form of a 95%
 CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code>. It may also be given
 in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a
@@ -191,15 +193,17 @@ assuming a normal distribution.
 The field <code>stat_method</code> must be present in the data frame <code>data</code> to indicate
 if counts are <strong>total counts</strong> (<code>'T'</code>), <strong>sampling</strong> (<code>'S'</code>), or
 <strong>guesstimate</strong> (<code>'G'</code>).</p>
-<p>If the series mixes aerial and ground counts, a field <code>field_method</code> must
+<p>If a series mixes aerial and ground counts, a field <code>field_method</code> must
 also be present and must contain either <code>'A'</code> (aerial counts), or <code>'G'</code>
-(ground counts). As all counts must refer to the same field method, a
-conversion will be performed to homogenize counts. This conversion is based
-on a <strong>preferred field method</strong> and a <strong>conversion factor</strong> both specific to
-a species/category. This conversion factor (a multiplicative factor)
-will be apply to an aerial count to get an equivalent ground count (if the
-preferred field method is <code>'G'</code>) or to a ground count to get an equivalent
-aerial count (if the preferred field method is <code>'A'</code>).
+(ground counts). As all counts must eventually refer to the same field method
+for a correct estimation of trend, a conversion will be performed to
+homogenize counts. This conversion is based on a <strong>preferred field method</strong>
+and a <strong>conversion factor</strong> both specific to a species/category.
+The preferred field method specifies the conversion direction. The conversion
+factor is the multiplicative factor that must be applied to an aerial count
+to get an equivalent ground count. (Note that if the preferred field method
+is <code>'A'</code>, ground counts will be divided by the conversion factor to get the
+equivalent aerial count.)
 These two parameters, named <code>pref_field_method</code> and <code>conversion_fact</code>, can
 be present in the data frame <code>data</code> or in the data frame <code>info</code>.
 Alternatively, the package <code>popbayes</code> provides their values for some
@@ -237,7 +241,7 @@ obtained with one field method.</p>
 <code>year</code>, <code>counts</code>, and <code>stat_method</code>.</p>
 <p>The <code>stat_method</code> field indicates the method used to estimate counts. It
 can contain: <code>T</code> (total counts), <code>G</code> (guesstimate), and/or <code>S</code> (sampling).</p>
-<p>If individuals counts were estimated by <strong>sampling</strong>, additional column(s)
+<p>If individual counts were estimated by <strong>sampling</strong>, additional column(s)
 providing a measure of precision is also required (e.g. <code>lower_ci</code> and
 <code>upper_ci</code>, or <code>sd</code>, <code>cv</code>, <code>var</code>). Precision metrics can be different
 between counts. For instance, some sampling counts can have a <code>sd</code> value
@@ -262,26 +266,27 @@ if not available in <code>popbayes</code>).</p></td>
     </tr>
     <tr>
       <th>year</th>
-      <td><p>a character of length 1. The column name in <code>data</code> of the year.
-This column <code>year</code> must be in the form 1999, 2000, etc. (numeric).
+      <td><p>a character string. The column name in <code>data</code> of the year.
+This column <code>year</code> must be in the form 1999, 2000, etc. (numeric), with
+possibly a decimal part.
 Default is <code>'year'</code>.</p></td>
     </tr>
     <tr>
       <th>counts</th>
-      <td><p>a character of length 1. The column name in <code>data</code> of the
+      <td><p>a character string. The column name in <code>data</code> of the
 number of individuals. This column must be numerical.
 Default is <code>'counts'</code>.</p></td>
     </tr>
     <tr>
       <th>location</th>
-      <td><p>a character of length 1. The column name in <code>data</code> of the
+      <td><p>a character string. The column name in <code>data</code> of the
 site. This field is used to distinguish counts series from different sites
 (if required) and to create an unique series name.
 Default is <code>'location'</code>.</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p>a character of length 1. The column name in <code>data</code> (and
+      <td><p>a character string. The column name in <code>data</code> (and
 in <code>info</code> if provided) of the species. This field is used to distinguish
 counts series for different species (if required) and to create an unique
 series name.
@@ -289,7 +294,7 @@ Default is <code>'species'</code>.</p></td>
     </tr>
     <tr>
       <th>stat_method</th>
-      <td><p>a character of length 1. The column name in <code>data</code> of
+      <td><p>a character string. The column name in <code>data</code> of
 the method used to estimate individuals counts. It can contain <code>'T'</code>
 (total counts), <code>'G'</code> (guesstimate), and/or <code>'S'</code> (sampling). If some
 counts are coded as <code>'S'</code>, precision column(s) must also be provided (see
@@ -298,9 +303,9 @@ Default is <code>'stat_method'</code>.</p></td>
     </tr>
     <tr>
       <th>lower_ci</th>
-      <td><p>(optional) a character of length 1. The column name in <code>data</code>
+      <td><p>(optional) a character string. The column name in <code>data</code>
 of the lower boundary of the 95% CI of the estimate (i.e. <code>counts</code>). If
-provided the upper boundary of the 95% CI (argument <code>upper_ci</code>) must be
+provided, the upper boundary of the 95% CI (argument <code>upper_ci</code>) must be
 also provided. This argument is only required if some counts have been
 estimated by a sampling method. But user may prefer use other precision
 measures, e.g. standard deviation (argument <code>sd</code>), variance (argument
@@ -309,33 +314,33 @@ Default is <code>'lower_ci'</code>.</p></td>
     </tr>
     <tr>
       <th>upper_ci</th>
-      <td><p>(optional) a character of length 1. The column name in <code>data</code>
+      <td><p>(optional) a character string. The column name in <code>data</code>
 of the upper boundary of the 95% CI of the estimate (i.e. <code>counts</code>). If
-provided the lower boundary of the 95% CI (argument <code>lower_ci</code>) must be
+provided, the lower boundary of the 95% CI (argument <code>lower_ci</code>) must be
 also provided.
 Default is <code>'upper_ci'</code>.</p></td>
     </tr>
     <tr>
       <th>sd</th>
-      <td><p>(optional) a character of length 1. The column name in <code>data</code> of
+      <td><p>(optional) a character string. The column name in <code>data</code> of
 the standard deviation of the estimate.
 Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>var</th>
-      <td><p>(optional) a character of length 1. The column name in <code>data</code> of
+      <td><p>(optional) a character string. The column name in <code>data</code> of
 the variance of the estimate.
 Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>cv</th>
-      <td><p>(optional) a character of length 1. The column name in <code>data</code> of
+      <td><p>(optional) a character string. The column name in <code>data</code> of
 the coefficient of variation of the estimate.
 Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>field_method</th>
-      <td><p>(optional) a character of length 1. The column name in
+      <td><p>(optional) a character string. The column name in
 <code>data</code> of the field method used to count individuals. Counts can be ground
 counts (coded as <code>'G'</code>) or aerial counts (coded as <code>'A'</code>). This argument
 is optional if individuals have been counted by the same method. See above
@@ -344,10 +349,10 @@ Default is <code>'field_method'</code>.</p></td>
     </tr>
     <tr>
       <th>pref_field_method</th>
-      <td><p>(optional) a character of length 1. The column name
+      <td><p>(optional) a character string. The column name
 in <code>data</code> of the preferred field method of the species. This argument is
 only required is <code>field_method</code> is not NULL (i.e. individuals have been
-counted by different methods). Alternatively this value can be passed in
+counted by different methods). Alternatively, this value can be passed in
 <code>info</code>(or internally retrieved if the species is listed in the package).
 See above section <strong>Description</strong> for further information on the counts
 conversion.
@@ -355,9 +360,9 @@ Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>conversion_fact</th>
-      <td><p>(optional) a character of length 1. The column name
+      <td><p>(optional) a character string. The column name
 in <code>data</code> of the counts conversion factor of the species. This argument is
-only required is <code>field_method</code> is not NULL (i.e. individuals have been
+only required if <code>field_method</code> is not NULL (i.e. individuals have been
 counted by different methods). Alternatively this value can be passed in
 <code>info</code> (or internally retrieved if the species is listed in the package).
 See above section <strong>Description</strong> for further information on the counts
@@ -366,24 +371,23 @@ Default is <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>path</th>
-      <td><p>a character. The directory to save formatted data.
+      <td><p>a character string. The directory to save formatted data.
 This directory must exist and can be an absolute or a relative path.</p></td>
     </tr>
     <tr>
       <th>na_rm</th>
-      <td><p>a logical. If <code>TRUE</code> counts and precision measures (for
-sampling counts) with <code>NA</code> values will be removed.
+      <td><p>a logical. If <code>TRUE</code>, counts with <code>NA</code> values will be removed.
 Default is <code>FALSE</code> (returns an error to inform user if <code>NA</code> are detected).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A n-elements list (where n is the number of counts series). The name
+    <p>An n-elements list (where n is the number of counts series). The name
 of each element of this list is a combination of location and species.
 Each element of the list is a list with the following content:</p><ul>
-<li><p><code>location</code> a character. The name of the series site.</p></li>
-<li><p><code>species</code> a character. The name of the series species.</p></li>
+<li><p><code>location</code> a character string. The name of the series site.</p></li>
+<li><p><code>species</code> a character string. The name of the series species.</p></li>
 <li><p><code>years</code> a numerical vector. The sequence of years of the series.</p></li>
 <li><p><code>n_years</code> an integer. The number of unique years.</p></li>
 <li><p><code>stat_methods</code> a character vector. The different stat methods
@@ -393,10 +397,9 @@ field methods of the series.</p></li>
 <li><p><code>pref_field_method</code> (optional) a character. The preferred
 field method of the species (<code>'A'</code> or <code>'G'</code>).</p></li>
 <li><p><code>conversion_fact</code> (optional) a numeric. The conversion factor
-of the species used to convert counts from a field method to its
-preferred field method.</p></li>
+of the species used to convert counts to its preferred field method.</p></li>
 <li><p><code>data_original</code> a data frame. Original data of the series with
-renamed columns. Some rows can have been deleted (if <code>na_rm = TRUE</code>).</p></li>
+renamed columns. Some rows may have been deleted (if <code>na_rm = TRUE</code>).</p></li>
 <li><p><code>data_converted</code> a data frame. Data containing computed
 boundaries of the 95% CI (<code>lower_ci_conv</code> and <code>upper_ci_conv</code>). If
 counts have been obtained by different field methods, contains also
