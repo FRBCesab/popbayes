@@ -322,6 +322,8 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
     stop("All counts are NA. Please check your data.")
   }
   
+  species_list <- sort(unique(data[ , species]))
+  
   
   ## Check Stat Method field ----
   
@@ -458,7 +460,7 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
   
   if ("S" %in% data[ , stat_method]) {
     
-    if (!(lower_ci %in% colnames(data) && upper_ci %in% colnames(data)) && is.null(sd) && is.null(cv) && 
+    if (is.null(lower_ci) && is.null(upper_ci) && is.null(sd) && is.null(cv) &&
         is.null(var)) {
       
       stop("No valid measure of precision is available for sampling counts. ", 
@@ -466,6 +468,13 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
            "information.")
     }
     
+    if (!is.null(lower_ci) && is.null(upper_ci)) {
+      stop("You must provide both lower and upper CI.")
+    }
+    
+    if (is.null(lower_ci) && !is.null(upper_ci)) {
+      stop("You must provide both lower and upper CI.")
+    }
   }
   
   
@@ -516,12 +525,12 @@ format_data <- function(data, info = NULL, year = "year", counts = "counts",
     valid_info_colnames_msg <- paste0("'", valid_info_colnames_msg, "'")
     
     
-    if (any(!(colnames(info) %in% valid_info_colnames))) {
+    if (any(!(valid_info_colnames %in% colnames(info)))) {
       stop("Invalid columns in 'info'. ",
            "Required variables are: ", valid_info_colnames_msg, ".")
     }
     
-    if (any(is.na(info))) {
+    if (any(is.na(info[ , valid_info_colnames]))) {
       stop("The dataset 'info' cannot contain NA.")
     }
   }
