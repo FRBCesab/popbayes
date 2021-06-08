@@ -80,7 +80,7 @@ garamba <- read.csv(file = file_path)
 
 ```{r 'print-data', echo = FALSE}
 knitr::kable(head(garamba, 20), caption = "The Garamba dataset (first 20 rows)", 
-             align = c("c", "l", "c", "c", "c", "r", "r", "r"))
+             align = c("c", "l", "c", "c", "c", "r", "r", "r", "c", "r", "r"))
 ```
 
 
