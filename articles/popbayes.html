@@ -117,10 +117,25 @@ Framework of the popbayes package
 <p>The package <code>popbayes</code> comes with an example dataset: <code>garamba</code>. It contains counts of individuals from 10 African mammal species surveyed in the Garamba National Park (Democratic Republic of the Congo) from 1976 to 2017.</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"garamba"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span>
+
+<span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 <table class="table">
 <caption>The Garamba dataset (first 20 rows)</caption>
+<colgroup>
+<col width="7%">
+<col width="17%">
+<col width="4%">
+<col width="9%">
+<col width="10%">
+<col width="5%">
+<col width="6%">
+<col width="6%">
+<col width="14%">
+<col width="11%">
+<col width="5%">
+</colgroup>
 <thead><tr class="header">
 <th align="center">location</th>
 <th align="left">species</th>
@@ -130,6 +145,9 @@ Framework of the popbayes package
 <th align="right">counts</th>
 <th align="right">lower_ci</th>
 <th align="right">upper_ci</th>
+<th align="center">pref_field_method</th>
+<th align="left">conversion_fact</th>
+<th align="center">rmax</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -141,6 +159,9 @@ Framework of the popbayes package
 <td align="right">7750</td>
 <td align="right">6280</td>
 <td align="right">9220</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -151,6 +172,9 @@ Framework of the popbayes package
 <td align="right">1932</td>
 <td align="right">1120</td>
 <td align="right">2744</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -161,6 +185,9 @@ Framework of the popbayes package
 <td align="right">1224</td>
 <td align="right">782</td>
 <td align="right">1666</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -171,6 +198,9 @@ Framework of the popbayes package
 <td align="right">1705</td>
 <td align="right">1116</td>
 <td align="right">2294</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -181,6 +211,9 @@ Framework of the popbayes package
 <td align="right">987</td>
 <td align="right">663</td>
 <td align="right">1311</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -191,6 +224,9 @@ Framework of the popbayes package
 <td align="right">3444</td>
 <td align="right">1290</td>
 <td align="right">5598</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -201,6 +237,9 @@ Framework of the popbayes package
 <td align="right">2819</td>
 <td align="right">1620</td>
 <td align="right">4018</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -211,6 +250,9 @@ Framework of the popbayes package
 <td align="right">1685</td>
 <td align="right">1287</td>
 <td align="right">2083</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -221,6 +263,9 @@ Framework of the popbayes package
 <td align="right">1169</td>
 <td align="right">945</td>
 <td align="right">1393</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -231,6 +276,9 @@ Framework of the popbayes package
 <td align="right">1139</td>
 <td align="right">907</td>
 <td align="right">1371</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -241,6 +289,9 @@ Framework of the popbayes package
 <td align="right">1595</td>
 <td align="right">1142</td>
 <td align="right">2048</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -251,6 +302,9 @@ Framework of the popbayes package
 <td align="right">1204</td>
 <td align="right">811</td>
 <td align="right">1597</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -261,6 +315,9 @@ Framework of the popbayes package
 <td align="right">552</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -271,6 +328,9 @@ Framework of the popbayes package
 <td align="right">698</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -281,6 +341,9 @@ Framework of the popbayes package
 <td align="right">1051</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
+<td align="center">G</td>
+<td align="left">2.302</td>
+<td align="center">0.2748</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -291,6 +354,9 @@ Framework of the popbayes package
 <td align="right">350</td>
 <td align="right">100</td>
 <td align="right">600</td>
+<td align="center">A</td>
+<td align="left">3.011</td>
+<td align="center">0.1750</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -301,6 +367,9 @@ Framework of the popbayes package
 <td align="right">175</td>
 <td align="right">12</td>
 <td align="right">338</td>
+<td align="center">A</td>
+<td align="left">3.011</td>
+<td align="center">0.1750</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -311,6 +380,9 @@ Framework of the popbayes package
 <td align="right">237</td>
 <td align="right">93</td>
 <td align="right">381</td>
+<td align="center">A</td>
+<td align="left">3.011</td>
+<td align="center">0.1750</td>
 </tr>
 <tr class="odd">
 <td align="center">Garamba</td>
@@ -321,6 +393,9 @@ Framework of the popbayes package
 <td align="right">153</td>
 <td align="right">13</td>
 <td align="right">293</td>
+<td align="center">A</td>
+<td align="left">3.011</td>
+<td align="center">0.1750</td>
 </tr>
 <tr class="even">
 <td align="center">Garamba</td>
@@ -331,6 +406,9 @@ Framework of the popbayes package
 <td align="right">346</td>
 <td align="right">143</td>
 <td align="right">549</td>
+<td align="center">A</td>
+<td align="left">3.011</td>
+<td align="center">0.1750</td>
 </tr>
 </tbody>
 </table>
@@ -623,7 +701,7 @@ Let’s assume that we have counts of <em>Taurotragus oryx</em> and <em>Taurotra
 <p><br></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">garamba</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span>
-<span class="co">#&gt; ✔ Conversion data found in 'popbayes'.</span>
+<span class="co">#&gt; ✔ Conversion data found in 'data'.</span>
 <span class="co">#&gt; ✔ Detecting 10 series</span></code></pre></div>
 <p><br></p>
 <p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method and the conversion factor as this : <code>pref_field_method =  "column_with_preferred_field_method"</code> and <code>conversion_fact = "column_with_conversion_factor"</code>, or alternatively use the argument <code>info</code> : <code>info = "dataframe_with_conversion_info"</code>.</p>
