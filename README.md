@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# popbayes
+# popbayes <img src="man/figures/hexsticker.png" height="120" align="right"/>
 
 <!-- badges: start -->
 
@@ -9,7 +9,7 @@
 Check](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml)
 [![Website
 deployment](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml)
-[![License: GPL (&gt;=
+[![License: GPL (>=
 2)](https://img.shields.io/badge/License-GPL%20%28%3E%3D%202%29-blue.svg)](https://choosealicense.com/licenses/gpl-2.0/)
 [![LifeCycle](man/figures/lifecycle/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Project Status:
