@@ -22,9 +22,19 @@ knitr::opts_chunk$set(
 library("popbayes")
 ```
 
-The goal of the R package `popbayes` is to fit population trajectories over time from counts of individuals collected at various dates and with a variety of methods. It does so under a Bayesian framework where the primary quantity being modeled is the rate of increase between successive years (or any other time unit for that matter, the one used for date). The package can deal with multiple species and multiple locations presented in a single data set, but each **count series** made of the counts relative to one species at one location will be processed independently.
+The goal of the R package `popbayes` is to fit population trajectories over time 
+from counts of individuals collected at various dates and with a variety of 
+methods. It does so under a Bayesian framework where the primary quantity being 
+modeled is the rate of increase between successive years (or any other time unit 
+for that matter, the one used for date). The package can deal with multiple 
+species and multiple locations presented in a single data set, but each 
+**count series** made of the counts relative to one species at one location 
+will be processed independently.
 
-The strength of `popbayes` is to handle, in a single series, counts collected under different types of surveys (aerial vs ground surveys), and estimated by different census methods (total counts, sampling counts, and even guesstimates [i.e. expert estimates]).
+The strength of `popbayes` is to handle, in a single series, counts collected 
+under different types of surveys (aerial vs ground surveys), and estimated by 
+different census methods (total counts, sampling counts, and even guesstimates 
+[i.e. expert estimates]).
 
 
 
@@ -44,7 +54,7 @@ The workflow of `popbayes` consists in three main steps:
 
 The package also provides a lot of functions to handle individual count series 
 and model outputs. The following figure shows a more complete usage of the 
-workflow.
+package.
 
 
 <br />
@@ -71,8 +81,10 @@ National Park (Democratic Republic of the Congo) from 1976 to 2017.
 <br />
 
 ```{r 'load-data'}
+## Define filename path ----
 file_path <- system.file("extdata", "garamba_survey.csv", package = "popbayes")
 
+## Read CSV file ----
 garamba <- read.csv(file = file_path)
 ```
 
@@ -97,14 +109,17 @@ A file with a similar structure in Excel format can be imported in R with...
 
 **Statistical method**
 
-In addition to the fields `location`, `species`, `year`, and `counts`, a fourth field is **mandatory**: `stat_method`. This field specifies the 
+In addition to the fields `location`, `species`, `year`, and `counts`, a fourth 
+field is **mandatory**: `stat_method`. This field specifies the 
 census method that produced the count. It can be `T` for a total 
 count, `G` for a guesstimate (i.e. expert estimate), or `S` for a sampling count.
 
 To be usable by the Bayesian model, individual counts are to be accompanied 
-by information on precision in the form of a 95% confidence interval. If counts are :
+by information on precision in the form of a 95% confidence interval. If counts 
+are :
 
-- `T` or `G`, a confidence interval will be computed automatically by the function `format_data()` according respectively to the following formulas:
+- `T` or `G`, a confidence interval will be computed automatically by the 
+function `format_data()` according respectively to the following formulas:
 
 $$ CI_{(T)} = [\ 0.95 \times counts\ ; 1.20 \times counts\ ] $$
 $$ CI_{(G)} = [\ 0.80 \times counts\ ; 1.20 \times counts\ ] $$
@@ -124,12 +139,15 @@ between counts. For instance, some `S` counts may have an `sd` value and others
 **Field method**
 
 Another **optional** column, `field_method`, may be provided. It refers to the 
-type of survey used to collect data. This can be `A` for aerial survey or `G` for 
-ground survey. This column becomes mandatory as soon as both field methods are present in a series.
+type of survey used to collect data. This can be `A` for aerial survey or `G` 
+for ground survey. This column becomes mandatory as soon as both field methods 
+are present in a series.
 
-The detectability of a species is indeed strongly dependent on the survey method and
-each species has its own _preferred field method_, the one that is assumed to provide estimates closer to the truth. So, even if a series is homogeneous relative to the `field method`, it is recommended to provide
-the column `field_method` if counts have been collected under the not preferred 
+The detectability of a species is indeed strongly dependent on the survey method 
+and each species has its own _preferred field method_, the one that is assumed 
+to provide estimates closer to the truth. So, even if a series is homogeneous 
+relative to the `field method`, it is recommended to provide the column 
+`field_method` if counts have been collected under the not preferred 
 field method. That will force conversion towards the _preferred field method_.
 
 
@@ -138,10 +156,12 @@ field method. That will force conversion towards the _preferred field method_.
 **Count conversion**
 
 The function `format_data()` will convert counts (and 95% CI bounds) into their 
-equivalent in the preferred field method for the species. To this aim, two pieces of information are required :
+equivalent in the preferred field method for the species. To this aim, two 
+pieces of information are required :
 
 - `pref_field_method`: the preferred field method for the species (`A` or `G`)
-- `conversion_fact`: the multiplicative factor used to convert an aerial count into an equivalent ground count.
+- `conversion_fact`: the multiplicative factor used to convert an aerial count 
+into an equivalent ground count or vice versa.
 
 The package `popbayes` provides the `conversion_data` data set, which contains
 these two pieces of information for 15 African mammal species. 
@@ -155,25 +175,51 @@ data("conversion_data")
 <br />
 
 ```{r 'print-data-2', echo = FALSE}
-knitr::kable(conversion_data[ , c(3, 6, 7, 8)], caption = "Species with count conversion information in popbayes", 
+knitr::kable(conversion_data[ , c(3, 6, 7, 8)], 
+             caption = "Species with count conversion information in popbayes", 
              align = c("l", "c", "c", "r"))
 ```
 
 <br />
 
-If users work only with species in this table, the package `popbayes` can automatically retrieve the values of `pref_field_method` and `conversion_fact` from the `conversion_data` data set. But for other species, users **need to provide** the information themselves when running `format_data()`. These values can be provided as additional columns of the count data set. Care must then be taken that the same value is consistently repeated for each count of the same species. For users with sufficient command of R, we recommend rather to create an independent additional table similar to `conversion_data` and to pass it to the function `format_data()` as the argument `info`. 
+If users work only with species in this table, the package `popbayes` can 
+automatically retrieve the values of `pref_field_method` and `conversion_fact` 
+from the `conversion_data` data set. But for other species, users 
+**need to provide** the information themselves when running `format_data()`. 
+These values can be provided as additional columns of the count data set. Care 
+must then be taken that the same value is consistently repeated for each count 
+of the same species. For users with sufficient command of R, we recommend rather 
+to create an independent additional table similar to `conversion_data` and to 
+pass it to the function `format_data()` as the argument `info`. 
 
-**Note**: Currently `format_data()` takes its information for count conversion from **one source only** with priority given to `info`, then to additional columns in data (if `info` is not provided), and eventually to the `conversion_data` table of the package (when the other two sources are missing). That means that the source with the highest priority must be complete with respect to the species present in data, as it will be used exclusively to any other source. If, say, you use `info`, you cannot expect `format_data()` to retrieve conversion information for a species undocumented in `info` from the `conversion_data` table of the package. However, you can easily construct `info` from a copy of `conversion_data`, which additionally provides a ready template. It suffices to add any species not already in `conversion_data` as shown below.   
-Let's assume that we have counts of _Taurotragus oryx_ and  _Taurotragus derbianus_ in addition to other species present in the package `conversion_data` table. We can construct `info` as follows. 
+**Note**: Currently `format_data()` takes its information for count conversion 
+from **one source only** with priority given to `info`, then to additional 
+columns in data (if `info` is not provided), and eventually to the 
+`conversion_data` table of the package (when the other two sources are missing). 
+That means that the source with the highest priority must be complete with 
+respect to the species present in data, as it will be used exclusively to any 
+other source. If, say, you use `info`, you cannot expect `format_data()` to 
+retrieve conversion information for a species undocumented in `info` from the 
+`conversion_data` table of the package. However, you can easily construct `info` 
+from a copy of `conversion_data`, which additionally provides a ready template. 
+It suffices to add any species not already in `conversion_data` as shown below.
+
+Let's assume that we have counts of _Taurotragus oryx_ and _Taurotragus derbianus_ 
+in addition to other species present in the package `conversion_data` table. 
+We can construct `info` as follows. 
+
+
+<br />
+
 
 ```{r 'create-info'}
 ## Extract the relevant columns of the package table "conversion_data" ----
-info_from_package <- conversion_data[, c("species", "pref_field_method", "conversion_fact")]
+info_from_package <- conversion_data[ , c("species", "pref_field_method", "conversion_fact")]
 
 ## Add the new species ----
 new_conversion_info <- data.frame("species"           = c("Taurotragus oryx","Taurotragus derbianus"),
-                              "pref_field_method" = "G",
-                              "conversion_fact"   = 2.302)
+                                  "pref_field_method" = "G",
+                                  "conversion_fact"   = 2.302)
 
 ## Append the new species ----
 info <- rbind(info_from_package, new_conversion_info)
@@ -182,7 +228,10 @@ info
 
 <br />
 
-If you do not have conversion information of your own for a new species, you can rely on the conversion information of species with similar characteristics. The package popbayes distinguishes five categories of species:
+If you do not have conversion information of your own for a new species, you 
+can rely on the conversion information of species with similar characteristics
+(for example the two _Taurotragus_ species belong to the category LLB). 
+The package `popbayes` distinguishes five categories of species:
 
 - **MLB**: Medium-sized Light and Brown species (20-150kg)
 - **LLB**: Large Light and Brown species (>150kg)
@@ -190,7 +239,8 @@ If you do not have conversion information of your own for a new species, you can
 - **Elephant**
 - **Giraffe**
 
-The field `category` of the `conversion_data` table indicates which species belong to each.
+The field `category` of the `conversion_data` table indicates which species 
+belong to each.
 
 <br />
 
@@ -199,9 +249,12 @@ The field `category` of the `conversion_data` table indicates which species belo
 ## Checking data
 
 
-The first thing that the function `format data()` does is to check the validity of the content of the different fields of the count data set. Here we will do that manually on the Garamba dataset for illustration purposes. 
+The first thing that the function `format data()` does is to check the validity 
+of the content of the different fields of the count data set. Here we will 
+explore our data to avoid errors while using the function `format data()`.
 
-In particular, we need to check `location` and `species` spelling, `year` and `counts` field format, and the `stat_method` and `field_method` categories.
+In particular, we need to check `location` and `species` spelling, `year` and 
+`counts` field format, and the `stat_method` and `field_method` categories.
 
 
 <br />
