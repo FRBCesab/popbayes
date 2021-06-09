@@ -103,7 +103,7 @@
 <li>Fitting trends (<code><a href="../reference/fit_trend.html">fit_trend()</a></code>)</li>
 <li>Visualizing results (<code><a href="../reference/plot_trend.html">plot_trend()</a></code>)</li>
 </ol>
-<p>The package also provides a lot of functions to handle individual count series and model outputs. The following figure shows a more complete usage of the workflow.</p>
+<p>The package also provides a lot of functions to handle individual count series and model outputs. The following figure shows a more complete usage of the package.</p>
 <p><br></p>
 <div class="figure" style="text-align: center">
 <img src="docs/popbayes-diagram.png" alt="Framework of the popbayes package" width="100%"><p class="caption">
@@ -117,8 +117,10 @@ Framework of the popbayes package
 <p>The package <code>popbayes</code> comes with an example dataset: <code>garamba</code>. It contains counts of individuals from 10 African mammal species surveyed in the Garamba National Park (Democratic Republic of the Congo) from 1976 to 2017.</p>
 <p><br></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="co">## Define filename path ----</span>
+<span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span>
 
+<span class="co">## Read CSV file ----</span>
 <span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 <table class="table">
@@ -439,7 +441,7 @@ Framework of the popbayes package
 <li>
 <code>pref_field_method</code>: the preferred field method for the species (<code>A</code> or <code>G</code>)</li>
 <li>
-<code>conversion_fact</code>: the multiplicative factor used to convert an aerial count into an equivalent ground count.</li>
+<code>conversion_fact</code>: the multiplicative factor used to convert an aerial count into an equivalent ground count or vice versa.</li>
 </ul>
 <p>The package <code>popbayes</code> provides the <code>conversion_data</code> data set, which contains these two pieces of information for 15 African mammal species.</p>
 <p><br></p>
@@ -549,16 +551,17 @@ Framework of the popbayes package
 </table>
 <p><br></p>
 <p>If users work only with species in this table, the package <code>popbayes</code> can automatically retrieve the values of <code>pref_field_method</code> and <code>conversion_fact</code> from the <code>conversion_data</code> data set. But for other species, users <strong>need to provide</strong> the information themselves when running <code><a href="../reference/format_data.html">format_data()</a></code>. These values can be provided as additional columns of the count data set. Care must then be taken that the same value is consistently repeated for each count of the same species. For users with sufficient command of R, we recommend rather to create an independent additional table similar to <code>conversion_data</code> and to pass it to the function <code><a href="../reference/format_data.html">format_data()</a></code> as the argument <code>info</code>.</p>
-<p><strong>Note</strong>: Currently <code><a href="../reference/format_data.html">format_data()</a></code> takes its information for count conversion from <strong>one source only</strong> with priority given to <code>info</code>, then to additional columns in data (if <code>info</code> is not provided), and eventually to the <code>conversion_data</code> table of the package (when the other two sources are missing). That means that the source with the highest priority must be complete with respect to the species present in data, as it will be used exclusively to any other source. If, say, you use <code>info</code>, you cannot expect <code><a href="../reference/format_data.html">format_data()</a></code> to retrieve conversion information for a species undocumented in <code>info</code> from the <code>conversion_data</code> table of the package. However, you can easily construct <code>info</code> from a copy of <code>conversion_data</code>, which additionally provides a ready template. It suffices to add any species not already in <code>conversion_data</code> as shown below.<br>
-Let’s assume that we have counts of <em>Taurotragus oryx</em> and <em>Taurotragus derbianus</em> in addition to other species present in the package <code>conversion_data</code> table. We can construct <code>info</code> as follows.</p>
+<p><strong>Note</strong>: Currently <code><a href="../reference/format_data.html">format_data()</a></code> takes its information for count conversion from <strong>one source only</strong> with priority given to <code>info</code>, then to additional columns in data (if <code>info</code> is not provided), and eventually to the <code>conversion_data</code> table of the package (when the other two sources are missing). That means that the source with the highest priority must be complete with respect to the species present in data, as it will be used exclusively to any other source. If, say, you use <code>info</code>, you cannot expect <code><a href="../reference/format_data.html">format_data()</a></code> to retrieve conversion information for a species undocumented in <code>info</code> from the <code>conversion_data</code> table of the package. However, you can easily construct <code>info</code> from a copy of <code>conversion_data</code>, which additionally provides a ready template. It suffices to add any species not already in <code>conversion_data</code> as shown below.</p>
+<p>Let’s assume that we have counts of <em>Taurotragus oryx</em> and <em>Taurotragus derbianus</em> in addition to other species present in the package <code>conversion_data</code> table. We can construct <code>info</code> as follows.</p>
+<p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Extract the relevant columns of the package table "conversion_data" ----</span>
-<span class="va">info_from_package</span> <span class="op">&lt;-</span> <span class="va">conversion_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"pref_field_method"</span>, <span class="st">"conversion_fact"</span><span class="op">)</span><span class="op">]</span>
+<span class="va">info_from_package</span> <span class="op">&lt;-</span> <span class="va">conversion_data</span><span class="op">[</span> , <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"pref_field_method"</span>, <span class="st">"conversion_fact"</span><span class="op">)</span><span class="op">]</span>
 
 <span class="co">## Add the new species ----</span>
 <span class="va">new_conversion_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"species"</span>           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Taurotragus oryx"</span>,<span class="st">"Taurotragus derbianus"</span><span class="op">)</span>,
-                              <span class="st">"pref_field_method"</span> <span class="op">=</span> <span class="st">"G"</span>,
-                              <span class="st">"conversion_fact"</span>   <span class="op">=</span> <span class="fl">2.302</span><span class="op">)</span>
+                                  <span class="st">"pref_field_method"</span> <span class="op">=</span> <span class="st">"G"</span>,
+                                  <span class="st">"conversion_fact"</span>   <span class="op">=</span> <span class="fl">2.302</span><span class="op">)</span>
 
 <span class="co">## Append the new species ----</span>
 <span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">info_from_package</span>, <span class="va">new_conversion_info</span><span class="op">)</span>
@@ -582,7 +585,7 @@ Let’s assume that we have counts of <em>Taurotragus oryx</em> and <em>Taurotra
 <span class="co">#&gt; 16       Taurotragus oryx                 G           2.302</span>
 <span class="co">#&gt; 17  Taurotragus derbianus                 G           2.302</span></code></pre></div>
 <p><br></p>
-<p>If you do not have conversion information of your own for a new species, you can rely on the conversion information of species with similar characteristics. The package popbayes distinguishes five categories of species:</p>
+<p>If you do not have conversion information of your own for a new species, you can rely on the conversion information of species with similar characteristics (for example the two <em>Taurotragus</em> species belong to the category LLB). The package <code>popbayes</code> distinguishes five categories of species:</p>
 <ul>
 <li>
 <strong>MLB</strong>: Medium-sized Light and Brown species (20-150kg)</li>
@@ -599,7 +602,7 @@ Let’s assume that we have counts of <em>Taurotragus oryx</em> and <em>Taurotra
 <div id="checking-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#checking-data" class="anchor"></a>Checking data</h2>
-<p>The first thing that the function <code>format data()</code> does is to check the validity of the content of the different fields of the count data set. Here we will do that manually on the Garamba dataset for illustration purposes.</p>
+<p>The first thing that the function <code>format data()</code> does is to check the validity of the content of the different fields of the count data set. Here we will explore our data to avoid errors while using the function <code>format data()</code>.</p>
 <p>In particular, we need to check <code>location</code> and <code>species</code> spelling, <code>year</code> and <code>counts</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
 <p><br></p>
 <p><strong>Check <code>location</code> field</strong></p>
