@@ -22,7 +22,7 @@ listing problematic models is displayed.
 }
 \examples{
 \dontrun{
-## Get counts series names ----
+## Get count series names ----
 popbayes::list_series()
 
 ## Import BUGS outputs for one count series ----

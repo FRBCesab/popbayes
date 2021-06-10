@@ -100,16 +100,14 @@ knitr::kable(head(garamba, 20), caption = "The Garamba dataset (first 20 rows)",
 
 
 This dataset has a typical structure with a location field (`location`), a 
-species name field (`species`), a date field (`year`), and a count
-field (`counts`).  
-
-A file with a similar structure in Excel format can be imported in R with...
+species name field (`species`), a date field (`date`), and a count
+field (`count`).  
 
 <br />
 
 **Statistical method**
 
-In addition to the fields `location`, `species`, `year`, and `counts`, a fourth 
+In addition to the fields `location`, `species`, `date`, and `counts`, a fourth 
 field is **mandatory**: `stat_method`. This field specifies the 
 census method that produced the count. It can be `T` for a total 
 count, `G` for a guesstimate (i.e. expert estimate), or `S` for a sampling count.
@@ -160,52 +158,52 @@ equivalent in the preferred field method for the species. To this aim, two
 pieces of information are required :
 
 - `pref_field_method`: the preferred field method for the species (`A` or `G`)
-- `conversion_fact`: the multiplicative factor used to convert an aerial count 
+- `conversion_A2G`: the multiplicative factor used to convert an aerial count 
 into an equivalent ground count or vice versa.
 
-The package `popbayes` provides the `conversion_data` data set, which contains
+The package `popbayes` provides the `species_info` data set, which contains
 these two pieces of information for 15 African mammal species. 
 
 <br />
 
 ```{r 'load-data-2'}
-data("conversion_data")
+data("species_info")
 ```
 
 <br />
 
 ```{r 'print-data-2', echo = FALSE}
-knitr::kable(conversion_data[ , c(3, 6, 7, 8)], 
+knitr::kable(species_info[ , c(3, 6, 7, 8, 9)], 
              caption = "Species with count conversion information in popbayes", 
-             align = c("l", "c", "c", "r"))
+             align = c("l", "c", "c", "r", "r"))
 ```
 
 <br />
 
 If users work only with species in this table, the package `popbayes` can 
-automatically retrieve the values of `pref_field_method` and `conversion_fact` 
-from the `conversion_data` data set. But for other species, users 
+automatically retrieve the values of `pref_field_method` and `conversion_A2G` 
+from the `species_info` data set. But for other species, users 
 **need to provide** the information themselves when running `format_data()`. 
 These values can be provided as additional columns of the count data set. Care 
 must then be taken that the same value is consistently repeated for each count 
 of the same species. For users with sufficient command of R, we recommend rather 
-to create an independent additional table similar to `conversion_data` and to 
+to create an independent additional table similar to `species_info` and to 
 pass it to the function `format_data()` as the argument `info`. 
 
 **Note**: Currently `format_data()` takes its information for count conversion 
 from **one source only** with priority given to `info`, then to additional 
 columns in data (if `info` is not provided), and eventually to the 
-`conversion_data` table of the package (when the other two sources are missing). 
+`species_info` table of the package (when the other two sources are missing). 
 That means that the source with the highest priority must be complete with 
 respect to the species present in data, as it will be used exclusively to any 
 other source. If, say, you use `info`, you cannot expect `format_data()` to 
 retrieve conversion information for a species undocumented in `info` from the 
-`conversion_data` table of the package. However, you can easily construct `info` 
-from a copy of `conversion_data`, which additionally provides a ready template. 
-It suffices to add any species not already in `conversion_data` as shown below.
+`species_info` table of the package. However, you can easily construct `info` 
+from a copy of `species_info`, which additionally provides a ready template. 
+It suffices to add any species not already in `species_info` as shown below.
 
 Let's assume that we have counts of _Taurotragus oryx_ and _Taurotragus derbianus_ 
-in addition to other species present in the package `conversion_data` table. 
+in addition to other species present in the package `species_info` table. 
 We can construct `info` as follows. 
 
 
@@ -213,13 +211,14 @@ We can construct `info` as follows.
 
 
 ```{r 'create-info'}
-## Extract the relevant columns of the package table "conversion_data" ----
-info_from_package <- conversion_data[ , c("species", "pref_field_method", "conversion_fact")]
+## Extract the relevant columns of the package table "species_info" ----
+info_from_package <- species_info[ , c("species", "pref_field_method", "conversion_A2G", "rmax")]
 
 ## Add the new species ----
 new_conversion_info <- data.frame("species"           = c("Taurotragus oryx","Taurotragus derbianus"),
                                   "pref_field_method" = "G",
-                                  "conversion_fact"   = 2.302)
+                                  "conversion_A2G"    = 2.302,
+                                  "rmax"              = 0.1500)
 
 ## Append the new species ----
 info <- rbind(info_from_package, new_conversion_info)
@@ -239,7 +238,7 @@ The package `popbayes` distinguishes five categories of species:
 - **Elephant**
 - **Giraffe**
 
-The field `category` of the `conversion_data` table indicates which species 
+The field `category` of the `species_info` table indicates which species 
 belong to each.
 
 <br />
@@ -253,7 +252,7 @@ The first thing that the function `format data()` does is to check the validity
 of the content of the different fields of the count data set. Here we will 
 explore our data to avoid errors while using the function `format data()`.
 
-In particular, we need to check `location` and `species` spelling, `year` and 
+In particular, we need to check `location` and `species` spelling, `date` and 
 `counts` field format, and the `stat_method` and `field_method` categories.
 
 
@@ -280,9 +279,9 @@ unique(garamba$"species")
 
 sum(is.na(garamba$"species"))   # Are there any missing values?
 
-## Are there species absent from the 'conversion_data' popbayes dataset?
+## Are there species absent from the 'species_info' popbayes dataset?
 garamba_species <- unique(garamba$"species")
-garamba_species[which(!(garamba_species %in% conversion_data$"species"))]
+garamba_species[which(!(garamba_species %in% species_info$"species"))]
 ```
 
 Field **`species`** can be either a `character` or a `factor`. It **cannot** 
@@ -291,17 +290,20 @@ contain any `NA` values.
 
 <br />
 
-**Check `year` field**
+**Check `date` field**
 
-```{r 'check-year'}
-is.numeric(garamba$"year")     # Are years in a numerical format?
+```{r 'check-date'}
+is.numeric(garamba$"date")     # Are dates in a numerical format?
 
-sum(is.na(garamba$"year"))     # Are there any missing values?
+sum(is.na(garamba$"date"))     # Are there any missing values?
 
-range(garamba$"year")          # What is the temporal extent?
+range(garamba$"date")          # What is the temporal extent?
 ```
 
-Field **`year`** must be a `numeric`. It **cannot** contain any `NA` values. This said, the time unit is arbitrary, and fractional values of years (or another unit) are allowed. As long as numeric values are entered, the package will work.
+Field **`date`** must be a `numeric`. It **cannot** contain any `NA` values. 
+This said, the time unit is arbitrary, and fractional values of years (or 
+another unit) are allowed. As long as numeric values are entered, the package 
+will work.
 
 <br />
 
@@ -410,7 +412,7 @@ garamba_formatted <- popbayes::format_data(data = garamba, path = path)
 
 As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method and the conversion factor as this :
 `pref_field_method =  "column_with_preferred_field_method"` and 
-`conversion_fact = "column_with_conversion_factor"`,
+`conversion_A2G = "column_with_conversion_A2Gor"`,
 or alternatively use the argument `info` :
 `info = "dataframe_with_conversion_info"`.
 
@@ -508,7 +510,7 @@ a_buselaphus <- popbayes::read_series("garamba__alcelaphus_buselaphus", path = p
 
 The demographic potential of a species is limited. The intrinsic rate of 
 increase `rmax` is the maximum increase in log population size that a species 
-can attain in a year.
+can attain in a year (or another time unit).
 
 We strongly recommend providing these `rmax` values while estimating population 
 trend to limit yearly population growth estimated by the model.
@@ -530,26 +532,11 @@ species listed previously. These values are available in the dataset `rmax_data`
 
 <br />
 
-```{r 'rmax-data'}
-data("rmax_data")
-```
-
 
 **!!! BOOKMARK !!!**
 
 
 <br />
-
-```{r 'print-data-3', echo = FALSE}
-knitr::kable(rmax_data, caption = "Rmax data available in popbayes", 
-             align = c("l", "r"))
-```
-
-
-
-
-
-
 
 
 
@@ -576,4 +563,5 @@ popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = "docs/")
 Other functions: `popbayes::read_series()`, `popbayes::list_series()`, 
 `popbayes::read_bugs()`, `popbayes::bugs_to_df()`.
 
-...
+
+## References

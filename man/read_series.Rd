@@ -7,12 +7,12 @@
 read_series(series = NULL, path = ".")
 }
 \arguments{
-\item{series}{a vector of character strings. One or several count series names
-to be imported. If \code{NULL} (default), all available count series will be
-imported.}
+\item{series}{a vector of character strings. One or several count series
+names to be imported. If \code{NULL} (default), all available count series
+will be imported.}
 
-\item{path}{a character string. The directory in which count series have been
-saved by the function \code{\link[=format_data]{format_data()}}.}
+\item{path}{a character string. The directory in which count series have
+been saved by the function \code{\link[=format_data]{format_data()}}.}
 }
 \value{
 An n-element list (where n is the number of count series). See
@@ -24,10 +24,10 @@ This function imports a list of count series data previously exported by
 }
 \examples{
 \dontrun{
-## Import all counts series ----
-counts_series <- popbayes::read_series()
+## Import all count series ----
+count_series <- popbayes::read_series()
 
-## Import one counts series ----
+## Import one count series ----
 a_buselaphus <- popbayes::read_series("garamba__alcelaphus_buselaphus")
 }
 }

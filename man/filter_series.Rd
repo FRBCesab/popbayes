@@ -2,7 +2,8 @@
 % Please edit documentation in R/series-funs.R
 \name{filter_series}
 \alias{filter_series}
-\title{Extract the count series corresponding to a location and/or a species in a list}
+\title{Extract the count series corresponding to a location and/or a species in a
+list}
 \usage{
 filter_series(data, species = NULL, location = NULL)
 }

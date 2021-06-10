@@ -7,13 +7,13 @@
 read_bugs(series = NULL, path = ".")
 }
 \arguments{
-\item{series}{a vector of character strings. One or several count series names.
-If \code{NULL} (default) BUGS outputs for all count series will be imported.
-Users can run \code{\link[=list_series]{list_series()}} to get the correct spelling of count series
-names.}
+\item{series}{a vector of character strings. One or several count series
+names. If \code{NULL} (default) BUGS outputs for all count series will be
+imported. Users can run \code{\link[=list_series]{list_series()}} to get the correct spelling of
+count series names.}
 
-\item{path}{a character string. The directory in which BUGS outputs have been
-saved by the function \code{\link[=fit_trend]{fit_trend()}}.}
+\item{path}{a character string. The directory in which BUGS outputs have
+been saved by the function \code{\link[=fit_trend]{fit_trend()}}.}
 }
 \value{
 An n-element list (where n is the number of count series). See
@@ -25,13 +25,13 @@ This function imports a list of BUGS outputs previously exported by
 }
 \examples{
 \dontrun{
-## Get counts series names ----
+## Get count series names ----
 popbayes::list_series()
 
-## Import BUGS outputs for one counts series ----
+## Import BUGS outputs for one count series ----
 popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus")
 
-## Import BUGS outputs for all counts series ----
+## Import BUGS outputs for all count series ----
 popbayes::read_bugs()
 }
 }

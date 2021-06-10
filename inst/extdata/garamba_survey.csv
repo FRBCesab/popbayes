@@ -1,4 +1,4 @@
-"location","species","year","stat_method","field_method","counts","lower_ci","upper_ci","pref_field_method","conversion_fact","rmax"
+"location","species","date","stat_method","field_method","count","lower_ci","upper_ci","pref_field_method","conversion_A2G","rmax"
 "Garamba","Alcelaphus buselaphus",1976,"S","A",7750,6280,9220,"G",2.302,0.2748
 "Garamba","Alcelaphus buselaphus",1983,"S","A",1932,1120,2744,"G",2.302,0.2748
 "Garamba","Alcelaphus buselaphus",1984,"S","A",1224,782,1666,"G",2.302,0.2748

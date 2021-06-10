@@ -7,8 +7,8 @@
 list_series(path = ".")
 }
 \arguments{
-\item{path}{a character string. The directory in which count series have been
-saved by the function \code{\link[=format_data]{format_data()}}.}
+\item{path}{a character string. The directory in which count series have
+been saved by the function \code{\link[=format_data]{format_data()}}.}
 }
 \value{
 A vector of count series names (character strings).
@@ -28,7 +28,7 @@ garamba <- read.csv(file = file_path)
 ## Format dataset ----
 garamba_formatted <- format_data(garamba)
 
-## Retrieve counts series names ----
+## Retrieve count series names ----
 popbayes::list_series()
 }
 }

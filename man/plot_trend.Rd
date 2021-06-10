@@ -31,7 +31,7 @@ This function plots a panel of two graphics for one BUGS model
 (blue line) with the 95\% CI (gray envelop). Dots (with intervals)
 represent converted counts passed to the model (with the 95\% CI);
 \item on the right side, a bar plot of estimated relative growth rates (r) by
-year. Dark bars are real estimated r.
+date. Dark bars are real estimated r.
 }
 }
 \examples{

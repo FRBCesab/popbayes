@@ -22,10 +22,10 @@ useful for users.
 }
 \examples{
 \dontrun{
-## Get counts series names ----
+## Get count series names ----
 popbayes::list_series()
 
-## Import BUGS outputs for one counts series ----
+## Import BUGS outputs for one count series ----
 bugs <- popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus")
 
 ## Extract estimated parameters ----

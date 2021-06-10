@@ -10,7 +10,7 @@ series_to_df(data, converted = TRUE)
 \item{data}{a named list. The output of \code{\link[=format_data]{format_data()}} or \code{\link[=filter_series]{filter_series()}}.}
 
 \item{converted}{a logical. If \code{TRUE} (default) extracts converted counts,
-otherwise returns original counts}
+otherwise returns original counts.}
 }
 \value{
 A data frame.
@@ -19,7 +19,7 @@ A data frame.
 From the output of the function \code{\link[=format_data]{format_data()}} (or \code{\link[=filter_series]{filter_series()}}), this
 function extracts data frames containing converted counts
 (\code{converted = TRUE}) or original counts (\code{converted = FALSE}) for one,
-several, or all counts series.
+several, or all count series.
 
 The resulting data frame has no particular use in \code{popbayes} but it can be
 useful for users.
@@ -37,12 +37,12 @@ garamba_formatted <- popbayes::format_data(garamba)
 
 class(garamba_formatted)
 
-## Extract converted counts data ----
+## Extract converted count data ----
 converted_data <- popbayes::series_to_df(garamba_formatted, converted = TRUE)
 
 class(converted_data)
 
-## Extract original counts data ----
+## Extract original count data ----
 original_data <- popbayes::series_to_df(garamba_formatted, converted = FALSE)
 
 dim(converted_data)

@@ -8,7 +8,8 @@ p <- ggplot2::ggplot(ggplot2::aes(x = mpg, y = wt), data = mtcars) +
   ggplot2::geom_point(size = 0.1, colour = "white") + 
   ggplot2::geom_smooth(method = "gam", colour = "white", fill = "white",
                        size = 0.2) + 
-  rphylopic::add_phylopic(elephant, alpha = 1, x = 28, y = 4.75, ysize = 6.5, col = "white") +
+  rphylopic::add_phylopic(elephant, alpha = 1, x = 28, y = 4.75, ysize = 6.5, 
+                          col = "white") +
   ggplot2::theme_void() + 
   ggpubr::theme_transparent()
 
@@ -44,6 +45,3 @@ hexSticker::sticker(
   l_width   = 4,
   l_height  = 4
 )
-
-
-Chargé.e de mission Data-scientist Cesab/ Animateur.trice scientifique du Challenge IA BIODIV

@@ -82,8 +82,8 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
   ## Get plot extent ----
   
   counts_range <- c(0, max(c(data$"data_converted"$"upper_ci_conv", 
-                             data$"data_original"$"counts_orig")))
-  years_range <- range(data$"years")
+                             data$"data_original"$"count_orig")))
+  dates_range <- range(data$"date")
   
   
   ## Export as PNG (if required) ----
@@ -115,7 +115,7 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Empty plot ----
   
-  plot(0, type = "n", xlim = years_range, ylim = counts_range, axes = FALSE,
+  plot(0, type = "n", xlim = dates_range, ylim = counts_range, axes = FALSE,
        xlab = "", ylab = "Original (black) and converted (grey) counts",
        font.lab = 1)
   
@@ -133,23 +133,23 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   for (i in 1:nrow(data$"data_original")) {
     
-    lines(x = rep(data$"data_original"[i, "year"], 2),
-          y = c(data$"data_original"[i, "counts_orig"], 
-                data$"data_converted"[i, "counts_conv"]),
+    lines(x = rep(data$"data_original"[i, "date"], 2),
+          y = c(data$"data_original"[i, "count_orig"], 
+                data$"data_converted"[i, "count_conv"]),
           lty = 4, lwd = 0.75)
   }
   
   
   ## Add data ----
   
-  points(x = data$"data_original"$"year", 
-         y = data$"data_original"$"counts_orig", pch = 19, cex = 1.2)
+  points(x = data$"data_original"$"date", 
+         y = data$"data_original"$"count_orig", pch = 19, cex = 1.2)
   
-  points(x = data$"data_converted"$"year", 
-         y = data$"data_converted"$"counts_conv", pch = 19, cex = 1.2)
+  points(x = data$"data_converted"$"date", 
+         y = data$"data_converted"$"count_conv", pch = 19, cex = 1.2)
   
-  points(x = data$"data_converted"$"year", 
-         y = data$"data_converted"$"counts_conv", pch = 19, col = "#aaaaaa")
+  points(x = data$"data_converted"$"date", 
+         y = data$"data_converted"$"count_conv", pch = 19, col = "#aaaaaa")
   
   
   ###
@@ -159,7 +159,7 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Empty plot ----
   
-  plot(0, type = "n", xlim = years_range, ylim = counts_range, axes = FALSE,
+  plot(0, type = "n", xlim = dates_range, ylim = counts_range, axes = FALSE,
        xlab = "", ylab = "Converted counts with 95% CI",
        font.lab = 1)
   
@@ -177,32 +177,32 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   for (i in 1:nrow(data$"data_converted")) {
     
-    lines(x = rep(data$"data_converted"[i, "year"], 2),
+    lines(x = rep(data$"data_converted"[i, "date"], 2),
           y = c(data$"data_converted"[i, "lower_ci_conv"], 
                 data$"data_converted"[i, "upper_ci_conv"]))
     
     
-    lines(x = c(data$"data_converted"[i, "year"] - 
-                  data$"data_converted"[i, "year"] * 0.0002,
-                data$"data_converted"[i, "year"] + 
-                  data$"data_converted"[i, "year"] * 0.0002),
+    lines(x = c(data$"data_converted"[i, "date"] - 
+                  data$"data_converted"[i, "date"] * 0.0002,
+                data$"data_converted"[i, "date"] + 
+                  data$"data_converted"[i, "date"] * 0.0002),
           y = rep(data$"data_converted"[i, "lower_ci_conv"], 2))
     
-    lines(x = c(data$"data_converted"[i, "year"] - 
-                  data$"data_converted"[i, "year"] * 0.0002,
-                data$"data_converted"[i, "year"] + 
-                  data$"data_converted"[i, "year"] * 0.0002),
+    lines(x = c(data$"data_converted"[i, "date"] - 
+                  data$"data_converted"[i, "date"] * 0.0002,
+                data$"data_converted"[i, "date"] + 
+                  data$"data_converted"[i, "date"] * 0.0002),
           y = rep(data$"data_converted"[i, "upper_ci_conv"], 2))
   }
   
   
   ## Add data ----
   
-  points(x = data$"data_converted"$"year", 
-         y = data$"data_converted"$"counts_conv", pch = 19, cex = 1.2)
+  points(x = data$"data_converted"$"date", 
+         y = data$"data_converted"$"count_conv", pch = 19, cex = 1.2)
   
-  points(x = data$"data_converted"$"year", 
-         y = data$"data_converted"$"counts_conv", pch = 19, col = "#aaaaaa")
+  points(x = data$"data_converted"$"date", 
+         y = data$"data_converted"$"count_conv", pch = 19, col = "#aaaaaa")
   
   
   ## Add title ----
@@ -233,7 +233,7 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
 #'   (blue line) with the 95% CI (gray envelop). Dots (with intervals) 
 #'   represent converted counts passed to the model (with the 95% CI);
 #' - on the right side, a bar plot of estimated relative growth rates (r) by 
-#'   year. Dark bars are real estimated r.
+#'   date. Dark bars are real estimated r.
 #' 
 #' @param series a character string. The count series name (can be 
 #'   retrieved by running [list_series()]).
@@ -339,13 +339,13 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   outputs_n <- outputs[grep("^N\\[", rownames(outputs)), c("mean", "2.5%", 
                                                            "97.5%")]
   rownames(outputs_n) <- NULL
-  colnames(outputs_n) <- c("counts_jags", "lower_ci_jags", "upper_ci_jags")
+  colnames(outputs_n) <- c("count_jags", "lower_ci_jags", "upper_ci_jags")
   
   
   ## Create table N for graphic ----
   
-  data_n_for_graph <- data.frame("year"     = data$"year", 
-                                 "counts"   = data$"counts_conv",
+  data_n_for_graph <- data.frame("date"     = data$"date", 
+                                 "count"    = data$"count_conv",
                                  "lower_ci" = data$"lower_ci_conv", 
                                  "upper_ci" = data$"upper_ci_conv")
   
@@ -356,16 +356,16 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   outputs_r <- outputs[grep("^r\\[", rownames(outputs)), "mean"]
   outputs_r <- c(outputs_r, NA)
-  outputs_r <- data.frame(year = data$"year", "r_jags" = outputs_r)
+  outputs_r <- data.frame("date" = data$"date", "r_jags" = outputs_r)
   rownames(outputs_r) <- NULL
   
   
   ## Create table r for graphic ----
   
-  years_seq <- data.frame(
-    "year" = seq(min(outputs_r$"year"), max(outputs_r$"year")))
+  dates_seq <- data.frame(
+    "date" = seq(min(outputs_r$"date"), max(outputs_r$"date")))
   
-  outputs_r <- merge(outputs_r, years_seq, by = "year", all = TRUE)
+  outputs_r <- merge(outputs_r, dates_seq, by = "date", all = TRUE)
   
   outputs_r$"color" <- ifelse(is.na(outputs_r$"r_jags"), "#888888", "black")
   outputs_r$"lwd"   <- ifelse(is.na(outputs_r$"r_jags"), 1, 1.2)
@@ -381,7 +381,7 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Get plot extent ----
   
-  years_range  <- range(data_n_for_graph$"year")
+  dates_range  <- range(data_n_for_graph$"date")
   
   counts_range <- c(0, max(c(data_n_for_graph$"upper_ci", 
                              data_n_for_graph$"upper_ci_jags")))
@@ -427,7 +427,7 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Empty plot ----
   
-  plot(0, type = "n", xlim = years_range, ylim = counts_range, axes = FALSE,
+  plot(0, type = "n", xlim = dates_range, ylim = counts_range, axes = FALSE,
        xlab = "", ylab = "Population size", font.lab = 1)
   
   
@@ -442,8 +442,8 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Add JAGS CI polygon ----
   
-  polygon(x = c(data_n_for_graph$"year", 
-                data_n_for_graph$"year"[nrow(data_n_for_graph):1]),
+  polygon(x = c(data_n_for_graph$"date", 
+                data_n_for_graph$"date"[nrow(data_n_for_graph):1]),
           y = c(data_n_for_graph[ , "lower_ci_jags"],
                 data_n_for_graph[nrow(data_n_for_graph):1, "upper_ci_jags"]),
           col = "#bbbbbb", border = "#bbbbbb", lwd = 1)
@@ -451,7 +451,7 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Add JAGS mean prediction ----
   
-  lines(x = data_n_for_graph$"year", y = data_n_for_graph$"counts_jags", 
+  lines(x = data_n_for_graph$"date", y = data_n_for_graph$"count_jags", 
         col = "steelblue", lwd = 2)
   
   
@@ -459,28 +459,28 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   for (i in 1:nrow(data_n_for_graph)) {
     
-    lines(x = rep(data_n_for_graph[i, "year"], 2),
+    lines(x = rep(data_n_for_graph[i, "date"], 2),
           y = c(data_n_for_graph[i, "lower_ci"], 
                 data_n_for_graph[i, "upper_ci"]))
     
     
-    lines(x = c(data_n_for_graph[i, "year"] - 
-                  data_n_for_graph[i, "year"] * 0.0002,
-                data_n_for_graph[i, "year"] + 
-                  data_n_for_graph[i, "year"] * 0.0002),
+    lines(x = c(data_n_for_graph[i, "date"] - 
+                  data_n_for_graph[i, "date"] * 0.0002,
+                data_n_for_graph[i, "date"] + 
+                  data_n_for_graph[i, "date"] * 0.0002),
           y = rep(data_n_for_graph[i, "lower_ci"], 2))
     
-    lines(x = c(data_n_for_graph[i, "year"] - 
-                  data_n_for_graph[i, "year"] * 0.0002,
-                data_n_for_graph[i, "year"] + 
-                  data_n_for_graph[i, "year"] * 0.0002),
+    lines(x = c(data_n_for_graph[i, "date"] - 
+                  data_n_for_graph[i, "date"] * 0.0002,
+                data_n_for_graph[i, "date"] + 
+                  data_n_for_graph[i, "date"] * 0.0002),
           y = rep(data_n_for_graph[i, "upper_ci"], 2))
   }
   
   
   ## Add Observed (converted) counts ----
   
-  points(x = data_n_for_graph$"year", y = data_n_for_graph$"counts", pch = 19, 
+  points(x = data_n_for_graph$"date", y = data_n_for_graph$"count", pch = 19, 
          cex = 1.2)
   
   
@@ -493,7 +493,7 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Empty plot ----
   
-  plot(0, type = "n", xlim = years_range, ylim = growth_range, axes = FALSE,
+  plot(0, type = "n", xlim = dates_range, ylim = growth_range, axes = FALSE,
        xlab = "", ylab = "Relative growth rate (r)",
        font.lab = 1)
   
@@ -507,7 +507,7 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   
   ## Add data ----
   
-  points(x = data_r_for_graph$"year", y = data_r_for_graph$"r", type = "h", 
+  points(x = data_r_for_graph$"date", y = data_r_for_graph$"r", type = "h", 
          col = data_r_for_graph$"color", lwd = data_r_for_graph$"lwd")
   
   

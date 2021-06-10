@@ -1,12 +1,16 @@
-#' Counts conversion data
+#' Species information dataset
 #' 
 #' @description
-#' This dataset contains information to convert individual counts estimated from
-#' a field method to a preferred field method. The field method can be `A` 
-#' (aerial counts) or `G` (ground counts). See [format_data()] for further 
-#' information. User can take this dataset as a template to add information for 
-#' missing species. Note that only `species`, `pref_field_method`, and 
-#' `conversion_fact` are required.
+#' This dataset contains information about a list of 15 African mammal species.
+#' It can be used in the function `format_data()` to convert individual counts 
+#' estimated from a field method to a preferred field method. The field method 
+#' can be `A` (aerial counts) or `G` (ground counts). See [format_data()] for 
+#' further information. It also contains the maximum population growth rate 
+#' (i.e. the maximum change in log population size).
+#' 
+#' User can take this dataset as a template to add information for missing 
+#' species. Note that only `species`, `pref_field_method`, `conversion_A2G`, 
+#' and `rmax` are required.
 #'   
 #' @format A data frame with 15 rows (African mammals species) and the following
 #' columns:
@@ -22,37 +26,16 @@
 #'     \code{LD} for Large Dark (>150kg), \code{Elephant}, and \code{Giraffe}}
 #'   \item{pref_field_method}{the preferred field method of the species. One of 
 #'     \code{A} for Aerial counts, and \code{G} for Ground counts}
-#'   \item{conversion_fact}{the conversion multiplicative factor (corresponding  
+#'   \item{conversion_A2G}{the conversion multiplicative factor (corresponding  
 #'     to the detectability category) used to convert aerial to ground counts}
-#' }
-#' 
-#' @examples 
-#' data("conversion_data")
-#' conversion_data
-
-"conversion_data"
-
-
-
-#' Maximum population growth rates
-#' 
-#' @description
-#' This dataset contains for a list of 15 African mammal species the maximum 
-#' population growth rate (i.e. the maximum yearly change in log population 
-#' size).
-#'   
-#' @format A data frame with 15 rows (species) and the following two columns:
-#' \describe{
-#'   \item{species}{the species binomial name (same as in `conversion_data`)}
 #'   \item{rmax}{the maximum population growth rate}
 #' }
 #' 
 #' @examples 
-#' data("rmax_data")
-#' rmax_data
+#' data("species_info")
+#' species_info
 
-"rmax_data"
-
+"species_info"
 
 
 #' African mammals survey in the Garamba National Park
@@ -66,17 +49,22 @@
 #' \describe{
 #'   \item{location}{the location of the survey (Garamba)}
 #'   \item{species}{the binomial name of the species}
-#'   \item{year}{the year of the survey}
+#'   \item{date}{the date of the survey}
 #'   \item{stat_method}{the method used to estimate individuals counts. One of
 #'     \code{T} (total counts), \code{G} (guesstimate), and \code{S} 
 #'     (sampling counts)}
 #'   \item{field_method}{the field method used to collect data. One of 
 #'     \code{A} (aerial counts), and \code{G} (ground counts)}
-#'   \item{counts}{number of individuals}
+#'   \item{count}{number of individuals}
 #'   \item{lower_ci}{lower boundary of the 95% confidence interval of the counts
 #'     (only for sampling counts)}
 #'   \item{upper_ci}{upper boundary of the 95% confidence interval of the counts
 #'     (only for sampling counts)}
+#'   \item{pref_field_method}{the preferred field method of the species. One of 
+#'     \code{A} for Aerial counts, and \code{G} for Ground counts}
+#'   \item{conversion_A2G}{the conversion multiplicative factor (corresponding  
+#'     to the detectability category) used to convert aerial to ground counts}
+#'   \item{rmax}{the maximum population growth rate}
 #' }
 #' 
 #' @examples 

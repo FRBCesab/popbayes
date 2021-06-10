@@ -8,7 +8,6 @@ fit_trend(
   data,
   model_opts = list(100, TRUE),
   mcmc_opts = list(ni = 50000, nt = 3, nb = 10000, nc = 2),
-  rmax = NULL,
   path = "."
 )
 }
@@ -24,10 +23,6 @@ argument \code{rmax} cannot be NULL unless species are listed in \code{popbayes}
 \item{mcmc_opts}{a list containing the number of iteration (\code{ni}), the
 thinning factor (\code{nt}), the length of burn in (\code{nb}), i.e. the number of
 iterations to discard at the beginning, and the number of chains (\code{nc}).}
-
-\item{rmax}{a data frame with two columns: the species name (\code{species}) and
-the maximum relative rate of increase of the species (\code{rmax}), i.e. the
-maximum yearly change in log pop size. See \code{?rmax_data} for an example.}
 
 \item{path}{a character string. The directory to save BUGS outputs (the same
 as in \code{\link[=format_data]{format_data()}}).}
@@ -57,18 +52,19 @@ the next candidate relative rate of increase (see below) is drawn.
 The highest this number, the tighter the link between successive relative
 rates of increase. The default \code{100} corresponds to a moderate link.
 \item a logical indicating whether the population growth must remain limited by
-the species demographic potential (provided by the argument \code{rmax}).
+the species demographic potential (provided by the argument \code{rmax} in
+\code{\link[=format_data]{format_data()}}).
 }
 
 The relative rate of increase is the change in log population size between
 two dates. The quantity actually being modeled is the relative rate of
-increase per unit of time (usually one year). This quantity reflects more
+increase per unit of time (usually one date). This quantity reflects more
 directly the prevailing conditions than the population size itself, which is
 the reason why it has been chosen.
 
 When the second model option is set to \code{TRUE}, the candidate rate of
 increase is compared to the maximum relative rate of increase
-(parameter \code{rmax}) and replaced by \code{rmax} if greater.
+(obtained when using \code{\link[=format_data]{format_data()}}) and replaced by \code{rmax} if greater.
 
 \strong{B. MCMC options}
 
@@ -83,10 +79,10 @@ file_path <- system.file("extdata", "garamba_survey.csv",
                          
 garamba <- read.csv(file = file_path)
 
-## Format counts series ----
+## Format count series ----
 garamba_formatted <- popbayes::format_data(garamba)
 
-## Select one counts series (optional) ----
+## Select one count series (optional) ----
 a_buselaphus <- popbayes::filter_series(garamba_formatted, 
                                         species = "Alcelaphus buselaphus")
 ## Fit population trend ----
