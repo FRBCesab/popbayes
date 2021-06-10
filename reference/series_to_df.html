@@ -43,7 +43,7 @@
 <meta property="og:description" content="From the output of the function format_data() (or filter_series()), this
 function extracts data frames containing converted counts
 (converted = TRUE) or original counts (converted = FALSE) for one,
-several, or all counts series.
+several, or all count series.
 The resulting data frame has no particular use in popbayes but it can be
 useful for users." />
 
@@ -137,7 +137,7 @@ useful for users." />
     <p>From the output of the function <code><a href='format_data.html'>format_data()</a></code> (or <code><a href='filter_series.html'>filter_series()</a></code>), this
 function extracts data frames containing converted counts
 (<code>converted = TRUE</code>) or original counts (<code>converted = FALSE</code>) for one,
-several, or all counts series.</p>
+several, or all count series.</p>
 <p>The resulting data frame has no particular use in <code>popbayes</code> but it can be
 useful for users.</p>
     </div>
@@ -154,7 +154,7 @@ useful for users.</p>
     <tr>
       <th>converted</th>
       <td><p>a logical. If <code>TRUE</code> (default) extracts converted counts,
-otherwise returns original counts</p></td>
+otherwise returns original counts.</p></td>
     </tr>
     </table>
 
@@ -175,12 +175,12 @@ otherwise returns original counts</p></td>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span><span class='op'>)</span>
 
-<span class='co'>## Extract converted counts data ----</span>
+<span class='co'>## Extract converted count data ----</span>
 <span class='va'>converted_data</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>series_to_df</span><span class='op'>(</span><span class='va'>garamba_formatted</span>, converted <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>converted_data</span><span class='op'>)</span>
 
-<span class='co'>## Extract original counts data ----</span>
+<span class='co'>## Extract original count data ----</span>
 <span class='va'>original_data</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>series_to_df</span><span class='op'>(</span><span class='va'>garamba_formatted</span>, converted <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>converted_data</span><span class='op'>)</span>

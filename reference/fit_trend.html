@@ -55,17 +55,18 @@ the next candidate relative rate of increase (see below) is drawn.
 The highest this number, the tighter the link between successive relative
 rates of increase. The default 100 corresponds to a moderate link.
 a logical indicating whether the population growth must remain limited by
-the species demographic potential (provided by the argument rmax).
+the species demographic potential (provided by the argument rmax in
+format_data()).
 
 
 The relative rate of increase is the change in log population size between
 two dates. The quantity actually being modeled is the relative rate of
-increase per unit of time (usually one year). This quantity reflects more
+increase per unit of time (usually one date). This quantity reflects more
 directly the prevailing conditions than the population size itself, which is
 the reason why it has been chosen.
 When the second model option is set to TRUE, the candidate rate of
 increase is compared to the maximum relative rate of increase
-(parameter rmax) and replaced by rmax if greater.
+(obtained when using format_data()) and replaced by rmax if greater.
 B. MCMC options
 Classical Markov chain Monte Carlo (MCMC) settings (see argument mcmc_opts
 below)." />
@@ -172,17 +173,18 @@ the next candidate relative rate of increase (see below) is drawn.
 The highest this number, the tighter the link between successive relative
 rates of increase. The default <code>100</code> corresponds to a moderate link.</p></li>
 <li><p>a logical indicating whether the population growth must remain limited by
-the species demographic potential (provided by the argument <code>rmax</code>).</p></li>
+the species demographic potential (provided by the argument <code>rmax</code> in
+<code><a href='format_data.html'>format_data()</a></code>).</p></li>
 </ul>
 
 <p>The relative rate of increase is the change in log population size between
 two dates. The quantity actually being modeled is the relative rate of
-increase per unit of time (usually one year). This quantity reflects more
+increase per unit of time (usually one date). This quantity reflects more
 directly the prevailing conditions than the population size itself, which is
 the reason why it has been chosen.</p>
 <p>When the second model option is set to <code>TRUE</code>, the candidate rate of
 increase is compared to the maximum relative rate of increase
-(parameter <code>rmax</code>) and replaced by <code>rmax</code> if greater.</p>
+(obtained when using <code><a href='format_data.html'>format_data()</a></code>) and replaced by <code>rmax</code> if greater.</p>
 <p><strong>B. MCMC options</strong></p>
 <p>Classical Markov chain Monte Carlo (MCMC) settings (see argument <code>mcmc_opts</code>
 below).</p>
@@ -192,7 +194,6 @@ below).</p>
   <span class='va'>data</span>,
   model_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
   mcmc_opts <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>ni <span class='op'>=</span> <span class='fl'>50000</span>, nt <span class='op'>=</span> <span class='fl'>3</span>, nb <span class='op'>=</span> <span class='fl'>10000</span>, nc <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
-  rmax <span class='op'>=</span> <span class='cn'>NULL</span>,
   path <span class='op'>=</span> <span class='st'>"."</span>
 <span class='op'>)</span></pre>
 
@@ -218,12 +219,6 @@ thinning factor (<code>nt</code>), the length of burn in (<code>nb</code>), i.e.
 iterations to discard at the beginning, and the number of chains (<code>nc</code>).</p></td>
     </tr>
     <tr>
-      <th>rmax</th>
-      <td><p>a data frame with two columns: the species name (<code>species</code>) and
-the maximum relative rate of increase of the species (<code>rmax</code>), i.e. the
-maximum yearly change in log pop size. See <code><a href='rmax_data.html'>?rmax_data</a></code> for an example.</p></td>
-    </tr>
-    <tr>
       <th>path</th>
       <td><p>a character string. The directory to save BUGS outputs (the same
 as in <code><a href='format_data.html'>format_data()</a></code>).</p></td>
@@ -244,10 +239,10 @@ in the folder <code>path</code>).</p>
                          
 <span class='va'>garamba</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>file <span class='op'>=</span> <span class='va'>file_path</span><span class='op'>)</span>
 
-<span class='co'>## Format counts series ----</span>
+<span class='co'>## Format count series ----</span>
 <span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='format_data.html'>format_data</a></span><span class='op'>(</span><span class='va'>garamba</span><span class='op'>)</span>
 
-<span class='co'>## Select one counts series (optional) ----</span>
+<span class='co'>## Select one count series (optional) ----</span>
 <span class='va'>a_buselaphus</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='filter_series.html'>filter_series</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span>, 
                                         species <span class='op'>=</span> <span class='st'>"Alcelaphus buselaphus"</span><span class='op'>)</span>
 <span class='co'>## Fit population trend ----</span>

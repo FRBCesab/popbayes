@@ -144,17 +144,22 @@ in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
     <p>A data frame with 141 rows (counts) and the following 8 columns:</p><dl>
 <dt>location</dt><dd><p>the location of the survey (Garamba)</p></dd>
 <dt>species</dt><dd><p>the binomial name of the species</p></dd>
-<dt>year</dt><dd><p>the year of the survey</p></dd>
+<dt>date</dt><dd><p>the date of the survey</p></dd>
 <dt>stat_method</dt><dd><p>the method used to estimate individuals counts. One of
 <code>T</code> (total counts), <code>G</code> (guesstimate), and <code>S</code>
 (sampling counts)</p></dd>
 <dt>field_method</dt><dd><p>the field method used to collect data. One of
 <code>A</code> (aerial counts), and <code>G</code> (ground counts)</p></dd>
-<dt>counts</dt><dd><p>number of individuals</p></dd>
+<dt>count</dt><dd><p>number of individuals</p></dd>
 <dt>lower_ci</dt><dd><p>lower boundary of the 95% confidence interval of the counts
 (only for sampling counts)</p></dd>
 <dt>upper_ci</dt><dd><p>upper boundary of the 95% confidence interval of the counts
 (only for sampling counts)</p></dd>
+<dt>pref_field_method</dt><dd><p>the preferred field method of the species. One of
+<code>A</code> for Aerial counts, and <code>G</code> for Ground counts</p></dd>
+<dt>conversion_A2G</dt><dd><p>the conversion multiplicative factor (corresponding
+to the detectability category) used to convert aerial to ground counts</p></dd>
+<dt>rmax</dt><dd><p>the maximum population growth rate</p></dd>
 
 </dl>
 
@@ -162,68 +167,68 @@ in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"garamba"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>garamba</span>, <span class='fl'>30</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    location                species year stat_method field_method counts
-#&gt; 1   Garamba  Alcelaphus buselaphus 1976           S            A   7750
-#&gt; 2   Garamba  Alcelaphus buselaphus 1983           S            A   1932
-#&gt; 3   Garamba  Alcelaphus buselaphus 1984           S            A   1224
-#&gt; 4   Garamba  Alcelaphus buselaphus 1986           S            A   1705
-#&gt; 5   Garamba  Alcelaphus buselaphus 1991           S            A    987
-#&gt; 6   Garamba  Alcelaphus buselaphus 1993           S            A   3444
-#&gt; 7   Garamba  Alcelaphus buselaphus 1995           S            A   2819
-#&gt; 8   Garamba  Alcelaphus buselaphus 1998           S            A   1685
-#&gt; 9   Garamba  Alcelaphus buselaphus 2000           S            A   1169
-#&gt; 10  Garamba  Alcelaphus buselaphus 2002           S            A   1139
-#&gt; 11  Garamba  Alcelaphus buselaphus 2003           S            A   1595
-#&gt; 12  Garamba  Alcelaphus buselaphus 2004           S            A   1204
-#&gt; 13  Garamba  Alcelaphus buselaphus 2012           T            A    552
-#&gt; 14  Garamba  Alcelaphus buselaphus 2014           T            A    698
-#&gt; 15  Garamba  Alcelaphus buselaphus 2017           T            A   1051
-#&gt; 16  Garamba Giraffa camelopardalis 1976           S            A    350
-#&gt; 17  Garamba Giraffa camelopardalis 1983           S            A    175
-#&gt; 18  Garamba Giraffa camelopardalis 1984           S            A    237
-#&gt; 19  Garamba Giraffa camelopardalis 1986           S            A    153
-#&gt; 20  Garamba Giraffa camelopardalis 1991           S            A    346
-#&gt; 21  Garamba Giraffa camelopardalis 1993           S            A    347
-#&gt; 22  Garamba Giraffa camelopardalis 1995           S            A    178
-#&gt; 23  Garamba Giraffa camelopardalis 1998           S            A    144
-#&gt; 24  Garamba Giraffa camelopardalis 2000           S            A    118
-#&gt; 25  Garamba Giraffa camelopardalis 2002           S            A     62
-#&gt; 26  Garamba Giraffa camelopardalis 2003           S            A     62
-#&gt; 27  Garamba Giraffa camelopardalis 2004           S            A    185
-#&gt; 28  Garamba Giraffa camelopardalis 2012           T            A     11
-#&gt; 29  Garamba Giraffa camelopardalis 2014           T            A     42
-#&gt; 30  Garamba Giraffa camelopardalis 2017           T            A     42
-#&gt;    lower_ci upper_ci
-#&gt; 1      6280     9220
-#&gt; 2      1120     2744
-#&gt; 3       782     1666
-#&gt; 4      1116     2294
-#&gt; 5       663     1311
-#&gt; 6      1290     5598
-#&gt; 7      1620     4018
-#&gt; 8      1287     2083
-#&gt; 9       945     1393
-#&gt; 10      907     1371
-#&gt; 11     1142     2048
-#&gt; 12      811     1597
-#&gt; 13       NA       NA
-#&gt; 14       NA       NA
-#&gt; 15       NA       NA
-#&gt; 16      100      600
-#&gt; 17       12      338
-#&gt; 18       93      381
-#&gt; 19       13      293
-#&gt; 20      143      549
-#&gt; 21      347      766
-#&gt; 22      178      388
-#&gt; 23       71      217
-#&gt; 24       54      182
-#&gt; 25       49       75
-#&gt; 26       62      137
-#&gt; 27       33      337
-#&gt; 28       NA       NA
-#&gt; 29       NA       NA
-#&gt; 30       NA       NA</div></pre>
+</div><div class='output co'>#&gt;    location                species date stat_method field_method count lower_ci
+#&gt; 1   Garamba  Alcelaphus buselaphus 1976           S            A  7750     6280
+#&gt; 2   Garamba  Alcelaphus buselaphus 1983           S            A  1932     1120
+#&gt; 3   Garamba  Alcelaphus buselaphus 1984           S            A  1224      782
+#&gt; 4   Garamba  Alcelaphus buselaphus 1986           S            A  1705     1116
+#&gt; 5   Garamba  Alcelaphus buselaphus 1991           S            A   987      663
+#&gt; 6   Garamba  Alcelaphus buselaphus 1993           S            A  3444     1290
+#&gt; 7   Garamba  Alcelaphus buselaphus 1995           S            A  2819     1620
+#&gt; 8   Garamba  Alcelaphus buselaphus 1998           S            A  1685     1287
+#&gt; 9   Garamba  Alcelaphus buselaphus 2000           S            A  1169      945
+#&gt; 10  Garamba  Alcelaphus buselaphus 2002           S            A  1139      907
+#&gt; 11  Garamba  Alcelaphus buselaphus 2003           S            A  1595     1142
+#&gt; 12  Garamba  Alcelaphus buselaphus 2004           S            A  1204      811
+#&gt; 13  Garamba  Alcelaphus buselaphus 2012           T            A   552       NA
+#&gt; 14  Garamba  Alcelaphus buselaphus 2014           T            A   698       NA
+#&gt; 15  Garamba  Alcelaphus buselaphus 2017           T            A  1051       NA
+#&gt; 16  Garamba Giraffa camelopardalis 1976           S            A   350      100
+#&gt; 17  Garamba Giraffa camelopardalis 1983           S            A   175       12
+#&gt; 18  Garamba Giraffa camelopardalis 1984           S            A   237       93
+#&gt; 19  Garamba Giraffa camelopardalis 1986           S            A   153       13
+#&gt; 20  Garamba Giraffa camelopardalis 1991           S            A   346      143
+#&gt; 21  Garamba Giraffa camelopardalis 1993           S            A   347      347
+#&gt; 22  Garamba Giraffa camelopardalis 1995           S            A   178      178
+#&gt; 23  Garamba Giraffa camelopardalis 1998           S            A   144       71
+#&gt; 24  Garamba Giraffa camelopardalis 2000           S            A   118       54
+#&gt; 25  Garamba Giraffa camelopardalis 2002           S            A    62       49
+#&gt; 26  Garamba Giraffa camelopardalis 2003           S            A    62       62
+#&gt; 27  Garamba Giraffa camelopardalis 2004           S            A   185       33
+#&gt; 28  Garamba Giraffa camelopardalis 2012           T            A    11       NA
+#&gt; 29  Garamba Giraffa camelopardalis 2014           T            A    42       NA
+#&gt; 30  Garamba Giraffa camelopardalis 2017           T            A    42       NA
+#&gt;    upper_ci pref_field_method conversion_A2G   rmax
+#&gt; 1      9220                 G          2.302 0.2748
+#&gt; 2      2744                 G          2.302 0.2748
+#&gt; 3      1666                 G          2.302 0.2748
+#&gt; 4      2294                 G          2.302 0.2748
+#&gt; 5      1311                 G          2.302 0.2748
+#&gt; 6      5598                 G          2.302 0.2748
+#&gt; 7      4018                 G          2.302 0.2748
+#&gt; 8      2083                 G          2.302 0.2748
+#&gt; 9      1393                 G          2.302 0.2748
+#&gt; 10     1371                 G          2.302 0.2748
+#&gt; 11     2048                 G          2.302 0.2748
+#&gt; 12     1597                 G          2.302 0.2748
+#&gt; 13       NA                 G          2.302 0.2748
+#&gt; 14       NA                 G          2.302 0.2748
+#&gt; 15       NA                 G          2.302 0.2748
+#&gt; 16      600                 A          3.011 0.1750
+#&gt; 17      338                 A          3.011 0.1750
+#&gt; 18      381                 A          3.011 0.1750
+#&gt; 19      293                 A          3.011 0.1750
+#&gt; 20      549                 A          3.011 0.1750
+#&gt; 21      766                 A          3.011 0.1750
+#&gt; 22      388                 A          3.011 0.1750
+#&gt; 23      217                 A          3.011 0.1750
+#&gt; 24      182                 A          3.011 0.1750
+#&gt; 25       75                 A          3.011 0.1750
+#&gt; 26      137                 A          3.011 0.1750
+#&gt; 27      337                 A          3.011 0.1750
+#&gt; 28       NA                 A          3.011 0.1750
+#&gt; 29       NA                 A          3.011 0.1750
+#&gt; 30       NA                 A          3.011 0.1750</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

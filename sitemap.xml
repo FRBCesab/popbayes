@@ -7,9 +7,6 @@
     <loc>https://frbcesab.github.io/popbayes/reference/bugs_to_df.html</loc>
   </url>
   <url>
-    <loc>https://frbcesab.github.io/popbayes/reference/conversion_data.html</loc>
-  </url>
-  <url>
     <loc>https://frbcesab.github.io/popbayes/reference/diagnostic.html</loc>
   </url>
   <url>
@@ -43,10 +40,10 @@
     <loc>https://frbcesab.github.io/popbayes/reference/read_series.html</loc>
   </url>
   <url>
-    <loc>https://frbcesab.github.io/popbayes/reference/rmax_data.html</loc>
+    <loc>https://frbcesab.github.io/popbayes/reference/series_to_df.html</loc>
   </url>
   <url>
-    <loc>https://frbcesab.github.io/popbayes/reference/series_to_df.html</loc>
+    <loc>https://frbcesab.github.io/popbayes/reference/species_info.html</loc>
   </url>
   <url>
     <loc>https://frbcesab.github.io/popbayes/articles/generate_data.html</loc>
