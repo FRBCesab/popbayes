@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • popbayes</title>
+<title>Compute rmax from adult female body mass — w_to_rmax • popbayes</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,12 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Compute rmax from adult female body mass — w_to_rmax" />
+<meta property="og:description" content="The demographic potential of a species is limited. The intrinsic rate of
+increase rmax is the maximum increase in log population size that a
+species can attain in a year. According to Sinclair (2003), it is related
+to the body mass of adult females by the formula:
+$$ 1.375*W^-0.315 $$" />
 
 
 
@@ -58,7 +63,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,147 +125,48 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Compute rmax from adult female body mass</h1>
+    <small class="dont-index">Source: <a href='https://github.com/frbcesab/popbayes/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>w_to_rmax.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>The demographic potential of a species is limited. The intrinsic rate of
+increase <code>rmax</code> is the maximum increase in log population size that a
+species can attain in a year. According to Sinclair (2003), it is related
+to the body mass of adult females by the formula:</p>
+<p>$$ 1.375*W^-0.315 $$</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>w_to_rmax</span><span class='op'>(</span><span class='va'>w</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-datasets" class="hasAnchor"><a href="#section-datasets" class="anchor"></a>Datasets</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="garamba.html">garamba</a></code> </p>
-        </td>
-        <td><p>African mammals survey in the Garamba National Park</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="species_info.html">species_info</a></code> </p>
-        </td>
-        <td><p>Species information dataset</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-main-functions" class="hasAnchor"><a href="#section-main-functions" class="anchor"></a>Main functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="format_data.html">format_data()</a></code> </p>
-        </td>
-        <td><p>Format count series</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filter_series.html">filter_series()</a></code> </p>
-        </td>
-        <td><p>Extract the count series corresponding to a location and/or a species in a
-list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_series.html">plot_series()</a></code> </p>
-        </td>
-        <td><p>Plot original vs converted counts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fit_trend.html">fit_trend()</a></code> </p>
-        </td>
-        <td><p>Fit a Bayesian model to estimate population size trend</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="diagnostic.html">diagnostic()</a></code> </p>
-        </td>
-        <td><p>Check if a BUGS model has converged</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_trend.html">plot_trend()</a></code> </p>
-        </td>
-        <td><p>Plot estimated population trend</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-additional-functions" class="hasAnchor"><a href="#section-additional-functions" class="anchor"></a>Additional functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="list_series.html">list_series()</a></code> </p>
-        </td>
-        <td><p>Retrieve the count series names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_series.html">read_series()</a></code> </p>
-        </td>
-        <td><p>Import a list of count series previously exported</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="series_to_df.html">series_to_df()</a></code> </p>
-        </td>
-        <td><p>Extract original/converted count series data from a list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_bugs.html">read_bugs()</a></code> </p>
-        </td>
-        <td><p>Import a list of BUGS outputs previously exported</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bugs_to_df.html">bugs_to_df()</a></code> </p>
-        </td>
-        <td><p>Extract estimated parameters from a list of BUGS outputs</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="w_to_rmax.html">w_to_rmax()</a></code> </p>
-        </td>
-        <td><p>Compute rmax from adult female body mass</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>w</th>
+      <td><p>a numerical vector. Adult female body mass (in kg).</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A numerical vector of <code>rmax</code> values.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Sinclair (2013) Mammal population regulation, keystone processes and
+ecosystem dynamics. <em>Philosophical Transactions: Biological Sciences</em>,
+<strong>358</strong>, 1729-1740.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>body_masses</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>55</span>, <span class='fl'>127</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>body_masses</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Impala"</span>, <span class='st'>"Tiang"</span><span class='op'>)</span>
+<span class='fu'>w_to_rmax</span><span class='op'>(</span><span class='va'>body_masses</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Impala     Tiang 
+#&gt; 0.3891244 0.2989541 </div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
