@@ -15,12 +15,12 @@ Authors@R: c(
       email   = "roger.pradel@cefe.cnrs.fr",
       role    = "aut",
       comment = c(ORCID = "0000-0002-2684-9251")))
-Description: This package infers the trends of one or several populations 
-      over time from series of counts. It does so by accounting for count 
-      precisions (provided or inferred based on expert knowledge, e.g. for
-      guesstimates), smoothing the population rate of increase over time, 
-      and accounting for the maximum demographic potential of species.
-      Inference is carried out in a Bayesian framework.
+Description: Infers the trends of one or several populations over time from 
+    series of counts. It does so by accounting for count precisions (provided 
+    or inferred based on expert knowledge, e.g. for guesstimates), smoothing 
+    the population rate of increase over time, and accounting for the maximum 
+    demographic potential of species. Inference is carried out in a Bayesian 
+    framework.
 URL: https://github.com/frbcesab/popbayes
 BugReports: https://github.com/frbcesab/popbayes/issues
 Depends: R (>= 3.5)

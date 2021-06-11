@@ -196,7 +196,7 @@ model_formula <- function(path = ".") {
 #' @description
 #' This function applies a Bayesian model to count series in order to infer 
 #' the population trend over time. This function only works on the output of 
-#' the [format_data()] or [filter_series()].
+#' [format_data()] or [filter_series()].
 #' 
 #' **Important:** This function uses [R2jags::jags()] and the 
 #' freeware **JAGS** (\url{https://mcmc-jags.sourceforge.io/}) must be 

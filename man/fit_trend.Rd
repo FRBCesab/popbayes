@@ -35,7 +35,7 @@ in the folder \code{path}).
 \description{
 This function applies a Bayesian model to count series in order to infer
 the population trend over time. This function only works on the output of
-the \code{\link[=format_data]{format_data()}} or \code{\link[=filter_series]{filter_series()}}.
+\code{\link[=format_data]{format_data()}} or \code{\link[=filter_series]{filter_series()}}.
 
 \strong{Important:} This function uses \code{\link[R2jags:jags]{R2jags::jags()}} and the
 freeware \strong{JAGS} (\url{https://mcmc-jags.sourceforge.io/}) must be

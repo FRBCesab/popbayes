@@ -346,7 +346,8 @@ will work.
 
 <br />
 
-On the other hand, if you have a date format (e.g. '2021/05/19'), you need to convert it to a numeric format. For instance:
+On the other hand, if you have a date format (e.g. '2021/05/19'), you need to 
+convert it to a numeric format. For instance:
 
 ```{r 'convert-date'}
 ## Convert a character to a date object ----
@@ -378,7 +379,8 @@ sum(is.na(garamba$"counts"))   # Are there any missing values?
 ```
 
 Field **`count`** must be a **positive** `numeric` (zero counts are allowed).
-`NA` counts cannot be used for fitting trends. The `format_data()` function (see below) has an option for dropping them.
+`NA` counts cannot be used for fitting trends. The `format_data()` function 
+(see below) has an option for dropping them.
 
 
 <br />
@@ -423,7 +425,8 @@ the package. It must be **used prior to** all other functions.
 
 <br />
 
-First let's define the path (relative or absolute) to save objects/results, namely the formatted count series that can be extracted from the data set.
+First let's define the path (relative or absolute) to save objects/results, 
+namely the formatted count series that can be extracted from the data set.
 
 ```{r 'define-path-1', eval = TRUE, echo = FALSE}
 path <- tempdir()
@@ -436,8 +439,11 @@ path <- "the_folder_to_store_outputs"
 
 <br />
 
-The function `format_data()` has many arguments to provide the names of the columns in the user's dataset that contain `location`, `species`, `lower_ci`, etc. By default column names are the same as in the Garamba dataset. If your location field, say, is "site", you'll need to use the argument `location` as follows : 
-`location = "site"`.
+The function `format_data()` has many arguments to provide the names of the 
+columns in the user's dataset that contain `location`, `species`, `lower_ci`, 
+etc. By default column names are the same as in the Garamba dataset. If your 
+location field, say, is "site", you'll need to use the argument `location` as 
+follows: `location = "site"`.
 
 
 <br />
@@ -449,10 +455,12 @@ garamba_formatted <- popbayes::format_data(data = garamba, path = path)
 <br />
 
 
-As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method and the conversion factor as this :
-`pref_field_method =  "column_with_preferred_field_method"` and 
-`conversion_A2G = "column_with_conversion_A2Gor"`,
-or alternatively use the argument `info` :
+As said above, if you have to add your own count conversion data, you need 
+specify the names of columns for the preferred field method, the conversion 
+factor, and rmax as this:
+`pref_field_method = "column_with_preferred_field_method"`, 
+`conversion_A2G = "column_with_conversion_A2Gor"`, `rmax = "rmax"`,
+or alternatively use the argument `info`:
 `info = "dataframe_with_conversion_info"`.
 
 <br />
@@ -501,12 +509,13 @@ they are not identical. The function `format_data()` has **1)** computed
 preferred field method (from `A` to `G`) by applying the conversion factor of 
 `2.302`.
 
-The Bayesian model will use counts and precision measures from the `data_converted`
-data frame.
+The Bayesian model will use counts and precision measures from the 
+`data_converted` data frame.
 
 <br />
 
-Before fitting the model we can visualize the count series with `plot_series()`.
+Before fitting the population size trend we can visualize the count series with 
+`plot_series()`.
 
 <br />
 
@@ -518,7 +527,9 @@ popbayes::plot_series("garamba__alcelaphus_buselaphus", path = path)
 
 
 
-The function `format_data()` has also exported the count series as `.RData` files in the `path` folder where they have been dispatched into sub-folders, one per series.
+The function `format_data()` has also exported the count series as `.RData` 
+files in the `path` folder where they have been dispatched into sub-folders, 
+one per series.
 
 
 ```{r 'list-folder-1', echo = TRUE, eval = FALSE}
@@ -532,7 +543,8 @@ list.files(path, recursive = TRUE, pattern = "^garamba__")
 
 <br />
 
-These `*_data.RData` files (count series) can be imported later by running the function `read_series()`.
+These `*_data.RData` files (count series) can be imported later by running the 
+function `read_series()`.
 
 
 ```{r 'read-series', eval = FALSE}
@@ -544,50 +556,62 @@ a_buselaphus <- popbayes::read_series("garamba__alcelaphus_buselaphus", path = p
 
 
 
-## 4. Fitting Bayesian model
+## Fitting trend
 
 
-The demographic potential of a species is limited. The intrinsic rate of 
-increase `rmax` is the maximum increase in log population size that a species 
-can attain in a year (or another time unit).
+The function `fit_trend()` fits population trajectories over time 
+from counts of individuals formatted by `format_data()`. It does so under a 
+Bayesian framework where the primary quantity being modeled is the rate of 
+increase between successive years (or any other time unit).
 
-We strongly recommend providing these `rmax` values while estimating population 
-trend to limit yearly population growth estimated by the model.
+This function only works on the output of `format_data()` (or `filter_series()`).
 
-According to Sinclair (2003), `rmax` is related to the body mass of adult 
-females `W`  by the formula:
-
-$$ rmax = 1.375 \times W^{-0.315} $$
-
-Body masses are found in the literature in publications such as Kingdon & 
-Hoffman (2013), Cornelis _et al._ (2014), Illius & Gordon (1992), 
-Sinclair (1996), Suraud _et al._ (2012), or Foley & Faust (2010). 
-Alternatively, `rmax` can be obtained from previous demographic analyses.
+Here is the default usage of the function `fit_trend()`:
 
 <br />
-
-The package `popbayes` provides the `rmax` values for the same 15 African mammals
-species listed previously. These values are available in the dataset `rmax_data`.
-
-<br />
-
-
-**!!! BOOKMARK !!!**
-
-
-<br />
-
-
 
 ```{r 'run-jags', eval = FALSE}
 a_buselaphus_bugs <- popbayes::fit_trend(a_buselaphus, path = path)
 ```
 
+<br />
+
+The function returns an n-element list (where n is the number of count series). 
+Each element of the list is a BUGS output as provided by JAGS. It has also 
+exported these BUGS outputs as `.RData` files in the `path` folder where they 
+have been dispatched into sub-folders, one per series.
+
+
+<br />
+
+These `*_bugs.RData` files (BUGS outputs) can be imported later by running the 
+function `read_bugs()`.
+
+
+```{r 'read-bugs', eval = FALSE}
+a_buselaphus_bugs <- popbayes::read_bugs("garamba__alcelaphus_buselaphus", path = path)
+```
+
+
+<br />
+
+The function `diagnostic()` allows to check if estimation of all parameters of 
+the model has converged. This diagnostic is performed by comparing the 
+`Rhat` value of each parameter to a `threshold` (default is `1.1`).
+
+<br />
 
 ```{r 'diagnostic', echo = -1}
 a_buselaphus_bugs <- popbayes::read_bugs("garamba__alcelaphus_buselaphus", path = "docs/")
-diagnostic(a_buselaphus_bugs)
+popbayes::diagnostic(a_buselaphus_bugs)
 ```
+
+<br />
+
+Finally we can use the function `plot_trend()` to visualize model predictions and
+estimated yearly relative growth rates.
+
+<br />
 
 ```{r 'plot-trend-1',  fig.width=12, fig.height=6, out.width="100%", eval = FALSE, echo = TRUE}
 popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = path)
@@ -597,10 +621,25 @@ popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = path)
 popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = "docs/")
 ```
 
+
+
 <br />
 
-Other functions: `popbayes::read_series()`, `popbayes::list_series()`, 
-`popbayes::read_bugs()`, `popbayes::bugs_to_df()`.
 
 
 ## References
+
+
+- Cornelis _et al._ (2014) ...
+- Foley & Faust (2010) Rapid population growth in an elephant _Loxodonta africana_ 
+population recovering from poaching in Tarangire National Park, Tanzania.
+_Oryx_, **44**, 205-212.
+DOI: [10.1017/S0030605309990706](https://doi.org/10.1017/S0030605309990706).
+- Illius & Gordon (1992) Modelling the nutritional ecology of ungulate 
+herbivores: evolution of body size and competitive interactions. 
+_Oecologia_, **89**, 428-434.
+DOI: [10.1017/S0030605309990706](https://doi.org/10.1017/S0030605309990706).
+- Kingdon & Hoffman (2013) ...
+- Sinclair (1996) ...
+- Sinclair (2003) ...
+- Suraud _et al._ (2012) ...
