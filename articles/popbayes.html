@@ -745,14 +745,14 @@ Framework of the popbayes package
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"the_folder_to_store_outputs"</span></code></pre></div>
 <p><br></p>
-<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has many arguments to provide the names of the columns in the user’s dataset that contain <code>location</code>, <code>species</code>, <code>lower_ci</code>, etc. By default column names are the same as in the Garamba dataset. If your location field, say, is “site”, you’ll need to use the argument <code>location</code> as follows : <code>location = "site"</code>.</p>
+<p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has many arguments to provide the names of the columns in the user’s dataset that contain <code>location</code>, <code>species</code>, <code>lower_ci</code>, etc. By default column names are the same as in the Garamba dataset. If your location field, say, is “site”, you’ll need to use the argument <code>location</code> as follows: <code>location = "site"</code>.</p>
 <p><br></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">garamba</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span>
 <span class="co">#&gt; ✔ Conversion data found in 'data'.</span>
 <span class="co">#&gt; ✔ Detecting 10 count series</span></code></pre></div>
 <p><br></p>
-<p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method and the conversion factor as this : <code>pref_field_method =  "column_with_preferred_field_method"</code> and <code>conversion_A2G = "column_with_conversion_A2Gor"</code>, or alternatively use the argument <code>info</code> : <code>info = "dataframe_with_conversion_info"</code>.</p>
+<p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method, the conversion factor, and rmax as this: <code>pref_field_method = "column_with_preferred_field_method"</code>, <code>conversion_A2G = "column_with_conversion_A2Gor"</code>, <code>rmax = "rmax"</code>, or alternatively use the argument <code>info</code>: <code>info = "dataframe_with_conversion_info"</code>.</p>
 <p><br></p>
 <p>Let’s explore the output.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -883,7 +883,7 @@ Framework of the popbayes package
 <p>If we compare the two last data frames (<code>data_original</code> and <code>data_converted</code>), they are not identical. The function <code><a href="../reference/format_data.html">format_data()</a></code> has <strong>1)</strong> computed 95% CI boundaries for total counts (coded <code>T</code> in the column <code>stat_method</code>), and <strong>2)</strong> converted all counts (and CI boundaries) to their equivalent in the preferred field method (from <code>A</code> to <code>G</code>) by applying the conversion factor of <code>2.302</code>.</p>
 <p>The Bayesian model will use counts and precision measures from the <code>data_converted</code> data frame.</p>
 <p><br></p>
-<p>Before fitting the model we can visualize the count series with <code><a href="../reference/plot_series.html">plot_series()</a></code>.</p>
+<p>Before fitting the population size trend we can visualize the count series with <code><a href="../reference/plot_series.html">plot_series()</a></code>.</p>
 <p><br></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_series.html">plot_series</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
@@ -908,33 +908,47 @@ Framework of the popbayes package
 <code class="sourceCode R"><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/read_series.html">read_series</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><br></p>
 </div>
-<div id="fitting-bayesian-model" class="section level2">
+<div id="fitting-trend" class="section level2">
 <h2 class="hasAnchor">
-<a href="#fitting-bayesian-model" class="anchor"></a>4. Fitting Bayesian model</h2>
-<p>The demographic potential of a species is limited. The intrinsic rate of increase <code>rmax</code> is the maximum increase in log population size that a species can attain in a year (or another time unit).</p>
-<p>We strongly recommend providing these <code>rmax</code> values while estimating population trend to limit yearly population growth estimated by the model.</p>
-<p>According to Sinclair (2003), <code>rmax</code> is related to the body mass of adult females <code>W</code> by the formula:</p>
-<p><span class="math display">\[ rmax = 1.375 \times W^{-0.315} \]</span></p>
-<p>Body masses are found in the literature in publications such as Kingdon &amp; Hoffman (2013), Cornelis <em>et al.</em> (2014), Illius &amp; Gordon (1992), Sinclair (1996), Suraud <em>et al.</em> (2012), or Foley &amp; Faust (2010). Alternatively, <code>rmax</code> can be obtained from previous demographic analyses.</p>
-<p><br></p>
-<p>The package <code>popbayes</code> provides the <code>rmax</code> values for the same 15 African mammals species listed previously. These values are available in the dataset <code>rmax_data</code>.</p>
-<p><br></p>
-<p><strong>!!! BOOKMARK !!!</strong></p>
+<a href="#fitting-trend" class="anchor"></a>Fitting trend</h2>
+<p>The function <code><a href="../reference/fit_trend.html">fit_trend()</a></code> fits population trajectories over time from counts of individuals formatted by <code><a href="../reference/format_data.html">format_data()</a></code>. It does so under a Bayesian framework where the primary quantity being modeled is the rate of increase between successive years (or any other time unit).</p>
+<p>This function only works on the output of <code><a href="../reference/format_data.html">format_data()</a></code> (or <code><a href="../reference/filter_series.html">filter_series()</a></code>).</p>
+<p>Here is the default usage of the function <code><a href="../reference/fit_trend.html">fit_trend()</a></code>:</p>
 <p><br></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">a_buselaphus_bugs</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<p>The function returns an n-element list (where n is the number of count series). Each element of the list is a BUGS output as provided by JAGS. It has also exported these BUGS outputs as <code>.RData</code> files in the <code>path</code> folder where they have been dispatched into sub-folders, one per series.</p>
+<p><br></p>
+<p>These <code>*_bugs.RData</code> files (BUGS outputs) can be imported later by running the function <code><a href="../reference/read_bugs.html">read_bugs()</a></code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/diagnostic.html">diagnostic</a></span><span class="op">(</span><span class="va">a_buselaphus_bugs</span><span class="op">)</span>
-<span class="co">#&gt; ✔ All models have converged.</span></code></pre></div>
+<code class="sourceCode R"><span class="va">a_buselaphus_bugs</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/read_bugs.html">read_bugs</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<p>The function <code><a href="../reference/diagnostic.html">diagnostic()</a></code> allows to check if estimation of all parameters of the model has converged. This diagnostic is performed by comparing the <code>Rhat</code> value of each parameter to a <code>threshold</code> (default is <code>1.1</code>).</p>
+<p><br></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/diagnostic.html">diagnostic</a></span><span class="op">(</span><span class="va">a_buselaphus_bugs</span><span class="op">)</span>
+<span class="co">#&gt; ✔ All models have converged.</span></code></pre></div>
+<p><br></p>
+<p>Finally we can use the function <code><a href="../reference/plot_trend.html">plot_trend()</a></code> to visualize model predictions and estimated yearly relative growth rates.</p>
+<p><br></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_trend.html">plot_trend</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><img src="popbayes_files/figure-html/plot-trend-2-1.png" width="100%"></p>
 <p><br></p>
-<p>Other functions: <code><a href="../reference/read_series.html">popbayes::read_series()</a></code>, <code><a href="../reference/list_series.html">popbayes::list_series()</a></code>, <code><a href="../reference/read_bugs.html">popbayes::read_bugs()</a></code>, <code><a href="../reference/bugs_to_df.html">popbayes::bugs_to_df()</a></code>.</p>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
+<ul>
+<li>Cornelis <em>et al.</em> (2014) …</li>
+<li>Foley &amp; Faust (2010) Rapid population growth in an elephant <em>Loxodonta africana</em> population recovering from poaching in Tarangire National Park, Tanzania. <em>Oryx</em>, <strong>44</strong>, 205-212. DOI: <a href="https://doi.org/10.1017/S0030605309990706">10.1017/S0030605309990706</a>.</li>
+<li>Illius &amp; Gordon (1992) Modelling the nutritional ecology of ungulate herbivores: evolution of body size and competitive interactions. <em>Oecologia</em>, <strong>89</strong>, 428-434. DOI: <a href="https://doi.org/10.1017/S0030605309990706">10.1017/S0030605309990706</a>.</li>
+<li>Kingdon &amp; Hoffman (2013) …</li>
+<li>Sinclair (1996) …</li>
+<li>Sinclair (2003) …</li>
+<li>Suraud <em>et al.</em> (2012) …</li>
+</ul>
 </div>
   </div>
 
