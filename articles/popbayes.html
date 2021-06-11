@@ -417,8 +417,10 @@ Framework of the popbayes package
 <p><br></p>
 <p>This dataset has a typical structure with a location field (<code>location</code>), a species name field (<code>species</code>), a date field (<code>date</code>), and a count field (<code>count</code>).</p>
 <p><br></p>
-<p><strong>Statistical method</strong></p>
-<p>In addition to the fields <code>location</code>, <code>species</code>, <code>date</code>, and <code>counts</code>, a fourth field is <strong>mandatory</strong>: <code>stat_method</code>. This field specifies the census method that produced the count. It can be <code>T</code> for a total count, <code>G</code> for a guesstimate (i.e. expert estimate), or <code>S</code> for a sampling count.</p>
+<div id="statistical-method" class="section level3">
+<h3 class="hasAnchor">
+<a href="#statistical-method" class="anchor"></a>Statistical method</h3>
+<p>In addition to the fields <code>location</code>, <code>species</code>, <code>date</code>, and <code>count</code>, a fourth field is <strong>mandatory</strong>: <code>stat_method</code>. This field specifies the census method that produced the count. It can be <code>T</code> for a total count, <code>G</code> for a guesstimate (i.e. expert estimate), or <code>S</code> for a sampling count.</p>
 <p>To be usable by the Bayesian model, individual counts are to be accompanied by information on precision in the form of a 95% confidence interval. If counts are :</p>
 <ul>
 <li>
@@ -430,19 +432,25 @@ Framework of the popbayes package
 <code>S</code>, users <strong>need to specify</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively, it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts may have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case, three precision columns would be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>).</li>
 </ul>
 <p><br></p>
-<p><strong>Field method</strong></p>
+</div>
+<div id="field-method" class="section level3">
+<h3 class="hasAnchor">
+<a href="#field-method" class="anchor"></a>Field method</h3>
 <p>Another <strong>optional</strong> column, <code>field_method</code>, may be provided. It refers to the type of survey used to collect data. This can be <code>A</code> for aerial survey or <code>G</code> for ground survey. This column becomes mandatory as soon as both field methods are present in a series.</p>
 <p>The detectability of a species is indeed strongly dependent on the survey method and each species has its own <em>preferred field method</em>, the one that is assumed to provide estimates closer to the truth. So, even if a series is homogeneous relative to the <code>field method</code>, it is recommended to provide the column <code>field_method</code> if counts have been collected under the not preferred field method. That will force conversion towards the <em>preferred field method</em>.</p>
 <p><br></p>
-<p><strong>Count conversion</strong></p>
+</div>
+<div id="count-conversion" class="section level3">
+<h3 class="hasAnchor">
+<a href="#count-conversion" class="anchor"></a>Count conversion</h3>
 <p>The function <code><a href="../reference/format_data.html">format_data()</a></code> will convert counts (and 95% CI bounds) into their equivalent in the preferred field method for the species. To this aim, two pieces of information are required :</p>
 <ul>
 <li>
-<code>pref_field_method</code>: the preferred field method for the species (<code>A</code> or <code>G</code>)</li>
+<code>pref_field_method</code>: the preferred field method for the species (<code>A</code> or <code>G</code>);</li>
 <li>
 <code>conversion_A2G</code>: the multiplicative factor used to convert an aerial count into an equivalent ground count or vice versa.</li>
 </ul>
-<p>The package <code>popbayes</code> provides the <code>species_info</code> data set, which contains these two pieces of information for 15 African mammal species.</p>
+<p>The package <code>popbayes</code> provides the <code>species_info</code> dataset, which contains these two pieces of information for 15 African mammal species.</p>
 <p><br></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"species_info"</span><span class="op">)</span></code></pre></div>
@@ -615,11 +623,29 @@ Framework of the popbayes package
 <p>The field <code>category</code> of the <code>species_info</code> table indicates which species belong to each.</p>
 <p><br></p>
 </div>
+<div id="relative-rate-of-increase" class="section level3">
+<h3 class="hasAnchor">
+<a href="#relative-rate-of-increase" class="anchor"></a>Relative rate of increase</h3>
+<p>The demographic potential of a species is limited. The intrinsic rate of increase (called <code>rmax</code>) is the maximum increase in log population size that a species can attain in a year (or another time unit).</p>
+<p>We strongly recommend providing these <code>rmax</code> values while estimating population trend to limit yearly population growth estimated by the model.</p>
+<p><br></p>
+<p>As for <code>pref_field_method</code> and <code>conversion_A2G</code>, <code>rmax</code> values (specific to a species) can be provided as an additional column of the count dataset (<code>garamba</code>), as additional column of the <code>info</code> data frame, or internally can be retrieved from the internal dataset of <code>popbayes</code>.</p>
+<p><br></p>
+<p><strong>How to find the species <code>rmax</code> value?</strong></p>
+<p>According to Sinclair (2003), <code>rmax</code> is related to the body mass of adult females <code>W</code> by the formula:</p>
+<p><span class="math display">\[ rmax = 1.375 \times W^{-0.315} \]</span></p>
+<p>Body masses are found in the literature in publications such as Kingdon &amp; Hoffman (2013), Cornelis <em>et al.</em> (2014), Illius &amp; Gordon (1992), Sinclair (1996), Suraud <em>et al.</em> (2012), or Foley &amp; Faust (2010).</p>
+<p>If you know the body mass of adult females of the species, you can compute the <code>rmax</code> value with the function <code>w_to_rmax()</code>.</p>
+<p><br></p>
+<p>Alternatively, <code>rmax</code> can be obtained from previous demographic analyses.</p>
+<p><br></p>
+</div>
+</div>
 <div id="checking-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#checking-data" class="anchor"></a>Checking data</h2>
 <p>The first thing that the function <code>format data()</code> does is to check the validity of the content of the different fields of the count data set. Here we will explore our data to avoid errors while using the function <code>format data()</code>.</p>
-<p>In particular, we need to check <code>location</code> and <code>species</code> spelling, <code>date</code> and <code>counts</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
+<p>In particular, we need to check <code>location</code> and <code>species</code> spelling, <code>date</code> and <code>count</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
 <p><br></p>
 <p><strong>Check <code>location</code> field</strong></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -676,7 +702,7 @@ Framework of the popbayes package
 <span class="co">#&gt; [1] "2021-05-19"</span></code></pre></div>
 <p>Other methods exist to convert a <code>date</code> to a <code>numeric</code> format. You may prefer computing the number of days since the first date of your survey. It’s up to you.</p>
 <p><br></p>
-<p><strong>Check <code>counts</code> field</strong></p>
+<p><strong>Check <code>count</code> field</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>   <span class="co"># Are counts in a numerical format?</span>
 <span class="co">#&gt; [1] FALSE</span>
@@ -689,7 +715,7 @@ Framework of the popbayes package
 
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
-<p>Field <strong><code>counts</code></strong> must be a <strong>positive</strong> <code>numeric</code> (zero counts are allowed). <code>NA</code> counts cannot be used for fitting trends. The <code><a href="../reference/format_data.html">format_data()</a></code> function (see below) has an option for dropping them.</p>
+<p>Field <strong><code>count</code></strong> must be a <strong>positive</strong> <code>numeric</code> (zero counts are allowed). <code>NA</code> counts cannot be used for fitting trends. The <code><a href="../reference/format_data.html">format_data()</a></code> function (see below) has an option for dropping them.</p>
 <p><br></p>
 <p><strong>Check <code>stat_method</code> field</strong></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -724,7 +750,6 @@ Framework of the popbayes package
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">garamba</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span>
 <span class="co">#&gt; ✔ Conversion data found in 'data'.</span>
-<span class="co">#&gt; ✔ Rmax data found in 'data'.</span>
 <span class="co">#&gt; ✔ Detecting 10 count series</span></code></pre></div>
 <p><br></p>
 <p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method and the conversion factor as this : <code>pref_field_method =  "column_with_preferred_field_method"</code> and <code>conversion_A2G = "column_with_conversion_A2Gor"</code>, or alternatively use the argument <code>info</code> : <code>info = "dataframe_with_conversion_info"</code>.</p>
