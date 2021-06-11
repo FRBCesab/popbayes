@@ -36,16 +36,17 @@
 #' and a **conversion factor** both specific to a species/category. 
 #' The preferred field method specifies the conversion direction. The 
 #' conversion factor is the multiplicative factor that must be applied to an 
-#' aerial count to get an equivalent ground count. (Note that if the preferred 
+#' aerial count to get an equivalent ground count (note that if the preferred 
 #' field method is `'A'`, ground counts will be divided by the conversion 
-#' factor to get the equivalent aerial count.)
+#' factor to get the equivalent aerial count).
 #' 
 #' The argument `rmax` represents the maximum change in log population size 
 #' between two dates (i.e. the relative rate of increase). It will be used 
-#' by [fit_trend()].
+#' by [fit_trend()] but must be provided in this function.
 #' 
 #' These three parameters, named `pref_field_method`, `conversion_A2G`, and 
-#' `rmax` can be present in the data frame `data` or in the data frame `info`.
+#' `rmax` can be present in the data frame `data` or in a second data frame 
+#' (passed through the argument `info`).
 #' Alternatively, the package `popbayes` provides their values for some 
 #' African large mammals.
 #' 
@@ -77,9 +78,9 @@
 #'   Others fields can be present either in `data` or `info` (see below).
 #' 
 #' @param info (optional) a data frame with species in rows and the following
-#'   columns: `species` (species name), `pref_field_method`,and 
-#'   `conversion_A2G`. See above section **Description** for further 
-#'   information on these fields.
+#'   columns: `species` (species name), `pref_field_method`, 
+#'   `conversion_A2G`, and `rmax`. See above section **Description** for 
+#'   further information on these fields.
 #'   Default is `NULL` (i.e. these information must be present in `data` 
 #'   if not available in `popbayes`).
 #' 
@@ -94,9 +95,10 @@
 #'   series name.
 #'   Default is `'species'`.
 #'   
-#' @param date a character string. The column name in `data` of the date
+#' @param date a character string. The column name in `data` of the date.
 #'   This column `date` must be in a numerical form with possibly a decimal 
-#'   part. Default is `'date'`.
+#'   part.
+#'   Default is `'date'`.
 #'   
 #' @param count a character string. The column name in `data` of the
 #'   number of individuals. This column must be numerical.
@@ -145,16 +147,16 @@
 #'   
 #' @param pref_field_method (optional) a character string. The column name
 #'   in `data` of the preferred field method of the species. This argument is
-#'   only required is `field_method` is not NULL (i.e. individuals have been 
+#'   only required is `field_method` is not `NULL` (i.e. individuals have been 
 #'   counted by different methods). Alternatively, this value can be passed in
-#'   `info`(or internally retrieved if the species is listed in the package). 
+#'   `info` (or internally retrieved if the species is listed in the package). 
 #'   See above section **Description** for further information on the count
 #'   conversion.
 #'   Default is `'pref_field_method'`.
 #' 
 #' @param conversion_A2G (optional) a character string. The column name
 #'   in `data` of the count conversion factor of the species. This argument is
-#'   only required if `field_method` is not NULL (i.e. individuals have been 
+#'   only required if `field_method` is not `NULL` (i.e. individuals have been 
 #'   counted by different methods). Alternatively this value can be passed in
 #'   `info` (or internally retrieved if the species is listed in the package).
 #'   See above section **Description** for further information on the count
@@ -164,14 +166,17 @@
 #' @param rmax (optional) a character string. The column name in `data` of the 
 #'   species demographic potential (i.e. the relative rate of increase of the 
 #'   population). This is the change in log population size between two dates 
-#'   and will be used by [fit_trend()].
+#'   and will be used later by [fit_trend()].
 #'   Default is `'rmax'`.
 #'   
 #' @param path a character string. The directory to save formatted data. 
 #'   This directory must exist and can be an absolute or a relative path.
+#'   Default is the current working directory.
 #' 
 #' @param na_rm a logical. If `TRUE`, counts with `NA` values will be removed.
 #'   Default is `FALSE` (returns an error to inform user if `NA` are detected).
+#'
+#'
 #'
 #' @return An n-elements list (where n is the number of count series). The  
 #'   name of each element of this list is a combination of location and 
@@ -263,8 +268,6 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     stop("The column '", location, "' cannot contain NA.")
   }
   
-  location_list <- sort(unique(data[ , location]))
-  
   
   ## Check Species field ----
   
@@ -282,8 +285,6 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   if (any(is.na(data[ , species]))) {
     stop("The column '", species, "' cannot contain NA.")
   }
-  
-  species_list <- sort(unique(data[ , species]))
   
   
   ## Check Date field ----
@@ -538,7 +539,8 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
       stop("Argument 'info' must be a data frame.")
     }
     
-    valid_info_colnames <- c("species", "pref_field_method", "conversion_A2G")
+    valid_info_colnames <- c("species", "pref_field_method", "conversion_A2G",
+                             "rmax")
     
     valid_info_colnames_msg <- paste0(valid_info_colnames, collapse = "' and '")
     valid_info_colnames_msg <- paste0("'", valid_info_colnames_msg, "'")
@@ -712,8 +714,6 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
       stop("Some species listed in 'data' are missing from 'info'.")
     }
     
-    usethis::ui_done("Rmax data found in 'info'.")
-    
     rmax_data <- info[info$"species" %in% species_list, ]
     
   } else {                        ## Rmax data in data
@@ -745,8 +745,6 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
       rmax_data <- data.frame("species" = names(rmax_data), 
                               "rmax"    = unlist(rmax_data))
       
-      usethis::ui_done("Rmax data found in 'data'.")
-      
     } else {                      ## Rmax data in popbayes
       
       if (!any(species_list %in% species_info$"species")) {
@@ -756,8 +754,6 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
       }
       
       rmax_data <- species_info[species_info$"species" %in% species_list, ]
-      
-      usethis::ui_done("Rmax data found in 'popbayes'.")
     }
   }
   

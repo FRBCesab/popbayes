@@ -49,15 +49,16 @@ information on the counts conversion.
 Others fields can be present either in \code{data} or \code{info} (see below).}
 
 \item{info}{(optional) a data frame with species in rows and the following
-columns: \code{species} (species name), \code{pref_field_method},and
-\code{conversion_A2G}. See above section \strong{Description} for further
-information on these fields.
+columns: \code{species} (species name), \code{pref_field_method},
+\code{conversion_A2G}, and \code{rmax}. See above section \strong{Description} for
+further information on these fields.
 Default is \code{NULL} (i.e. these information must be present in \code{data}
 if not available in \code{popbayes}).}
 
-\item{date}{a character string. The column name in \code{data} of the date
+\item{date}{a character string. The column name in \code{data} of the date.
 This column \code{date} must be in a numerical form with possibly a decimal
-part. Default is \code{'date'}.}
+part.
+Default is \code{'date'}.}
 
 \item{count}{a character string. The column name in \code{data} of the
 number of individuals. This column must be numerical.
@@ -117,16 +118,16 @@ Default is \code{'field_method'}.}
 
 \item{pref_field_method}{(optional) a character string. The column name
 in \code{data} of the preferred field method of the species. This argument is
-only required is \code{field_method} is not NULL (i.e. individuals have been
+only required is \code{field_method} is not \code{NULL} (i.e. individuals have been
 counted by different methods). Alternatively, this value can be passed in
-\code{info}(or internally retrieved if the species is listed in the package).
+\code{info} (or internally retrieved if the species is listed in the package).
 See above section \strong{Description} for further information on the count
 conversion.
 Default is \code{'pref_field_method'}.}
 
 \item{conversion_A2G}{(optional) a character string. The column name
 in \code{data} of the count conversion factor of the species. This argument is
-only required if \code{field_method} is not NULL (i.e. individuals have been
+only required if \code{field_method} is not \code{NULL} (i.e. individuals have been
 counted by different methods). Alternatively this value can be passed in
 \code{info} (or internally retrieved if the species is listed in the package).
 See above section \strong{Description} for further information on the count
@@ -136,11 +137,12 @@ Default is \code{'conversion_A2G'}.}
 \item{rmax}{(optional) a character string. The column name in \code{data} of the
 species demographic potential (i.e. the relative rate of increase of the
 population). This is the change in log population size between two dates
-and will be used by \code{\link[=fit_trend]{fit_trend()}}.
+and will be used later by \code{\link[=fit_trend]{fit_trend()}}.
 Default is \code{'rmax'}.}
 
 \item{path}{a character string. The directory to save formatted data.
-This directory must exist and can be an absolute or a relative path.}
+This directory must exist and can be an absolute or a relative path.
+Default is the current working directory.}
 
 \item{na_rm}{a logical. If \code{TRUE}, counts with \code{NA} values will be removed.
 Default is \code{FALSE} (returns an error to inform user if \code{NA} are detected).}
@@ -214,16 +216,17 @@ homogenize counts. This conversion is based on a \strong{preferred field method}
 and a \strong{conversion factor} both specific to a species/category.
 The preferred field method specifies the conversion direction. The
 conversion factor is the multiplicative factor that must be applied to an
-aerial count to get an equivalent ground count. (Note that if the preferred
+aerial count to get an equivalent ground count (note that if the preferred
 field method is \code{'A'}, ground counts will be divided by the conversion
-factor to get the equivalent aerial count.)
+factor to get the equivalent aerial count).
 
 The argument \code{rmax} represents the maximum change in log population size
 between two dates (i.e. the relative rate of increase). It will be used
-by \code{\link[=fit_trend]{fit_trend()}}.
+by \code{\link[=fit_trend]{fit_trend()}} but must be provided in this function.
 
 These three parameters, named \code{pref_field_method}, \code{conversion_A2G}, and
-\code{rmax} can be present in the data frame \code{data} or in the data frame \code{info}.
+\code{rmax} can be present in the data frame \code{data} or in a second data frame
+(passed through the argument \code{info}).
 Alternatively, the package \code{popbayes} provides their values for some
 African large mammals.
 

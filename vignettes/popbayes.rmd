@@ -105,9 +105,9 @@ field (`count`).
 
 <br />
 
-**Statistical method**
+### Statistical method
 
-In addition to the fields `location`, `species`, `date`, and `counts`, a fourth 
+In addition to the fields `location`, `species`, `date`, and `count`, a fourth 
 field is **mandatory**: `stat_method`. This field specifies the 
 census method that produced the count. It can be `T` for a total 
 count, `G` for a guesstimate (i.e. expert estimate), or `S` for a sampling count.
@@ -134,7 +134,7 @@ between counts. For instance, some `S` counts may have an `sd` value and others
 
 <br />
 
-**Field method**
+### Field method
 
 Another **optional** column, `field_method`, may be provided. It refers to the 
 type of survey used to collect data. This can be `A` for aerial survey or `G` 
@@ -151,17 +151,17 @@ field method. That will force conversion towards the _preferred field method_.
 
 <br />
 
-**Count conversion**
+### Count conversion
 
 The function `format_data()` will convert counts (and 95% CI bounds) into their 
 equivalent in the preferred field method for the species. To this aim, two 
 pieces of information are required :
 
-- `pref_field_method`: the preferred field method for the species (`A` or `G`)
+- `pref_field_method`: the preferred field method for the species (`A` or `G`);
 - `conversion_A2G`: the multiplicative factor used to convert an aerial count 
 into an equivalent ground count or vice versa.
 
-The package `popbayes` provides the `species_info` data set, which contains
+The package `popbayes` provides the `species_info` dataset, which contains
 these two pieces of information for 15 African mammal species. 
 
 <br />
@@ -241,6 +241,45 @@ The package `popbayes` distinguishes five categories of species:
 The field `category` of the `species_info` table indicates which species 
 belong to each.
 
+
+<br />
+
+### Relative rate of increase
+
+The demographic potential of a species is limited. The intrinsic rate of 
+increase (called `rmax`) is the maximum increase in log population size that a 
+species can attain in a year (or another time unit).
+
+We strongly recommend providing these `rmax` values while estimating population 
+trend to limit yearly population growth estimated by the model.
+
+<br />
+
+As for `pref_field_method` and `conversion_A2G`, `rmax` values (specific to a
+species) can be provided as an additional column of the count dataset (`garamba`),
+as additional column of the `info` data frame, or internally can be retrieved 
+from the internal dataset of `popbayes`.
+
+<br />
+
+**How to find the species `rmax` value?**
+
+According to Sinclair (2003), `rmax` is related to the body mass of adult 
+females `W`  by the formula:
+
+$$ rmax = 1.375 \times W^{-0.315} $$
+
+Body masses are found in the literature in publications such as Kingdon & 
+Hoffman (2013), Cornelis _et al._ (2014), Illius & Gordon (1992), 
+Sinclair (1996), Suraud _et al._ (2012), or Foley & Faust (2010). 
+
+If you know the body mass of adult females of the species, you can compute the
+`rmax` value with the function `w_to_rmax()`.
+
+<br />
+
+Alternatively, `rmax` can be obtained from previous demographic analyses.
+
 <br />
 
 
@@ -253,7 +292,7 @@ of the content of the different fields of the count data set. Here we will
 explore our data to avoid errors while using the function `format data()`.
 
 In particular, we need to check `location` and `species` spelling, `date` and 
-`counts` field format, and the `stat_method` and `field_method` categories.
+`count` field format, and the `stat_method` and `field_method` categories.
 
 
 <br />
@@ -328,7 +367,7 @@ computing the number of days since the first date of your survey. It's up to you
 
 <br />
 
-**Check `counts` field**
+**Check `count` field**
 
 ```{r 'check-counts'}
 is.numeric(garamba$"counts")   # Are counts in a numerical format?
@@ -338,7 +377,7 @@ range(garamba$"counts")        # What is the range of values?
 sum(is.na(garamba$"counts"))   # Are there any missing values?
 ```
 
-Field **`counts`** must be a **positive** `numeric` (zero counts are allowed).
+Field **`count`** must be a **positive** `numeric` (zero counts are allowed).
 `NA` counts cannot be used for fitting trends. The `format_data()` function (see below) has an option for dropping them.
 
 
