@@ -4,8 +4,7 @@ reference:
 - title: Datasets
   contents:
     - garamba
-    - conversion_data
-    - rmax_data
+    - species_info
     
 - title: Main functions
   contents:
@@ -23,3 +22,4 @@ reference:
     - series_to_df
     - read_bugs
     - bugs_to_df
+    - w_to_rmax
