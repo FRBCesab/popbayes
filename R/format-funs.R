@@ -708,7 +708,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   
   ## Get rmax ----
   
-  if (!is.null(info)) {           ## Rmax data in info
+  if (!is.null(info)) {           ## rmax data in info
     
     if (!any(species_list %in% info$"species")) {
       stop("Some species listed in 'data' are missing from 'info'.")
@@ -716,7 +716,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     
     rmax_data <- info[info$"species" %in% species_list, ]
     
-  } else {                        ## Rmax data in data
+  } else {                        ## rmax data in data
     
     if (!is.null(rmax)) {
       
@@ -745,7 +745,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
       rmax_data <- data.frame("species" = names(rmax_data), 
                               "rmax"    = unlist(rmax_data))
       
-    } else {                      ## Rmax data in popbayes
+    } else {                      ## rmax data in popbayes
       
       if (!any(species_list %in% species_info$"species")) {
         stop("Some species listed in 'data' are not available in popbayes. ", 
@@ -758,7 +758,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   if (!is.numeric(rmax_data[ , "rmax"])) {
-    stop("Rmax must be a numeric.")
+    stop("rmax must be a numeric.")
   }
   
   rownames(rmax_data) <- NULL
