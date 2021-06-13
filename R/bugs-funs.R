@@ -33,11 +33,11 @@ inits_plus <- function(data, nc) {
   }
   
   if (!is.numeric(nc) || length(nc) != 1) {
-    stop("Argument 'nc' must be an interger of length 1.")
+    stop("Argument 'nc' must be an integer of length 1.")
   }
   
   if (nc < 1) {
-    stop("Argument 'nc' must be a positive interger.")
+    stop("Argument 'nc' must be a positive integer.")
   }
   
   

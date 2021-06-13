@@ -25,7 +25,7 @@ library("popbayes")
 The goal of the R package `popbayes` is to fit population trajectories over time 
 from counts of individuals collected at various dates and with a variety of 
 methods. It does so under a Bayesian framework where the primary quantity being 
-modeled is the rate of increase between successive years (or any other time unit 
+modeled is the rate of increase between successive years (or any other time units 
 for that matter, the one used for date). The package can deal with multiple 
 species and multiple locations presented in a single data set, but each 
 **count series** made of the counts relative to one species at one location 
@@ -119,10 +119,10 @@ are :
 - `T` or `G`, a confidence interval will be computed automatically by the 
 function `format_data()` according respectively to the following formulas:
 
-$$ CI_{(T)} = [\ 0.95 \times counts\ ; 1.20 \times counts\ ] $$
-$$ CI_{(G)} = [\ 0.80 \times counts\ ; 1.20 \times counts\ ] $$
+$$ CI_{(T)} = [\ 0.95 \times count\ ; 1.20 \times count\ ] $$
+$$ CI_{(G)} = [\ 0.80 \times count\ ; 1.20 \times count\ ] $$
 
-- `S`, users **need to specify** a measure of precision. Precision 
+- `S`, users **need to supply** a measure of precision. Precision 
 is preferably provided in the form of a 95% CI by means of two fields: `lower_ci` 
 and `upper_ci` (as in the `garamba` dataset). Alternatively, it may also be given 
 in the form of a standard deviation (`sd`), a variance (`var`), or a 
@@ -159,7 +159,7 @@ pieces of information are required :
 
 - `pref_field_method`: the preferred field method for the species (`A` or `G`);
 - `conversion_A2G`: the multiplicative factor used to convert an aerial count 
-into an equivalent ground count or vice versa.
+into an equivalent ground count.
 
 The package `popbayes` provides the `species_info` dataset, which contains
 these two pieces of information for 15 African mammal species. 
@@ -183,17 +183,17 @@ knitr::kable(species_info[ , c(3, 6, 7, 8, 9)],
 If users work only with species in this table, the package `popbayes` can 
 automatically retrieve the values of `pref_field_method` and `conversion_A2G` 
 from the `species_info` data set. But for other species, users 
-**need to provide** the information themselves when running `format_data()`. 
-These values can be provided as additional columns of the count data set. Care 
+**need to supply** the information themselves when running `format_data()`. 
+These values may be provided as additional fields in the count data set. Care 
 must then be taken that the same value is consistently repeated for each count 
 of the same species. For users with sufficient command of R, we recommend rather 
 to create an independent additional table similar to `species_info` and to 
-pass it to the function `format_data()` as the argument `info`. 
+pass it to the function `format_data()` as the data frame argument `info`. 
 
 **Note**: Currently `format_data()` takes its information for count conversion 
 from **one source only** with priority given to `info`, then to additional 
-columns in data (if `info` is not provided), and eventually to the 
-`species_info` table of the package (when the other two sources are missing). 
+fields in data (if `info` is not provided), and eventually to the 
+`species_info` table of the package (when the other two sources are lacking). 
 That means that the source with the highest priority must be complete with 
 respect to the species present in data, as it will be used exclusively to any 
 other source. If, say, you use `info`, you cannot expect `format_data()` to 
@@ -202,9 +202,9 @@ retrieve conversion information for a species undocumented in `info` from the
 from a copy of `species_info`, which additionally provides a ready template. 
 It suffices to add any species not already in `species_info` as shown below.
 
-Let's assume that we have counts of _Taurotragus oryx_ and _Taurotragus derbianus_ 
-in addition to other species present in the package `species_info` table. 
-We can construct `info` as follows. 
+Let's assume that, in addition to other species present in the package 
+`species_info` table, we have counts of _Taurotragus oryx_ and 
+_Taurotragus derbianus_. We can construct `info` as follows. 
 
 
 <br />
@@ -248,16 +248,16 @@ belong to each.
 
 The demographic potential of a species is limited. The intrinsic rate of 
 increase (called `rmax`) is the maximum increase in log population size that a 
-species can attain in a year (or another time unit).
+species can attain in a year.
 
-We strongly recommend providing these `rmax` values while estimating population 
-trend to limit yearly population growth estimated by the model.
+We strongly recommend using the `rmax` values while estimating population trend
+to limit yearly population growth estimated by the model (the default).
 
 <br />
 
 As for `pref_field_method` and `conversion_A2G`, `rmax` values (specific to a
-species) can be provided as an additional column of the count dataset (`garamba`),
-as additional column of the `info` data frame, or internally can be retrieved 
+species) can be provided in an additional field of the count dataset (`garamba`),
+as additional field of the `info` data frame, or internally can be retrieved 
 from the internal dataset of `popbayes`.
 
 <br />
@@ -282,6 +282,12 @@ Alternatively, `rmax` can be obtained from previous demographic analyses.
 
 <br />
 
+**Important Note**: The intrinsic rate of increase refers to a change over one 
+year. If a different time unit is used for the dates (say a month), the rmax to
+provide must be adapted (here divided by 12). The **rmax values in popbayes cannot 
+be used for time units other than one year**.
+
+<br />
 
 
 ## Checking data
@@ -289,7 +295,7 @@ Alternatively, `rmax` can be obtained from previous demographic analyses.
 
 The first thing that the function `format data()` does is to check the validity 
 of the content of the different fields of the count data set. Here we will 
-explore our data to avoid errors while using the function `format data()`.
+explore our data to avoid errors when using the function `format data()`.
 
 In particular, we need to check `location` and `species` spelling, `date` and 
 `count` field format, and the `stat_method` and `field_method` categories.
@@ -371,11 +377,11 @@ computing the number of days since the first date of your survey. It's up to you
 **Check `count` field**
 
 ```{r 'check-counts'}
-is.numeric(garamba$"counts")   # Are counts in a numerical format?
+is.numeric(garamba$"count")   # Are counts in a numerical format?
 
-range(garamba$"counts")        # What is the range of values?
+range(garamba$"count")        # What is the range of values?
 
-sum(is.na(garamba$"counts"))   # Are there any missing values?
+sum(is.na(garamba$"count"))   # Are there any missing values?
 ```
 
 Field **`count`** must be a **positive** `numeric` (zero counts are allowed).
@@ -459,7 +465,8 @@ As said above, if you have to add your own count conversion data, you need
 specify the names of columns for the preferred field method, the conversion 
 factor, and rmax as this:
 `pref_field_method = "column_with_preferred_field_method"`, 
-`conversion_A2G = "column_with_conversion_A2Gor"`, `rmax = "rmax"`,
+`conversion_A2G = "column_with_conversion_A2Gor"`, 
+`rmax = "column_with_conversion_rmax"`,
 or alternatively use the argument `info`:
 `info = "dataframe_with_conversion_info"`.
 
@@ -471,7 +478,7 @@ Let's explore the output.
 ## Class of the object ----
 class(garamba_formatted)
 
-## Number of elements (i.e. number of counts series) ----
+## Number of elements (i.e. number of count series) ----
 length(garamba_formatted)
 
 ## Get series names ----
@@ -480,7 +487,7 @@ popbayes::list_series(path)
 
 <br />
 
-Let's work with the counts series `"garamba__alcelaphus_buselaphus"`. We can use
+Let's work with the count series `"garamba__alcelaphus_buselaphus"`. We can use
 the function `filter_series()`.
 
 ```{r 'filter-series'}
@@ -561,8 +568,8 @@ a_buselaphus <- popbayes::read_series("garamba__alcelaphus_buselaphus", path = p
 
 The function `fit_trend()` fits population trajectories over time 
 from counts of individuals formatted by `format_data()`. It does so under a 
-Bayesian framework where the primary quantity being modeled is the rate of 
-increase between successive years (or any other time unit).
+Bayesian framework where the primary quantity being modeled is the annual rate 
+of increase (more generally, the rate of increase per the time unit used for dates).
 
 This function only works on the output of `format_data()` (or `filter_series()`).
 
