@@ -92,7 +92,7 @@
 
     
     
-<p>The goal of the R package <code>popbayes</code> is to fit population trajectories over time from counts of individuals collected at various dates and with a variety of methods. It does so under a Bayesian framework where the primary quantity being modeled is the rate of increase between successive years (or any other time unit for that matter, the one used for date). The package can deal with multiple species and multiple locations presented in a single data set, but each <strong>count series</strong> made of the counts relative to one species at one location will be processed independently.</p>
+<p>The goal of the R package <code>popbayes</code> is to fit population trajectories over time from counts of individuals collected at various dates and with a variety of methods. It does so under a Bayesian framework where the primary quantity being modeled is the rate of increase between successive years (or any other time units for that matter, the one used for date). The package can deal with multiple species and multiple locations presented in a single data set, but each <strong>count series</strong> made of the counts relative to one species at one location will be processed independently.</p>
 <p>The strength of <code>popbayes</code> is to handle, in a single series, counts collected under different types of surveys (aerial vs ground surveys), and estimated by different census methods (total counts, sampling counts, and even guesstimates [i.e. expert estimates]).</p>
 <p><br></p>
 <p><strong>Before using this package, users need to install the freeware <a href="https://mcmc-jags.sourceforge.io/">JAGS</a>.</strong></p>
@@ -426,10 +426,10 @@ Framework of the popbayes package
 <li>
 <code>T</code> or <code>G</code>, a confidence interval will be computed automatically by the function <code><a href="../reference/format_data.html">format_data()</a></code> according respectively to the following formulas:</li>
 </ul>
-<p><span class="math display">\[ CI_{(T)} = [\ 0.95 \times counts\ ; 1.20 \times counts\ ] \]</span> <span class="math display">\[ CI_{(G)} = [\ 0.80 \times counts\ ; 1.20 \times counts\ ] \]</span></p>
+<p><span class="math display">\[ CI_{(T)} = [\ 0.95 \times count\ ; 1.20 \times count\ ] \]</span> <span class="math display">\[ CI_{(G)} = [\ 0.80 \times count\ ; 1.20 \times count\ ] \]</span></p>
 <ul>
 <li>
-<code>S</code>, users <strong>need to specify</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively, it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts may have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case, three precision columns would be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>).</li>
+<code>S</code>, users <strong>need to supply</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively, it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts may have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case, three precision columns would be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>).</li>
 </ul>
 <p><br></p>
 </div>
@@ -448,7 +448,7 @@ Framework of the popbayes package
 <li>
 <code>pref_field_method</code>: the preferred field method for the species (<code>A</code> or <code>G</code>);</li>
 <li>
-<code>conversion_A2G</code>: the multiplicative factor used to convert an aerial count into an equivalent ground count or vice versa.</li>
+<code>conversion_A2G</code>: the multiplicative factor used to convert an aerial count into an equivalent ground count.</li>
 </ul>
 <p>The package <code>popbayes</code> provides the <code>species_info</code> dataset, which contains these two pieces of information for 15 African mammal species.</p>
 <p><br></p>
@@ -573,9 +573,9 @@ Framework of the popbayes package
 </tbody>
 </table>
 <p><br></p>
-<p>If users work only with species in this table, the package <code>popbayes</code> can automatically retrieve the values of <code>pref_field_method</code> and <code>conversion_A2G</code> from the <code>species_info</code> data set. But for other species, users <strong>need to provide</strong> the information themselves when running <code><a href="../reference/format_data.html">format_data()</a></code>. These values can be provided as additional columns of the count data set. Care must then be taken that the same value is consistently repeated for each count of the same species. For users with sufficient command of R, we recommend rather to create an independent additional table similar to <code>species_info</code> and to pass it to the function <code><a href="../reference/format_data.html">format_data()</a></code> as the argument <code>info</code>.</p>
-<p><strong>Note</strong>: Currently <code><a href="../reference/format_data.html">format_data()</a></code> takes its information for count conversion from <strong>one source only</strong> with priority given to <code>info</code>, then to additional columns in data (if <code>info</code> is not provided), and eventually to the <code>species_info</code> table of the package (when the other two sources are missing). That means that the source with the highest priority must be complete with respect to the species present in data, as it will be used exclusively to any other source. If, say, you use <code>info</code>, you cannot expect <code><a href="../reference/format_data.html">format_data()</a></code> to retrieve conversion information for a species undocumented in <code>info</code> from the <code>species_info</code> table of the package. However, you can easily construct <code>info</code> from a copy of <code>species_info</code>, which additionally provides a ready template. It suffices to add any species not already in <code>species_info</code> as shown below.</p>
-<p>Let’s assume that we have counts of <em>Taurotragus oryx</em> and <em>Taurotragus derbianus</em> in addition to other species present in the package <code>species_info</code> table. We can construct <code>info</code> as follows.</p>
+<p>If users work only with species in this table, the package <code>popbayes</code> can automatically retrieve the values of <code>pref_field_method</code> and <code>conversion_A2G</code> from the <code>species_info</code> data set. But for other species, users <strong>need to supply</strong> the information themselves when running <code><a href="../reference/format_data.html">format_data()</a></code>. These values may be provided as additional fields in the count data set. Care must then be taken that the same value is consistently repeated for each count of the same species. For users with sufficient command of R, we recommend rather to create an independent additional table similar to <code>species_info</code> and to pass it to the function <code><a href="../reference/format_data.html">format_data()</a></code> as the data frame argument <code>info</code>.</p>
+<p><strong>Note</strong>: Currently <code><a href="../reference/format_data.html">format_data()</a></code> takes its information for count conversion from <strong>one source only</strong> with priority given to <code>info</code>, then to additional fields in data (if <code>info</code> is not provided), and eventually to the <code>species_info</code> table of the package (when the other two sources are lacking). That means that the source with the highest priority must be complete with respect to the species present in data, as it will be used exclusively to any other source. If, say, you use <code>info</code>, you cannot expect <code><a href="../reference/format_data.html">format_data()</a></code> to retrieve conversion information for a species undocumented in <code>info</code> from the <code>species_info</code> table of the package. However, you can easily construct <code>info</code> from a copy of <code>species_info</code>, which additionally provides a ready template. It suffices to add any species not already in <code>species_info</code> as shown below.</p>
+<p>Let’s assume that, in addition to other species present in the package <code>species_info</code> table, we have counts of <em>Taurotragus oryx</em> and <em>Taurotragus derbianus</em>. We can construct <code>info</code> as follows.</p>
 <p><br></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Extract the relevant columns of the package table "species_info" ----</span>
@@ -626,10 +626,10 @@ Framework of the popbayes package
 <div id="relative-rate-of-increase" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relative-rate-of-increase" class="anchor"></a>Relative rate of increase</h3>
-<p>The demographic potential of a species is limited. The intrinsic rate of increase (called <code>rmax</code>) is the maximum increase in log population size that a species can attain in a year (or another time unit).</p>
-<p>We strongly recommend providing these <code>rmax</code> values while estimating population trend to limit yearly population growth estimated by the model.</p>
+<p>The demographic potential of a species is limited. The intrinsic rate of increase (called <code>rmax</code>) is the maximum increase in log population size that a species can attain in a year.</p>
+<p>We strongly recommend using the <code>rmax</code> values while estimating population trend to limit yearly population growth estimated by the model (the default).</p>
 <p><br></p>
-<p>As for <code>pref_field_method</code> and <code>conversion_A2G</code>, <code>rmax</code> values (specific to a species) can be provided as an additional column of the count dataset (<code>garamba</code>), as additional column of the <code>info</code> data frame, or internally can be retrieved from the internal dataset of <code>popbayes</code>.</p>
+<p>As for <code>pref_field_method</code> and <code>conversion_A2G</code>, <code>rmax</code> values (specific to a species) can be provided in an additional field of the count dataset (<code>garamba</code>), as additional field of the <code>info</code> data frame, or internally can be retrieved from the internal dataset of <code>popbayes</code>.</p>
 <p><br></p>
 <p><strong>How to find the species <code>rmax</code> value?</strong></p>
 <p>According to Sinclair (2003), <code>rmax</code> is related to the body mass of adult females <code>W</code> by the formula:</p>
@@ -639,12 +639,14 @@ Framework of the popbayes package
 <p><br></p>
 <p>Alternatively, <code>rmax</code> can be obtained from previous demographic analyses.</p>
 <p><br></p>
+<p><strong>Important Note</strong>: The intrinsic rate of increase refers to a change over one year. If a different time unit is used for the dates (say a month), the rmax to provide must be adapted (here divided by 12). The <strong>rmax values in popbayes cannot be used for time units other than one year</strong>.</p>
+<p><br></p>
 </div>
 </div>
 <div id="checking-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#checking-data" class="anchor"></a>Checking data</h2>
-<p>The first thing that the function <code>format data()</code> does is to check the validity of the content of the different fields of the count data set. Here we will explore our data to avoid errors while using the function <code>format data()</code>.</p>
+<p>The first thing that the function <code>format data()</code> does is to check the validity of the content of the different fields of the count data set. Here we will explore our data to avoid errors when using the function <code>format data()</code>.</p>
 <p>In particular, we need to check <code>location</code> and <code>species</code> spelling, <code>date</code> and <code>count</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
 <p><br></p>
 <p><strong>Check <code>location</code> field</strong></p>
@@ -704,16 +706,13 @@ Framework of the popbayes package
 <p><br></p>
 <p><strong>Check <code>count</code> field</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>   <span class="co"># Are counts in a numerical format?</span>
-<span class="co">#&gt; [1] FALSE</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"count"</span><span class="op">)</span>   <span class="co"># Are counts in a numerical format?</span>
+<span class="co">#&gt; [1] TRUE</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span>        <span class="co"># What is the range of values?</span>
-<span class="co">#&gt; Warning in min(x, na.rm = na.rm): no non-missing arguments to min; returning Inf</span>
-<span class="co">#&gt; Warning in max(x, na.rm = na.rm): no non-missing arguments to max; returning -</span>
-<span class="co">#&gt; Inf</span>
-<span class="co">#&gt; [1]  Inf -Inf</span>
+<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"count"</span><span class="op">)</span>        <span class="co"># What is the range of values?</span>
+<span class="co">#&gt; [1]     0 53312</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"counts"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"count"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
 <p>Field <strong><code>count</code></strong> must be a <strong>positive</strong> <code>numeric</code> (zero counts are allowed). <code>NA</code> counts cannot be used for fitting trends. The <code><a href="../reference/format_data.html">format_data()</a></code> function (see below) has an option for dropping them.</p>
 <p><br></p>
@@ -752,7 +751,7 @@ Framework of the popbayes package
 <span class="co">#&gt; ✔ Conversion data found in 'data'.</span>
 <span class="co">#&gt; ✔ Detecting 10 count series</span></code></pre></div>
 <p><br></p>
-<p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method, the conversion factor, and rmax as this: <code>pref_field_method = "column_with_preferred_field_method"</code>, <code>conversion_A2G = "column_with_conversion_A2Gor"</code>, <code>rmax = "rmax"</code>, or alternatively use the argument <code>info</code>: <code>info = "dataframe_with_conversion_info"</code>.</p>
+<p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method, the conversion factor, and rmax as this: <code>pref_field_method = "column_with_preferred_field_method"</code>, <code>conversion_A2G = "column_with_conversion_A2Gor"</code>, <code>rmax = "column_with_conversion_rmax"</code>, or alternatively use the argument <code>info</code>: <code>info = "dataframe_with_conversion_info"</code>.</p>
 <p><br></p>
 <p>Let’s explore the output.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -760,7 +759,7 @@ Framework of the popbayes package
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span>
 <span class="co">#&gt; [1] "list"</span>
 
-<span class="co">## Number of elements (i.e. number of counts series) ----</span>
+<span class="co">## Number of elements (i.e. number of count series) ----</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span>
 <span class="co">#&gt; [1] 10</span>
 
@@ -772,7 +771,7 @@ Framework of the popbayes package
 <span class="co">#&gt;  [7] "garamba__ourebia_ourebi"         "garamba__redunca_redunca"       </span>
 <span class="co">#&gt;  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"</span></code></pre></div>
 <p><br></p>
-<p>Let’s work with the counts series <code>"garamba__alcelaphus_buselaphus"</code>. We can use the function <code><a href="../reference/filter_series.html">filter_series()</a></code>.</p>
+<p>Let’s work with the count series <code>"garamba__alcelaphus_buselaphus"</code>. We can use the function <code><a href="../reference/filter_series.html">filter_series()</a></code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Retrieve series by species and location ----</span>
 <span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_series.html">filter_series</a></span><span class="op">(</span>data     <span class="op">=</span> <span class="va">garamba_formatted</span>, 
@@ -911,7 +910,7 @@ Framework of the popbayes package
 <div id="fitting-trend" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fitting-trend" class="anchor"></a>Fitting trend</h2>
-<p>The function <code><a href="../reference/fit_trend.html">fit_trend()</a></code> fits population trajectories over time from counts of individuals formatted by <code><a href="../reference/format_data.html">format_data()</a></code>. It does so under a Bayesian framework where the primary quantity being modeled is the rate of increase between successive years (or any other time unit).</p>
+<p>The function <code><a href="../reference/fit_trend.html">fit_trend()</a></code> fits population trajectories over time from counts of individuals formatted by <code><a href="../reference/format_data.html">format_data()</a></code>. It does so under a Bayesian framework where the primary quantity being modeled is the annual rate of increase (more generally, the rate of increase per the time unit used for dates).</p>
 <p>This function only works on the output of <code><a href="../reference/format_data.html">format_data()</a></code> (or <code><a href="../reference/filter_series.html">filter_series()</a></code>).</p>
 <p>Here is the default usage of the function <code><a href="../reference/fit_trend.html">fit_trend()</a></code>:</p>
 <p><br></p>
