@@ -28,7 +28,7 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
-SystemRequirements: JAGS 4.x.y
+SystemRequirements: JAGS (>= 4.0)
 Imports: 
     graphics,
     grDevices,
@@ -39,5 +39,5 @@ Suggests:
     knitr,
     rmarkdown
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
