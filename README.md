@@ -35,24 +35,19 @@ You can install the development version from
 ## Install 'remotes' package (if not already installed) ----
 #  install.packages("remotes")
 
-## Install dev version of 'popbayes' from GitHub ----
+## Install development version of 'popbayes' ----
 remotes::install_github("frbcesab/popbayes", build_vignettes = TRUE)
-```
-
-Then you can attach the package `popbayes`:
-
-``` r
-library("popbayes")
 ```
 
 ## Overview
 
-![](man/figures/popbayes-diagram.png)
+![](vignettes/docs/popbayes-diagram.png)
 
 ## Get started
 
-Please read the
-[Vignette](https://frbcesab.github.io/popbayes/articles/popbayes.html)
+Please read the [Get
+started](https://frbcesab.github.io/popbayes/articles/popbayes.html)
+vignette.
 
 ## Citation
 
@@ -70,8 +65,7 @@ citation("popbayes")
 ## A BibTeX entry for LaTeX users is:
 ## 
 ## @Manual{,
-##   title  = {{popbayes}: {B}ayesian model to estimate population trends from 
-##   counts series,
+##   title  = {{popbayes}: {B}ayesian model to estimate population trends from counts series,
 ##   author = {{Casajus N.}, and {Pradel R.}},
 ##   year   = {2021},
 ##   note   = {R package version 1.0},

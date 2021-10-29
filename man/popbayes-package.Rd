@@ -11,7 +11,7 @@ Infers the trends of one or several populations over time from series of counts.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/frbcesab/popbayes}
+  \item \url{https://frbcesab.github.io/popbayes/}
   \item Report bugs at \url{https://github.com/frbcesab/popbayes/issues}
 }
 
