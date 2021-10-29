@@ -21,7 +21,7 @@ Description: Infers the trends of one or several populations over time from
     the population rate of increase over time, and accounting for the maximum 
     demographic potential of species. Inference is carried out in a Bayesian 
     framework.
-URL: https://github.com/frbcesab/popbayes
+URL: https://frbcesab.github.io/popbayes/
 BugReports: https://github.com/frbcesab/popbayes/issues
 Depends: R (>= 3.5)
 License: GPL (>= 2)
