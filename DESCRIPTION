@@ -1,6 +1,6 @@
 Package: popbayes
 Type: Package
-Version: 0.1
+Version: 1.0
 Title: Bayesian Model to Estimate Population Trends from Counts Series
 Authors@R: c(
     person(
