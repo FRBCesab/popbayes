@@ -7,20 +7,21 @@
 plot_trend(series, title = TRUE, path = ".", path_fig = ".", save = FALSE)
 }
 \arguments{
-\item{series}{a character string. The count series name (can be
+\item{series}{a \code{character} string. The count series name (can be
 retrieved by running \code{\link[=list_series]{list_series()}}).}
 
-\item{title}{a logical. If \code{TRUE} (default) a title (series name) is added.}
+\item{title}{a \code{logical}. If \code{TRUE} (default) a title (series name) is
+added.}
 
-\item{path}{a character. The directory in which count series (and BUGS
-outputs) have been saved by the function \code{\link[=format_data]{format_data()}} (and by
+\item{path}{a \code{character} string. The directory in which count series (and
+BUGS outputs) have been saved by the function \code{\link[=format_data]{format_data()}} (and by
 \code{\link[=fit_trend]{fit_trend()}}).}
 
-\item{path_fig}{a character. The directory where to save the plot
+\item{path_fig}{a \code{character} string. The directory where to save the plot
 (if \code{save = TRUE}). This directory must exist and can be an absolute or a
 relative path.}
 
-\item{save}{a logical. If \code{TRUE} (default is \code{FALSE}) the plot is saved in
+\item{save}{a \code{logical}. If \code{TRUE} (default is \code{FALSE}) the plot is saved in
 \code{path_fig}.}
 }
 \description{
@@ -35,26 +36,24 @@ date. Dark bars are real estimated r.
 }
 }
 \examples{
-\dontrun{
-## Load Garamba dataset ----
+## Load Garamba raw dataset ----
 file_path <- system.file("extdata", "garamba_survey.csv", 
                          package = "popbayes")
                          
 garamba <- read.csv(file = file_path)
 
-## Format count series ----
-garamba_formatted <- popbayes::format_data(garamba)
+## Create temporary folder ----
+temp_path <- tempdir()
 
-## Select one count series (optional) ----
-a_buselaphus <- popbayes::filter_series(garamba_formatted, 
-                                        species = "Alcelaphus buselaphus")
-## Fit population trend ----
-a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus)
-
-## Check for convergence ----
-popbayes::diagnostic(a_buselaphus_mod, threshold = 1.1)
+## Format dataset ----
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+                                        
+\dontrun{
+## Fit population trends (requires JAGS) ----
+garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
 
 ## Plot estimated population trend ----
-popbayes::plot_trend(series = "garamba__alcelaphus_buselaphus")
+popbayes::plot_trend(series = "garamba__alcelaphus_buselaphus", 
+                     path   = temp_path)
 }
 }

@@ -2,20 +2,19 @@
 % Please edit documentation in R/series-funs.R
 \name{filter_series}
 \alias{filter_series}
-\title{Extract the count series corresponding to a location and/or a species in a
-list}
+\title{Extract the count series corresponding to a location and/or a species}
 \usage{
 filter_series(data, species = NULL, location = NULL)
 }
 \arguments{
-\item{data}{a named list. The output of function \code{\link[=format_data]{format_data()}}.}
+\item{data}{a named \code{list}. The output of function \code{\link[=format_data]{format_data()}}.}
 
-\item{species}{a character string. A species name.}
+\item{species}{a \code{character} string. A species name.}
 
-\item{location}{a character string. A site name.}
+\item{location}{a \code{character} string. A site name.}
 }
 \value{
-A subset of \code{data}, i.e. a named list.
+A subset of \code{data}, i.e. a named \code{list}.
 }
 \description{
 This function identifies the count series relative to a species and/or
@@ -25,30 +24,34 @@ at the specified location is extracted. Otherwise, all series corresponding
 to the specified criterion (species or location) are extracted.
 }
 \examples{
-\dontrun{
-## Load Garamba dataset ----
+## Load Garamba raw dataset ----
 file_path <- system.file("extdata", "garamba_survey.csv", 
                          package = "popbayes")
                          
 garamba <- read.csv(file = file_path)
 
+## Create temporary folder ----
+temp_path <- tempdir()
+
 ## Format dataset ----
-garamba_formatted <- popbayes::format_data(garamba)
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
 
-## Get series names ----
-names(garamba_formatted)
+## Number of count series ----
+length(garamba_formatted)
 
-## Or...
-popbayes::list_series()
+## Retrieve count series names ----
+popbayes::list_series(path = temp_path)
 
 ## Get data for Alcelaphus buselaphus (at all sites) ----
-popbayes::filter_series(garamba_formatted, species = "Alcelaphus buselaphus")
+x <- popbayes::filter_series(garamba_formatted, 
+                             species = "Alcelaphus buselaphus")
 
 ## Get data at Garamba (for all species) ----
-popbayes::filter_series(garamba_formatted, location = "Garamba")
+x <- popbayes::filter_series(garamba_formatted, 
+                             location = "Garamba")
 
 ## Get data for Alcelaphus buselaphus at Garamba only ----
-popbayes::filter_series(garamba_formatted, location = "Garamba",
-                        species = "Alcelaphus buselaphus")
-}
+x <- popbayes::filter_series(garamba_formatted, 
+                             location = "Garamba",
+                             species  = "Alcelaphus buselaphus")
 }

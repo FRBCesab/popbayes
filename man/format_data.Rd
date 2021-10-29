@@ -26,8 +26,8 @@ format_data(
 )
 }
 \arguments{
-\item{data}{a data frame with at least five columns: \code{location}, \code{species},
-\code{date}, \code{count}, and \code{stat_method}.
+\item{data}{a \code{data.frame} with at least five columns: \code{location},
+\code{species}, \code{date}, \code{count}, and \code{stat_method}.
 
 The \code{stat_method} field indicates the method used to estimate counts. It
 can contain: \code{T} (total counts), \code{G} (guesstimate), and/or \code{S} (sampling).
@@ -48,41 +48,41 @@ information on the counts conversion.
 
 Others fields can be present either in \code{data} or \code{info} (see below).}
 
-\item{info}{(optional) a data frame with species in rows and the following
+\item{info}{(optional) a \code{data.frame} with species in rows and the following
 columns: \code{species} (species name), \code{pref_field_method},
 \code{conversion_A2G}, and \code{rmax}. See above section \strong{Description} for
 further information on these fields.
 Default is \code{NULL} (i.e. these information must be present in \code{data}
 if not available in \code{popbayes}).}
 
-\item{date}{a character string. The column name in \code{data} of the date.
+\item{date}{a \code{character} string. The column name in \code{data} of the date.
 This column \code{date} must be in a numerical form with possibly a decimal
 part.
 Default is \code{'date'}.}
 
-\item{count}{a character string. The column name in \code{data} of the
+\item{count}{a \code{character} string. The column name in \code{data} of the
 number of individuals. This column must be numerical.
 Default is \code{'count'}.}
 
-\item{location}{a character string. The column name in \code{data} of the
+\item{location}{a \code{character} string. The column name in \code{data} of the
 site. This field is used to distinguish count series from different sites
 (if required) and to create an unique series name.
 Default is \code{'location'}.}
 
-\item{species}{a character string. The column name in \code{data} (and
+\item{species}{a \code{character} string. The column name in \code{data} (and
 in \code{info} if provided) of the species. This field is used to distinguish
 count series for different species (if required) and to create an unique
 series name.
 Default is \code{'species'}.}
 
-\item{stat_method}{a character string. The column name in \code{data} of
+\item{stat_method}{a \code{character} string. The column name in \code{data} of
 the method used to estimate individuals counts. It can contain \code{'T'}
 (total counts), \code{'G'} (guesstimate), and/or \code{'S'} (sampling). If some
 counts are coded as \code{'S'}, precision column(s) must also be provided (see
 below).
 Default is \code{'stat_method'}.}
 
-\item{lower_ci}{(optional) a character string. The column name in \code{data}
+\item{lower_ci}{(optional) a \code{character} string. The column name in \code{data}
 of the lower boundary of the 95\% CI of the estimate (i.e. \code{count}). If
 provided, the upper boundary of the 95\% CI (argument \code{upper_ci}) must be
 also provided. This argument is only required if some counts have been
@@ -91,32 +91,32 @@ measures, e.g. standard deviation (argument \code{sd}), variance (argument
 \code{var}), or coefficient of variation (argument \code{cv}).
 Default is \code{'lower_ci'}.}
 
-\item{upper_ci}{(optional) a character string. The column name in \code{data}
+\item{upper_ci}{(optional) a \code{character} string. The column name in \code{data}
 of the upper boundary of the 95\% CI of the estimate (i.e. \code{count}). If
 provided, the lower boundary of the 95\% CI (argument \code{lower_ci}) must be
 also provided.
 Default is \code{'upper_ci'}.}
 
-\item{sd}{(optional) a character string. The column name in \code{data} of
+\item{sd}{(optional) a \code{character} string. The column name in \code{data} of
 the standard deviation of the estimate.
 Default is \code{NULL}.}
 
-\item{var}{(optional) a character string. The column name in \code{data} of
+\item{var}{(optional) a \code{character} string. The column name in \code{data} of
 the variance of the estimate.
 Default is \code{NULL}.}
 
-\item{cv}{(optional) a character string. The column name in \code{data} of
+\item{cv}{(optional) a \code{character} string. The column name in \code{data} of
 the coefficient of variation of the estimate.
 Default is \code{NULL}.}
 
-\item{field_method}{(optional) a character string. The column name in
+\item{field_method}{(optional) a \code{character} string. The column name in
 \code{data} of the field method used to count individuals. Counts can be ground
 counts (coded as \code{'G'}) or aerial counts (coded as \code{'A'}). This argument
 is optional if individuals have been counted by the same method. See above
 section \strong{Description} for further information on the count conversion.
 Default is \code{'field_method'}.}
 
-\item{pref_field_method}{(optional) a character string. The column name
+\item{pref_field_method}{(optional) a \code{character} string. The column name
 in \code{data} of the preferred field method of the species. This argument is
 only required is \code{field_method} is not \code{NULL} (i.e. individuals have been
 counted by different methods). Alternatively, this value can be passed in
@@ -125,7 +125,7 @@ See above section \strong{Description} for further information on the count
 conversion.
 Default is \code{'pref_field_method'}.}
 
-\item{conversion_A2G}{(optional) a character string. The column name
+\item{conversion_A2G}{(optional) a \code{character} string. The column name
 in \code{data} of the count conversion factor of the species. This argument is
 only required if \code{field_method} is not \code{NULL} (i.e. individuals have been
 counted by different methods). Alternatively this value can be passed in
@@ -134,45 +134,48 @@ See above section \strong{Description} for further information on the count
 conversion.
 Default is \code{'conversion_A2G'}.}
 
-\item{rmax}{(optional) a character string. The column name in \code{data} of the
-species demographic potential (i.e. the relative rate of increase of the
-population). This is the change in log population size between two dates
-and will be used later by \code{\link[=fit_trend]{fit_trend()}}.
+\item{rmax}{(optional) a \code{character} string. The column name in \code{data} of
+the species demographic potential (i.e. the relative rate of increase of
+the population). This is the change in log population size between two
+dates and will be used later by \code{\link[=fit_trend]{fit_trend()}}.
 Default is \code{'rmax'}.}
 
-\item{path}{a character string. The directory to save formatted data.
+\item{path}{a \code{character} string. The directory to save formatted data.
 This directory must exist and can be an absolute or a relative path.
 Default is the current working directory.}
 
-\item{na_rm}{a logical. If \code{TRUE}, counts with \code{NA} values will be removed.
+\item{na_rm}{a \code{logical.} If \code{TRUE}, counts with \code{NA} values will be
+removed.
 Default is \code{FALSE} (returns an error to inform user if \code{NA} are detected).}
 }
 \value{
-An n-elements list (where n is the number of count series). The
+An n-elements \code{list} (where \code{n} is the number of count series). The
 name of each element of this list is a combination of location and
-species. Each element of the list is a list with the following content:
+species. Each element of the list is a \code{list} with the following content:
 \itemize{
-\item \code{location} a character string. The name of the series site.
-\item \code{species} a character string. The name of the series species.
-\item \code{date} a numerical vector. The sequence of dates of the series.
-\item \code{n_dates} an integer. The number of unique dates.
-\item \code{stat_methods} a character vector. The different stat methods
+\item \code{location} a \code{character} string. The name of the series site.
+\item \code{species} a \code{character} string. The name of the series species.
+\item \code{date} a \code{numerical} vector. The sequence of dates of the
+series.
+\item \code{n_dates} an \code{integer.} The number of unique dates.
+\item \code{stat_methods} a \code{character} vector. The different stat methods
 of the series.
-\item \code{field_methods} (optional) a character vector. The different
+\item \code{field_methods} (optional) a \code{character} vector. The different
 field methods of the series.
-\item \code{pref_field_method} (optional) a character. The preferred
-field method of the species (\code{'A'} or \code{'G'}).
-\item \code{conversion_A2G} (optional) a numeric. The conversion factor
+\item \code{pref_field_method} (optional) a \code{character} string. The
+preferred field method of the species (\code{'A'} or \code{'G'}).
+\item \code{conversion_A2G} (optional) a \code{numeric}. The conversion factor
 of the species used to convert counts to its preferred field method.
-\item \code{rmax} a numeric. The maximum population growth rate of the
+\item \code{rmax} a \code{numeric}. The maximum population growth rate of the
 species.
-\item \code{data_original} a data frame. Original data of the series with
-renamed columns. Some rows may have been deleted (if \code{na_rm = TRUE}).
-\item \code{data_converted} a data frame. Data containing computed
+\item \code{data_original} a \code{data.frame}. Original data of the series
+with renamed columns. Some rows may have been deleted
+(if \code{na_rm = TRUE}).
+\item \code{data_converted} a \code{data.frame}. Data containing computed
 boundaries of the 95\% CI (\code{lower_ci_conv} and \code{upper_ci_conv}). If
 counts have been obtained by different field methods, contains also
 converted counts (\code{count_conv}) based on the preferred field method and
-conversion factor of the species. This data frame will be used by the
+conversion factor of the species. This \code{data.frame} will be used by the
 function \code{\link[=fit_trend]{fit_trend()}} to fit population models.
 }
 
@@ -204,7 +207,7 @@ coefficient of variation (\code{cv}). If the fields \code{lower_ci} and \code{up
 both absent (or \code{NA}), fields \code{sd}, \code{var}, and \code{cv} are examined in this
 order. When one is found valid (no missing value), a 95\% CI is derived
 assuming a normal distribution.
-The field \code{stat_method} must be present in the data frame \code{data} to indicate
+The field \code{stat_method} must be present in \code{data} to indicate
 if counts are \strong{total counts} (\code{'T'}), \strong{sampling} (\code{'S'}), or
 \strong{guesstimate} (\code{'G'}).
 
@@ -225,7 +228,7 @@ between two dates (i.e. the relative rate of increase). It will be used
 by \code{\link[=fit_trend]{fit_trend()}} but must be provided in this function.
 
 These three parameters, named \code{pref_field_method}, \code{conversion_A2G}, and
-\code{rmax} can be present in the data frame \code{data} or in a second data frame
+\code{rmax} can be present in \code{data} or in a second \code{data.frame}
 (passed through the argument \code{info}).
 Alternatively, the package \code{popbayes} provides their values for some
 African large mammals.
@@ -234,20 +237,30 @@ African large mammals.
 assumed to be obtained with one field method.
 }
 \examples{
-\dontrun{
-## Load Garamba dataset ----
+## Load Garamba raw dataset ----
 file_path <- system.file("extdata", "garamba_survey.csv", 
                          package = "popbayes")
                          
 garamba <- read.csv(file = file_path)
 
-## Format dataset ----
-garamba_formatted <- popbayes::format_data(garamba)
+## Create temporary folder ----
+temp_path <- tempdir()
 
-class(garamba_formatted)
+## Format dataset ----
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+
+## Number of count series ----
 length(garamba_formatted)
 
 ## Retrieve count series names ----
-popbayes::list_series()
-}
+popbayes::list_series(path = temp_path)
+
+## Print content of the first count series ----
+names(garamba_formatted[[1]])
+
+## Print original data ----
+garamba_formatted[[1]]$"data_original"
+
+## Print converted data ----
+garamba_formatted[[1]]$"data_converted"
 }

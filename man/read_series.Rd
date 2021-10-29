@@ -7,15 +7,15 @@
 read_series(series = NULL, path = ".")
 }
 \arguments{
-\item{series}{a vector of character strings. One or several count series
+\item{series}{a vector of \code{character} strings. One or several count series
 names to be imported. If \code{NULL} (default), all available count series
 will be imported.}
 
-\item{path}{a character string. The directory in which count series have
+\item{path}{a \code{character} string. The directory in which count series have
 been saved by the function \code{\link[=format_data]{format_data()}}.}
 }
 \value{
-An n-element list (where n is the number of count series). See
+An n-element \code{list} (where \code{n} is the number of count series). See
 \code{\link[=format_data]{format_data()}} for further information.
 }
 \description{
@@ -23,11 +23,22 @@ This function imports a list of count series data previously exported by
 \code{\link[=format_data]{format_data()}}. Users can import one, several, or all count series data.
 }
 \examples{
-\dontrun{
+## Load Garamba raw dataset ----
+file_path <- system.file("extdata", "garamba_survey.csv", 
+                         package = "popbayes")
+                         
+garamba <- read.csv(file = file_path)
+
+## Create temporary folder ----
+temp_path <- tempdir()
+
+## Format dataset ----
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+
 ## Import all count series ----
-count_series <- popbayes::read_series()
+count_series <- popbayes::read_series(path = temp_path)
 
 ## Import one count series ----
-a_buselaphus <- popbayes::read_series("garamba__alcelaphus_buselaphus")
-}
+a_bus <- popbayes::read_series(series = "garamba__alcelaphus_buselaphus",
+                               path   = temp_path)
 }

@@ -7,26 +7,39 @@
 bugs_to_df(data)
 }
 \arguments{
-\item{data}{a named list of BUGS outputs. The output of \code{\link[=fit_trend]{fit_trend()}} or
-\code{\link[=read_bugs]{read_bugs()}}.}
+\item{data}{a named \code{list} of BUGS outputs. The output of \code{\link[=fit_trend]{fit_trend()}} or
+\code{\link[=read_bugs]{read_bugs()}}}
 }
 \value{
-A data frame.
+A \code{data.frame}.
 }
 \description{
 From the output of the function \code{\link[=fit_trend]{fit_trend()}} (or \code{\link[=read_bugs]{read_bugs()}}), this
-function extracts estimated parameters into a data frame.
+function extracts estimated parameters into a \code{data.frame}.
 
-The resulting data frame has no particular use in \code{popbayes} but it can be
+The resulting \code{data.frame} has no particular use in \code{popbayes} but it can be
 useful for users.
 }
 \examples{
+## Load Garamba raw dataset ----
+file_path <- system.file("extdata", "garamba_survey.csv", 
+                         package = "popbayes")
+                         
+garamba <- read.csv(file = file_path)
+
+## Create temporary folder ----
+temp_path <- tempdir()
+
+## Format dataset ----
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+                                        
 \dontrun{
-## Get count series names ----
-popbayes::list_series()
+## Fit population trends (requires JAGS) ----
+garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
 
 ## Import BUGS outputs for one count series ----
-bugs <- popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus")
+bugs <- popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus", 
+                            path   = temp_path)
 
 ## Extract estimated parameters ----
 popbayes::bugs_to_df(bugs)

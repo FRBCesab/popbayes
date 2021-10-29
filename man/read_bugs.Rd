@@ -7,16 +7,16 @@
 read_bugs(series = NULL, path = ".")
 }
 \arguments{
-\item{series}{a vector of character strings. One or several count series
+\item{series}{a vector of \code{character} strings. One or several count series
 names. If \code{NULL} (default) BUGS outputs for all count series will be
 imported. Users can run \code{\link[=list_series]{list_series()}} to get the correct spelling of
 count series names.}
 
-\item{path}{a character string. The directory in which BUGS outputs have
+\item{path}{a \code{character} string. The directory in which BUGS outputs have
 been saved by the function \code{\link[=fit_trend]{fit_trend()}}.}
 }
 \value{
-An n-element list (where n is the number of count series). See
+An n-element \code{list} (where \code{n} is the number of count series). See
 \code{\link[=fit_trend]{fit_trend()}} for further information.
 }
 \description{
@@ -24,14 +24,27 @@ This function imports a list of BUGS outputs previously exported by
 \code{\link[=fit_trend]{fit_trend()}}. Users can import one, several, or all models.
 }
 \examples{
+## Load Garamba raw dataset ----
+file_path <- system.file("extdata", "garamba_survey.csv", 
+                         package = "popbayes")
+                         
+garamba <- read.csv(file = file_path)
+
+## Create temporary folder ----
+temp_path <- tempdir()
+
+## Format dataset ----
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+                                        
 \dontrun{
-## Get count series names ----
-popbayes::list_series()
+## Fit population trends (requires JAGS) ----
+garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
 
 ## Import BUGS outputs for one count series ----
-popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus")
+popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus", 
+                    path   = temp_path)
 
 ## Import BUGS outputs for all count series ----
-popbayes::read_bugs()
+popbayes::read_bugs(path = temp_path)
 }
 }

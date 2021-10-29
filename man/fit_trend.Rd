@@ -12,23 +12,24 @@ fit_trend(
 )
 }
 \arguments{
-\item{data}{a named list. The output of \code{\link[=format_data]{format_data()}} or \code{\link[=filter_series]{filter_series()}}}
+\item{data}{a named \code{list}. The output of \code{\link[=format_data]{format_data()}} or
+\code{\link[=filter_series]{filter_series()}}.}
 
-\item{model_opts}{a list of two vectors. The model smoothing factor
-(numeric) and a logical indicating if the parameter r must be limited by
-\code{rmax} (\code{TRUE}) or not (\code{FALSE}). If this second parameter is \code{TRUE}, the
-argument \code{rmax} cannot be NULL unless species are listed in \code{popbayes}
-(in \code{rmax_data}).}
+\item{model_opts}{a \code{list} of two vectors. The model smoothing factor
+(\code{numeric}) and a \code{logical} indicating if the parameter \strong{r} must be
+limited by \code{rmax} (\code{TRUE}) or not (\code{FALSE}). If this second parameter is
+\code{TRUE}, the argument \code{rmax} cannot be \code{NULL} unless species are listed in
+\code{popbayes} (in \code{species_info}).}
 
-\item{mcmc_opts}{a list containing the number of iteration (\code{ni}), the
+\item{mcmc_opts}{a \code{list} containing the number of iterations (\code{ni}), the
 thinning factor (\code{nt}), the length of burn in (\code{nb}), i.e. the number of
 iterations to discard at the beginning, and the number of chains (\code{nc}).}
 
-\item{path}{a character string. The directory to save BUGS outputs (the same
-as in \code{\link[=format_data]{format_data()}}).}
+\item{path}{a \code{character} string. The directory to save BUGS outputs (the
+same as in \code{\link[=format_data]{format_data()}}).}
 }
 \value{
-An n-element list (where n is the number of count series). Each
+An n-element \code{list} (where \code{n} is the number of count series). Each
 element of the list is a BUGS output as provided by JAGS (also written
 in the folder \code{path}).
 }
@@ -72,27 +73,33 @@ Classical Markov chain Monte Carlo (MCMC) settings (see argument \code{mcmc_opts
 below).
 }
 \examples{
-\dontrun{
-## Load Garamba dataset ----
+## Load Garamba raw dataset ----
 file_path <- system.file("extdata", "garamba_survey.csv", 
                          package = "popbayes")
                          
 garamba <- read.csv(file = file_path)
 
-## Format count series ----
-garamba_formatted <- popbayes::format_data(garamba)
+## Create temporary folder ----
+temp_path <- tempdir()
 
-## Select one count series (optional) ----
+## Format dataset ----
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+
+## Get data for Alcelaphus buselaphus at Garamba only ----
 a_buselaphus <- popbayes::filter_series(garamba_formatted, 
-                                        species = "Alcelaphus buselaphus")
-## Fit population trend ----
-a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus)
+                                        location = "Garamba",
+                                        species  = "Alcelaphus buselaphus")
+                                        
+\dontrun{
+## Fit population trend (requires JAGS) ----
+a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus, path = temp_path)
 
 ## Check for convergence ----
 popbayes::diagnostic(a_buselaphus_mod, threshold = 1.1)
 
 ## Plot estimated population trend ----
-popbayes::plot_trend(series = "garamba__alcelaphus_buselaphus")
+popbayes::plot_trend(series = "garamba__alcelaphus_buselaphus", 
+                     path   = temp_path)
 
 ## Plot MCMC traceplot ----
 R2jags::traceplot(a_buselaphus_mod[[1]], ask = TRUE)

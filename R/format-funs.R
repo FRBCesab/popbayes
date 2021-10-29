@@ -24,7 +24,7 @@
 #' both absent (or `NA`), fields `sd`, `var`, and `cv` are examined in this 
 #' order. When one is found valid (no missing value), a 95% CI is derived 
 #' assuming a normal distribution. 
-#' The field `stat_method` must be present in the data frame `data` to indicate
+#' The field `stat_method` must be present in `data` to indicate
 #' if counts are **total counts** (`'T'`), **sampling** (`'S'`), or 
 #' **guesstimate** (`'G'`).
 #' 
@@ -45,7 +45,7 @@
 #' by [fit_trend()] but must be provided in this function.
 #' 
 #' These three parameters, named `pref_field_method`, `conversion_A2G`, and 
-#' `rmax` can be present in the data frame `data` or in a second data frame 
+#' `rmax` can be present in `data` or in a second `data.frame` 
 #' (passed through the argument `info`).
 #' Alternatively, the package `popbayes` provides their values for some 
 #' African large mammals.
@@ -55,8 +55,8 @@
 #'
 #'
 #'
-#' @param data a data frame with at least five columns: `location`, `species`, 
-#'   `date`, `count`, and `stat_method`.
+#' @param data a `data.frame` with at least five columns: `location`, 
+#'   `species`, `date`, `count`, and `stat_method`.
 #'   
 #'   The `stat_method` field indicates the method used to estimate counts. It 
 #'   can contain: `T` (total counts), `G` (guesstimate), and/or `S` (sampling). 
@@ -77,41 +77,41 @@
 #'   
 #'   Others fields can be present either in `data` or `info` (see below).
 #' 
-#' @param info (optional) a data frame with species in rows and the following
+#' @param info (optional) a `data.frame` with species in rows and the following
 #'   columns: `species` (species name), `pref_field_method`, 
 #'   `conversion_A2G`, and `rmax`. See above section **Description** for 
 #'   further information on these fields.
 #'   Default is `NULL` (i.e. these information must be present in `data` 
 #'   if not available in `popbayes`).
 #' 
-#' @param location a character string. The column name in `data` of the
+#' @param location a `character` string. The column name in `data` of the
 #'   site. This field is used to distinguish count series from different sites
 #'   (if required) and to create an unique series name.
 #'   Default is `'location'`.
 #'   
-#' @param species a character string. The column name in `data` (and 
+#' @param species a `character` string. The column name in `data` (and 
 #'   in `info` if provided) of the species. This field is used to distinguish 
 #'   count series for different species (if required) and to create an unique 
 #'   series name.
 #'   Default is `'species'`.
 #'   
-#' @param date a character string. The column name in `data` of the date.
+#' @param date a `character` string. The column name in `data` of the date.
 #'   This column `date` must be in a numerical form with possibly a decimal 
 #'   part.
 #'   Default is `'date'`.
 #'   
-#' @param count a character string. The column name in `data` of the
+#' @param count a `character` string. The column name in `data` of the
 #'   number of individuals. This column must be numerical.
 #'   Default is `'count'`.
 #'  
-#' @param stat_method a character string. The column name in `data` of 
+#' @param stat_method a `character` string. The column name in `data` of 
 #'   the method used to estimate individuals counts. It can contain `'T'` 
 #'   (total counts), `'G'` (guesstimate), and/or `'S'` (sampling). If some 
 #'   counts are coded as `'S'`, precision column(s) must also be provided (see 
 #'   below).
 #'   Default is `'stat_method'`. 
 #' 
-#' @param lower_ci (optional) a character string. The column name in `data`
+#' @param lower_ci (optional) a `character` string. The column name in `data`
 #'   of the lower boundary of the 95% CI of the estimate (i.e. `count`). If 
 #'   provided, the upper boundary of the 95% CI (argument `upper_ci`) must be 
 #'   also provided. This argument is only required if some counts have been 
@@ -120,32 +120,32 @@
 #'   `var`), or coefficient of variation (argument `cv`). 
 #'   Default is `'lower_ci'`.
 #'   
-#' @param upper_ci (optional) a character string. The column name in `data`
+#' @param upper_ci (optional) a `character` string. The column name in `data`
 #'   of the upper boundary of the 95% CI of the estimate (i.e. `count`). If 
 #'   provided, the lower boundary of the 95% CI (argument `lower_ci`) must be 
 #'   also provided.
 #'   Default is `'upper_ci'`.
 #'   
-#' @param sd (optional) a character string. The column name in `data` of 
+#' @param sd (optional) a `character` string. The column name in `data` of 
 #'   the standard deviation of the estimate.
 #'   Default is `NULL`.
 #'   
-#' @param var (optional) a character string. The column name in `data` of 
+#' @param var (optional) a `character` string. The column name in `data` of 
 #'   the variance of the estimate.
 #'   Default is `NULL`.
 #'    
-#' @param cv (optional) a character string. The column name in `data` of 
+#' @param cv (optional) a `character` string. The column name in `data` of 
 #'   the coefficient of variation of the estimate.
 #'   Default is `NULL`.
 #'   
-#' @param field_method (optional) a character string. The column name in 
+#' @param field_method (optional) a `character` string. The column name in 
 #'   `data` of the field method used to count individuals. Counts can be ground 
 #'   counts (coded as `'G'`) or aerial counts (coded as `'A'`). This argument 
 #'   is optional if individuals have been counted by the same method. See above 
 #'   section **Description** for further information on the count conversion.
 #'   Default is `'field_method'`.
 #'   
-#' @param pref_field_method (optional) a character string. The column name
+#' @param pref_field_method (optional) a `character` string. The column name
 #'   in `data` of the preferred field method of the species. This argument is
 #'   only required is `field_method` is not `NULL` (i.e. individuals have been 
 #'   counted by different methods). Alternatively, this value can be passed in
@@ -154,7 +154,7 @@
 #'   conversion.
 #'   Default is `'pref_field_method'`.
 #' 
-#' @param conversion_A2G (optional) a character string. The column name
+#' @param conversion_A2G (optional) a `character` string. The column name
 #'   in `data` of the count conversion factor of the species. This argument is
 #'   only required if `field_method` is not `NULL` (i.e. individuals have been 
 #'   counted by different methods). Alternatively this value can be passed in
@@ -163,46 +163,49 @@
 #'   conversion.
 #'   Default is `'conversion_A2G'`.
 #'   
-#' @param rmax (optional) a character string. The column name in `data` of the 
-#'   species demographic potential (i.e. the relative rate of increase of the 
-#'   population). This is the change in log population size between two dates 
-#'   and will be used later by [fit_trend()].
+#' @param rmax (optional) a `character` string. The column name in `data` of 
+#'   the species demographic potential (i.e. the relative rate of increase of 
+#'   the population). This is the change in log population size between two 
+#'   dates and will be used later by [fit_trend()].
 #'   Default is `'rmax'`.
 #'   
-#' @param path a character string. The directory to save formatted data. 
+#' @param path a `character` string. The directory to save formatted data. 
 #'   This directory must exist and can be an absolute or a relative path.
 #'   Default is the current working directory.
 #' 
-#' @param na_rm a logical. If `TRUE`, counts with `NA` values will be removed.
+#' @param na_rm a `logical.` If `TRUE`, counts with `NA` values will be 
+#'   removed.
 #'   Default is `FALSE` (returns an error to inform user if `NA` are detected).
 #'
 #'
 #'
-#' @return An n-elements list (where n is the number of count series). The  
+#' @return An n-elements `list` (where `n` is the number of count series). The
 #'   name of each element of this list is a combination of location and 
-#'   species. Each element of the list is a list with the following content:
+#'   species. Each element of the list is a `list` with the following content:
 #'   \itemize{
-#'   \item \code{location} a character string. The name of the series site.
-#'   \item \code{species} a character string. The name of the series species.
-#'   \item \code{date} a numerical vector. The sequence of dates of the series.
-#'   \item \code{n_dates} an integer. The number of unique dates.
-#'   \item \code{stat_methods} a character vector. The different stat methods 
+#'   \item \code{location} a `character` string. The name of the series site.
+#'   \item \code{species} a `character` string. The name of the series species.
+#'   \item \code{date} a `numerical` vector. The sequence of dates of the 
+#'     series.
+#'   \item \code{n_dates} an `integer.` The number of unique dates.
+#'   \item \code{stat_methods} a `character` vector. The different stat methods
 #'     of the series.
-#'   \item \code{field_methods} (optional) a character vector. The different 
+#'   \item \code{field_methods} (optional) a `character` vector. The different
 #'     field methods of the series.
-#'   \item \code{pref_field_method} (optional) a character. The preferred 
-#'     field method of the species (`'A'` or `'G'`).
-#'   \item \code{conversion_A2G} (optional) a numeric. The conversion factor 
+#'   \item \code{pref_field_method} (optional) a `character` string. The 
+#'     preferred field method of the species (`'A'` or `'G'`).
+#'   \item \code{conversion_A2G} (optional) a `numeric`. The conversion factor
 #'     of the species used to convert counts to its preferred field method.
-#'   \item \code{rmax} a numeric. The maximum population growth rate of the 
+#'   \item \code{rmax} a `numeric`. The maximum population growth rate of the
 #'     species.
-#'   \item \code{data_original} a data frame. Original data of the series with 
-#'     renamed columns. Some rows may have been deleted (if `na_rm = TRUE`).
-#'   \item \code{data_converted} a data frame. Data containing computed 
+#'   \item \code{data_original} a `data.frame`. Original data of the series 
+#'     with renamed columns. Some rows may have been deleted 
+#'     (if `na_rm = TRUE`).
+#'   \item \code{data_converted} a `data.frame`. Data containing computed 
 #'     boundaries of the 95% CI (`lower_ci_conv` and `upper_ci_conv`). If 
 #'     counts have been obtained by different field methods, contains also 
 #'     converted counts (`count_conv`) based on the preferred field method and
-#'     conversion factor of the species. This data frame will be used by the 
+#'     conversion factor of the species. This `data.frame` will be used by the
 #'     function [fit_trend()] to fit population models.
 #'   }
 #'   
@@ -213,22 +216,32 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' ## Load Garamba dataset ----
+#' ## Load Garamba raw dataset ----
 #' file_path <- system.file("extdata", "garamba_survey.csv", 
 #'                          package = "popbayes")
 #'                          
 #' garamba <- read.csv(file = file_path)
 #' 
-#' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba)
+#' ## Create temporary folder ----
+#' temp_path <- tempdir()
 #' 
-#' class(garamba_formatted)
+#' ## Format dataset ----
+#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' 
+#' ## Number of count series ----
 #' length(garamba_formatted)
 #' 
 #' ## Retrieve count series names ----
-#' popbayes::list_series()
-#' }
+#' popbayes::list_series(path = temp_path)
+#' 
+#' ## Print content of the first count series ----
+#' names(garamba_formatted[[1]])
+#' 
+#' ## Print original data ----
+#' garamba_formatted[[1]]$"data_original"
+#' 
+#' ## Print converted data ----
+#' garamba_formatted[[1]]$"data_converted"
 
 format_data <- function(data, info = NULL, date = "date", count = "count", 
                         location = "location", species = "species", 
@@ -831,7 +844,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   data_series    <- list()
   series_ignored <- 0
   
-  for (i in 1:nrow(series_infos)) {
+  for (i in seq_len(nrow(series_infos))) {
     
     id <- series_infos[i, "id"]
     
@@ -922,11 +935,12 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
 
 #' Remove rows or return error if NA counts detected
 #'
-#' @param data a data frame
-#' @param col a character string (column to inspect)
-#' @param na_rm a logical. If TRUE, deletes rows. Otherwise, returns an error
+#' @param data a `data.frame`
+#' @param col a `character` string (column to inspect)
+#' @param na_rm a `logical`. If `TRUE`, deletes rows. Otherwise, returns an 
+#'   error.
 #'
-#' @return A data frame (same as `data` with possibly some rows removed).
+#' @return A `data.frame` (same as `data` with possibly some rows removed).
 #' 
 #' @noRd
 
@@ -963,10 +977,10 @@ is_na_counts <- function(data, col, na_rm) {
 #' - Check CI boundaries values: if lower_ci > count or upper_ci < count,
 #'   returns an error.
 #'
-#' @param data a data frame
-#' @param precision_cols a character vector (column names of precision 
+#' @param data a `data.frame`
+#' @param precision_cols a `character` vector (column names of precision 
 #'   information, i.e. `'lower_ci_orig'`, `'sd_orig'`, etc.)
-#' @param na_rm a logical. If `TRUE` delete rows. Otherwise return an error.
+#' @param na_rm a `logical`. If `TRUE` delete rows. Otherwise return an error.
 #'
 #' @return A data frame (same as `data`).
 #' 
@@ -1106,11 +1120,11 @@ is_na_precision <- function(data, precision_cols, na_rm) {
 #' - Derives CI bounds for stat method S from SD, VAR, or CV, unless CI bounds 
 #'   are provided
 #'
-#' @param data a data frame
-#' @param precision_cols a character vector (names of columns with precision 
+#' @param data a `data.frame`
+#' @param precision_cols a `character` vector (names of columns with precision 
 #'   information, i.e. `'lower_ci_orig'`, `'sd_orig'`, etc.)
 #'
-#' @return A data frame identical to `data` with two additional columns: 
+#' @return A `data.frame` identical to `data` with two additional columns: 
 #'   `lower_ci_conv` and `upper_ci_conv`.
 #' 
 #' @noRd
@@ -1214,13 +1228,13 @@ compute_ci <- function(data, precision_cols) {
 #' `field_method` column is present in `data`, counts are always converted 
 #' toward the preferred field method.
 #'
-#' @param data a data frame. Counts dataset.
+#' @param data a `data.frame`. Counts dataset.
 #' 
-#' @param field_method a character string. The column name in `data`.
+#' @param field_method a `character` string. The column name in `data`.
 #' 
-#' @param conversion_data a data frame. Conversion data (see `species_info`).
+#' @param conversion_data a `data.frame`. Conversion data (see `species_info`).
 #'
-#' @return A data frame (same as `data`).
+#' @return A `data.frame` (same as `data`).
 #' 
 #' @noRd
 
@@ -1230,7 +1244,7 @@ convert_counts <- function(data, field_method, conversion_data) {
     
     series_infos <- get_series(data, quiet = TRUE)
     
-    for (i in 1:nrow(series_infos)) {
+    for (i in seq_len(nrow(series_infos))) {
       
       species_name <- series_infos[i, "species"]
       
@@ -1273,12 +1287,12 @@ convert_counts <- function(data, field_method, conversion_data) {
 #' non-zero count (and replaces `lower_ci_conv` and `upper_ci_conv` by 
 #' the corresponding values).
 #'
-#' @param data a data frame
+#' @param data a `data.frame`
 #' 
-#' @param na_rm a logical. If TRUE delete series with all 0 counts. Otherwise, 
-#' return an error.
+#' @param na_rm a `logical`. If `TRUE` delete series with all 0 counts. 
+#'   Otherwise, return an error.
 #'
-#' @return A data frame (same as `data`).
+#' @return A `data.frame` (same as `data`).
 #' 
 #' @noRd
 

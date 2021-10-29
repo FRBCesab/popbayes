@@ -16,13 +16,16 @@ A numerical vector of \code{rmax} values.
 The demographic potential of a species is limited. The intrinsic rate of
 increase \code{rmax} is the maximum increase in log population size that a
 species can attain in a year. According to Sinclair (2003), it is related
-to the body mass of adult females by the formula:
-
-$$ 1.375*W^{-0.315} $$
+to the body mass of adult females by: \eqn{1.375 \times W^{-0.315}}
 }
 \examples{
+## Set adult female body mass ----
 body_masses <- c(55, 127)
+
+## Add species names ----
 names(body_masses) <- c("Impala", "Tiang")
+
+## Compute species rmax ----
 w_to_rmax(body_masses)
 }
 \references{

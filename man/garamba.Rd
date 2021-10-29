@@ -5,7 +5,7 @@
 \alias{garamba}
 \title{African mammals survey in the Garamba National Park}
 \format{
-A data frame with 141 rows (counts) and the following 8 columns:
+A \code{data.frame} with 141 rows (counts) and the following 8 variables:
 \describe{
 \item{location}{the location of the survey (Garamba)}
 \item{species}{the binomial name of the species}

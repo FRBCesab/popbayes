@@ -1,12 +1,12 @@
-#' Detect individual count series and create a unique identifier for each
+#' Detect individual count series and create an unique identifier
 #'
 #' For internal use only.
 #'
-#' @param data a data frame. 
+#' @param data a `data.frame`. 
 #' 
-#' @param quiet a logical. If `TRUE`, suppress messages.
+#' @param quiet a `logical`. If `TRUE`, suppress messages.
 #'
-#' @return A data frame with three columns:
+#' @return A `data.frame` with three columns:
 #'   - `id` (a series unique identifier);
 #'   - `location` (the series site);
 #'   - `species` (the series species).
@@ -45,8 +45,7 @@ get_series <- function(data, quiet = TRUE) {
 
 
 
-#' Extract the count series corresponding to a location and/or a species in a 
-#' list
+#' Extract the count series corresponding to a location and/or a species
 #' 
 #' @description
 #' This function identifies the count series relative to a species and/or
@@ -55,43 +54,47 @@ get_series <- function(data, quiet = TRUE) {
 #' at the specified location is extracted. Otherwise, all series corresponding
 #' to the specified criterion (species or location) are extracted.
 #' 
-#' @param data a named list. The output of function [format_data()].
+#' @param data a named `list`. The output of function [format_data()].
 #' 
-#' @param species a character string. A species name.
+#' @param species a `character` string. A species name.
 #' 
-#' @param location a character string. A site name.
+#' @param location a `character` string. A site name.
 #'
-#' @return A subset of `data`, i.e. a named list.
+#' @return A subset of `data`, i.e. a named `list`.
 #' 
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' ## Load Garamba dataset ----
+#' ## Load Garamba raw dataset ----
 #' file_path <- system.file("extdata", "garamba_survey.csv", 
 #'                          package = "popbayes")
 #'                          
 #' garamba <- read.csv(file = file_path)
 #' 
+#' ## Create temporary folder ----
+#' temp_path <- tempdir()
+#' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba)
+#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
 #' 
-#' ## Get series names ----
-#' names(garamba_formatted)
+#' ## Number of count series ----
+#' length(garamba_formatted)
 #' 
-#' ## Or...
-#' popbayes::list_series()
+#' ## Retrieve count series names ----
+#' popbayes::list_series(path = temp_path)
 #' 
 #' ## Get data for Alcelaphus buselaphus (at all sites) ----
-#' popbayes::filter_series(garamba_formatted, species = "Alcelaphus buselaphus")
+#' x <- popbayes::filter_series(garamba_formatted, 
+#'                              species = "Alcelaphus buselaphus")
 #' 
 #' ## Get data at Garamba (for all species) ----
-#' popbayes::filter_series(garamba_formatted, location = "Garamba")
+#' x <- popbayes::filter_series(garamba_formatted, 
+#'                              location = "Garamba")
 #' 
 #' ## Get data for Alcelaphus buselaphus at Garamba only ----
-#' popbayes::filter_series(garamba_formatted, location = "Garamba",
-#'                         species = "Alcelaphus buselaphus")
-#' }
+#' x <- popbayes::filter_series(garamba_formatted, 
+#'                              location = "Garamba",
+#'                              species  = "Alcelaphus buselaphus")
 
 filter_series <- function(data, species = NULL, location = NULL) {
   
@@ -208,47 +211,47 @@ filter_series <- function(data, species = NULL, location = NULL) {
 #'
 #' @description
 #' From the output of the function [format_data()] (or [filter_series()]), this
-#' function extracts data frames containing converted counts 
+#' function extracts `data.frame` containing converted counts 
 #' (`converted = TRUE`) or original counts (`converted = FALSE`) for one, 
 #' several, or all count series.
 #' 
-#' The resulting data frame has no particular use in `popbayes` but it can be 
+#' The resulting `data.frame` has no particular use in `popbayes` but it can be
 #' useful for users.
 #'
-#' @param data a named list. The output of [format_data()] or [filter_series()].
+#' @param data a named `list`. The output of [format_data()] or 
+#'   [filter_series()].
 #' 
-#' @param converted a logical. If `TRUE` (default) extracts converted counts, 
+#' @param converted a `logical`. If `TRUE` (default) extracts converted counts,
 #'   otherwise returns original counts.
 #'
-#' @return A data frame.
+#' @return A `data.frame`.
 #' 
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' ## Load Garamba dataset ----
+#' ## Load Garamba raw dataset ----
 #' file_path <- system.file("extdata", "garamba_survey.csv", 
 #'                          package = "popbayes")
 #'                          
 #' garamba <- read.csv(file = file_path)
 #' 
-#' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba)
+#' ## Create temporary folder ----
+#' temp_path <- tempdir()
 #' 
-#' class(garamba_formatted)
+#' ## Format dataset ----
+#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
 #' 
 #' ## Extract converted count data ----
-#' converted_data <- popbayes::series_to_df(garamba_formatted, converted = TRUE)
-#' 
-#' class(converted_data)
+#' converted_data <- popbayes::series_to_df(garamba_formatted, 
+#'                                          converted = TRUE)
 #' 
 #' ## Extract original count data ----
-#' original_data <- popbayes::series_to_df(garamba_formatted, converted = FALSE)
+#' original_data <- popbayes::series_to_df(garamba_formatted, 
+#'                                         converted = FALSE)
 #' 
 #' dim(converted_data)
 #' dim(original_data)
 #' dim(garamba)
-#' }
 
 series_to_df <- function(data, converted = TRUE) {
   
@@ -285,26 +288,37 @@ series_to_df <- function(data, converted = TRUE) {
 #' This function imports a list of count series data previously exported by 
 #' [format_data()]. Users can import one, several, or all count series data.
 #'
-#' @param series a vector of character strings. One or several count series 
+#' @param series a vector of `character` strings. One or several count series
 #'   names to be imported. If `NULL` (default), all available count series 
 #'   will be imported.
 #'    
-#' @param path a character string. The directory in which count series have
+#' @param path a `character` string. The directory in which count series have
 #'   been saved by the function [format_data()].
 #'
-#' @return An n-element list (where n is the number of count series). See
+#' @return An n-element `list` (where `n` is the number of count series). See
 #'   [format_data()] for further information.
 #' 
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' ## Load Garamba raw dataset ----
+#' file_path <- system.file("extdata", "garamba_survey.csv", 
+#'                          package = "popbayes")
+#'                          
+#' garamba <- read.csv(file = file_path)
+#' 
+#' ## Create temporary folder ----
+#' temp_path <- tempdir()
+#' 
+#' ## Format dataset ----
+#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' 
 #' ## Import all count series ----
-#' count_series <- popbayes::read_series()
+#' count_series <- popbayes::read_series(path = temp_path)
 #' 
 #' ## Import one count series ----
-#' a_buselaphus <- popbayes::read_series("garamba__alcelaphus_buselaphus")
-#' }
+#' a_bus <- popbayes::read_series(series = "garamba__alcelaphus_buselaphus",
+#'                                path   = temp_path)
 
 read_series <- function(series = NULL, path = ".") {
   
@@ -359,27 +373,28 @@ read_series <- function(series = NULL, path = ".") {
 #' @description This function retrieves the count series names generated by
 #' the function [format_data()].
 #'
-#' @param path a character string. The directory in which count series have 
+#' @param path a `character` string. The directory in which count series have 
 #'   been saved by the function [format_data()].
 #'
-#' @return A vector of count series names (character strings).
+#' @return A vector of count series names (`character` strings).
 #' 
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' ## Load Garamba dataset ----
+#' ## Load Garamba raw dataset ----
 #' file_path <- system.file("extdata", "garamba_survey.csv", 
 #'                          package = "popbayes")
 #'                          
 #' garamba <- read.csv(file = file_path)
 #' 
+#' ## Create temporary folder ----
+#' temp_path <- tempdir()
+#' 
 #' ## Format dataset ----
-#' garamba_formatted <- format_data(garamba)
+#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
 #' 
 #' ## Retrieve count series names ----
-#' popbayes::list_series()
-#' }
+#' popbayes::list_series(path = temp_path)
 
 list_series <- function(path = ".") {
   

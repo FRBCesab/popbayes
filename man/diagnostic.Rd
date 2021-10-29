@@ -7,10 +7,10 @@
 diagnostic(data, threshold = 1.1)
 }
 \arguments{
-\item{data}{a named list of BUGS outputs. The output of \code{\link[=fit_trend]{fit_trend()}} or
+\item{data}{a named \code{list} of BUGS outputs. The output of \code{\link[=fit_trend]{fit_trend()}} or
 \code{\link[=read_bugs]{read_bugs()}}.}
 
-\item{threshold}{a numeric.}
+\item{threshold}{a \code{numeric}.}
 }
 \description{
 From the output of the function \code{\link[=fit_trend]{fit_trend()}} (or \code{\link[=read_bugs]{read_bugs()}}), this
@@ -21,14 +21,23 @@ BUGS model has converged. This diagnostic is performed by comparing the
 listing problematic models is displayed.
 }
 \examples{
-\dontrun{
-## Get count series names ----
-popbayes::list_series()
+## Load Garamba raw dataset ----
+file_path <- system.file("extdata", "garamba_survey.csv", 
+                         package = "popbayes")
+                         
+garamba <- read.csv(file = file_path)
 
-## Import BUGS outputs for one count series ----
-bugs <- popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus")
+## Create temporary folder ----
+temp_path <- tempdir()
+
+## Format dataset ----
+garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+                                        
+\dontrun{
+## Fit population trends (requires JAGS) ----
+garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
 
 ## Check for convergence ----
-popbayes::diagnostic(bugs)
+popbayes::diagnostic(garamba_mod)
 }
 }

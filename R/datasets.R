@@ -1,7 +1,7 @@
 #' Species information dataset
 #' 
 #' @description
-#' This dataset contains information about a list of 15 African mammal species.
+#' This dataset contains information about 15 African mammal species.
 #' It can be used in the function `format_data()` to convert individual counts 
 #' estimated from a field method to a preferred field method. The field method 
 #' can be `A` (aerial counts) or `G` (ground counts). See [format_data()] for 
@@ -12,8 +12,8 @@
 #' species. Note that only `species`, `pref_field_method`, `conversion_A2G`, 
 #' and `rmax` are required.
 #'   
-#' @format A data frame with 15 rows (African mammals species) and the following
-#' columns:
+#' @format A `data.frame` with 15 rows (African mammals species) and the 
+#' following variables:
 #' \describe{
 #'   \item{order}{the order of the species}
 #'   \item{family}{the family of the species}
@@ -45,7 +45,7 @@
 #' in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
 #' 2017.
 #'   
-#' @format A data frame with 141 rows (counts) and the following 8 columns:
+#' @format A `data.frame` with 141 rows (counts) and the following 8 variables:
 #' \describe{
 #'   \item{location}{the location of the survey (Garamba)}
 #'   \item{species}{the binomial name of the species}
