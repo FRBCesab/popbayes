@@ -92,22 +92,21 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of the R package <code>popbayes</code> is to estimate population trends from counts series</p>
+<p>The goal of the R package <code>popbayes</code> is to infer trends of one or several populations over time from series of counts. It does so by accounting for count precision (provided or inferred based on expert knowledge, e.g. for guesstimates), smoothing the population rate of increase over time, and accounting for the maximum demographic potential of species. Inference is carried out in a Bayesian framework.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
+<p><strong>Before using this package, users need to install the freeware <a href="https://mcmc-jags.sourceforge.io/">JAGS</a>.</strong></p>
 <p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Install 'remotes' package (if not already installed) ----</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"remotes"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="op">}</span>
+<span class="co">#  install.packages("remotes")</span>
 
 <span class="co">## Install dev version of 'popbayes' from GitHub ----</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"frbcesab/popbayes"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Then you can attach the package <code>popbayes</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/frbcesab/popbayes">"popbayes"</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://frbcesab.github.io/popbayes/">"popbayes"</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
@@ -124,7 +123,7 @@
 <a href="#citation" class="anchor"></a>Citation</h2>
 <p>Please cite this package as:</p>
 <blockquote>
-<p>Casajus N. &amp; Pradel R. (2021) popbayes: Bayesian model to estimate populations trend. R package version 0.1.</p>
+<p>Casajus N. &amp; Pradel R. (2021) popbayes: Bayesian model to estimate population trends from counts series. R package version 1.0. URL: <a href="https://frbcesab.github.io/popbayes/" class="uri">https://frbcesab.github.io/popbayes/</a>.</p>
 </blockquote>
 <p>You can also run:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -133,11 +132,12 @@
 <span class="co">## A BibTeX entry for LaTeX users is:</span>
 <span class="co">## </span>
 <span class="co">## @Manual{,</span>
-<span class="co">##   title  = {{popbayes}: {B}ayesian model to estimate populations trend,</span>
+<span class="co">##   title  = {{popbayes}: {B}ayesian model to estimate population trends from </span>
+<span class="co">##   counts series,</span>
 <span class="co">##   author = {{Casajus N.}, and {Pradel R.}},</span>
 <span class="co">##   year   = {2021},</span>
-<span class="co">##   note   = {R package version 0.1},</span>
-<span class="co">##   url    = {https://github.com/frbcesab/popbayes},</span>
+<span class="co">##   note   = {R package version 1.0},</span>
+<span class="co">##   url    = {https://frbcesab.github.io/popbayes/},</span>
 <span class="co">## }</span></code></pre></div>
 </div>
 </div>

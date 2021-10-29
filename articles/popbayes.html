@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get started with popbayes • popbayes</title>
+<title>Get started with 'popbayes' • popbayes</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Get started with popbayes">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Get started with 'popbayes'">
 <meta property="og:description" content="popbayes">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -82,7 +82,7 @@
       </header><script src="popbayes_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Get started with popbayes</h1>
+      <h1 data-toc-skip>Get started with ‘popbayes’</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/frbcesab/popbayes/blob/master/vignettes/popbayes.rmd"><code>vignettes/popbayes.rmd</code></a></small>
@@ -106,8 +106,8 @@
 <p>The package also provides a lot of functions to handle individual count series and model outputs. The following figure shows a more complete usage of the package.</p>
 <p><br></p>
 <div class="figure" style="text-align: center">
-<img src="docs/popbayes-diagram.png" alt="Framework of the popbayes package" width="100%"><p class="caption">
-Framework of the popbayes package
+<img src="docs/popbayes-diagram.png" alt="Framework of `popbayes`" width="100%"><p class="caption">
+Framework of <code>popbayes</code>
 </p>
 </div>
 <p><br></p>
@@ -639,14 +639,14 @@ Framework of the popbayes package
 <p><br></p>
 <p>Alternatively, <code>rmax</code> can be obtained from previous demographic analyses.</p>
 <p><br></p>
-<p><strong>Important Note</strong>: The intrinsic rate of increase refers to a change over one year. If a different time unit is used for the dates (say a month), the rmax to provide must be adapted (here divided by 12). The <strong>rmax values in popbayes cannot be used for time units other than one year</strong>.</p>
+<p><strong>Important note</strong>: The intrinsic rate of increase refers to a change over one year. If a different time unit is used for the dates (say a month), the rmax to provide must be adapted (here divided by 12). The <strong>rmax values in popbayes cannot be used for time units other than one year</strong>.</p>
 <p><br></p>
 </div>
 </div>
 <div id="checking-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#checking-data" class="anchor"></a>Checking data</h2>
-<p>The first thing that the function <code>format data()</code> does is to check the validity of the content of the different fields of the count data set. Here we will explore our data to avoid errors when using the function <code>format data()</code>.</p>
+<p>The first thing that the function <code><a href="../reference/format_data.html">format_data()</a></code> does is to check the validity of the content of the different fields of the count data set. Here we will explore our data to avoid errors when using the function <code><a href="../reference/format_data.html">format_data()</a></code>.</p>
 <p>In particular, we need to check <code>location</code> and <code>species</code> spelling, <code>date</code> and <code>count</code> field format, and the <code>stat_method</code> and <code>field_method</code> categories.</p>
 <p><br></p>
 <p><strong>Check <code>location</code> field</strong></p>
@@ -940,13 +940,13 @@ Framework of the popbayes package
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <ul>
-<li>Cornelis <em>et al.</em> (2014) …</li>
-<li>Foley &amp; Faust (2010) Rapid population growth in an elephant <em>Loxodonta africana</em> population recovering from poaching in Tarangire National Park, Tanzania. <em>Oryx</em>, <strong>44</strong>, 205-212. DOI: <a href="https://doi.org/10.1017/S0030605309990706">10.1017/S0030605309990706</a>.</li>
-<li>Illius &amp; Gordon (1992) Modelling the nutritional ecology of ungulate herbivores: evolution of body size and competitive interactions. <em>Oecologia</em>, <strong>89</strong>, 428-434. DOI: <a href="https://doi.org/10.1017/S0030605309990706">10.1017/S0030605309990706</a>.</li>
-<li>Kingdon &amp; Hoffman (2013) …</li>
-<li>Sinclair (1996) …</li>
-<li>Sinclair (2003) Mammal population regulation, keystone processes and ecosystem dynamics. <em>Philosophical Transactions: Biological Sciences</em>, <strong>358</strong>, 1729-1740. DOI: <a href="https://doi.org/10.1098/rstb.2003.1359">10.1098/rstb.2003.1359</a>.</li>
-<li>Suraud <em>et al.</em> (2012) …</li>
+<li><p>Cornelis D <em>et al.</em> (2014) Species account: African buffalo (<em>Syncerus caffer</em>). In: <em>Ecology, Evolution and Behaviour of Wild Cattle: Implications for Conservation</em> (Eds M Melletti &amp; J Burton). Cambridge University Press, Cambridge. DOI: <a href="https://doi.org/10.1017/CBO9781139568098">10.1017/CBO9781139568098</a>.</p></li>
+<li><p>Foley CAH &amp; Faust LJ (2010) Rapid population growth in an elephant <em>Loxodonta africana</em> population recovering from poaching in Tarangire National Park, Tanzania. <em>Oryx</em>, <strong>44</strong>, 205-212. DOI: <a href="https://doi.org/10.1017/S0030605309990706">10.1017/S0030605309990706</a>.</p></li>
+<li><p>Illius AW &amp; Gordon IJ (1992) Modelling the nutritional ecology of ungulate herbivores: evolution of body size and competitive interactions. <em>Oecologia</em>, <strong>89</strong>, 428-434. DOI: <a href="https://doi.org/10.1007/BF00317422">10.1017/S0030605309990706</a>.</p></li>
+<li><p>Kingdon J &amp; Hoffman M (2013) <em>Mammals of Africa. Volume VI: Pigs, Hippopotamuses, Chevrotain, Giraffes, Deer and Bovids</em>. Bloomsbury Publishing, London, United Kingdom, 680 pp.</p></li>
+<li><p>Sinclair ARE (1996) Mammal populations: fluctuation, regulation, life history theory, and their implications for conservation. In: <em>Frontiers of population ecology</em> (Eds RB Floyd &amp; AW Sheppard), pp. 127–154. CSIRO: Melbourne, Australia.</p></li>
+<li><p>Sinclair (2003) Mammal population regulation, keystone processes and ecosystem dynamics. <em>Philosophical Transactions: Biological Sciences</em>, <strong>358</strong>, 1729-1740. DOI: <a href="https://doi.org/10.1098/rstb.2003.1359">10.1098/rstb.2003.1359</a>.</p></li>
+<li><p>Suraud JP <em>et al.</em> (2012) Higher than expected growth rate of the endangered West African giraffe <em>Giraffa camelopardalis peralta</em>: a successful human–wildlife cohabitation. <em>Oryx</em>, <strong>46</strong>, 577-583. DOI: <a href="https://doi.org/10.1017/S0030605311000639">10.1017/S0030605311000639</a>.</p></li>
 </ul>
 </div>
   </div>
