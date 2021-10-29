@@ -24,7 +24,7 @@ can attain in a year. According to Sinclair (2003), it is related to the body
 mass of adult females $W$  by the formula:
 
 
-$$ 1.375*W^{-0.315} $$
+$$ rmax = 1.375 \times W^{-0.315} $$
 
 
 Body masses are found in the literature in publications such as Kingdon & 
@@ -95,3 +95,47 @@ species$"category" <- c("MLB", "MLB", "LLB", "LLB", "LD", "LLB", "Giraffe",
                         "Elephant")
 species
 ```
+
+
+
+<br />
+
+
+
+## References
+
+
+- Cornelis D _et al._ (2014) Species account: African buffalo (_Syncerus caffer_).
+In: _Ecology, Evolution and Behaviour of Wild Cattle: Implications for Conservation_
+(Eds M Melletti & J Burton). Cambridge University Press, Cambridge.
+DOI: [10.1017/CBO9781139568098](https://doi.org/10.1017/CBO9781139568098).
+
+- Foley CAH & Faust LJ (2010) Rapid population growth in an elephant _Loxodonta africana_ 
+population recovering from poaching in Tarangire National Park, Tanzania.
+_Oryx_, **44**, 205-212.
+DOI: [10.1017/S0030605309990706](https://doi.org/10.1017/S0030605309990706).
+
+- Illius AW & Gordon IJ (1992) Modelling the nutritional ecology of ungulate 
+herbivores: evolution of body size and competitive interactions. 
+_Oecologia_, **89**, 428-434.
+DOI: [10.1017/S0030605309990706](https://doi.org/10.1007/BF00317422).
+
+- Kingdon J & Hoffman M (2013) 
+_Mammals of Africa. Volume VI: Pigs, Hippopotamuses, Chevrotain, Giraffes, Deer and Bovids_.
+Bloomsbury Publishing, London, United Kingdom, 680 pp.
+
+- Sinclair ARE (1996) Mammal populations: fluctuation, regulation, life history 
+theory, and their implications for conservation. 
+In: _Frontiers of population ecology_ (Eds RB Floyd & AW Sheppard), 
+pp. 127???154. CSIRO: Melbourne, Australia.
+
+- Sinclair (2003) Mammal population regulation, keystone processes and
+ecosystem dynamics.
+_Philosophical Transactions: Biological Sciences_, **358**, 1729-1740.
+DOI: [10.1098/rstb.2003.1359](https://doi.org/10.1098/rstb.2003.1359).
+
+- Suraud JP _et al._ (2012)
+Higher than expected growth rate of the endangered West African giraffe 
+_Giraffa camelopardalis peralta_: a successful human???wildlife cohabitation. 
+_Oryx_, **46**, 577-583.
+DOI: [10.1017/S0030605311000639](https://doi.org/10.1017/S0030605311000639).
