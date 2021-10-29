@@ -127,7 +127,7 @@ Bloomsbury Publishing, London, United Kingdom, 680 pp.
 - Sinclair ARE (1996) Mammal populations: fluctuation, regulation, life history 
 theory, and their implications for conservation. 
 In: _Frontiers of population ecology_ (Eds RB Floyd & AW Sheppard), 
-pp. 127???154. CSIRO: Melbourne, Australia.
+pp. 127–154. CSIRO: Melbourne, Australia.
 
 - Sinclair (2003) Mammal population regulation, keystone processes and
 ecosystem dynamics.
@@ -136,6 +136,6 @@ DOI: [10.1098/rstb.2003.1359](https://doi.org/10.1098/rstb.2003.1359).
 
 - Suraud JP _et al._ (2012)
 Higher than expected growth rate of the endangered West African giraffe 
-_Giraffa camelopardalis peralta_: a successful human???wildlife cohabitation. 
+_Giraffa camelopardalis peralta_: a successful human–wildlife cohabitation. 
 _Oryx_, **46**, 577-583.
 DOI: [10.1017/S0030605311000639](https://doi.org/10.1017/S0030605311000639).

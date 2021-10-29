@@ -16,19 +16,24 @@ deployment](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml/
 Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
-The goal of the R package `popbayes` is to estimate population trends
-from counts series
+The goal of the R package `popbayes` is to infer trends of one or
+several populations over time from series of counts. It does so by
+accounting for count precision (provided or inferred based on expert
+knowledge, e.g. for guesstimates), smoothing the population rate of
+increase over time, and accounting for the maximum demographic potential
+of species. Inference is carried out in a Bayesian framework.
 
 ## Installation
+
+**Before using this package, users need to install the freeware
+[JAGS](https://mcmc-jags.sourceforge.io/).**
 
 You can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
 ## Install 'remotes' package (if not already installed) ----
-if (!requireNamespace("remotes", quietly = TRUE)) {
-  install.packages("remotes")
-}
+#  install.packages("remotes")
 
 ## Install dev version of 'popbayes' from GitHub ----
 remotes::install_github("frbcesab/popbayes", build_vignettes = TRUE)
@@ -54,7 +59,8 @@ Please read the
 Please cite this package as:
 
 > Casajus N. & Pradel R. (2021) popbayes: Bayesian model to estimate
-> populations trend. R package version 0.1.
+> population trends from counts series. R package version 1.0. URL:
+> <https://frbcesab.github.io/popbayes/>.
 
 You can also run:
 
@@ -64,10 +70,11 @@ citation("popbayes")
 ## A BibTeX entry for LaTeX users is:
 ## 
 ## @Manual{,
-##   title  = {{popbayes}: {B}ayesian model to estimate populations trend,
+##   title  = {{popbayes}: {B}ayesian model to estimate population trends from 
+##   counts series,
 ##   author = {{Casajus N.}, and {Pradel R.}},
 ##   year   = {2021},
-##   note   = {R package version 0.1},
-##   url    = {https://github.com/frbcesab/popbayes},
+##   note   = {R package version 1.0},
+##   url    = {https://frbcesab.github.io/popbayes/},
 ## }
 ```
