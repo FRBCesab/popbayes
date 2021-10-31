@@ -19,9 +19,11 @@ Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repost
 The goal of the R package `popbayes` is to infer trends of one or
 several populations over time from series of counts. It does so by
 accounting for count precision (provided or inferred based on expert
-knowledge, e.g. for guesstimates), smoothing the population rate of
-increase over time, and accounting for the maximum demographic potential
-of species. Inference is carried out in a Bayesian framework.
+knowledge, e.g. guesstimates), smoothing the population rate of increase
+over time, and accounting for the maximum demographic potential of
+species. Inference is carried out in a Bayesian framework. This work is
+part of the FRB-CESAB working group
+[AfroBioDrivers](https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/).
 
 ## Installation
 
@@ -32,10 +34,8 @@ You can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
-## Install 'remotes' package (if not already installed) ----
-#  install.packages("remotes")
+# install.packages("remotes")
 
-## Install development version of 'popbayes' ----
 remotes::install_github("frbcesab/popbayes", build_vignettes = TRUE)
 ```
 

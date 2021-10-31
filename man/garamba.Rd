@@ -39,4 +39,12 @@ in the Garamba National Park (Democratic Republic of the Congo) from 1976 to
 data("garamba")
 head(garamba, 30)
 }
+\references{
+Hillman Smith K & Kalpers J (2015) \emph{Garamba Conservation in Peace & War}.
+Hillman Smith publisher, 448pp. ISBN: 9789966185105.\cr
+Monico M (2014) \emph{Aerial Survey Report March 2014 - Garamba National Park, DRC}.
+African Parks Network/ICCN/Pan-African Elephant Aerial Survey, 42pp.\cr
+Spies K \emph{et al.} (2017) \emph{Aerial Survey Report April 2017 - Garamba National Park, DRC}.
+African Parks Network/EU/ICCN. 38pp.
+}
 \keyword{datasets}
