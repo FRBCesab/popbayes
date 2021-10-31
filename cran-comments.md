@@ -20,8 +20,10 @@
 0 error | 0 warning | 1 note
 
 * checking CRAN incoming feasibility ... NOTE
-
+  
   Maintainer: 'Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>' - New submission
+
+* No mis-spelled words in 'DESCRIPTION'
 
 
 ## Downstream dependencies
