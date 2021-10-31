@@ -12,12 +12,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Bayesian Model to Estimate Population Trends from Counts Series">
-<meta property="og:description" content="Infers the trends of one or several populations over time from 
-    series of counts. It does so by accounting for count precision (provided 
-    or inferred based on expert knowledge, e.g. for guesstimates), smoothing 
-    the population rate of increase over time, and accounting for the maximum 
-    demographic potential of species. Inference is carried out in a Bayesian 
-    framework.">
+<meta property="og:description" content="Infers the trends of one or several animal populations over time 
+    from series of counts. It does so by accounting for count precision 
+    (provided or inferred based on expert knowledge, e.g. guesstimates), 
+    smoothing the population rate of increase over time, and accounting for the
+    maximum demographic potential of species. Inference is carried out in a 
+    Bayesian framework. This work is part of the FRB-CESAB working group
+    AfroBioDrivers 
+    &lt;https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/&gt;.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -66,6 +68,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -92,17 +97,15 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of the R package <code>popbayes</code> is to infer trends of one or several populations over time from series of counts. It does so by accounting for count precision (provided or inferred based on expert knowledge, e.g. for guesstimates), smoothing the population rate of increase over time, and accounting for the maximum demographic potential of species. Inference is carried out in a Bayesian framework.</p>
+<p>The goal of the R package <code>popbayes</code> is to infer trends of one or several populations over time from series of counts. It does so by accounting for count precision (provided or inferred based on expert knowledge, e.g. guesstimates), smoothing the population rate of increase over time, and accounting for the maximum demographic potential of species. Inference is carried out in a Bayesian framework. This work is part of the FRB-CESAB working group <a href="https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/">AfroBioDrivers</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p><strong>Before using this package, users need to install the freeware <a href="https://mcmc-jags.sourceforge.io/">JAGS</a>.</strong></p>
 <p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## Install 'remotes' package (if not already installed) ----</span>
-<span class="co">#  install.packages("remotes")</span>
+<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 
-<span class="co">## Install development version of 'popbayes' ----</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"frbcesab/popbayes"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="overview" class="section level2">
