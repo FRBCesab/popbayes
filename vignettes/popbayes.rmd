@@ -620,11 +620,11 @@ estimated yearly relative growth rates.
 
 <br />
 
-```{r 'plot-trend-1',  fig.width=12, fig.height=6, out.width="100%", eval = FALSE, echo = TRUE}
+```{r 'plot-trend-1', fig.width=12, fig.height=6, out.width="100%", eval = FALSE, echo = TRUE}
 popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = path)
 ```
 
-```{r 'plot-trend-2',  fig.width=12, fig.height=6, out.width="100%", eval = TRUE, echo = FALSE}
+```{r, echo = FALSE, out.width = "100%", fig.align = 'center'}
 knitr::include_graphics(file.path("docs", "garamba__alcelaphus_buselaphus", 
                                   "garamba__alcelaphus_buselaphus.png"))
 ```
