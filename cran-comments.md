@@ -29,3 +29,7 @@
 ## Downstream dependencies
 
 There are currently no downstream dependencies for this package.
+
+## Resubmit comments
+
+* Size of tarball: 21557165 bytes - Fixed: size is now 2.1 MB
