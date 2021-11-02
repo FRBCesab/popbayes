@@ -3,9 +3,11 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README\.html$
+^\.git$
 ^\.github$
 ^popbayes\.Rproj$
 ^_pkgdown\.yml$
 ^cran-comments\.md$
 ^_pkgdown\.yml$
 ^popbayes-manual\.*$
+^CRAN-RELEASE$

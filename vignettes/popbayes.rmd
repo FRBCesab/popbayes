@@ -608,9 +608,9 @@ the model has converged. This diagnostic is performed by comparing the
 
 <br />
 
-```{r 'diagnostic', echo = -1}
-a_buselaphus_bugs <- popbayes::read_bugs("garamba__alcelaphus_buselaphus", path = "docs/")
+```{r 'diagnostic', echo = FALSE}
 popbayes::diagnostic(a_buselaphus_bugs)
+#> All models have converged.
 ```
 
 <br />
@@ -625,7 +625,8 @@ popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = path)
 ```
 
 ```{r 'plot-trend-2',  fig.width=12, fig.height=6, out.width="100%", eval = TRUE, echo = FALSE}
-popbayes::plot_trend("garamba__alcelaphus_buselaphus", path = "docs/")
+knitr::include_graphics(file.path("docs", "garamba__alcelaphus_buselaphus", 
+                                  "garamba__alcelaphus_buselaphus.png"))
 ```
 
 
