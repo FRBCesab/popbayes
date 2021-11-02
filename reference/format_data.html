@@ -439,102 +439,109 @@ conditions is met: 1) the series contains only zero counts, and 2) the
 series contains only a few dates (&lt; 4 dates).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Load Garamba raw dataset ----</span>
-<span class='va'>file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"garamba_survey.csv"</span>, 
-                         package <span class='op'>=</span> <span class='st'>"popbayes"</span><span class='op'>)</span>
-                         
-<span class='va'>garamba</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>file <span class='op'>=</span> <span class='va'>file_path</span><span class='op'>)</span>
-
-<span class='co'>## Create temporary folder ----</span>
-<span class='va'>temp_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## Format dataset ----</span>
-<span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>format_data</span><span class='op'>(</span><span class='va'>garamba</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span> Conversion data found in 'data'.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span> Detecting <span style='color: #0000BB;'>10</span> count series</span></div><div class='input'>
-<span class='co'>## Number of count series ----</span>
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 10</div><div class='input'>
-<span class='co'>## Retrieve count series names ----</span>
-<span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='list_series.html'>list_series</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "garamba__alcelaphus_buselaphus"  "garamba__giraffa_camelopardalis"
-#&gt;  [3] "garamba__hippotragus_equinus"    "garamba__kobus_ellipsiprymnus"  
-#&gt;  [5] "garamba__kobus_kob"              "garamba__loxodonta_africana"    
-#&gt;  [7] "garamba__ourebia_ourebi"         "garamba__redunca_redunca"       
-#&gt;  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"  </div><div class='input'>
-<span class='co'>## Print content of the first count series ----</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "location"          "species"           "dates"            
-#&gt;  [4] "n_dates"           "stat_methods"      "field_methods"    
-#&gt;  [7] "pref_field_method" "conversion_A2G"    "rmax"             
-#&gt; [10] "data_original"     "data_converted"   </div><div class='input'>
-<span class='co'>## Print original data ----</span>
-<span class='va'>garamba_formatted</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='st'>"data_original"</span>
-</div><div class='output co'>#&gt;    location               species date stat_method field_method count_orig
-#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A       7750
-#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A       1932
-#&gt; 3   Garamba Alcelaphus buselaphus 1984           S            A       1224
-#&gt; 4   Garamba Alcelaphus buselaphus 1986           S            A       1705
-#&gt; 5   Garamba Alcelaphus buselaphus 1991           S            A        987
-#&gt; 6   Garamba Alcelaphus buselaphus 1993           S            A       3444
-#&gt; 7   Garamba Alcelaphus buselaphus 1995           S            A       2819
-#&gt; 8   Garamba Alcelaphus buselaphus 1998           S            A       1685
-#&gt; 9   Garamba Alcelaphus buselaphus 2000           S            A       1169
-#&gt; 10  Garamba Alcelaphus buselaphus 2002           S            A       1139
-#&gt; 11  Garamba Alcelaphus buselaphus 2003           S            A       1595
-#&gt; 12  Garamba Alcelaphus buselaphus 2004           S            A       1204
-#&gt; 13  Garamba Alcelaphus buselaphus 2012           T            A        552
-#&gt; 14  Garamba Alcelaphus buselaphus 2014           T            A        698
-#&gt; 15  Garamba Alcelaphus buselaphus 2017           T            A       1051
-#&gt;    lower_ci_orig upper_ci_orig
-#&gt; 1           6280          9220
-#&gt; 2           1120          2744
-#&gt; 3            782          1666
-#&gt; 4           1116          2294
-#&gt; 5            663          1311
-#&gt; 6           1290          5598
-#&gt; 7           1620          4018
-#&gt; 8           1287          2083
-#&gt; 9            945          1393
-#&gt; 10           907          1371
-#&gt; 11          1142          2048
-#&gt; 12           811          1597
-#&gt; 13            NA            NA
-#&gt; 14            NA            NA
-#&gt; 15            NA            NA</div><div class='input'>
-<span class='co'>## Print converted data ----</span>
-<span class='va'>garamba_formatted</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='st'>"data_converted"</span>
-</div><div class='output co'>#&gt;    location               species date stat_method field_method count_conv
-#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A  17840.500
-#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A   4447.464
-#&gt; 3   Garamba Alcelaphus buselaphus 1984           S            A   2817.648
-#&gt; 4   Garamba Alcelaphus buselaphus 1986           S            A   3924.910
-#&gt; 5   Garamba Alcelaphus buselaphus 1991           S            A   2272.074
-#&gt; 6   Garamba Alcelaphus buselaphus 1993           S            A   7928.088
-#&gt; 7   Garamba Alcelaphus buselaphus 1995           S            A   6489.338
-#&gt; 8   Garamba Alcelaphus buselaphus 1998           S            A   3878.870
-#&gt; 9   Garamba Alcelaphus buselaphus 2000           S            A   2691.038
-#&gt; 10  Garamba Alcelaphus buselaphus 2002           S            A   2621.978
-#&gt; 11  Garamba Alcelaphus buselaphus 2003           S            A   3671.690
-#&gt; 12  Garamba Alcelaphus buselaphus 2004           S            A   2771.608
-#&gt; 13  Garamba Alcelaphus buselaphus 2012           T            A   1270.704
-#&gt; 14  Garamba Alcelaphus buselaphus 2014           T            A   1606.796
-#&gt; 15  Garamba Alcelaphus buselaphus 2017           T            A   2419.402
-#&gt;    lower_ci_conv upper_ci_conv field_method_conv
-#&gt; 1      14456.560     21224.440                 G
-#&gt; 2       2578.240      6316.688                 G
-#&gt; 3       1800.164      3835.132                 G
-#&gt; 4       2569.032      5280.788                 G
-#&gt; 5       1526.226      3017.922                 G
-#&gt; 6       2969.580     12886.596                 G
-#&gt; 7       3729.240      9249.436                 G
-#&gt; 8       2962.674      4795.066                 G
-#&gt; 9       2175.390      3206.686                 G
-#&gt; 10      2087.914      3156.042                 G
-#&gt; 11      2628.884      4714.496                 G
-#&gt; 12      1866.922      3676.294                 G
-#&gt; 13      1207.169      1524.845                 G
-#&gt; 14      1526.456      1928.155                 G
-#&gt; 15      2298.432      2903.282                 G</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>## Load Garamba raw dataset ----</span></span>
+<span class='r-in'><span class='va'>file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"garamba_survey.csv"</span>, </span>
+<span class='r-in'>                         package <span class='op'>=</span> <span class='st'>"popbayes"</span><span class='op'>)</span></span>
+<span class='r-in'>                         </span>
+<span class='r-in'><span class='va'>garamba</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>file <span class='op'>=</span> <span class='va'>file_path</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Create temporary folder ----</span></span>
+<span class='r-in'><span class='va'>temp_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Format dataset ----</span></span>
+<span class='r-in'><span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>format_data</span><span class='op'>(</span><span class='va'>garamba</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Conversion data found in 'data'.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Detecting <span style='color: #0000BB;'>10</span> count series</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Number of count series ----</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 10</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Retrieve count series names ----</span></span>
+<span class='r-in'><span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='list_series.html'>list_series</a></span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "garamba__alcelaphus_buselaphus"  "garamba__giraffa_camelopardalis"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [3] "garamba__hippotragus_equinus"    "garamba__kobus_ellipsiprymnus"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [5] "garamba__kobus_kob"              "garamba__loxodonta_africana"    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "garamba__ourebia_ourebi"         "garamba__redunca_redunca"       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"  </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Print content of the first count series ----</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] "location"          "species"           "dates"            </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [4] "n_dates"           "stat_methods"      "field_methods"    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7] "pref_field_method" "conversion_A2G"    "rmax"             </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10] "data_original"     "data_converted"   </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Print original data ----</span></span>
+<span class='r-in'><span class='va'>garamba_formatted</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='st'>"data_original"</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    location               species date stat_method field_method count_orig</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A       7750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A       1932</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   Garamba Alcelaphus buselaphus 1984           S            A       1224</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   Garamba Alcelaphus buselaphus 1986           S            A       1705</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   Garamba Alcelaphus buselaphus 1991           S            A        987</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   Garamba Alcelaphus buselaphus 1993           S            A       3444</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   Garamba Alcelaphus buselaphus 1995           S            A       2819</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   Garamba Alcelaphus buselaphus 1998           S            A       1685</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   Garamba Alcelaphus buselaphus 2000           S            A       1169</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  Garamba Alcelaphus buselaphus 2002           S            A       1139</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  Garamba Alcelaphus buselaphus 2003           S            A       1595</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12  Garamba Alcelaphus buselaphus 2004           S            A       1204</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13  Garamba Alcelaphus buselaphus 2012           T            A        552</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14  Garamba Alcelaphus buselaphus 2014           T            A        698</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15  Garamba Alcelaphus buselaphus 2017           T            A       1051</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    lower_ci_orig upper_ci_orig</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           6280          9220</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           1120          2744</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            782          1666</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           1116          2294</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5            663          1311</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           1290          5598</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7           1620          4018</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8           1287          2083</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9            945          1393</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10           907          1371</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11          1142          2048</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12           811          1597</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13            NA            NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14            NA            NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15            NA            NA</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Print converted data ----</span></span>
+<span class='r-in'><span class='va'>garamba_formatted</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='st'>"data_converted"</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    location               species date stat_method field_method count_conv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A  17840.500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A   4447.464</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   Garamba Alcelaphus buselaphus 1984           S            A   2817.648</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   Garamba Alcelaphus buselaphus 1986           S            A   3924.910</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   Garamba Alcelaphus buselaphus 1991           S            A   2272.074</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   Garamba Alcelaphus buselaphus 1993           S            A   7928.088</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   Garamba Alcelaphus buselaphus 1995           S            A   6489.338</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   Garamba Alcelaphus buselaphus 1998           S            A   3878.870</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   Garamba Alcelaphus buselaphus 2000           S            A   2691.038</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  Garamba Alcelaphus buselaphus 2002           S            A   2621.978</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  Garamba Alcelaphus buselaphus 2003           S            A   3671.690</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12  Garamba Alcelaphus buselaphus 2004           S            A   2771.608</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13  Garamba Alcelaphus buselaphus 2012           T            A   1270.704</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14  Garamba Alcelaphus buselaphus 2014           T            A   1606.796</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15  Garamba Alcelaphus buselaphus 2017           T            A   2419.402</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    lower_ci_conv upper_ci_conv field_method_conv</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      14456.560     21224.440                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       2578.240      6316.688                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       1800.164      3835.132                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       2569.032      5280.788                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       1526.226      3017.922                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       2969.580     12886.596                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7       3729.240      9249.436                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8       2962.674      4795.066                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9       2175.390      3206.686                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10      2087.914      3156.042                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11      2628.884      4714.496                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12      1866.922      3676.294                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13      1207.169      1524.845                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14      1526.456      1928.155                 G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15      2298.432      2903.282                 G</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

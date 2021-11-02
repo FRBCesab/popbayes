@@ -176,70 +176,71 @@ Spies K <em>et al.</em> (2017) <em>Aerial Survey Report April 2017 - Garamba Nat
 African Parks Network/EU/ICCN. 38pp.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"garamba"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>garamba</span>, <span class='fl'>30</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    location                species date stat_method field_method count lower_ci
-#&gt; 1   Garamba  Alcelaphus buselaphus 1976           S            A  7750     6280
-#&gt; 2   Garamba  Alcelaphus buselaphus 1983           S            A  1932     1120
-#&gt; 3   Garamba  Alcelaphus buselaphus 1984           S            A  1224      782
-#&gt; 4   Garamba  Alcelaphus buselaphus 1986           S            A  1705     1116
-#&gt; 5   Garamba  Alcelaphus buselaphus 1991           S            A   987      663
-#&gt; 6   Garamba  Alcelaphus buselaphus 1993           S            A  3444     1290
-#&gt; 7   Garamba  Alcelaphus buselaphus 1995           S            A  2819     1620
-#&gt; 8   Garamba  Alcelaphus buselaphus 1998           S            A  1685     1287
-#&gt; 9   Garamba  Alcelaphus buselaphus 2000           S            A  1169      945
-#&gt; 10  Garamba  Alcelaphus buselaphus 2002           S            A  1139      907
-#&gt; 11  Garamba  Alcelaphus buselaphus 2003           S            A  1595     1142
-#&gt; 12  Garamba  Alcelaphus buselaphus 2004           S            A  1204      811
-#&gt; 13  Garamba  Alcelaphus buselaphus 2012           T            A   552       NA
-#&gt; 14  Garamba  Alcelaphus buselaphus 2014           T            A   698       NA
-#&gt; 15  Garamba  Alcelaphus buselaphus 2017           T            A  1051       NA
-#&gt; 16  Garamba Giraffa camelopardalis 1976           S            A   350      100
-#&gt; 17  Garamba Giraffa camelopardalis 1983           S            A   175       12
-#&gt; 18  Garamba Giraffa camelopardalis 1984           S            A   237       93
-#&gt; 19  Garamba Giraffa camelopardalis 1986           S            A   153       13
-#&gt; 20  Garamba Giraffa camelopardalis 1991           S            A   346      143
-#&gt; 21  Garamba Giraffa camelopardalis 1993           S            A   347      347
-#&gt; 22  Garamba Giraffa camelopardalis 1995           S            A   178      178
-#&gt; 23  Garamba Giraffa camelopardalis 1998           S            A   144       71
-#&gt; 24  Garamba Giraffa camelopardalis 2000           S            A   118       54
-#&gt; 25  Garamba Giraffa camelopardalis 2002           S            A    62       49
-#&gt; 26  Garamba Giraffa camelopardalis 2003           S            A    62       62
-#&gt; 27  Garamba Giraffa camelopardalis 2004           S            A   185       33
-#&gt; 28  Garamba Giraffa camelopardalis 2012           T            A    11       NA
-#&gt; 29  Garamba Giraffa camelopardalis 2014           T            A    42       NA
-#&gt; 30  Garamba Giraffa camelopardalis 2017           T            A    42       NA
-#&gt;    upper_ci pref_field_method conversion_A2G   rmax
-#&gt; 1      9220                 G          2.302 0.2748
-#&gt; 2      2744                 G          2.302 0.2748
-#&gt; 3      1666                 G          2.302 0.2748
-#&gt; 4      2294                 G          2.302 0.2748
-#&gt; 5      1311                 G          2.302 0.2748
-#&gt; 6      5598                 G          2.302 0.2748
-#&gt; 7      4018                 G          2.302 0.2748
-#&gt; 8      2083                 G          2.302 0.2748
-#&gt; 9      1393                 G          2.302 0.2748
-#&gt; 10     1371                 G          2.302 0.2748
-#&gt; 11     2048                 G          2.302 0.2748
-#&gt; 12     1597                 G          2.302 0.2748
-#&gt; 13       NA                 G          2.302 0.2748
-#&gt; 14       NA                 G          2.302 0.2748
-#&gt; 15       NA                 G          2.302 0.2748
-#&gt; 16      600                 A          3.011 0.1750
-#&gt; 17      338                 A          3.011 0.1750
-#&gt; 18      381                 A          3.011 0.1750
-#&gt; 19      293                 A          3.011 0.1750
-#&gt; 20      549                 A          3.011 0.1750
-#&gt; 21      766                 A          3.011 0.1750
-#&gt; 22      388                 A          3.011 0.1750
-#&gt; 23      217                 A          3.011 0.1750
-#&gt; 24      182                 A          3.011 0.1750
-#&gt; 25       75                 A          3.011 0.1750
-#&gt; 26      137                 A          3.011 0.1750
-#&gt; 27      337                 A          3.011 0.1750
-#&gt; 28       NA                 A          3.011 0.1750
-#&gt; 29       NA                 A          3.011 0.1750
-#&gt; 30       NA                 A          3.011 0.1750</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"garamba"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>garamba</span>, <span class='fl'>30</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    location                species date stat_method field_method count lower_ci</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   Garamba  Alcelaphus buselaphus 1976           S            A  7750     6280</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   Garamba  Alcelaphus buselaphus 1983           S            A  1932     1120</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   Garamba  Alcelaphus buselaphus 1984           S            A  1224      782</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   Garamba  Alcelaphus buselaphus 1986           S            A  1705     1116</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   Garamba  Alcelaphus buselaphus 1991           S            A   987      663</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   Garamba  Alcelaphus buselaphus 1993           S            A  3444     1290</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   Garamba  Alcelaphus buselaphus 1995           S            A  2819     1620</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   Garamba  Alcelaphus buselaphus 1998           S            A  1685     1287</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   Garamba  Alcelaphus buselaphus 2000           S            A  1169      945</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  Garamba  Alcelaphus buselaphus 2002           S            A  1139      907</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  Garamba  Alcelaphus buselaphus 2003           S            A  1595     1142</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12  Garamba  Alcelaphus buselaphus 2004           S            A  1204      811</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13  Garamba  Alcelaphus buselaphus 2012           T            A   552       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14  Garamba  Alcelaphus buselaphus 2014           T            A   698       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15  Garamba  Alcelaphus buselaphus 2017           T            A  1051       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16  Garamba Giraffa camelopardalis 1976           S            A   350      100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17  Garamba Giraffa camelopardalis 1983           S            A   175       12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18  Garamba Giraffa camelopardalis 1984           S            A   237       93</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19  Garamba Giraffa camelopardalis 1986           S            A   153       13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20  Garamba Giraffa camelopardalis 1991           S            A   346      143</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21  Garamba Giraffa camelopardalis 1993           S            A   347      347</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22  Garamba Giraffa camelopardalis 1995           S            A   178      178</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23  Garamba Giraffa camelopardalis 1998           S            A   144       71</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24  Garamba Giraffa camelopardalis 2000           S            A   118       54</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25  Garamba Giraffa camelopardalis 2002           S            A    62       49</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26  Garamba Giraffa camelopardalis 2003           S            A    62       62</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27  Garamba Giraffa camelopardalis 2004           S            A   185       33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28  Garamba Giraffa camelopardalis 2012           T            A    11       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29  Garamba Giraffa camelopardalis 2014           T            A    42       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30  Garamba Giraffa camelopardalis 2017           T            A    42       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    upper_ci pref_field_method conversion_A2G   rmax</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      9220                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      2744                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      1666                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4      2294                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5      1311                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      5598                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7      4018                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8      2083                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9      1393                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10     1371                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11     2048                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12     1597                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13       NA                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14       NA                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15       NA                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16      600                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17      338                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18      381                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19      293                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20      549                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21      766                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22      388                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23      217                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24      182                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25       75                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26      137                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27      337                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28       NA                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29       NA                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30       NA                 A          3.011 0.1750</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -236,38 +236,41 @@ element of the list is a BUGS output as provided by JAGS (also written
 in the folder <code>path</code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Load Garamba raw dataset ----</span>
-<span class='va'>file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"garamba_survey.csv"</span>, 
-                         package <span class='op'>=</span> <span class='st'>"popbayes"</span><span class='op'>)</span>
-                         
-<span class='va'>garamba</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>file <span class='op'>=</span> <span class='va'>file_path</span><span class='op'>)</span>
-
-<span class='co'>## Create temporary folder ----</span>
-<span class='va'>temp_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## Format dataset ----</span>
-<span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='format_data.html'>format_data</a></span><span class='op'>(</span><span class='va'>garamba</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span> Conversion data found in 'data'.</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span> Detecting <span style='color: #0000BB;'>10</span> count series</span></div><div class='input'>
-<span class='co'>## Get data for Alcelaphus buselaphus at Garamba only ----</span>
-<span class='va'>a_buselaphus</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='filter_series.html'>filter_series</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span>, 
-                                        location <span class='op'>=</span> <span class='st'>"Garamba"</span>,
-                                        species  <span class='op'>=</span> <span class='st'>"Alcelaphus buselaphus"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>✔</span> Found <span style='color: #0000BB;'>1</span> series with <span style='color: #0000BB;'>'Alcelaphus buselaphus'</span> and <span style='color: #0000BB;'>'Garamba'</span>.</span></div><div class='input'>                                        
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'>## Fit population trend (requires JAGS) ----</span>
-<span class='va'>a_buselaphus_mod</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>fit_trend</span><span class='op'>(</span><span class='va'>a_buselaphus</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span>
-
-<span class='co'>## Check for convergence ----</span>
-<span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='diagnostic.html'>diagnostic</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span>, threshold <span class='op'>=</span> <span class='fl'>1.1</span><span class='op'>)</span>
-
-<span class='co'>## Plot estimated population trend ----</span>
-<span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='plot_trend.html'>plot_trend</a></span><span class='op'>(</span>series <span class='op'>=</span> <span class='st'>"garamba__alcelaphus_buselaphus"</span>, 
-                     path   <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span>
-
-<span class='co'>## Plot MCMC traceplot ----</span>
-<span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/traceplot.html'>traceplot</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, ask <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>## Load Garamba raw dataset ----</span></span>
+<span class='r-in'><span class='va'>file_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"garamba_survey.csv"</span>, </span>
+<span class='r-in'>                         package <span class='op'>=</span> <span class='st'>"popbayes"</span><span class='op'>)</span></span>
+<span class='r-in'>                         </span>
+<span class='r-in'><span class='va'>garamba</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>file <span class='op'>=</span> <span class='va'>file_path</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Create temporary folder ----</span></span>
+<span class='r-in'><span class='va'>temp_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Format dataset ----</span></span>
+<span class='r-in'><span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='format_data.html'>format_data</a></span><span class='op'>(</span><span class='va'>garamba</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Conversion data found in 'data'.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Detecting <span style='color: #0000BB;'>10</span> count series</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Get data for Alcelaphus buselaphus at Garamba only ----</span></span>
+<span class='r-in'><span class='va'>a_buselaphus</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='filter_series.html'>filter_series</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span>, </span>
+<span class='r-in'>                                        location <span class='op'>=</span> <span class='st'>"Garamba"</span>,</span>
+<span class='r-in'>                                        species  <span class='op'>=</span> <span class='st'>"Alcelaphus buselaphus"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Found <span style='color: #0000BB;'>1</span> series with <span style='color: #0000BB;'>'Alcelaphus buselaphus'</span> and <span style='color: #0000BB;'>'Garamba'</span>.</span>
+<span class='r-in'>                                        </span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'>## Fit population trend (requires JAGS) ----</span></span>
+<span class='r-in'><span class='va'>a_buselaphus_mod</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>fit_trend</span><span class='op'>(</span><span class='va'>a_buselaphus</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Check for convergence ----</span></span>
+<span class='r-in'><span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='diagnostic.html'>diagnostic</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span>, threshold <span class='op'>=</span> <span class='fl'>1.1</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Plot estimated population trend ----</span></span>
+<span class='r-in'><span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='plot_trend.html'>plot_trend</a></span><span class='op'>(</span>series <span class='op'>=</span> <span class='st'>"garamba__alcelaphus_buselaphus"</span>, </span>
+<span class='r-in'>                     path   <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Plot MCMC traceplot ----</span></span>
+<span class='r-in'><span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/traceplot.html'>traceplot</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, ask <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

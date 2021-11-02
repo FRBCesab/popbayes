@@ -177,40 +177,41 @@ to the detectability category) used to convert aerial to ground counts</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"species_info"</span><span class='op'>)</span>
-<span class='va'>species_info</span>
-</div><div class='output co'>#&gt;           order       family                species             english
-#&gt; 1  Artiodactyla      Bovidae     Aepyceros melampus              Impala
-#&gt; 2  Artiodactyla      Bovidae  Alcelaphus buselaphus          Hartebeest
-#&gt; 3  Artiodactyla      Bovidae  Connochaetes taurinus     Blue wildebeest
-#&gt; 4  Artiodactyla      Bovidae     Damaliscus lunatus               Tiang
-#&gt; 5  Artiodactyla      Bovidae     Eudorcas rufifrons Red-fronted gazelle
-#&gt; 6  Artiodactyla   Giraffidae Giraffa camelopardalis             Giraffe
-#&gt; 7  Artiodactyla      Bovidae    Hippotragus equinus       Roan Antelope
-#&gt; 8  Artiodactyla      Bovidae   Kobus ellipsiprymnus           Waterbuck
-#&gt; 9  Artiodactyla      Bovidae              Kobus kob                 Kob
-#&gt; 10  Proboscidea Elephantidae     Loxodonta africana    Savanna Elephant
-#&gt; 11 Artiodactyla      Bovidae         Ourebia ourebi               Oribi
-#&gt; 12 Artiodactyla      Bovidae        Redunca redunca      Bohor reedbuck
-#&gt; 13 Artiodactyla      Bovidae        Syncerus caffer     African Buffalo
-#&gt; 14 Artiodactyla      Bovidae  Tragelaphus derbianus         Giant eland
-#&gt; 15 Artiodactyla      Bovidae   Tragelaphus scriptus            Bushbuck
-#&gt;              french category pref_field_method conversion_A2G   rmax
-#&gt; 1            Impala      MLB                 G          6.747 0.4010
-#&gt; 2            Bubale      LLB                 G          2.302 0.2748
-#&gt; 3         Gnou bleu      LLB                 G          2.302 0.2679
-#&gt; 4              Topi      MLB                 G          6.747 0.2990
-#&gt; 5  Gazelle Rufifron      MLB                 G          6.747 0.5270
-#&gt; 6            Girafe  Giraffe                 A          3.011 0.1750
-#&gt; 7       Hippotrague      LLB                 G          2.302 0.2420
-#&gt; 8      Cobe Defassa      MLB                 G          6.747 0.2702
-#&gt; 9    Cobe de Buffon      MLB                 G          6.747 0.3802
-#&gt; 10         Elephant Elephant                 A          0.659 0.1120
-#&gt; 11           Ourebi      MLB                 G          6.747 0.5988
-#&gt; 12          Redunca      MLB                 G          6.747 0.4010
-#&gt; 13           Buffle       LD                 A          0.561 0.2080
-#&gt; 14   Eland de derby      LLB                 G          2.302 0.1500
-#&gt; 15    Guib Harnache      MLB                 G          6.747 0.4487</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"species_info"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>species_info</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           order       family                species             english</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  Artiodactyla      Bovidae     Aepyceros melampus              Impala</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  Artiodactyla      Bovidae  Alcelaphus buselaphus          Hartebeest</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  Artiodactyla      Bovidae  Connochaetes taurinus     Blue wildebeest</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  Artiodactyla      Bovidae     Damaliscus lunatus               Tiang</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  Artiodactyla      Bovidae     Eudorcas rufifrons Red-fronted gazelle</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  Artiodactyla   Giraffidae Giraffa camelopardalis             Giraffe</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  Artiodactyla      Bovidae    Hippotragus equinus       Roan Antelope</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  Artiodactyla      Bovidae   Kobus ellipsiprymnus           Waterbuck</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  Artiodactyla      Bovidae              Kobus kob                 Kob</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  Proboscidea Elephantidae     Loxodonta africana    Savanna Elephant</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 Artiodactyla      Bovidae         Ourebia ourebi               Oribi</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 Artiodactyla      Bovidae        Redunca redunca      Bohor reedbuck</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 Artiodactyla      Bovidae        Syncerus caffer     African Buffalo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 Artiodactyla      Bovidae  Tragelaphus derbianus         Giant eland</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15 Artiodactyla      Bovidae   Tragelaphus scriptus            Bushbuck</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              french category pref_field_method conversion_A2G   rmax</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1            Impala      MLB                 G          6.747 0.4010</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2            Bubale      LLB                 G          2.302 0.2748</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         Gnou bleu      LLB                 G          2.302 0.2679</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4              Topi      MLB                 G          6.747 0.2990</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  Gazelle Rufifron      MLB                 G          6.747 0.5270</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6            Girafe  Giraffe                 A          3.011 0.1750</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7       Hippotrague      LLB                 G          2.302 0.2420</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8      Cobe Defassa      MLB                 G          6.747 0.2702</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9    Cobe de Buffon      MLB                 G          6.747 0.3802</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10         Elephant Elephant                 A          0.659 0.1120</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11           Ourebi      MLB                 G          6.747 0.5988</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12          Redunca      MLB                 G          6.747 0.4010</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13           Buffle       LD                 A          0.561 0.2080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14   Eland de derby      LLB                 G          2.302 0.1500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15    Guib Harnache      MLB                 G          6.747 0.4487</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
