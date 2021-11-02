@@ -608,7 +608,7 @@ the model has converged. This diagnostic is performed by comparing the
 
 <br />
 
-```{r 'diagnostic', echo = FALSE}
+```{r 'diagnostic', eval = FALSE}
 popbayes::diagnostic(a_buselaphus_bugs)
 #> All models have converged.
 ```
