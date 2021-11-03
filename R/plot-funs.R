@@ -24,7 +24,7 @@
 #' @param save a `logical`. If `TRUE` (default is `FALSE`) the plot is saved in 
 #'   `path_fig`.
 #'
-#' @return NULL
+#' @return No return value.
 #' 
 #' @export
 #'
@@ -255,7 +255,7 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
 #' @param save a `logical`. If `TRUE` (default is `FALSE`) the plot is saved in 
 #'   `path_fig`.
 #'
-#' @return NULL
+#' @return No return value.
 #' 
 #' @export
 #'

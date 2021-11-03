@@ -100,7 +100,7 @@ inits_plus <- function(data, nc) {
 #' @param path a `character` string. The directory to save the file. This 
 #'   directory must exist and can be an absolute or a relative path.
 #'
-#' @return NULL
+#' @return No return value.
 #' 
 #' @noRd
 
@@ -615,7 +615,7 @@ bugs_to_df <- function(data) {
 #'   
 #' @param threshold a `numeric`.
 #'
-#' @return NULL
+#' @return No return value.
 #' 
 #' @export
 #'

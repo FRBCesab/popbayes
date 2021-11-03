@@ -12,6 +12,9 @@ diagnostic(data, threshold = 1.1)
 
 \item{threshold}{a \code{numeric}.}
 }
+\value{
+No return value.
+}
 \description{
 From the output of the function \code{\link[=fit_trend]{fit_trend()}} (or \code{\link[=read_bugs]{read_bugs()}}), this
 function checks if the estimation of all parameters of one (or several)
