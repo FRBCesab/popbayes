@@ -35,7 +35,6 @@ There are currently no downstream dependencies for this package.
 ## Resubmit comments
 
 * Size of tarball: 21557165 bytes - Fixed: size is now 2.1 MB
-* Add `\value{No return value}` in `diagnostic()`, `plot_series()` and `plot_trend()` to document function output
-* Replace all `\dontrun{}` by `\donttest{}` in JAGS examples (model fitting takes > 5s)
-* Add `on.exit(par(opar))` in `plot_series()` and `plot_trend()` to restore user graphical parameters
-* Thanks!
+* Add `\value{No return value}` in Rd files for `diagnostic()`, `plot_series()` and `plot_trend()` to document function output - DONE
+* Replace all `\dontrun{}` by `\donttest{}` in JAGS examples (model fitting takes > 5s) - DONE
+* Add `on.exit(par(opar))` in `plot_series()` and `plot_trend()` to restore user graphical parameters - DONE
