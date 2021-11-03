@@ -175,18 +175,198 @@ been saved by the function <code><a href='fit_trend.html'>fit_trend()</a></code>
 <span class='r-in'><span class='va'>garamba_formatted</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='format_data.html'>format_data</a></span><span class='op'>(</span><span class='va'>garamba</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Conversion data found in 'data'.</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Detecting <span style='color: #0000BB;'>10</span> count series</span>
-<span class='r-in'>                                        </span>
-<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Select one serie ----</span></span>
+<span class='r-in'><span class='va'>a_buselaphus</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='filter_series.html'>filter_series</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span>, </span>
+<span class='r-in'>                                        location <span class='op'>=</span> <span class='st'>"Garamba"</span>,</span>
+<span class='r-in'>                                        species  <span class='op'>=</span> <span class='st'>"Alcelaphus buselaphus"</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Found <span style='color: #0000BB;'>1</span> series with <span style='color: #0000BB;'>'Alcelaphus buselaphus'</span> and <span style='color: #0000BB;'>'Garamba'</span>.</span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
 <span class='r-in'><span class='co'>## Fit population trends (requires JAGS) ----</span></span>
-<span class='r-in'><span class='va'>garamba_mod</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='fit_trend.html'>fit_trend</a></span><span class='op'>(</span><span class='va'>garamba_formatted</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>a_buselaphus_mod</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='fit_trend.html'>fit_trend</a></span><span class='op'>(</span><span class='va'>a_buselaphus</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling data graph</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Initializing</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Reading data back into data table</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling model graph</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graph information:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Observed stochastic nodes: 15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Unobserved stochastic nodes: 15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Total graph size: 227</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Initializing model</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>## Import BUGS outputs for one count series ----</span></span>
 <span class='r-in'><span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>read_bugs</span><span class='op'>(</span>series <span class='op'>=</span> <span class='st'>"garamba__alcelaphus_buselaphus"</span>, </span>
 <span class='r-in'>                    path   <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $garamba__alcelaphus_buselaphus</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Inference for Bugs model at "model.bug", fit using jags,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2 chains, each with 50000 iterations (first 10000 discarded), n.thin = 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  n.sims = 26666 iterations saved</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            mu.vect  sd.vect      2.5%       25%       50%       75%     97.5%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[1]     17685.981 1733.998 14277.150 16508.855 17717.666 18846.160 21063.507</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[2]      3865.329  512.525  2891.789  3516.437  3855.529  4198.655  4906.995</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[3]      3322.320  398.899  2549.491  3057.826  3321.147  3586.658  4113.046</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[4]      3010.473  427.929  2217.944  2713.434  2995.194  3289.426  3882.440</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[5]      2675.482  331.545  2041.604  2447.240  2671.309  2900.134  3330.760</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[6]      3224.325  544.322  2248.000  2839.607  3189.280  3573.923  4389.428</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[7]      3755.939  668.736  2559.061  3281.074  3721.329  4188.211  5163.674</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[8]      3483.815  365.680  2799.321  3230.259  3478.492  3728.039  4214.172</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[9]      2888.850  206.927  2490.742  2748.531  2888.379  3027.213  3301.309</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[10]     2748.587  206.509  2349.815  2607.414  2747.427  2886.491  3157.499</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[11]     2753.478  260.659  2257.112  2573.372  2749.665  2926.622  3270.544</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[12]     2624.659  300.613  2061.996  2412.867  2615.560  2824.720  3234.690</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[13]     1311.974   73.704  1168.594  1262.254  1311.874  1361.720  1456.847</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[14]     1571.090   89.536  1398.506  1510.792  1569.996  1630.734  1750.616</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[15]     2394.431  153.041  2095.715  2292.351  2393.482  2497.532  2696.191</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> meanr       -0.049    0.003    -0.054    -0.051    -0.049    -0.047    -0.043</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[1]        -0.218    0.023    -0.263    -0.233    -0.218    -0.202    -0.173</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[2]        -0.150    0.069    -0.285    -0.196    -0.150    -0.103    -0.013</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[3]        -0.051    0.061    -0.171    -0.091    -0.051    -0.010     0.069</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[4]        -0.023    0.034    -0.090    -0.046    -0.023    -0.001     0.044</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[5]         0.090    0.064    -0.036     0.047     0.091     0.133     0.216</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[6]         0.075    0.058    -0.039     0.036     0.076     0.115     0.189</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[7]        -0.022    0.051    -0.120    -0.056    -0.022     0.012     0.081</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[8]        -0.092    0.050    -0.186    -0.126    -0.093    -0.058     0.006</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[9]        -0.025    0.044    -0.111    -0.055    -0.025     0.005     0.061</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[10]        0.000    0.067    -0.134    -0.044     0.001     0.046     0.128</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[11]       -0.050    0.066    -0.180    -0.094    -0.050    -0.005     0.079</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[12]       -0.086    0.016    -0.115    -0.097    -0.086    -0.076    -0.055</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[13]        0.090    0.036     0.021     0.066     0.090     0.114     0.160</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[14]        0.140    0.027     0.087     0.122     0.141     0.159     0.193</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sdr          0.112    0.009     0.094     0.106     0.112     0.118     0.131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> vrrmax       0.461    0.038     0.388     0.435     0.460     0.486     0.539</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> deviance   236.237    5.158   227.500   232.585   235.764   239.411   247.580</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           Rhat n.eff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[1]     1.004   550</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[2]     1.001  5400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[3]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[4]     1.002  2500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[5]     1.001 10000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[6]     1.001 14000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[7]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[8]     1.002  1500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[9]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[10]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[11]    1.001  2800</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[12]    1.003   820</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[13]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[14]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[15]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> meanr    1.003   840</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[1]     1.003   700</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[2]     1.002   990</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[3]     1.002  2300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[4]     1.001 11000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[5]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[6]     1.001  5700</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[7]     1.001  3300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[8]     1.002  1200</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[9]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[10]    1.003   890</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[11]    1.003   870</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[12]    1.002  1100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[13]    1.001 20000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[14]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sdr      1.001 12000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> vrrmax   1.001 12000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> deviance 1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> For each parameter, n.eff is a crude measure of effective sample size,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> and Rhat is the potential scale reduction factor (at convergence, Rhat=1).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DIC info (using the rule, pD = var(deviance)/2)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> pD = 13.3 and DIC = 249.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DIC is an estimate of expected predictive error (lower deviance is better).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>## Import BUGS outputs for all count series ----</span></span>
 <span class='r-in'><span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>read_bugs</span><span class='op'>(</span>path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
-<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $garamba__alcelaphus_buselaphus</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Inference for Bugs model at "model.bug", fit using jags,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  2 chains, each with 50000 iterations (first 10000 discarded), n.thin = 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  n.sims = 26666 iterations saved</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            mu.vect  sd.vect      2.5%       25%       50%       75%     97.5%</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[1]     17685.981 1733.998 14277.150 16508.855 17717.666 18846.160 21063.507</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[2]      3865.329  512.525  2891.789  3516.437  3855.529  4198.655  4906.995</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[3]      3322.320  398.899  2549.491  3057.826  3321.147  3586.658  4113.046</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[4]      3010.473  427.929  2217.944  2713.434  2995.194  3289.426  3882.440</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[5]      2675.482  331.545  2041.604  2447.240  2671.309  2900.134  3330.760</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[6]      3224.325  544.322  2248.000  2839.607  3189.280  3573.923  4389.428</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[7]      3755.939  668.736  2559.061  3281.074  3721.329  4188.211  5163.674</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[8]      3483.815  365.680  2799.321  3230.259  3478.492  3728.039  4214.172</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[9]      2888.850  206.927  2490.742  2748.531  2888.379  3027.213  3301.309</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[10]     2748.587  206.509  2349.815  2607.414  2747.427  2886.491  3157.499</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[11]     2753.478  260.659  2257.112  2573.372  2749.665  2926.622  3270.544</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[12]     2624.659  300.613  2061.996  2412.867  2615.560  2824.720  3234.690</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[13]     1311.974   73.704  1168.594  1262.254  1311.874  1361.720  1456.847</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[14]     1571.090   89.536  1398.506  1510.792  1569.996  1630.734  1750.616</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[15]     2394.431  153.041  2095.715  2292.351  2393.482  2497.532  2696.191</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> meanr       -0.049    0.003    -0.054    -0.051    -0.049    -0.047    -0.043</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[1]        -0.218    0.023    -0.263    -0.233    -0.218    -0.202    -0.173</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[2]        -0.150    0.069    -0.285    -0.196    -0.150    -0.103    -0.013</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[3]        -0.051    0.061    -0.171    -0.091    -0.051    -0.010     0.069</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[4]        -0.023    0.034    -0.090    -0.046    -0.023    -0.001     0.044</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[5]         0.090    0.064    -0.036     0.047     0.091     0.133     0.216</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[6]         0.075    0.058    -0.039     0.036     0.076     0.115     0.189</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[7]        -0.022    0.051    -0.120    -0.056    -0.022     0.012     0.081</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[8]        -0.092    0.050    -0.186    -0.126    -0.093    -0.058     0.006</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[9]        -0.025    0.044    -0.111    -0.055    -0.025     0.005     0.061</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[10]        0.000    0.067    -0.134    -0.044     0.001     0.046     0.128</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[11]       -0.050    0.066    -0.180    -0.094    -0.050    -0.005     0.079</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[12]       -0.086    0.016    -0.115    -0.097    -0.086    -0.076    -0.055</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[13]        0.090    0.036     0.021     0.066     0.090     0.114     0.160</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[14]        0.140    0.027     0.087     0.122     0.141     0.159     0.193</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sdr          0.112    0.009     0.094     0.106     0.112     0.118     0.131</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> vrrmax       0.461    0.038     0.388     0.435     0.460     0.486     0.539</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> deviance   236.237    5.158   227.500   232.585   235.764   239.411   247.580</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           Rhat n.eff</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[1]     1.004   550</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[2]     1.001  5400</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[3]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[4]     1.002  2500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[5]     1.001 10000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[6]     1.001 14000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[7]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[8]     1.002  1500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[9]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[10]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[11]    1.001  2800</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[12]    1.003   820</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[13]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[14]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> N[15]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> meanr    1.003   840</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[1]     1.003   700</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[2]     1.002   990</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[3]     1.002  2300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[4]     1.001 11000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[5]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[6]     1.001  5700</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[7]     1.001  3300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[8]     1.002  1200</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[9]     1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[10]    1.003   890</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[11]    1.003   870</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[12]    1.002  1100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[13]    1.001 20000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> r[14]    1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> sdr      1.001 12000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> vrrmax   1.001 12000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> deviance 1.001 27000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> For each parameter, n.eff is a crude measure of effective sample size,</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> and Rhat is the potential scale reduction factor (at convergence, Rhat=1).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DIC info (using the rule, pD = var(deviance)/2)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> pD = 13.3 and DIC = 249.5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> DIC is an estimate of expected predictive error (lower deviance is better).</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

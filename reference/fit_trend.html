@@ -256,20 +256,70 @@ in the folder <code>path</code>).</p>
 <span class='r-in'>                                        species  <span class='op'>=</span> <span class='st'>"Alcelaphus buselaphus"</span><span class='op'>)</span></span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> Found <span style='color: #0000BB;'>1</span> series with <span style='color: #0000BB;'>'Alcelaphus buselaphus'</span> and <span style='color: #0000BB;'>'Garamba'</span>.</span>
 <span class='r-in'>                                        </span>
-<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
 <span class='r-in'><span class='co'>## Fit population trend (requires JAGS) ----</span></span>
 <span class='r-in'><span class='va'>a_buselaphus_mod</span> <span class='op'>&lt;-</span> <span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'>fit_trend</span><span class='op'>(</span><span class='va'>a_buselaphus</span>, path <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling data graph</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Initializing</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Reading data back into data table</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling model graph</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graph information:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Observed stochastic nodes: 15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Unobserved stochastic nodes: 15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Total graph size: 227</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Initializing model</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>## Check for convergence ----</span></span>
 <span class='r-in'><span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='diagnostic.html'>diagnostic</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span>, threshold <span class='op'>=</span> <span class='fl'>1.1</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>✔</span> All models have converged.</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>## Plot estimated population trend ----</span></span>
 <span class='r-in'><span class='fu'>popbayes</span><span class='fu'>::</span><span class='fu'><a href='plot_trend.html'>plot_trend</a></span><span class='op'>(</span>series <span class='op'>=</span> <span class='st'>"garamba__alcelaphus_buselaphus"</span>, </span>
 <span class='r-in'>                     path   <span class='op'>=</span> <span class='va'>temp_path</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='fit_trend-1.png' alt='' width='700' height='433' /></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>## Plot MCMC traceplot ----</span></span>
 <span class='r-in'><span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/traceplot.html'>traceplot</a></span><span class='op'>(</span><span class='va'>a_buselaphus_mod</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, ask <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
-<span class='r-in'><span class='op'>}</span></span>
+<span class='r-plt img'><img src='fit_trend-2.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-3.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-4.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-5.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-6.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-7.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-8.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-9.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-10.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-11.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-12.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-13.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-14.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-15.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-16.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-17.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-18.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-19.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-20.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-21.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-22.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-23.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-24.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-25.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-26.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-27.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-28.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-29.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-30.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-31.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-32.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-33.png' alt='' width='700' height='433' /></span>
+<span class='r-plt img'><img src='fit_trend-34.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
