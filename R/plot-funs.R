@@ -106,7 +106,7 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
   ## Graphical parameters ----
   
   opar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
+  on.exit(par(opar))
   
   par(family = "serif", mgp = c(1.5, 0.1, 0), mar = c(1.5, 3.1, 1.9, 1.1),
       cex.axis = 0.75)
@@ -413,7 +413,7 @@ plot_trend <- function(series, title = TRUE, path = ".", path_fig = ".",
   ## Graphical parameters ----
   
   opar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
+  on.exit(par(opar))
   
   par(family = "serif", mgp = c(1.5, 0.1, 0), mar = c(1.5, 3.1, 1.9, 1.1),
       cex.axis = 0.75)
