@@ -63,7 +63,7 @@ jobs:
           
       - uses: r-lib/actions/check-r-package@v1
         with:
-          args: '"--as-cran", "--no-examples"'
+          args: '"--no-examples"'
 
       - name: Show testthat output
         if: always()
