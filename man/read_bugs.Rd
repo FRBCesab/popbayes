@@ -35,10 +35,14 @@ temp_path <- tempdir()
 
 ## Format dataset ----
 garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
-                                        
-\dontrun{
+
+## Select one serie ----
+a_buselaphus <- popbayes::filter_series(garamba_formatted, 
+                                        location = "Garamba",
+                                        species  = "Alcelaphus buselaphus")
+\donttest{
 ## Fit population trends (requires JAGS) ----
-garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
+a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus, path = temp_path)
 
 ## Import BUGS outputs for one count series ----
 popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus", 

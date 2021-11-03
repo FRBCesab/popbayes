@@ -274,7 +274,7 @@ model_formula <- function(path = ".") {
 #'                                         location = "Garamba",
 #'                                         species  = "Alcelaphus buselaphus")
 #'                                         
-#' \dontrun{
+#' \donttest{
 #' ## Fit population trend (requires JAGS) ----
 #' a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus, path = temp_path)
 #' 
@@ -470,10 +470,14 @@ fit_trend <- function(data, model_opts = list(100, TRUE),
 #' 
 #' ## Format dataset ----
 #' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
-#'                                         
-#' \dontrun{
+#' 
+#' ## Select one serie ----
+#' a_buselaphus <- popbayes::filter_series(garamba_formatted, 
+#'                                         location = "Garamba",
+#'                                         species  = "Alcelaphus buselaphus")
+#' \donttest{
 #' ## Fit population trends (requires JAGS) ----
-#' garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
+#' a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus, path = temp_path)
 #' 
 #' ## Import BUGS outputs for one count series ----
 #' popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus", 
@@ -559,9 +563,13 @@ read_bugs <- function(series = NULL, path = ".") {
 #' ## Format dataset ----
 #' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
 #'                                         
-#' \dontrun{
+#' ## Select one serie ----
+#' a_buselaphus <- popbayes::filter_series(garamba_formatted, 
+#'                                         location = "Garamba",
+#'                                         species  = "Alcelaphus buselaphus")
+#' \donttest{
 #' ## Fit population trends (requires JAGS) ----
-#' garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
+#' a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus, path = temp_path)
 #' 
 #' ## Import BUGS outputs for one count series ----
 #' bugs <- popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus", 
@@ -632,12 +640,16 @@ bugs_to_df <- function(data) {
 #' ## Format dataset ----
 #' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
 #'                                         
-#' \dontrun{
+#' ## Select one serie ----
+#' a_buselaphus <- popbayes::filter_series(garamba_formatted, 
+#'                                         location = "Garamba",
+#'                                         species  = "Alcelaphus buselaphus")
+#' \donttest{
 #' ## Fit population trends (requires JAGS) ----
-#' garamba_mod <- popbayes::fit_trend(garamba_formatted, path = temp_path)
+#' a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus, path = temp_path)
 #' 
 #' ## Check for convergence ----
-#' popbayes::diagnostic(garamba_mod)
+#' popbayes::diagnostic(a_buselaphus_mod)
 #' }
 
 diagnostic <- function(data, threshold = 1.1) {

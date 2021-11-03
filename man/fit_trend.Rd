@@ -90,7 +90,7 @@ a_buselaphus <- popbayes::filter_series(garamba_formatted,
                                         location = "Garamba",
                                         species  = "Alcelaphus buselaphus")
                                         
-\dontrun{
+\donttest{
 ## Fit population trend (requires JAGS) ----
 a_buselaphus_mod <- popbayes::fit_trend(a_buselaphus, path = temp_path)
 
