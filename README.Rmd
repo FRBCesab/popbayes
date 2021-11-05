@@ -45,13 +45,13 @@ This work is part of the FRB-CESAB working group
 **Before using this package, users need to install the freeware 
 [JAGS](https://mcmc-jags.sourceforge.io/).**
 
-You can the CRAN version of the package with:
+You can install the stable version of the package from the [CRAN](https://cran.r-project.org) with:
 
 ```{r eval = FALSE}
 install.packages("popbayes")
 ```
 
-Or you can install the development version from [GitHub](https://github.com/) with:
+Alternatively you can install the development version from [GitHub](https://github.com/) with:
 
 ```{r eval = FALSE}
 # install.packages("remotes")
@@ -78,8 +78,7 @@ vignette.
 Please cite this package as: 
 
 > Casajus N. & Pradel R. (2021) popbayes: Bayesian model to estimate population 
-trends from counts series. R package version 1.0. 
-URL: https://frbcesab.github.io/popbayes/.
+trends from counts series. R package version 1.0. URL: https://frbcesab.github.io/popbayes/.
 
 You can also run:
 

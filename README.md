@@ -34,13 +34,14 @@ part of the FRB-CESAB working group
 **Before using this package, users need to install the freeware
 [JAGS](https://mcmc-jags.sourceforge.io/).**
 
-You can the CRAN version of the package with:
+You can install the stable version of the package from the
+[CRAN](https://cran.r-project.org) with:
 
 ``` r
 install.packages("popbayes")
 ```
 
-Or you can install the development version from
+Alternatively you can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
