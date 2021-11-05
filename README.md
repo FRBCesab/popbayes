@@ -5,6 +5,9 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/popbayes)](https://CRAN.R-project.org/package=popbayes/)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/popbayes?color=blue)](https://cran.r-project.org/package=blue)
 [![R CMD
 Check](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml)
 [![Website
@@ -14,6 +17,7 @@ deployment](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml/
 [![LifeCycle](man/figures/lifecycle/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Project Status:
 Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Dependencies](https://tinyverse.netlify.com/badge/popbayes)](https://cran.r-project.org/package=popbayes)
 <!-- badges: end -->
 
 The goal of the R package `popbayes` is to infer trends of one or
@@ -30,7 +34,13 @@ part of the FRB-CESAB working group
 **Before using this package, users need to install the freeware
 [JAGS](https://mcmc-jags.sourceforge.io/).**
 
-You can install the development version from
+You can the CRAN version of the package with:
+
+``` r
+install.packages("popbayes")
+```
+
+Or you can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
