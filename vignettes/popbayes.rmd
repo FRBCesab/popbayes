@@ -129,7 +129,7 @@ in the form of a standard deviation (`sd`), a variance (`var`), or a
 coefficient of variation (`cv`). Note that precision metrics can be different 
 between counts. For instance, some `S` counts may have an `sd` value and others 
 `lower_ci` and `upper_ci`. In that case, three precision columns would be required
-(`lower_ci`, `upper_ci`, and `sd`). 
+(`lower_ci`, `upper_ci`, and `sd`). An `S` count with no measure of precision will be detected as an anomaly by `format_data()` by default. The option 'na.rm = TRUE' may be used to automatically remove such counts from the series. If it is desirable to maintain such counts in the count series, we suggest to enter a value for the coefficient of variation, e.g. the average coefficient of variation of the other counts in the series.   
 
 
 <br />
