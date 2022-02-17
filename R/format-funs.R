@@ -576,7 +576,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     
     if (!is.null(info)) {           ## Conversion data in info
       
-      if (!any(species_list %in% info$"species")) {
+      if (!all(species_list %in% info$"species")) {
         stop("Some species listed in 'data' are missing from 'info'.")
       }
       
@@ -723,7 +723,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   
   if (!is.null(info)) {           ## rmax data in info
     
-    if (!any(species_list %in% info$"species")) {
+    if (!all(species_list %in% info$"species")) {
       stop("Some species listed in 'data' are missing from 'info'.")
     }
     

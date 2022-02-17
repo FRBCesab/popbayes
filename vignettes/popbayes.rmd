@@ -612,6 +612,8 @@ the model has converged. This diagnostic is performed by comparing the
 popbayes::diagnostic(a_buselaphus_bugs)
 #> All models have converged.
 ```
+In case convergence was not reached for some series, we suggest rerunning fit_trend() on these series after increasing the number of iterations (**ni**) and possibly the number of initial iterations discarded (**nb**) from their respective defaults of 50000 and 10000, e.g. 
+a_buselaphus_bugs <- popbayes::fit_trend(a_buselaphus, path = path, ni = 100000, nb = 20000). This process may be repeated with increasing values of **ni** and **nb** until convergence is eventually reached.
 
 <br />
 
