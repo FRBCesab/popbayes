@@ -776,7 +776,8 @@ Framework of <code>popbayes</code>
 <span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_series.html">filter_series</a></span><span class="op">(</span>data     <span class="op">=</span> <span class="va">garamba_formatted</span>, 
                                         species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span>,
                                         location <span class="op">=</span> <span class="st">"Garamba"</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">'Alcelaphus buselaphus'</span> and <span style="color: #0000BB;">'Garamba'</span>.</span></code></pre></div>
+<span class="co">#&gt; <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">'Alcelaphus buselaphus'</span> and</span>
+<span class="co">#&gt; <span style="color: #0000BB;">'Garamba'</span>.</span></code></pre></div>
 <p><br></p>
 <p>Let’s display the series content.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -927,6 +928,7 @@ Framework of <code>popbayes</code>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/diagnostic.html">diagnostic</a></span><span class="op">(</span><span class="va">a_buselaphus_bugs</span><span class="op">)</span>
 <span class="co">#&gt; All models have converged.</span></code></pre></div>
+<p>In case convergence was not reached for some series, we suggest rerunning fit_trend() on these series after increasing the number of iterations (<strong>ni</strong>) and possibly the number of initial iterations discarded (<strong>nb</strong>) from their respective defaults of 50000 and 10000, e.g.  a_buselaphus_bugs &lt;- popbayes::fit_trend(a_buselaphus, path = path, ni = 100000, nb = 20000). This process may be repeated with increasing values of <strong>ni</strong> and <strong>nb</strong> until convergence is eventually reached.</p>
 <p><br></p>
 <p>Finally we can use the function <code><a href="../reference/plot_trend.html">plot_trend()</a></code> to visualize model predictions and estimated yearly relative growth rates.</p>
 <p><br></p>
@@ -967,7 +969,7 @@ Framework of <code>popbayes</code>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
