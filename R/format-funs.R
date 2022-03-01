@@ -538,9 +538,15 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     
     data[ , field_method] <- as.character(data[ , field_method])
     
-    if (any(is.na(data[ , field_method]))) {
-      stop("The column '", field_method, "' cannot contain NA.")
-    }  
+    data_not_x <- data[data[ , stat_method] != "X", ]
+    
+    if (nrow(data_not_x)) {
+      
+      if (any(is.na(data_not_x[ , field_method]))) {
+        stop("The column '", field_method, "' cannot contain NA ", 
+             "(except if stat_method = 'X').")
+      }  
+    }
     
     if (any(!(data[ , field_method] %in% valid_field_methods))) {
       stop("Invalid value(s) for 'field_method' in 'data'. ",
