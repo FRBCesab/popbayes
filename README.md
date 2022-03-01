@@ -7,12 +7,12 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/popbayes)](https://CRAN.R-project.org/package=popbayes/)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/popbayes?color=blue)](https://cran.r-project.org/package=blue)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/popbayes?color=blue)](https://CRAN.R-project.org/package=popbayes/)
 [![R CMD
 Check](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml)
 [![Website
 deployment](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml)
-[![License: GPL (>=
+[![License: GPL (\>=
 2)](https://img.shields.io/badge/License-GPL%20%28%3E%3D%202%29-blue.svg)](https://choosealicense.com/licenses/gpl-2.0/)
 [![LifeCycle](man/figures/lifecycle/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Project Status:
