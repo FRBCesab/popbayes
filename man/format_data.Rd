@@ -30,7 +30,7 @@ format_data(
 \code{species}, \code{date}, \code{count}, and \code{stat_method}.
 
 The \code{stat_method} field indicates the method used to estimate counts. It
-can contain: \code{T} (total counts), \code{G} (guesstimate), and/or \code{S} (sampling).
+can contain: \code{T} (total counts), \code{X} (guesstimate), and/or \code{S} (sampling).
 
 If individual counts were estimated by \strong{sampling}, additional column(s)
 providing a measure of precision is also required (e.g. \code{lower_ci} and
@@ -77,7 +77,7 @@ Default is \code{'species'}.}
 
 \item{stat_method}{a \code{character} string. The column name in \code{data} of
 the method used to estimate individuals counts. It can contain \code{'T'}
-(total counts), \code{'G'} (guesstimate), and/or \code{'S'} (sampling). If some
+(total counts), \code{'X'} (guesstimate), and/or \code{'S'} (sampling). If some
 counts are coded as \code{'S'}, precision column(s) must also be provided (see
 below).
 Default is \code{'stat_method'}.}
@@ -209,7 +209,7 @@ order. When one is found valid (no missing value), a 95\% CI is derived
 assuming a normal distribution.
 The field \code{stat_method} must be present in \code{data} to indicate
 if counts are \strong{total counts} (\code{'T'}), \strong{sampling} (\code{'S'}), or
-\strong{guesstimate} (\code{'G'}).
+\strong{guesstimate} (\code{'X'}).
 
 If a series mixes aerial and ground counts, a field \code{field_method} must
 also be present and must contain either \code{'A'} (aerial counts), or \code{'G'}

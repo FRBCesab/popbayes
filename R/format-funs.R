@@ -26,7 +26,7 @@
 #' assuming a normal distribution. 
 #' The field `stat_method` must be present in `data` to indicate
 #' if counts are **total counts** (`'T'`), **sampling** (`'S'`), or 
-#' **guesstimate** (`'G'`).
+#' **guesstimate** (`'X'`).
 #' 
 #' If a series mixes aerial and ground counts, a field `field_method` must 
 #' also be present and must contain either `'A'` (aerial counts), or `'G'` 
@@ -59,7 +59,7 @@
 #'   `species`, `date`, `count`, and `stat_method`.
 #'   
 #'   The `stat_method` field indicates the method used to estimate counts. It 
-#'   can contain: `T` (total counts), `G` (guesstimate), and/or `S` (sampling). 
+#'   can contain: `T` (total counts), `X` (guesstimate), and/or `S` (sampling). 
 #' 
 #'   If individual counts were estimated by **sampling**, additional column(s) 
 #'   providing a measure of precision is also required (e.g. `lower_ci` and 
@@ -106,7 +106,7 @@
 #'  
 #' @param stat_method a `character` string. The column name in `data` of 
 #'   the method used to estimate individuals counts. It can contain `'T'` 
-#'   (total counts), `'G'` (guesstimate), and/or `'S'` (sampling). If some 
+#'   (total counts), `'X'` (guesstimate), and/or `'S'` (sampling). If some 
 #'   counts are coded as `'S'`, precision column(s) must also be provided (see 
 #'   below).
 #'   Default is `'stat_method'`. 
@@ -369,7 +369,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
          "from 'data'. Please check the spelling.")
   }
   
-  valid_stat_methods <- c("T", "G", "S")
+  valid_stat_methods <- c("T", "X", "S")
   
   valid_stat_methods_msg <- paste0(valid_stat_methods, collapse = "' or '")
   valid_stat_methods_msg <- paste0("'", valid_stat_methods_msg, "'")
@@ -1148,7 +1148,7 @@ compute_ci <- function(data, precision_cols) {
   
   ## Compute CI boundaries for Guesstimates ----
   
-  pos <- which(data$"stat_method" == "G")
+  pos <- which(data$"stat_method" == "X")
   
   if (length(pos)) {
     data[pos, "lower_ci_conv"] <- data[pos, "count_orig"] * 0.80
