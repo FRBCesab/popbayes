@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 
 
-popbayes <img src="man/figures/hexsticker.png" height="120" align="right"/>
+popbayes <img src="man/figures/hexsticker.png" height="120" align="right" style="float:right; height:120px;/>
 =========================================================
 
 <!-- badges: start -->
