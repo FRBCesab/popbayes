@@ -4,7 +4,7 @@ bibentry(
   bibtype = "Manual",
   title   = "popbayes: Bayesian model to estimate population trends from counts series",
   author  = c(person("Casajus Nicolas"), person("Pradel Roger")),
-  year    = "2021",
-  note    = "R package version 1.0",
+  year    = "2022",
+  note    = "R package version 1.1",
   url     = "https://frbcesab.github.io/popbayes/"
 )
