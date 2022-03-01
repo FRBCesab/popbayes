@@ -460,7 +460,12 @@ follows: `location = "site"`.
 <br />
 
 ```{r 'format-data'}
-garamba_formatted <- popbayes::format_data(data = garamba, path = path)
+garamba_formatted <- popbayes::format_data(data              = garamba, 
+                                           path              = path,
+                                           field_method      = "field_method",
+                                           pref_field_method = "pref_field_method",
+                                           conversion_A2G    = "conversion_A2G",
+                                           rmax              = "rmax")
 ```
 
 <br />

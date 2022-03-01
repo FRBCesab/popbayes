@@ -75,7 +75,13 @@ get_series <- function(data, quiet = TRUE) {
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Number of count series ----
 #' length(garamba_formatted)
@@ -239,7 +245,13 @@ filter_series <- function(data, species = NULL, location = NULL) {
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Extract converted count data ----
 #' converted_data <- popbayes::series_to_df(garamba_formatted, 
@@ -311,7 +323,13 @@ series_to_df <- function(data, converted = TRUE) {
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Import all count series ----
 #' count_series <- popbayes::read_series(path = temp_path)
@@ -391,7 +409,13 @@ read_series <- function(series = NULL, path = ".") {
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Retrieve count series names ----
 #' popbayes::list_series(path = temp_path)

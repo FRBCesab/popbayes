@@ -39,7 +39,13 @@
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Get series names ----
 #' popbayes::list_series(path = temp_path)
@@ -269,7 +275,13 @@ plot_series <- function(series, title = TRUE, path = ".", path_fig = ".",
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Select one serie ----
 #' a_buselaphus <- popbayes::filter_series(garamba_formatted, 

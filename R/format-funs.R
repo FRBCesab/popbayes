@@ -143,7 +143,7 @@
 #'   counts (coded as `'G'`) or aerial counts (coded as `'A'`). This argument 
 #'   is optional if individuals have been counted by the same method. See above 
 #'   section **Description** for further information on the count conversion.
-#'   Default is `'field_method'`.
+#'   Default is `NULL`.
 #'   
 #' @param pref_field_method (optional) a `character` string. The column name
 #'   in `data` of the preferred field method of the species. This argument is
@@ -152,7 +152,7 @@
 #'   `info` (or internally retrieved if the species is listed in the package). 
 #'   See above section **Description** for further information on the count
 #'   conversion.
-#'   Default is `'pref_field_method'`.
+#'   Default is `NULL`.
 #' 
 #' @param conversion_A2G (optional) a `character` string. The column name
 #'   in `data` of the count conversion factor of the species. This argument is
@@ -161,13 +161,13 @@
 #'   `info` (or internally retrieved if the species is listed in the package).
 #'   See above section **Description** for further information on the count
 #'   conversion.
-#'   Default is `'conversion_A2G'`.
+#'   Default is `NULL`.
 #'   
 #' @param rmax (optional) a `character` string. The column name in `data` of 
 #'   the species demographic potential (i.e. the relative rate of increase of 
 #'   the population). This is the change in log population size between two 
 #'   dates and will be used later by [fit_trend()].
-#'   Default is `'rmax'`.
+#'   Default is `NULL`.
 #'   
 #' @param path a `character` string. The directory to save formatted data. 
 #'   This directory must exist and can be an absolute or a relative path.
@@ -226,7 +226,13 @@
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Number of count series ----
 #' length(garamba_formatted)
@@ -247,9 +253,9 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
                         location = "location", species = "species", 
                         stat_method = "stat_method", lower_ci = "lower_ci", 
                         upper_ci = "upper_ci", sd = NULL, var = NULL, 
-                        cv = NULL, field_method = "field_method", 
-                        pref_field_method = "pref_field_method",
-                        conversion_A2G = "conversion_A2G", rmax = "rmax", 
+                        cv = NULL, field_method = NULL, 
+                        pref_field_method = NULL,
+                        conversion_A2G = NULL, rmax = NULL, 
                         path = ".", na_rm = FALSE) {
   
   

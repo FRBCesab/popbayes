@@ -36,7 +36,13 @@ garamba <- read.csv(file = file_path)
 temp_path <- tempdir()
 
 ## Format dataset ----
-garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+garamba_formatted <- popbayes::format_data(
+  data              = garamba, 
+  path              = temp_path,
+  field_method      = "field_method",
+  pref_field_method = "pref_field_method",
+  conversion_A2G    = "conversion_A2G",
+  rmax              = "rmax")
 
 ## Extract converted count data ----
 converted_data <- popbayes::series_to_df(garamba_formatted, 
