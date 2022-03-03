@@ -70,9 +70,11 @@
 #' @references 
 #' Hillman Smith K & Kalpers J (2015) _Garamba Conservation in Peace & War_. 
 #' Hillman Smith publisher, 448pp. ISBN: 9789966185105.\cr
-#' Monico M (2014) _Aerial Survey Report March 2014 - Garamba National Park, DRC_. 
+#' Monico M (2014) 
+#' _Aerial Survey Report March 2014 - Garamba National Park, DRC_. 
 #' African Parks Network/ICCN/Pan-African Elephant Aerial Survey, 42pp.\cr
-#' Spies K _et al._ (2017) _Aerial Survey Report April 2017 - Garamba National Park, DRC_.
+#' Spies K _et al._ (2017) 
+#' _Aerial Survey Report April 2017 - Garamba National Park, DRC_.
 #' African Parks Network/EU/ICCN. 38pp.
 #' 
 #' @examples 

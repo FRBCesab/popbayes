@@ -557,7 +557,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     }
     
     if (!(pref_field_method %in% colnames(data))) {
-      stop("The column '", pref_field_method, "' (argument pref_field_method) ", 
+      stop("The column '", pref_field_method, "' (argument pref_field_method) ",
            "is absent from 'data'. Please check the spelling.")
     }
     
@@ -828,7 +828,8 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
               if (unique(count_series[[i]]$"species") %in% 
                   species_info$"species") {
                 
-                pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+                pos <- species_info$"species" %in% 
+                  count_series[[i]]$"species"[1]
                 pref_field_method_data <- species_info[pos, "pref_field_method"]
                 
               } else {
@@ -924,7 +925,8 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
               if (unique(count_series[[i]]$"species") %in% 
                   species_info$"species") {
                 
-                pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+                pos <- species_info$"species" %in% 
+                  count_series[[i]]$"species"[1]
                 conversion_A2G_data <- species_info[pos, "conversion_A2G"]
                 
               } else {
@@ -1346,9 +1348,9 @@ is_na_precision <- function(data, precision_cols, na_rm) {
       
       if (!na_rm) {
         
-        stop("Precision column(s) cannot all be NA for sampling counts. If you ", 
-             "want to remove counts missing precision information, please use ", 
-             "'na_rm = TRUE'.")
+        stop("Precision column(s) cannot all be NA for sampling counts. If ", 
+             "you want to remove counts missing precision information, please ",
+             "use 'na_rm = TRUE'.")
         
       } else {
         
@@ -1389,7 +1391,7 @@ is_na_precision <- function(data, precision_cols, na_rm) {
             })
             
             if (sum(is_na)) {
-              stop("Unless another type of precision information is provided, ", 
+              stop("Unless another type of precision information is provided, ",
                    "both lower and upper CI bounds are required.")
             }
             
@@ -1413,7 +1415,7 @@ is_na_precision <- function(data, precision_cols, na_rm) {
                        data[sampling_rows, "count_orig"])
         
         if (length(pos)) {
-          stop("At least one CI lower bound is greater than the corresponding ", 
+          stop("At least one CI lower bound is greater than the corresponding ",
                "count.")
         }
         
@@ -1432,7 +1434,7 @@ is_na_precision <- function(data, precision_cols, na_rm) {
                        data[sampling_rows, "count_orig"])
         
         if (length(pos)) {
-          stop("At least one CI upper bound is smaller than the corresponding ", 
+          stop("At least one CI upper bound is smaller than the corresponding ",
                "count.")
         }
         
