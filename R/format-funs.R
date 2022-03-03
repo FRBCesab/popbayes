@@ -1354,7 +1354,7 @@ is_na_precision <- function(data, precision_cols, na_rm) {
         
       } else {
         
-        data <- data[-sampling_rows[which(is_na_precision)], ]
+        data <- data[-sampling_rows[which(is_na)], ]
       }
     }
   }
