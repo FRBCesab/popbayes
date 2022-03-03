@@ -26,7 +26,7 @@
 #' assuming a normal distribution. 
 #' The field `stat_method` must be present in `data` to indicate
 #' if counts are **total counts** (`'T'`), **sampling** (`'S'`), or 
-#' **guesstimate** (`'G'`).
+#' **guesstimate** (`'X'`).
 #' 
 #' If a series mixes aerial and ground counts, a field `field_method` must 
 #' also be present and must contain either `'A'` (aerial counts), or `'G'` 
@@ -59,7 +59,7 @@
 #'   `species`, `date`, `count`, and `stat_method`.
 #'   
 #'   The `stat_method` field indicates the method used to estimate counts. It 
-#'   can contain: `T` (total counts), `G` (guesstimate), and/or `S` (sampling). 
+#'   can contain: `T` (total counts), `X` (guesstimate), and/or `S` (sampling). 
 #' 
 #'   If individual counts were estimated by **sampling**, additional column(s) 
 #'   providing a measure of precision is also required (e.g. `lower_ci` and 
@@ -106,7 +106,7 @@
 #'  
 #' @param stat_method a `character` string. The column name in `data` of 
 #'   the method used to estimate individuals counts. It can contain `'T'` 
-#'   (total counts), `'G'` (guesstimate), and/or `'S'` (sampling). If some 
+#'   (total counts), `'X'` (guesstimate), and/or `'S'` (sampling). If some 
 #'   counts are coded as `'S'`, precision column(s) must also be provided (see 
 #'   below).
 #'   Default is `'stat_method'`. 
@@ -143,7 +143,7 @@
 #'   counts (coded as `'G'`) or aerial counts (coded as `'A'`). This argument 
 #'   is optional if individuals have been counted by the same method. See above 
 #'   section **Description** for further information on the count conversion.
-#'   Default is `'field_method'`.
+#'   Default is `NULL`.
 #'   
 #' @param pref_field_method (optional) a `character` string. The column name
 #'   in `data` of the preferred field method of the species. This argument is
@@ -152,7 +152,7 @@
 #'   `info` (or internally retrieved if the species is listed in the package). 
 #'   See above section **Description** for further information on the count
 #'   conversion.
-#'   Default is `'pref_field_method'`.
+#'   Default is `NULL`.
 #' 
 #' @param conversion_A2G (optional) a `character` string. The column name
 #'   in `data` of the count conversion factor of the species. This argument is
@@ -161,13 +161,13 @@
 #'   `info` (or internally retrieved if the species is listed in the package).
 #'   See above section **Description** for further information on the count
 #'   conversion.
-#'   Default is `'conversion_A2G'`.
+#'   Default is `NULL`.
 #'   
 #' @param rmax (optional) a `character` string. The column name in `data` of 
 #'   the species demographic potential (i.e. the relative rate of increase of 
 #'   the population). This is the change in log population size between two 
 #'   dates and will be used later by [fit_trend()].
-#'   Default is `'rmax'`.
+#'   Default is `NULL`.
 #'   
 #' @param path a `character` string. The directory to save formatted data. 
 #'   This directory must exist and can be an absolute or a relative path.
@@ -226,7 +226,13 @@
 #' temp_path <- tempdir()
 #' 
 #' ## Format dataset ----
-#' garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+#' garamba_formatted <- popbayes::format_data(
+#'   data              = garamba, 
+#'   path              = temp_path,
+#'   field_method      = "field_method",
+#'   pref_field_method = "pref_field_method",
+#'   conversion_A2G    = "conversion_A2G",
+#'   rmax              = "rmax")
 #' 
 #' ## Number of count series ----
 #' length(garamba_formatted)
@@ -247,24 +253,37 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
                         location = "location", species = "species", 
                         stat_method = "stat_method", lower_ci = "lower_ci", 
                         upper_ci = "upper_ci", sd = NULL, var = NULL, 
-                        cv = NULL, field_method = "field_method", 
-                        pref_field_method = "pref_field_method",
-                        conversion_A2G = "conversion_A2G", rmax = "rmax", 
+                        cv = NULL, field_method = NULL, 
+                        pref_field_method = NULL,
+                        conversion_A2G = NULL, rmax = NULL, 
                         path = ".", na_rm = FALSE) {
   
   
-  ## Check Data dataset ----
+  # CHECKS ----
+  
+  ## Check argument 'path' ----
+  
+  if (!is.character(path) || length(path) != 1) {
+    stop("Argument 'path' must be a character string.")
+  }
+  
+  if (!dir.exists(path)) {
+    stop("The directory '", path, "' does not exist.")
+  }
+  
+  
+  ## Check argument 'data' ----
   
   if (missing(data)) {
     stop("Argument 'data' is required.")
   }
   
   if (!is.data.frame(data)) {
-    stop("Argument 'data' must be a data frame.")
+    stop("Argument 'data' must be a data.frame.")
   }
   
   
-  ## Check Location field ----
+  ## Check argument 'location' ----
   
   if (!is.character(location) || length(location) != 1) {
     stop("Argument 'location' must be a column name (character string).")
@@ -282,7 +301,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
-  ## Check Species field ----
+  ## Check argument 'species' ----
   
   if (!is.character(species) || length(species) != 1) {
     stop("Argument 'species' must be a column name (character string).")
@@ -300,7 +319,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
-  ## Check Date field ----
+  ## Check argument 'date' ----
   
   if (!is.character(date) || length(date) != 1) {
     stop("Argument 'date' must be a column name (character string).")
@@ -320,7 +339,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
-  ## Check Count field ----
+  ## Check argument 'count' ----
   
   if (!is.character(count) || length(count) != 1) {
     stop("Argument 'count' must be a column name (character string).")
@@ -340,25 +359,14 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
-  ## Check Logical ----
+  ## Check argument 'na_rm' ----
   
-  if (!is.logical(na_rm)) {
-    stop("Argument 'na_rm' must be a TRUE or FALSE.")
+  if (!is.logical(na_rm) || length(na_rm) != 1) {
+    stop("Argument 'na_rm' must be TRUE or FALSE.")
   }
   
   
-  ## Detect and delete (or error) NA in counts ----
-  
-  data <- is_na_counts(data, count, na_rm)
-  
-  if (nrow(data) == 0) {
-    stop("All counts are NA. Please check your data.")
-  }
-  
-  species_list <- sort(unique(data[ , species]))
-  
-  
-  ## Check Stat Method field ----
+  ## Check argument 'stat_method' ----
   
   if (!is.character(stat_method) || length(stat_method) != 1) {
     stop("Argument 'stat_method' must be a column name (character string).")
@@ -369,7 +377,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
          "from 'data'. Please check the spelling.")
   }
   
-  valid_stat_methods <- c("T", "G", "S")
+  valid_stat_methods <- c("T", "X", "S")
   
   valid_stat_methods_msg <- paste0(valid_stat_methods, collapse = "' or '")
   valid_stat_methods_msg <- paste0("'", valid_stat_methods_msg, "'")
@@ -383,10 +391,10 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   if (any(!(data[ , stat_method] %in% valid_stat_methods))) {
     stop("Invalid value(s) for 'stat_method' in 'data'. ",
          "Allowed values are: ", valid_stat_methods_msg, ".")
-  }
+  }  
   
   
-  ## Check precision columns ----
+  ## Check argument 'lower_ci' ----
   
   if (!is.null(lower_ci)) {
     
@@ -408,6 +416,9 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     }
   }
   
+  
+  ## Check argument 'upper_ci' ----
+  
   if (!is.null(upper_ci)) {
     
     if (!is.character(upper_ci) || length(upper_ci) != 1) {
@@ -427,6 +438,9 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
       stop("The column '", upper_ci, "' must be positive (or zero).")
     }
   }
+  
+  
+  ## Check argument 'sd' ----
   
   if (!is.null(sd)) {
     
@@ -448,6 +462,9 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     }
   }
   
+  
+  ## Check argument 'var' ----
+  
   if (!is.null(var)) {
     
     if (!is.character(var) || length(var) != 1) {
@@ -467,6 +484,9 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
       stop("The column '", var, "' must be strictly positive.")
     }
   } 
+  
+  
+  ## Check argument 'cv' ----
   
   if (!is.null(cv)) {
     
@@ -489,29 +509,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   } 
   
   
-  ## Check Precision Information (if required) ----
-  
-  if ("S" %in% data[ , stat_method]) {
-    
-    if (is.null(lower_ci) && is.null(upper_ci) && is.null(sd) && is.null(cv) &&
-        is.null(var)) {
-      
-      stop("No valid measure of precision is available for sampling counts. ", 
-           "Add 'lower_ci' and 'upper_ci' and/or 'sd', 'var', 'cv' ", 
-           "information.")
-    }
-    
-    if (!is.null(lower_ci) && is.null(upper_ci)) {
-      stop("You must provide both lower and upper CI.")
-    }
-    
-    if (is.null(lower_ci) && !is.null(upper_ci)) {
-      stop("You must provide both lower and upper CI.")
-    }
-  }
-  
-  
-  ## Check Field Method field (optional) ----
+  ## Check argument 'field_method' ----
   
   if (!is.null(field_method)) {
     
@@ -532,9 +530,15 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     
     data[ , field_method] <- as.character(data[ , field_method])
     
-    if (any(is.na(data[ , field_method]))) {
-      stop("The column '", field_method, "' cannot contain NA.")
-    }  
+    data_not_x <- data[data[ , stat_method] != "X", ]
+    
+    if (nrow(data_not_x)) {
+      
+      if (any(is.na(data_not_x[ , field_method]))) {
+        stop("The column '", field_method, "' cannot contain NA ", 
+             "(except for count with stat_method = 'X').")
+      }  
+    }
     
     if (any(!(data[ , field_method] %in% valid_field_methods))) {
       stop("Invalid value(s) for 'field_method' in 'data'. ",
@@ -543,8 +547,88 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
+  ## Check argument 'pref_field_method' ----
   
-  ## Check Info dataset ----
+  if (!is.null(pref_field_method)) {
+    
+    if (!is.character(pref_field_method) || length(pref_field_method) != 1) {
+      stop("Argument 'pref_field_method' must be a column name (character of ",
+           "length 1).")
+    }
+    
+    if (!(pref_field_method %in% colnames(data))) {
+      stop("The column '", pref_field_method, "' (argument pref_field_method) ", 
+           "is absent from 'data'. Please check the spelling.")
+    }
+    
+    valid_field_methods <- c("G", "A")
+    
+    valid_field_methods_msg <- paste0(valid_field_methods, collapse = "' or '")
+    valid_field_methods_msg <- paste0("'", valid_field_methods_msg, "'")
+    
+    data[ , pref_field_method] <- as.character(data[ , pref_field_method])
+    
+    data_not_na <- data[!is.na(data[ , pref_field_method]), ]
+    
+    if (nrow(data_not_na)) {
+      
+      if (any(!(data_not_na[ , pref_field_method] %in% valid_field_methods))) {
+        stop("Invalid value(s) for 'field_method' in 'data'. ",
+             "Allowed values are: ", valid_field_methods_msg, ".")
+      } 
+    }
+  }
+  
+  
+  ## Check argument 'conversion_A2G' ----
+  
+  if (!is.null(conversion_A2G)) {
+    
+    if (!is.character(conversion_A2G) || length(conversion_A2G) != 1) {
+      stop("Argument 'conversion_A2G' must be a column name (character of ",
+           "length 1).")
+    }
+    
+    if (!(conversion_A2G %in% colnames(data))) {
+      stop("The column '", conversion_A2G, "' (argument conversion_A2G) ", 
+           "is absent from 'data'. Please check the spelling.")
+    }
+    
+    if (!is.numeric(data[ , conversion_A2G])) {
+      stop("The column '", conversion_A2G, "' must be a numeric.")
+    }
+    
+    if (length(which(data[ , conversion_A2G] <= 0))) {
+      stop("The column '", conversion_A2G, "' must be strictly positive.")
+    }
+  }
+  
+  
+  ## Check argument 'rmax' ----
+  
+  if (!is.null(rmax)) {
+    
+    if (!is.character(rmax) || length(rmax) != 1) {
+      stop("Argument 'rmax' must be a column name (character of ",
+           "length 1).")
+    }
+    
+    if (!(rmax %in% colnames(data))) {
+      stop("The column '", rmax, "' (argument rmax) ", 
+           "is absent from 'data'. Please check the spelling.")
+    }
+    
+    if (!is.numeric(data[ , rmax])) {
+      stop("The column '", rmax, "' must be a numeric.")
+    }
+    
+    if (length(which(data[ , rmax] <= 0))) {
+      stop("The column '", rmax, "' must be strictly positive.")
+    }
+  }
+  
+  
+  ## Check argument 'info' ----
   
   if (!is.null(info)) {
     
@@ -567,121 +651,49 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     if (any(is.na(info[ , valid_info_colnames]))) {
       stop("The dataset 'info' cannot contain NA.")
     }
+    
+    if (length(which(duplicated(info$"species"))) > 0) {
+      stop("The 'info' data.frame cannot contain duplicated species.")
+    }
   }
   
   
-  ## Check conversion data (if required) ----
+  ## Check precision information ----
   
-  if (!is.null(field_method)) {
+  if ("S" %in% data[ , stat_method]) {
     
-    if (!is.null(info)) {           ## Conversion data in info
+    if (is.null(lower_ci) && is.null(upper_ci) && is.null(sd) && is.null(cv) &&
+        is.null(var)) {
       
-      if (!all(species_list %in% info$"species")) {
-        stop("Some species listed in 'data' are missing from 'info'.")
-      }
-      
-      usethis::ui_done("Conversion data found in 'info'.")
-      
-      conversion_data <- info[info$"species" %in% species_list, ]
-      
-    } else {                        ## Conversion data in data
-      
-      if (!is.null(pref_field_method) && !is.null(conversion_A2G)) {
-        
-        if (!is.character(pref_field_method) || 
-            length(pref_field_method) != 1) {
-          stop("Argument 'pref_field_method' must be a column name ", 
-               "(character string).")
-        }
-        
-        if (!(pref_field_method %in% colnames(data))) {
-          stop("The column '", pref_field_method, "' (argument ",
-               "pref_field_method) is absent from 'data'. ",
-               "Please check the spelling.")
-        }
-        
-        if (any(is.na(data[ , pref_field_method]))) {
-          stop("The column '", pref_field_method, "' cannot contain NA.")
-        }
-        
-        if (!is.character(conversion_A2G) || 
-            length(conversion_A2G) != 1) {
-          stop("Argument 'conversion_A2G' must be a column name ", 
-               "(character string).")
-        }
-        
-        if (!(conversion_A2G %in% colnames(data))) {
-          stop("The column '", conversion_A2G, "' (argument ",
-               "conversion_A2G) is absent from 'data'. ",
-               "Please check the spelling.")
-        }
-        
-        if (any(is.na(data[ , conversion_A2G]))) {
-          stop("The column '", conversion_A2G, "' cannot contain NA.")
-        }
-        
-        pref_data <- tapply(data[ , pref_field_method], data[ , species], 
-                            function(x) unique(x))
-        
-        pref_data_unique <- unlist(lapply(pref_data, function(x) length(x)))
-        
-        if (any(pref_data_unique != 1)) {
-          stop("Each species must have an unique preferred field method.")
-        }
-        
-        conv_data <- tapply(data[ , conversion_A2G], data[ , species], 
-                            function(x) unique(x))
-        
-        conv_data_unique <- unlist(lapply(conv_data, function(x) length(x)))
-        
-        if (any(conv_data_unique != 1)) {
-          stop("Each species must have an unique conversion factor.")
-        }
-        
-        pref_data <- data.frame("species"           = names(pref_data), 
-                                "pref_field_method" = unlist(pref_data))
-        
-        conv_data <- data.frame("species"           = names(conv_data), 
-                                "conversion_A2G"    = unlist(conv_data))
-        
-        conversion_data <- merge(pref_data, conv_data, by = "species")
-        
-        usethis::ui_done("Conversion data found in 'data'.")
-        
-      } else {                      ## Conversion data in popbayes
-        
-        if (!any(species_list %in% species_info$"species")) {
-          stop("Some species listed in 'data' are not available in popbayes. ", 
-               "Please use the argument 'info' or add conversion information ",
-               "in 'data'.")
-        }
-        
-        conversion_data <- species_info[species_info$"species" %in% 
-                                        species_list, ]
-        
-        usethis::ui_done("Conversion data found in 'popbayes'.")
-      }
+      stop("No valid measure of precision is available for sampling counts. ", 
+           "Add 'lower_ci' and 'upper_ci' and/or 'sd', 'var', 'cv' ", 
+           "information.")
     }
     
-    if (!is.character(conversion_data[ , "pref_field_method"])) {
-      stop("Preferred field method must be a character.")
+    if (!is.null(lower_ci) && is.null(upper_ci)) {
+      stop("You must provide both lower and upper CI.")
     }
     
-    if (any(!(conversion_data[ , "pref_field_method"] %in% 
-              valid_field_methods))) {
-      stop("Invalid value(s) for 'pref_field_method'. ",
-           "Allowed values are: ", valid_field_methods_msg, ".")
+    if (is.null(lower_ci) && !is.null(upper_ci)) {
+      stop("You must provide both lower and upper CI.")
     }
-    
-    if (!is.numeric(conversion_data[ , "conversion_A2G"])) {
-      stop("Conversion factor must be a numeric.")
-    }
-    
-    rownames(conversion_data) <- NULL
+  }
+  
+ 
+  # NA COUNTS ----
+  
+  ## Handle NA in counts ----
+  
+  data <- is_na_counts(data, count, na_rm)
+  
+  if (nrow(data) == 0) {
+    stop("All counts are NA. Please check your data.")
   }
   
   
-  ## Detect Precision(s) Columns ----
+  # FORMAT DATA ----
+  
+  ## Detect precision(s) columns ----
   
   precision_cols <- NULL
   
@@ -719,64 +731,6 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
-  ## Get rmax ----
-  
-  if (!is.null(info)) {           ## rmax data in info
-    
-    if (!all(species_list %in% info$"species")) {
-      stop("Some species listed in 'data' are missing from 'info'.")
-    }
-    
-    rmax_data <- info[info$"species" %in% species_list, ]
-    
-  } else {                        ## rmax data in data
-    
-    if (!is.null(rmax)) {
-      
-      if (!is.character(rmax) || length(rmax) != 1) {
-        stop("Argument 'rmax' must be a column name (character string).")
-      }
-      
-      if (!(rmax %in% colnames(data))) {
-        stop("The column '", rmax, "' (argument rmax) is absent from 'data'. ",
-             "Please check the spelling.")
-      }
-      
-      if (any(is.na(data[ , rmax]))) {
-        stop("The column '", rmax, "' cannot contain NA.")
-      }
-      
-      rmax_data <- tapply(data[ , rmax], data[ , species], 
-                          function(x) unique(x))
-      
-      rmax_data_unique <- unlist(lapply(rmax_data, function(x) length(x)))
-      
-      if (any(rmax_data_unique != 1)) {
-        stop("Each species must have an unique rmax.")
-      }
-      
-      rmax_data <- data.frame("species" = names(rmax_data), 
-                              "rmax"    = unlist(rmax_data))
-      
-    } else {                      ## rmax data in popbayes
-      
-      if (!any(species_list %in% species_info$"species")) {
-        stop("Some species listed in 'data' are not available in popbayes. ", 
-             "Please use the argument 'info' or add rmax information ",
-             "in 'data'.")
-      }
-      
-      rmax_data <- species_info[species_info$"species" %in% species_list, ]
-    }
-  }
-  
-  if (!is.numeric(rmax_data[ , "rmax"])) {
-    stop("rmax must be a numeric.")
-  }
-  
-  rownames(rmax_data) <- NULL
-  
-  
   ## Rename columns ----
   
   data_renamed <- data[ , c(location, species, date, stat_method)]
@@ -785,6 +739,21 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   if (!is.null(field_method)) {
     data_renamed <- data.frame(data_renamed, 
                                "field_method" = data[ , field_method])
+  }
+  
+  if (!is.null(pref_field_method)) {
+    data_renamed <- data.frame(data_renamed, 
+                               "pref_field_method" = data[ , pref_field_method])
+  }
+  
+  if (!is.null(conversion_A2G)) {
+    data_renamed <- data.frame(data_renamed, 
+                               "conversion_A2G" = data[ , conversion_A2G])
+  }
+  
+  if (!is.null(rmax)) {
+    data_renamed <- data.frame(data_renamed, 
+                               "rmax" = data[ , rmax])
   }
   
   data_renamed <- data.frame(data_renamed, 
@@ -800,133 +769,462 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
-  ## Check precision measures ----
-  
-  data_renamed <- is_na_precision(data_renamed, precision_cols, na_rm)
-  
-  if (nrow(data_renamed) == 0) {
-    stop("All your counts are sampling counts without precision measures. ", 
-         "Please check your data.")
-  }
-  
-  
-  ## Check path ----
-  
-  if (!dir.exists(path)) {
-    stop("The directory '", path, "' does not exist.")
-  }
-  
-  
-  
-  ##
-  ## ... end of checks ----
-  ## 
-  
-  
-  
-  ## Compute 95% CI boundaries ----
-  
-  data_renamed <- compute_ci(data_renamed, precision_cols)
-  
-  
-  ## Convert counts to preferred field method ----
-  
-  data_renamed <- convert_counts(data_renamed, field_method, conversion_data)
-  
+  # CREATE SERIES ----
   
   ## Detect series ----
   
   series_infos <- get_series(data_renamed, quiet = TRUE)
   
   
-  ## Split original data by series ----
+  ## Split data by series ----
   
-  data_series    <- list()
-  series_ignored <- 0
+  count_series <- list()
   
   for (i in seq_len(nrow(series_infos))) {
     
     id <- series_infos[i, "id"]
     
     sel_rows <- which(data_renamed$"location" == series_infos[i, "location"] &
-                      data_renamed$"species"  == series_infos[i, "species"])
+                        data_renamed$"species"  == series_infos[i, "species"])
     
-    data_sub <- zero_counts(data_renamed[sel_rows, ], na_rm)
+    series <- data_renamed[sel_rows, ]
+    rownames(series) <- NULL
     
-    if (nrow(data_sub) < 4) {
+    count_series[[id]] <- series
+  }
+  
+  
+  # SPECIES INFO ----
+  
+  for (i in seq_along(count_series)) {
+    
+    if (!is.null(field_method)) {
       
-      if (!na_rm) {
+      
+      ## Retrieve 'pref_field_method' ----
+      
+      if (!is.null(pref_field_method)) {
         
-        stop("Count series '", id, "' have not enough data (< 4). Remove ",
-             "this count series or use 'na_rm = TRUE'.")
+        pref_field_method_data <- unique(count_series[[i]]$"pref_field_method")
+        pref_field_method_data <- pref_field_method_data[
+          !is.na(pref_field_method_data)]
+        
+        if (length(pref_field_method_data) > 1) {
+          stop("Multiple values for 'pref_field_method' detected in ", 
+               names(count_series)[i], ".")
+        }
+
+        if (length(pref_field_method_data) == 0) {
+          
+          if (!is.null(info)) {
+            
+            if (unique(count_series[[i]]$"species") %in% info$"species") {
+              
+              pos <- info$"species" %in% count_series[[i]]$"species"[1]
+              pref_field_method_data <- info[pos, "pref_field_method"]
+              
+            } else {
+              
+              if (unique(count_series[[i]]$"species") %in% 
+                  species_info$"species") {
+                
+                pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+                pref_field_method_data <- species_info[pos, "pref_field_method"]
+                
+              } else {
+                
+                stop("Unable to retrieve 'pref_field_method' for the series ", 
+                     names(count_series)[i])
+              }
+            }
+            
+          } else {
+            
+            if (unique(count_series[[i]]$"species") %in% 
+                species_info$"species") {
+              
+              pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+              pref_field_method_data <- species_info[pos, "pref_field_method"]
+              
+            } else {
+              
+              stop("Unable to retrieve 'pref_field_method' for the series ", 
+                   names(count_series)[i])
+            }
+          }
+        }
         
       } else {
         
-        data_sub <- data.frame()
+        if (!is.null(info)) {
+          
+          if (unique(count_series[[i]]$"species") %in% info$"species") {
+            
+            pos <- info$"species" %in% count_series[[i]]$"species"[1]
+            pref_field_method_data <- info[pos, "pref_field_method"]
+            
+          } else {
+            
+            if (unique(count_series[[i]]$"species") %in% 
+                species_info$"species") {
+              
+              pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+              pref_field_method_data <- species_info[pos, "pref_field_method"]
+              
+            } else {
+              
+              stop("Unable to retrieve 'pref_field_method' for the series ", 
+                   names(count_series)[i])
+            }
+          }
+          
+        } else {
+          
+          if (unique(count_series[[i]]$"species") %in% 
+              species_info$"species") {
+            
+            pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+            pref_field_method_data <- species_info[pos, "pref_field_method"]
+            
+          } else {
+            
+            stop("Unable to retrieve 'pref_field_method' for the series ", 
+                 names(count_series)[i])
+          }
+        }
+      }
+      
+      count_series[[i]]$"pref_field_method" <- pref_field_method_data
+      
+      
+      ## Retrieve 'conversion_A2G' ----
+      
+      if (!is.null(conversion_A2G)) {
+      
+        conversion_A2G_data <- unique(count_series[[i]]$"conversion_A2G")
+        conversion_A2G_data <- conversion_A2G_data[
+          !is.na(conversion_A2G_data)]
+        
+        if (length(conversion_A2G_data) > 1) {
+          stop("Multiple values for 'conversion_A2G' detected in ", 
+               names(count_series)[i], ".")
+        }
+
+        if (length(conversion_A2G_data) == 0) {
+          
+          if (!is.null(info)) {
+            
+            if (unique(count_series[[i]]$"species") %in% info$"species") {
+              
+              pos <- info$"species" %in% count_series[[i]]$"species"[1]
+              conversion_A2G_data <- info[pos, "conversion_A2G"]
+              
+            } else {
+              
+              if (unique(count_series[[i]]$"species") %in% 
+                  species_info$"species") {
+                
+                pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+                conversion_A2G_data <- species_info[pos, "conversion_A2G"]
+                
+              } else {
+                
+                stop("Unable to retrieve 'conversion_A2G' for the series ", 
+                     names(count_series)[i])
+              }
+            }
+            
+          } else {
+            
+            if (unique(count_series[[i]]$"species") %in% 
+                species_info$"species") {
+              
+              pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+              conversion_A2G_data <- species_info[pos, "conversion_A2G"]
+              
+            } else {
+              
+              stop("Unable to retrieve 'conversion_A2G' for the series ", 
+                   names(count_series)[i])
+            }
+          }
+        }
+        
+      } else {
+        
+        if (!is.null(info)) {
+          
+          if (unique(count_series[[i]]$"species") %in% info$"species") {
+            
+            pos <- info$"species" %in% count_series[[i]]$"species"[1]
+            conversion_A2G_data <- info[pos, "conversion_A2G"]
+            
+          } else {
+            
+            if (unique(count_series[[i]]$"species") %in% 
+                species_info$"species") {
+              
+              pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+              conversion_A2G_data <- species_info[pos, "conversion_A2G"]
+              
+            } else {
+              
+              stop("Unable to retrieve 'conversion_A2G' for the series ", 
+                   names(count_series)[i])
+            }
+          }
+          
+        } else {
+          
+          if (unique(count_series[[i]]$"species") %in% 
+              species_info$"species") {
+            
+            pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+            conversion_A2G_data <- species_info[pos, "conversion_A2G"]
+            
+          } else {
+            
+            stop("Unable to retrieve 'conversion_A2G' for the series ", 
+                 names(count_series)[i])
+          }
+        }
+      }
+      
+      count_series[[i]]$"conversion_A2G"    <- conversion_A2G_data
+    }
+    
+    
+    ## Retrieve 'rmax' ----
+    
+    if (!is.null(rmax)) {
+      
+      rmax_data <- unique(count_series[[i]]$"rmax")
+      rmax_data <- rmax_data[!is.na(rmax_data)]
+      
+      if (length(rmax_data) > 1) {
+        stop("Multiple values for 'rmax' detected in ", 
+             names(count_series)[i], ".")
+      }
+      
+      
+      if (length(rmax_data) == 0) {
+        
+        if (!is.null(info)) {
+          
+          if (unique(count_series[[i]]$"species") %in% info$"species") {
+            
+            pos <- info$"species" %in% count_series[[i]]$"species"[1]
+            rmax_data <- info[pos, "rmax"]
+            
+          } else {
+            
+            if (unique(count_series[[i]]$"species") %in% 
+                species_info$"species") {
+              
+              pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+              rmax_data <- species_info[pos, "rmax"]
+              
+            } else {
+              
+              stop("Unable to retrieve 'rmax' for the series ", 
+                   names(count_series)[i])
+            }
+          }
+          
+        } else {
+          
+          if (unique(count_series[[i]]$"species") %in% 
+              species_info$"species") {
+            
+            pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+            rmax_data <- species_info[pos, "rmax"]
+            
+          } else {
+            
+            stop("Unable to retrieve 'rmax' for the series ", 
+                 names(count_series)[i])
+          }
+        }
+      }
+      
+    } else {
+      
+      if (!is.null(info)) {
+        
+        if (unique(count_series[[i]]$"species") %in% info$"species") {
+          
+          pos <- info$"species" %in% count_series[[i]]$"species"[1]
+          rmax_data <- info[pos, "rmax"]
+          
+        } else {
+          
+          if (unique(count_series[[i]]$"species") %in% 
+              species_info$"species") {
+            
+            pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+            rmax_data <- species_info[pos, "rmax"]
+            
+          } else {
+            
+            stop("Unable to retrieve 'rmax' for the series ", 
+                 names(count_series)[i])
+          }
+        }
+        
+      } else {
+        
+        if (unique(count_series[[i]]$"species") %in% 
+            species_info$"species") {
+          
+          pos <- species_info$"species" %in% count_series[[i]]$"species"[1]
+          rmax_data <- species_info[pos, "rmax"]
+          
+        } else {
+          
+          stop("Unable to retrieve 'rmax' for the series ", 
+               names(count_series)[i])
+        }
       }
     }
     
-    if (nrow(data_sub)) {
-      
-      data_sub <- data_sub[order(data_sub$"date", decreasing = FALSE), ]
-      rownames(data_sub) <- NULL
-      
-      if (!is.null(field_method)) {
-        
-        species_row <- which(conversion_data$"species" == 
-                             series_infos[i, "species"])
-        
-        pref_field_method <- conversion_data[species_row, "pref_field_method"]
-        conversion_A2G   <- conversion_data[species_row, "conversion_A2G"]
-        
-        field_methods <- sort(unique(data_sub[ , "field_method"]))
-        
-      } else {
-        
-        pref_field_method <- NULL
-        conversion_A2G    <- NULL
-        field_methods     <- NULL
-      }
-      
-      rmax <- rmax_data[rmax_data$"species" == series_infos[i, "species"], 
-                        "rmax"]
-      
-      
-      data_series[[id]] <- list(
-        "location"          = series_infos[i, "location"],
-        "species"           = series_infos[i, "species"],
-        "dates"             = data_sub[ , "date"],
-        "n_dates"           = length(unique(data_sub[ , "date"])),
-        "stat_methods"      = sort(unique(data_sub[ , "stat_method"])),
-        "field_methods"     = field_methods,
-        "pref_field_method" = pref_field_method,
-        "conversion_A2G"    = conversion_A2G,
-        "rmax"              = rmax,
-        "data_original"     = data_sub[ , -grep("_conv", colnames(data_sub))],
-        "data_converted"    = data_sub[ , -grep("_orig", colnames(data_sub))])
-      
-      
-      ## Export sub-list ----
-      
-      species_path <- file.path(path, id)
-      dir.create(species_path, showWarnings = FALSE)
-      
-      formatted_data <- data_series[id]
-      save(formatted_data, file = file.path(species_path,
-                                            paste0(id, "_data.RData")))
+    count_series[[i]]$"rmax" <- rmax_data
+  }
+  
+  
+  # CHECK PRECISION MEASURES ----
+  
+  for (i in seq_along(count_series)) {
+    
+    count_series[[i]] <- is_na_precision(count_series[[i]], precision_cols, 
+                                         na_rm)
+  }
+  
+  
+  ## Remove series ----
+  
+  n_rows <- unlist(lapply(count_series, function(x) nrow(x)))
+  n_rows <- n_rows[n_rows == 0]
+  
+  if (length(n_rows)) {
+    
+    series_to_del <- names(n_rows)
+    count_series <- count_series[-which(names(count_series) %in% series_to_del)]
+    
+    if (length(n_rows) < length(count_series)) {
+      usethis::ui_oops(paste0("Removing the following series without valid ", 
+                              "precision measures: ", 
+                              usethis::ui_value(paste0(series_to_del, 
+                                                       collapse = ", "))))
     }
   }
   
   
-  if (length(data_series) == 0) {
+  n_rows <- unlist(lapply(count_series, function(x) nrow(x)))
+  n_rows <- n_rows[n_rows < 4]
+  
+  if (length(n_rows)) {
     
-    stop("No count series detected. Check your data.")
+    series_to_del <- names(n_rows)
     
-  } else {
+    if (!na_rm) {
+      
+      stop("The following count series have not enough data (< 4):\n", 
+           usethis::ui_value(paste0(series_to_del, 
+                                    collapse = ", ")),
+           "\nRemove these count series or use 'na_rm = TRUE'.")
+      
+    } else {
+      
+      count_series <- count_series[-which(names(count_series) %in% 
+                                            series_to_del)]  
+    }
     
-    usethis::ui_done(paste0("Detecting {usethis::ui_value(length(", 
-                            "data_series))} count series"))
+    if (length(n_rows) < length(count_series)) {
+      usethis::ui_oops(paste0("Removing the following series without enough ", 
+                              "data (< 4) ", 
+                              usethis::ui_value(paste0(series_to_del, 
+                                                       collapse = ", "))))
+    }
   }
+  
+  if (length(count_series) == 0) {
+    stop("All your series have been removed. Please check your data.")
+  }
+  
+  
+  # COMPUTE CI BOUNDARIES ----
+  
+  for (i in seq_along(count_series)) {
+    
+    count_series[[i]] <- compute_ci(count_series[[i]], precision_cols)
+  }
+  
+  
+  # CONVERT COUNTS ----
+  
+  for (i in seq_along(count_series)) {
+  
+    count_series[[i]] <- convert_counts(count_series[[i]], field_method)
+  }
+  
+  
+  # CREATE FINAL LIST ----
+  
+  data_series    <- list()
+  
+  for (i in seq_len(nrow(series_infos))) {
+    
+    id <- names(count_series)[i]
+    
+    data_sub <- count_series[[i]][order(count_series[[i]]$"date",
+                                        decreasing = FALSE), ]
+    rownames(data_sub) <- NULL
+    
+    if (!is.null(field_method)) {
+      
+      pref_field_method <- unique(data_sub$"pref_field_method")
+      conversion_A2G    <- unique(data_sub$"conversion_A2G")
+      
+      field_methods <- sort(unique(data_sub[ , "field_method"]))
+      field_methods <- field_methods[!is.na(field_methods)]
+      
+    } else {
+      
+      pref_field_method <- NULL
+      conversion_A2G    <- NULL
+      field_methods     <- NULL
+    }
+      
+    rmax <- unique(data_sub$"rmax")
+      
+      
+    data_series[[id]] <- list(
+      "location"          = unique(data_sub$"location"),
+      "species"           = unique(data_sub$"species"),
+      "dates"             = data_sub[ , "date"],
+      "n_dates"           = length(unique(data_sub[ , "date"])),
+      "stat_methods"      = sort(unique(data_sub[ , "stat_method"])),
+      "field_methods"     = field_methods,
+      "pref_field_method" = pref_field_method,
+      "conversion_A2G"    = conversion_A2G,
+      "rmax"              = rmax,
+      "data_original"     = data_sub[ , -grep("_conv", colnames(data_sub))],
+      "data_converted"    = data_sub[ , -grep("_orig", colnames(data_sub))])
+    
+    
+    ## Export sub-list ----
+    
+    species_path <- file.path(path, id)
+    dir.create(species_path, showWarnings = FALSE)
+    
+    formatted_data <- data_series[id]
+    save(formatted_data, file = file.path(species_path,
+                                          paste0(id, "_data.RData")))
+  }
+  
+    
+  usethis::ui_done(paste0("Detecting {usethis::ui_value(length(", 
+                          "data_series))} count series"))
   
   data_series
 }
@@ -951,13 +1249,13 @@ is_na_counts <- function(data, col, na_rm) {
     if (!na_rm) {
       
       stop("The column '", col, "' cannot contain NA. If you want to ", 
-           "remove missing counts, please use 'na_rm = TRUE'.")
+           "remove missing counts, please use 'na_rm = TRUE'.", call. = FALSE)
       
     } else {
       
       pos <- which(is.na(data[ , col]))
       usethis::ui_info(paste0("Removing {usethis::ui_value(length(pos))} ",
-                              "rows with NA values in 'counts' field."))
+                              "rows with NA values in '", col, "' field."))
       
       data <- data[-pos, ]
     }
@@ -995,116 +1293,122 @@ is_na_precision <- function(data, precision_cols, na_rm) {
   
   if (length(sampling_rows)) {
     
-    is_na_precision <- apply(data[sampling_rows, precision_cols], 1, 
-                             function(x) {
-                               x <- sum(ifelse(is.na(x), 0, 1))
-                               ifelse(x == 0, TRUE, FALSE)
-                             })
-  }
+    is_na <- apply(data[sampling_rows, precision_cols], 1, function(x) {
+      x <- sum(ifelse(is.na(x), 0, 1))
+      ifelse(x == 0, TRUE, FALSE)
+    })
   
   
-  ## Remove or stop if missing precision values for S ----
-  
-  if (sum(is_na_precision)) {
+    ## Remove or stop if missing precision values for S ----
     
-    if (!na_rm) {
+    if (sum(is_na)) {
       
-      stop("Precision column(s) cannot all be NA for sampling counts. If you ", 
-           "want to remove counts missing precision information, please use ", 
-           "'na_rm = TRUE'.")
-      
-    } else {
-      
-      usethis::ui_info(paste0("Removing {usethis::ui_value(", 
-                              "sum(is_na_precision))} rows with NA values ", 
-                              "in 'precision' field(s) for (S)amplings."))
-      
-      data <- data[-sampling_rows[which(is_na_precision)], ]
+      if (!na_rm) {
+        
+        stop("Precision column(s) cannot all be NA for sampling counts. If you ", 
+             "want to remove counts missing precision information, please use ", 
+             "'na_rm = TRUE'.")
+        
+      } else {
+        
+        data <- data[-sampling_rows[which(is_na_precision)], ]
+      }
     }
   }
   
-  
-  ## Check for CI bounds (require both) for S ----
-  
-  sampling_rows <- which(data[ , "stat_method"] == "S")
-  
-  if (length(sampling_rows)) {
+  if (nrow(data)) {
     
-    if ("lower_ci_orig" %in% colnames(data)) {
+    
+    ## Check for CI bounds (require both) for S ----
+    
+    sampling_rows <- which(data[ , "stat_method"] == "S")
+    
+    if (length(sampling_rows)) {
       
-      is_na_lower <- is.na(data[sampling_rows, "lower_ci_orig"])
-      is_na_upper <- is.na(data[sampling_rows, "upper_ci_orig"])
-      
-      pos <- which((is_na_upper + is_na_lower) == 1)
-      
-      if (length(pos)) {
+      if ("lower_ci_orig" %in% colnames(data)) {
         
-        ci_cols <- which(precision_cols %in% c("lower_ci_orig", 
-                                               "upper_ci_orig"))
+        is_na_lower <- is.na(data[sampling_rows, "lower_ci_orig"])
+        is_na_upper <- is.na(data[sampling_rows, "upper_ci_orig"])
         
-        tmp <- as.data.frame(data[sampling_rows[pos], precision_cols[-ci_cols]])
+        pos <- which((is_na_upper + is_na_lower) == 1)
         
-        if (ncol(tmp)) {
+        if (length(pos)) {
           
-          is_na_precision <- apply(tmp, 1, 
-                                   function(x) {
-                                     x <- sum(ifelse(is.na(x), 0, 1))
-                                     ifelse(x == 0, TRUE, FALSE)
-                                   })
+          ci_cols <- which(precision_cols %in% c("lower_ci_orig", 
+                                                 "upper_ci_orig"))
           
-          if (sum(is_na_precision)) {
+          tmp <- as.data.frame(data[sampling_rows[pos], 
+                                    precision_cols[-ci_cols]])
+          
+          if (ncol(tmp)) {
+            
+            is_na <- apply(tmp, 1, function(x) {
+              x <- sum(ifelse(is.na(x), 0, 1))
+              ifelse(x == 0, TRUE, FALSE)
+            })
+            
+            if (sum(is_na)) {
+              stop("Unless another type of precision information is provided, ", 
+                   "both lower and upper CI bounds are required.")
+            }
+            
+          } else {
+            
             stop("Unless another type of precision information is provided, ", 
                  "both lower and upper CI bounds are required.")
           }
-          
-        } else {
-          
-          stop("Unless another type of precision information is provided, ", 
-               "both lower and upper CI bounds are required.")
         }
       }
     }
-  }
-  
-  
-  ## Check CI bounds values for S ----
-  
-  if (length(sampling_rows)) {
+   
     
-    if ("lower_ci_orig" %in% colnames(data)) {
+    ## Check CI bounds values for S ----
+    
+    if (length(sampling_rows)) {
       
-      pos <- which(data[sampling_rows, "lower_ci_orig"] > 
-                     data[sampling_rows, "count_orig"])
-      
-      if (length(pos)) {
-        stop("At least one CI lower bound is greater than the corresponding ", 
-             "count.")
+      if ("lower_ci_orig" %in% colnames(data)) {
+        
+        pos <- which(data[sampling_rows, "lower_ci_orig"] > 
+                       data[sampling_rows, "count_orig"])
+        
+        if (length(pos)) {
+          stop("At least one CI lower bound is greater than the corresponding ", 
+               "count.")
+        }
+        
+        
+        pos <- which(data[sampling_rows, "lower_ci_orig"] < 0)
+        
+        if (length(pos)) {
+          stop("CI lower bounds must be positive.")
+        }
       }
       
       
-      pos <- which(data[sampling_rows, "lower_ci_orig"] < 0)
-      
-      if (length(pos)) {
-        stop("CI lower bounds must be positive.")
-      }
-    }
-    
-    
-    if ("upper_ci_orig" %in% colnames(data)) {
-      
-      pos <- which(data[sampling_rows, "upper_ci_orig"] < 
-                     data[sampling_rows, "count_orig"])
-      
-      if (length(pos)) {
-        stop("At least one CI upper bound is smaller than the corresponding ", 
-             "count.")
-      }
-      
-      
-      pos <- which(data[sampling_rows, "upper_ci_orig"] < 0)
-      
-      if (length(pos)) {
-        stop("Upper CI values must be positive.")
+      if ("upper_ci_orig" %in% colnames(data)) {
+        
+        pos <- which(data[sampling_rows, "upper_ci_orig"] < 
+                       data[sampling_rows, "count_orig"])
+        
+        if (length(pos)) {
+          stop("At least one CI upper bound is smaller than the corresponding ", 
+               "count.")
+        }
+        
+        
+        pos <- which(data[sampling_rows, "upper_ci_orig"] < 0)
+        
+        if (length(pos)) {
+          stop("Upper CI values must be positive.")
+        }
+        
+        
+        if ("upper_ci_orig" %in% colnames(data)) {
+          if (data[sampling_rows, "lower_ci_orig"] ==
+              data[sampling_rows, "upper_ci_orig"]) {
+            stop("Lower and upper CI bounds cannot be strictly equal.")
+          }
+        }
       }
     }
   }
@@ -1148,7 +1452,7 @@ compute_ci <- function(data, precision_cols) {
   
   ## Compute CI boundaries for Guesstimates ----
   
-  pos <- which(data$"stat_method" == "G")
+  pos <- which(data$"stat_method" == "X")
   
   if (length(pos)) {
     data[pos, "lower_ci_conv"] <- data[pos, "count_orig"] * 0.80
@@ -1231,44 +1535,34 @@ compute_ci <- function(data, precision_cols) {
 #' @param data a `data.frame`. Counts dataset.
 #' 
 #' @param field_method a `character` string. The column name in `data`.
-#' 
-#' @param conversion_data a `data.frame`. Conversion data (see `species_info`).
 #'
 #' @return A `data.frame` (same as `data`).
 #' 
 #' @noRd
 
-convert_counts <- function(data, field_method, conversion_data) {
+convert_counts <- function(data, field_method) {
   
   if (!is.null(field_method)) {
     
-    series_infos <- get_series(data, quiet = TRUE)
+    method_pref <- unique(data$"pref_field_method")
+    conv_fact   <- unique(data$"conversion_A2G")
     
-    for (i in seq_len(nrow(series_infos))) {
-      
-      species_name <- series_infos[i, "species"]
-      
-      series_rows <- which(data$"location" == series_infos[i, "location"] & 
-                           data$"species" == series_infos[i, "species"])
-      
-      methods_used <- data[series_rows, "field_method"]
-      
-      conv_row    <- which(conversion_data$"species" == species_name)
-      method_pref <- conversion_data[conv_row, "pref_field_method"]
-      conv_fact   <- conversion_data[conv_row, "conversion_A2G"]
-      
-      conv_fact   <- ifelse(method_pref == "A", 1 / conv_fact, conv_fact)
-      conv_fact   <- ifelse(methods_used == method_pref, 1, conv_fact)
-      
-      data[series_rows, "count_conv"]   <- 
-        data[series_rows, "count_conv"]    * conv_fact
-      data[series_rows, "lower_ci_conv"] <- 
-        data[series_rows, "lower_ci_conv"] * conv_fact
-      data[series_rows, "upper_ci_conv"] <- 
-        data[series_rows, "upper_ci_conv"] * conv_fact
-      
-      data[series_rows, "field_method_conv"] <- method_pref
-    }
+    methods_used <- data$"field_method"
+    
+    # for guesstimates (only)
+    methods_used <- ifelse(is.na(methods_used), method_pref, methods_used)
+    
+    conv_fact   <- ifelse(method_pref == "A", 1 / conv_fact, conv_fact)
+    conv_fact   <- ifelse(methods_used == method_pref, 1, conv_fact)
+    
+    data[ , "count_conv"]   <- 
+      data[ , "count_conv"]    * conv_fact
+    data[ , "lower_ci_conv"] <- 
+      data[ , "lower_ci_conv"] * conv_fact
+    data[ , "upper_ci_conv"] <- 
+      data[ , "upper_ci_conv"] * conv_fact
+    
+    data[ , "field_method_conv"] <- method_pref
   }
   
   data

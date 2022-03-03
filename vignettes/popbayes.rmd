@@ -110,17 +110,17 @@ field (`count`).
 In addition to the fields `location`, `species`, `date`, and `count`, a fourth 
 field is **mandatory**: `stat_method`. This field specifies the 
 census method that produced the count. It can be `T` for a total 
-count, `G` for a guesstimate (i.e. expert estimate), or `S` for a sampling count.
+count, `X` for a guesstimate (i.e. expert estimate), or `S` for a sampling count.
 
 To be usable by the Bayesian model, individual counts are to be accompanied 
 by information on precision in the form of a 95% confidence interval. If counts 
 are :
 
-- `T` or `G`, a confidence interval will be computed automatically by the 
+- `T` or `X`, a confidence interval will be computed automatically by the 
 function `format_data()` according respectively to the following formulas:
 
 $$ CI_{(T)} = [\ 0.95 \times count\ ; 1.20 \times count\ ] $$
-$$ CI_{(G)} = [\ 0.80 \times count\ ; 1.20 \times count\ ] $$
+$$ CI_{(X)} = [\ 0.80 \times count\ ; 1.20 \times count\ ] $$
 
 - `S`, users **need to supply** a measure of precision. Precision 
 is preferably provided in the form of a 95% CI by means of two fields: `lower_ci` 
@@ -129,7 +129,12 @@ in the form of a standard deviation (`sd`), a variance (`var`), or a
 coefficient of variation (`cv`). Note that precision metrics can be different 
 between counts. For instance, some `S` counts may have an `sd` value and others 
 `lower_ci` and `upper_ci`. In that case, three precision columns would be required
-(`lower_ci`, `upper_ci`, and `sd`). An `S` count with no measure of precision will be detected as an anomaly by `format_data()` by default. The option 'na.rm = TRUE' may be used to automatically remove such counts from the series. If it is desirable to maintain such counts in the count series, we suggest to enter a value for the coefficient of variation, e.g. the average coefficient of variation of the other counts in the series.   
+(`lower_ci`, `upper_ci`, and `sd`). An `S` count with no measure of precision will 
+be detected as an anomaly by `format_data()` by default. The option `na.rm = TRUE`
+may be used to automatically remove such counts from the series. If it is 
+desirable to maintain such counts in the count series, we suggest to enter a 
+value for the coefficient of variation, e.g. the average coefficient of variation 
+of the other counts in the series.   
 
 
 <br />
@@ -400,7 +405,7 @@ sum(is.na(garamba$"stat_method"))   # Are there any missing values?
 ```
 
 Field **`stat_method`** can be either a `character` or a `factor`. It **must**
-contain only `T`, `G`, or `S` categories and **cannot** contain any `NA` values.
+contain only `T`, `X`, or `S` categories and **cannot** contain any `NA` values.
 
 
 <br />
@@ -414,7 +419,7 @@ sum(is.na(garamba$"field_method"))   # Are there any missing values?
 ```
 
 Field **`field_method`** can be either a `character` or a `factor`. It **must**
-contain only `A`, or `T` categories and **cannot** contain any `NA` values.
+contain only `A`, or `G` categories and **cannot** contain any `NA` values.
 
 
 
@@ -455,7 +460,12 @@ follows: `location = "site"`.
 <br />
 
 ```{r 'format-data'}
-garamba_formatted <- popbayes::format_data(data = garamba, path = path)
+garamba_formatted <- popbayes::format_data(data              = garamba, 
+                                           path              = path,
+                                           field_method      = "field_method",
+                                           pref_field_method = "pref_field_method",
+                                           conversion_A2G    = "conversion_A2G",
+                                           rmax              = "rmax")
 ```
 
 <br />
@@ -612,8 +622,19 @@ the model has converged. This diagnostic is performed by comparing the
 popbayes::diagnostic(a_buselaphus_bugs)
 #> All models have converged.
 ```
-In case convergence was not reached for some series, we suggest rerunning fit_trend() on these series after increasing the number of iterations (**ni**) and possibly the number of initial iterations discarded (**nb**) from their respective defaults of 50000 and 10000, e.g. 
-a_buselaphus_bugs <- popbayes::fit_trend(a_buselaphus, path = path, ni = 100000, nb = 20000). This process may be repeated with increasing values of **ni** and **nb** until convergence is eventually reached.
+
+In case convergence was not reached for some series, we suggest rerunning 
+`fit_trend()` on these series after increasing the number of iterations 
+(**ni**) and possibly the number of initial iterations discarded (**nb**) from 
+their respective defaults of 50,000 and 10,000. For example:
+
+```{r 're-run-jags', eval = FALSE}
+a_buselaphus_bugs <- popbayes::fit_trend(a_buselaphus, path = path, ni = 100000, nb = 20000)
+```
+
+This process may be repeated with increasing values of **ni** and **nb** until 
+convergence is eventually reached.
+
 
 <br />
 

@@ -17,10 +17,10 @@ format_data(
   sd = NULL,
   var = NULL,
   cv = NULL,
-  field_method = "field_method",
-  pref_field_method = "pref_field_method",
-  conversion_A2G = "conversion_A2G",
-  rmax = "rmax",
+  field_method = NULL,
+  pref_field_method = NULL,
+  conversion_A2G = NULL,
+  rmax = NULL,
   path = ".",
   na_rm = FALSE
 )
@@ -30,7 +30,7 @@ format_data(
 \code{species}, \code{date}, \code{count}, and \code{stat_method}.
 
 The \code{stat_method} field indicates the method used to estimate counts. It
-can contain: \code{T} (total counts), \code{G} (guesstimate), and/or \code{S} (sampling).
+can contain: \code{T} (total counts), \code{X} (guesstimate), and/or \code{S} (sampling).
 
 If individual counts were estimated by \strong{sampling}, additional column(s)
 providing a measure of precision is also required (e.g. \code{lower_ci} and
@@ -77,7 +77,7 @@ Default is \code{'species'}.}
 
 \item{stat_method}{a \code{character} string. The column name in \code{data} of
 the method used to estimate individuals counts. It can contain \code{'T'}
-(total counts), \code{'G'} (guesstimate), and/or \code{'S'} (sampling). If some
+(total counts), \code{'X'} (guesstimate), and/or \code{'S'} (sampling). If some
 counts are coded as \code{'S'}, precision column(s) must also be provided (see
 below).
 Default is \code{'stat_method'}.}
@@ -114,7 +114,7 @@ Default is \code{NULL}.}
 counts (coded as \code{'G'}) or aerial counts (coded as \code{'A'}). This argument
 is optional if individuals have been counted by the same method. See above
 section \strong{Description} for further information on the count conversion.
-Default is \code{'field_method'}.}
+Default is \code{NULL}.}
 
 \item{pref_field_method}{(optional) a \code{character} string. The column name
 in \code{data} of the preferred field method of the species. This argument is
@@ -123,7 +123,7 @@ counted by different methods). Alternatively, this value can be passed in
 \code{info} (or internally retrieved if the species is listed in the package).
 See above section \strong{Description} for further information on the count
 conversion.
-Default is \code{'pref_field_method'}.}
+Default is \code{NULL}.}
 
 \item{conversion_A2G}{(optional) a \code{character} string. The column name
 in \code{data} of the count conversion factor of the species. This argument is
@@ -132,13 +132,13 @@ counted by different methods). Alternatively this value can be passed in
 \code{info} (or internally retrieved if the species is listed in the package).
 See above section \strong{Description} for further information on the count
 conversion.
-Default is \code{'conversion_A2G'}.}
+Default is \code{NULL}.}
 
 \item{rmax}{(optional) a \code{character} string. The column name in \code{data} of
 the species demographic potential (i.e. the relative rate of increase of
 the population). This is the change in log population size between two
 dates and will be used later by \code{\link[=fit_trend]{fit_trend()}}.
-Default is \code{'rmax'}.}
+Default is \code{NULL}.}
 
 \item{path}{a \code{character} string. The directory to save formatted data.
 This directory must exist and can be an absolute or a relative path.
@@ -209,7 +209,7 @@ order. When one is found valid (no missing value), a 95\% CI is derived
 assuming a normal distribution.
 The field \code{stat_method} must be present in \code{data} to indicate
 if counts are \strong{total counts} (\code{'T'}), \strong{sampling} (\code{'S'}), or
-\strong{guesstimate} (\code{'G'}).
+\strong{guesstimate} (\code{'X'}).
 
 If a series mixes aerial and ground counts, a field \code{field_method} must
 also be present and must contain either \code{'A'} (aerial counts), or \code{'G'}
@@ -247,7 +247,13 @@ garamba <- read.csv(file = file_path)
 temp_path <- tempdir()
 
 ## Format dataset ----
-garamba_formatted <- popbayes::format_data(garamba, path = temp_path)
+garamba_formatted <- popbayes::format_data(
+  data              = garamba, 
+  path              = temp_path,
+  field_method      = "field_method",
+  pref_field_method = "pref_field_method",
+  conversion_A2G    = "conversion_A2G",
+  rmax              = "rmax")
 
 ## Number of count series ----
 length(garamba_formatted)
