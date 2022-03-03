@@ -35,10 +35,10 @@ get_series <- function(data, quiet = TRUE) {
   
   if (!quiet)
     usethis::ui_done(paste0("Detecting {usethis::ui_value(nrow(series_infos))}",
-                            " series (with {usethis::ui_value(length(unique(",
-                            "series_infos$location)))} locations and ",
+                            " series with {usethis::ui_value(length(unique(",
+                            "series_infos$location)))} location(s) and ",
                             "{usethis::ui_value(length(unique(",
-                            "series_infos$species)))} species)."))
+                            "series_infos$species)))} species"))
   
   series_infos
 }
