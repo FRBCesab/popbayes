@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">popbayes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -419,16 +419,16 @@ Framework of <code>popbayes</code>
 <div class="section level3">
 <h3 id="statistical-method">Statistical method<a class="anchor" aria-label="anchor" href="#statistical-method"></a>
 </h3>
-<p>In addition to the fields <code>location</code>, <code>species</code>, <code>date</code>, and <code>count</code>, a fourth field is <strong>mandatory</strong>: <code>stat_method</code>. This field specifies the census method that produced the count. It can be <code>T</code> for a total count, <code>G</code> for a guesstimate (i.e. expert estimate), or <code>S</code> for a sampling count.</p>
+<p>In addition to the fields <code>location</code>, <code>species</code>, <code>date</code>, and <code>count</code>, a fourth field is <strong>mandatory</strong>: <code>stat_method</code>. This field specifies the census method that produced the count. It can be <code>T</code> for a total count, <code>X</code> for a guesstimate (i.e. expert estimate), or <code>S</code> for a sampling count.</p>
 <p>To be usable by the Bayesian model, individual counts are to be accompanied by information on precision in the form of a 95% confidence interval. If counts are :</p>
 <ul>
 <li>
-<code>T</code> or <code>G</code>, a confidence interval will be computed automatically by the function <code><a href="../reference/format_data.html">format_data()</a></code> according respectively to the following formulas:</li>
+<code>T</code> or <code>X</code>, a confidence interval will be computed automatically by the function <code><a href="../reference/format_data.html">format_data()</a></code> according respectively to the following formulas:</li>
 </ul>
-<p><span class="math display">\[ CI_{(T)} = [\ 0.95 \times count\ ; 1.20 \times count\ ] \]</span> <span class="math display">\[ CI_{(G)} = [\ 0.80 \times count\ ; 1.20 \times count\ ] \]</span></p>
+<p><span class="math display">\[ CI_{(T)} = [\ 0.95 \times count\ ; 1.20 \times count\ ] \]</span> <span class="math display">\[ CI_{(X)} = [\ 0.80 \times count\ ; 1.20 \times count\ ] \]</span></p>
 <ul>
 <li>
-<code>S</code>, users <strong>need to supply</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively, it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts may have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case, three precision columns would be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>). An <code>S</code> count with no measure of precision will be detected as an anomaly by <code><a href="../reference/format_data.html">format_data()</a></code> by default. The option ‘na.rm = TRUE’ may be used to automatically remove such counts from the series. If it is desirable to maintain such counts in the count series, we suggest to enter a value for the coefficient of variation, e.g. the average coefficient of variation of the other counts in the series.</li>
+<code>S</code>, users <strong>need to supply</strong> a measure of precision. Precision is preferably provided in the form of a 95% CI by means of two fields: <code>lower_ci</code> and <code>upper_ci</code> (as in the <code>garamba</code> dataset). Alternatively, it may also be given in the form of a standard deviation (<code>sd</code>), a variance (<code>var</code>), or a coefficient of variation (<code>cv</code>). Note that precision metrics can be different between counts. For instance, some <code>S</code> counts may have an <code>sd</code> value and others <code>lower_ci</code> and <code>upper_ci</code>. In that case, three precision columns would be required (<code>lower_ci</code>, <code>upper_ci</code>, and <code>sd</code>). An <code>S</code> count with no measure of precision will be detected as an anomaly by <code><a href="../reference/format_data.html">format_data()</a></code> by default. The option <code>na.rm = TRUE</code> may be used to automatically remove such counts from the series. If it is desirable to maintain such counts in the count series, we suggest to enter a value for the coefficient of variation, e.g. the average coefficient of variation of the other counts in the series.</li>
 </ul>
 <p><br></p>
 </div>
@@ -722,7 +722,7 @@ Framework of <code>popbayes</code>
 
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"stat_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
-<p>Field <strong><code>stat_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>T</code>, <code>G</code>, or <code>S</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p>Field <strong><code>stat_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>T</code>, <code>X</code>, or <code>S</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
 <p><br></p>
 <p><strong>Check <code>field_method</code> field</strong></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -731,7 +731,7 @@ Framework of <code>popbayes</code>
 
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">garamba</span><span class="op">$</span><span class="st">"field_method"</span><span class="op">)</span><span class="op">)</span>   <span class="co"># Are there any missing values?</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
-<p>Field <strong><code>field_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>A</code>, or <code>T</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
+<p>Field <strong><code>field_method</code></strong> can be either a <code>character</code> or a <code>factor</code>. It <strong>must</strong> contain only <code>A</code>, or <code>G</code> categories and <strong>cannot</strong> contain any <code>NA</code> values.</p>
 <p><br></p>
 </div>
 <div class="section level2">
@@ -746,8 +746,41 @@ Framework of <code>popbayes</code>
 <p>The function <code><a href="../reference/format_data.html">format_data()</a></code> has many arguments to provide the names of the columns in the user’s dataset that contain <code>location</code>, <code>species</code>, <code>lower_ci</code>, etc. By default column names are the same as in the Garamba dataset. If your location field, say, is “site”, you’ll need to use the argument <code>location</code> as follows: <code>location = "site"</code>.</p>
 <p><br></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">garamba</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #00BB00;">✔</span> Conversion data found in 'data'.</span>
+<code class="sourceCode R"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/format_data.html">format_data</a></span><span class="op">(</span>data              <span class="op">=</span> <span class="va">garamba</span>, 
+                                           path              <span class="op">=</span> <span class="va">path</span>,
+                                           field_method      <span class="op">=</span> <span class="st">"field_method"</span>,
+                                           pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,
+                                           conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,
+                                           rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span>
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (data[sampling_rows, "lower_ci_orig"] == data[sampling_rows, : the</span>
+<span class="co">#&gt; condition has length &gt; 1 and only the first element will be used</span>
 <span class="co">#&gt; <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span></code></pre></div>
 <p><br></p>
 <p>As said above, if you have to add your own count conversion data, you need specify the names of columns for the preferred field method, the conversion factor, and rmax as this: <code>pref_field_method = "column_with_preferred_field_method"</code>, <code>conversion_A2G = "column_with_conversion_A2Gor"</code>, <code>rmax = "column_with_conversion_rmax"</code>, or alternatively use the argument <code>info</code>: <code>info = "dataframe_with_conversion_info"</code>.</p>
@@ -811,72 +844,104 @@ Framework of <code>popbayes</code>
 <span class="co">#&gt; [1] 0.2748</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $garamba__alcelaphus_buselaphus$data_original</span>
-<span class="co">#&gt;    location               species date stat_method field_method count_orig</span>
-<span class="co">#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A       7750</span>
-<span class="co">#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A       1932</span>
-<span class="co">#&gt; 3   Garamba Alcelaphus buselaphus 1984           S            A       1224</span>
-<span class="co">#&gt; 4   Garamba Alcelaphus buselaphus 1986           S            A       1705</span>
-<span class="co">#&gt; 5   Garamba Alcelaphus buselaphus 1991           S            A        987</span>
-<span class="co">#&gt; 6   Garamba Alcelaphus buselaphus 1993           S            A       3444</span>
-<span class="co">#&gt; 7   Garamba Alcelaphus buselaphus 1995           S            A       2819</span>
-<span class="co">#&gt; 8   Garamba Alcelaphus buselaphus 1998           S            A       1685</span>
-<span class="co">#&gt; 9   Garamba Alcelaphus buselaphus 2000           S            A       1169</span>
-<span class="co">#&gt; 10  Garamba Alcelaphus buselaphus 2002           S            A       1139</span>
-<span class="co">#&gt; 11  Garamba Alcelaphus buselaphus 2003           S            A       1595</span>
-<span class="co">#&gt; 12  Garamba Alcelaphus buselaphus 2004           S            A       1204</span>
-<span class="co">#&gt; 13  Garamba Alcelaphus buselaphus 2012           T            A        552</span>
-<span class="co">#&gt; 14  Garamba Alcelaphus buselaphus 2014           T            A        698</span>
-<span class="co">#&gt; 15  Garamba Alcelaphus buselaphus 2017           T            A       1051</span>
-<span class="co">#&gt;    lower_ci_orig upper_ci_orig</span>
-<span class="co">#&gt; 1           6280          9220</span>
-<span class="co">#&gt; 2           1120          2744</span>
-<span class="co">#&gt; 3            782          1666</span>
-<span class="co">#&gt; 4           1116          2294</span>
-<span class="co">#&gt; 5            663          1311</span>
-<span class="co">#&gt; 6           1290          5598</span>
-<span class="co">#&gt; 7           1620          4018</span>
-<span class="co">#&gt; 8           1287          2083</span>
-<span class="co">#&gt; 9            945          1393</span>
-<span class="co">#&gt; 10           907          1371</span>
-<span class="co">#&gt; 11          1142          2048</span>
-<span class="co">#&gt; 12           811          1597</span>
-<span class="co">#&gt; 13            NA            NA</span>
-<span class="co">#&gt; 14            NA            NA</span>
-<span class="co">#&gt; 15            NA            NA</span>
+<span class="co">#&gt;    location               species date stat_method field_method</span>
+<span class="co">#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A</span>
+<span class="co">#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A</span>
+<span class="co">#&gt; 3   Garamba Alcelaphus buselaphus 1984           S            A</span>
+<span class="co">#&gt; 4   Garamba Alcelaphus buselaphus 1986           S            A</span>
+<span class="co">#&gt; 5   Garamba Alcelaphus buselaphus 1991           S            A</span>
+<span class="co">#&gt; 6   Garamba Alcelaphus buselaphus 1993           S            A</span>
+<span class="co">#&gt; 7   Garamba Alcelaphus buselaphus 1995           S            A</span>
+<span class="co">#&gt; 8   Garamba Alcelaphus buselaphus 1998           S            A</span>
+<span class="co">#&gt; 9   Garamba Alcelaphus buselaphus 2000           S            A</span>
+<span class="co">#&gt; 10  Garamba Alcelaphus buselaphus 2002           S            A</span>
+<span class="co">#&gt; 11  Garamba Alcelaphus buselaphus 2003           S            A</span>
+<span class="co">#&gt; 12  Garamba Alcelaphus buselaphus 2004           S            A</span>
+<span class="co">#&gt; 13  Garamba Alcelaphus buselaphus 2012           T            A</span>
+<span class="co">#&gt; 14  Garamba Alcelaphus buselaphus 2014           T            A</span>
+<span class="co">#&gt; 15  Garamba Alcelaphus buselaphus 2017           T            A</span>
+<span class="co">#&gt;    pref_field_method conversion_A2G   rmax count_orig lower_ci_orig</span>
+<span class="co">#&gt; 1                  G          2.302 0.2748       7750          6280</span>
+<span class="co">#&gt; 2                  G          2.302 0.2748       1932          1120</span>
+<span class="co">#&gt; 3                  G          2.302 0.2748       1224           782</span>
+<span class="co">#&gt; 4                  G          2.302 0.2748       1705          1116</span>
+<span class="co">#&gt; 5                  G          2.302 0.2748        987           663</span>
+<span class="co">#&gt; 6                  G          2.302 0.2748       3444          1290</span>
+<span class="co">#&gt; 7                  G          2.302 0.2748       2819          1620</span>
+<span class="co">#&gt; 8                  G          2.302 0.2748       1685          1287</span>
+<span class="co">#&gt; 9                  G          2.302 0.2748       1169           945</span>
+<span class="co">#&gt; 10                 G          2.302 0.2748       1139           907</span>
+<span class="co">#&gt; 11                 G          2.302 0.2748       1595          1142</span>
+<span class="co">#&gt; 12                 G          2.302 0.2748       1204           811</span>
+<span class="co">#&gt; 13                 G          2.302 0.2748        552            NA</span>
+<span class="co">#&gt; 14                 G          2.302 0.2748        698            NA</span>
+<span class="co">#&gt; 15                 G          2.302 0.2748       1051            NA</span>
+<span class="co">#&gt;    upper_ci_orig</span>
+<span class="co">#&gt; 1           9220</span>
+<span class="co">#&gt; 2           2744</span>
+<span class="co">#&gt; 3           1666</span>
+<span class="co">#&gt; 4           2294</span>
+<span class="co">#&gt; 5           1311</span>
+<span class="co">#&gt; 6           5598</span>
+<span class="co">#&gt; 7           4018</span>
+<span class="co">#&gt; 8           2083</span>
+<span class="co">#&gt; 9           1393</span>
+<span class="co">#&gt; 10          1371</span>
+<span class="co">#&gt; 11          2048</span>
+<span class="co">#&gt; 12          1597</span>
+<span class="co">#&gt; 13            NA</span>
+<span class="co">#&gt; 14            NA</span>
+<span class="co">#&gt; 15            NA</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $garamba__alcelaphus_buselaphus$data_converted</span>
-<span class="co">#&gt;    location               species date stat_method field_method count_conv</span>
-<span class="co">#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A  17840.500</span>
-<span class="co">#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A   4447.464</span>
-<span class="co">#&gt; 3   Garamba Alcelaphus buselaphus 1984           S            A   2817.648</span>
-<span class="co">#&gt; 4   Garamba Alcelaphus buselaphus 1986           S            A   3924.910</span>
-<span class="co">#&gt; 5   Garamba Alcelaphus buselaphus 1991           S            A   2272.074</span>
-<span class="co">#&gt; 6   Garamba Alcelaphus buselaphus 1993           S            A   7928.088</span>
-<span class="co">#&gt; 7   Garamba Alcelaphus buselaphus 1995           S            A   6489.338</span>
-<span class="co">#&gt; 8   Garamba Alcelaphus buselaphus 1998           S            A   3878.870</span>
-<span class="co">#&gt; 9   Garamba Alcelaphus buselaphus 2000           S            A   2691.038</span>
-<span class="co">#&gt; 10  Garamba Alcelaphus buselaphus 2002           S            A   2621.978</span>
-<span class="co">#&gt; 11  Garamba Alcelaphus buselaphus 2003           S            A   3671.690</span>
-<span class="co">#&gt; 12  Garamba Alcelaphus buselaphus 2004           S            A   2771.608</span>
-<span class="co">#&gt; 13  Garamba Alcelaphus buselaphus 2012           T            A   1270.704</span>
-<span class="co">#&gt; 14  Garamba Alcelaphus buselaphus 2014           T            A   1606.796</span>
-<span class="co">#&gt; 15  Garamba Alcelaphus buselaphus 2017           T            A   2419.402</span>
-<span class="co">#&gt;    lower_ci_conv upper_ci_conv field_method_conv</span>
-<span class="co">#&gt; 1      14456.560     21224.440                 G</span>
-<span class="co">#&gt; 2       2578.240      6316.688                 G</span>
-<span class="co">#&gt; 3       1800.164      3835.132                 G</span>
-<span class="co">#&gt; 4       2569.032      5280.788                 G</span>
-<span class="co">#&gt; 5       1526.226      3017.922                 G</span>
-<span class="co">#&gt; 6       2969.580     12886.596                 G</span>
-<span class="co">#&gt; 7       3729.240      9249.436                 G</span>
-<span class="co">#&gt; 8       2962.674      4795.066                 G</span>
-<span class="co">#&gt; 9       2175.390      3206.686                 G</span>
-<span class="co">#&gt; 10      2087.914      3156.042                 G</span>
-<span class="co">#&gt; 11      2628.884      4714.496                 G</span>
-<span class="co">#&gt; 12      1866.922      3676.294                 G</span>
-<span class="co">#&gt; 13      1207.169      1524.845                 G</span>
-<span class="co">#&gt; 14      1526.456      1928.155                 G</span>
-<span class="co">#&gt; 15      2298.432      2903.282                 G</span></code></pre></div>
+<span class="co">#&gt;    location               species date stat_method field_method</span>
+<span class="co">#&gt; 1   Garamba Alcelaphus buselaphus 1976           S            A</span>
+<span class="co">#&gt; 2   Garamba Alcelaphus buselaphus 1983           S            A</span>
+<span class="co">#&gt; 3   Garamba Alcelaphus buselaphus 1984           S            A</span>
+<span class="co">#&gt; 4   Garamba Alcelaphus buselaphus 1986           S            A</span>
+<span class="co">#&gt; 5   Garamba Alcelaphus buselaphus 1991           S            A</span>
+<span class="co">#&gt; 6   Garamba Alcelaphus buselaphus 1993           S            A</span>
+<span class="co">#&gt; 7   Garamba Alcelaphus buselaphus 1995           S            A</span>
+<span class="co">#&gt; 8   Garamba Alcelaphus buselaphus 1998           S            A</span>
+<span class="co">#&gt; 9   Garamba Alcelaphus buselaphus 2000           S            A</span>
+<span class="co">#&gt; 10  Garamba Alcelaphus buselaphus 2002           S            A</span>
+<span class="co">#&gt; 11  Garamba Alcelaphus buselaphus 2003           S            A</span>
+<span class="co">#&gt; 12  Garamba Alcelaphus buselaphus 2004           S            A</span>
+<span class="co">#&gt; 13  Garamba Alcelaphus buselaphus 2012           T            A</span>
+<span class="co">#&gt; 14  Garamba Alcelaphus buselaphus 2014           T            A</span>
+<span class="co">#&gt; 15  Garamba Alcelaphus buselaphus 2017           T            A</span>
+<span class="co">#&gt;    pref_field_method conversion_A2G   rmax count_conv lower_ci_conv</span>
+<span class="co">#&gt; 1                  G          2.302 0.2748  17840.500     14456.560</span>
+<span class="co">#&gt; 2                  G          2.302 0.2748   4447.464      2578.240</span>
+<span class="co">#&gt; 3                  G          2.302 0.2748   2817.648      1800.164</span>
+<span class="co">#&gt; 4                  G          2.302 0.2748   3924.910      2569.032</span>
+<span class="co">#&gt; 5                  G          2.302 0.2748   2272.074      1526.226</span>
+<span class="co">#&gt; 6                  G          2.302 0.2748   7928.088      2969.580</span>
+<span class="co">#&gt; 7                  G          2.302 0.2748   6489.338      3729.240</span>
+<span class="co">#&gt; 8                  G          2.302 0.2748   3878.870      2962.674</span>
+<span class="co">#&gt; 9                  G          2.302 0.2748   2691.038      2175.390</span>
+<span class="co">#&gt; 10                 G          2.302 0.2748   2621.978      2087.914</span>
+<span class="co">#&gt; 11                 G          2.302 0.2748   3671.690      2628.884</span>
+<span class="co">#&gt; 12                 G          2.302 0.2748   2771.608      1866.922</span>
+<span class="co">#&gt; 13                 G          2.302 0.2748   1270.704      1207.169</span>
+<span class="co">#&gt; 14                 G          2.302 0.2748   1606.796      1526.456</span>
+<span class="co">#&gt; 15                 G          2.302 0.2748   2419.402      2298.432</span>
+<span class="co">#&gt;    upper_ci_conv field_method_conv</span>
+<span class="co">#&gt; 1      21224.440                 G</span>
+<span class="co">#&gt; 2       6316.688                 G</span>
+<span class="co">#&gt; 3       3835.132                 G</span>
+<span class="co">#&gt; 4       5280.788                 G</span>
+<span class="co">#&gt; 5       3017.922                 G</span>
+<span class="co">#&gt; 6      12886.596                 G</span>
+<span class="co">#&gt; 7       9249.436                 G</span>
+<span class="co">#&gt; 8       4795.066                 G</span>
+<span class="co">#&gt; 9       3206.686                 G</span>
+<span class="co">#&gt; 10      3156.042                 G</span>
+<span class="co">#&gt; 11      4714.496                 G</span>
+<span class="co">#&gt; 12      3676.294                 G</span>
+<span class="co">#&gt; 13      1524.845                 G</span>
+<span class="co">#&gt; 14      1928.155                 G</span>
+<span class="co">#&gt; 15      2903.282                 G</span></code></pre></div>
 <p><br></p>
 <p>The first elements of the list provide a summary of the count series.</p>
 <p>If we compare the two last data frames (<code>data_original</code> and <code>data_converted</code>), they are not identical. The function <code><a href="../reference/format_data.html">format_data()</a></code> has <strong>1)</strong> computed 95% CI boundaries for total counts (coded <code>T</code> in the column <code>stat_method</code>), and <strong>2)</strong> converted all counts (and CI boundaries) to their equivalent in the preferred field method (from <code>A</code> to <code>G</code>) by applying the conversion factor of <code>2.302</code>.</p>
@@ -928,11 +993,14 @@ Framework of <code>popbayes</code>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/diagnostic.html">diagnostic</a></span><span class="op">(</span><span class="va">a_buselaphus_bugs</span><span class="op">)</span>
 <span class="co">#&gt; All models have converged.</span></code></pre></div>
-<p>In case convergence was not reached for some series, we suggest rerunning fit_trend() on these series after increasing the number of iterations (<strong>ni</strong>) and possibly the number of initial iterations discarded (<strong>nb</strong>) from their respective defaults of 50000 and 10000, e.g.  a_buselaphus_bugs &lt;- popbayes::fit_trend(a_buselaphus, path = path, ni = 100000, nb = 20000). This process may be repeated with increasing values of <strong>ni</strong> and <strong>nb</strong> until convergence is eventually reached.</p>
+<p>In case convergence was not reached for some series, we suggest rerunning <code><a href="../reference/fit_trend.html">fit_trend()</a></code> on these series after increasing the number of iterations (<strong>ni</strong>) and possibly the number of initial iterations discarded (<strong>nb</strong>) from their respective defaults of 50,000 and 10,000. For example:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a_buselaphus_bugs</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">path</span>, ni <span class="op">=</span> <span class="fl">100000</span>, nb <span class="op">=</span> <span class="fl">20000</span><span class="op">)</span></code></pre></div>
+<p>This process may be repeated with increasing values of <strong>ni</strong> and <strong>nb</strong> until convergence is eventually reached.</p>
 <p><br></p>
 <p>Finally we can use the function <code><a href="../reference/plot_trend.html">plot_trend()</a></code> to visualize model predictions and estimated yearly relative growth rates.</p>
 <p><br></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_trend.html">plot_trend</a></span><span class="op">(</span><span class="st">"garamba__alcelaphus_buselaphus"</span>, path <span class="op">=</span> <span class="va">path</span><span class="op">)</span></code></pre></div>
 <p><img src="docs/garamba__alcelaphus_buselaphus.png" width="100%" style="display: block; margin: auto;"></p>
 <p><br></p>

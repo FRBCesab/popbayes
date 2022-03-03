@@ -18,7 +18,7 @@ fit_trend(). Users can import one, several, or all models."><!-- mathjax --><scr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">popbayes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1</span>
       </span>
     </div>
 
@@ -30,7 +30,7 @@ fit_trend(). Users can import one, several, or all models."><!-- mathjax --><scr
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -100,8 +100,23 @@ been saved by the function <code><a href="fit_trend.html">fit_trend()</a></code>
 <span class="r-in"><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Format dataset ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span><span class="va">garamba</span>, path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Conversion data found in 'data'.</span>
+<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span></span>
+<span class="r-in">  data              <span class="op">=</span> <span class="va">garamba</span>, </span>
+<span class="r-in">  path              <span class="op">=</span> <span class="va">temp_path</span>,</span>
+<span class="r-in">  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span>
+<span class="r-in">  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span>
+<span class="r-in">  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span>
+<span class="r-in">  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Select one serie ----</span></span>
@@ -136,79 +151,79 @@ been saved by the function <code><a href="fit_trend.html">fit_trend()</a></code>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2 chains, each with 50000 iterations (first 10000 discarded), n.thin = 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  n.sims = 26666 iterations saved</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mu.vect  sd.vect      2.5%       25%       50%       75%     97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     17653.374 1709.875 14293.416 16500.262 17670.895 18788.744 21013.284</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[2]      3877.572  507.906  2924.494  3526.800  3859.274  4215.326  4910.025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]      3334.692  393.875  2565.487  3064.603  3334.835  3602.807  4108.442</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]      3035.278  431.005  2235.066  2739.158  3021.576  3316.903  3922.510</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]      2658.386  328.199  2022.471  2434.520  2652.234  2879.177  3310.742</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]      3182.195  534.831  2234.229  2805.697  3143.962  3523.175  4328.668</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]      3700.213  662.011  2556.281  3232.193  3643.074  4113.770  5130.826</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]      3472.790  368.289  2773.647  3218.876  3466.432  3714.664  4210.885</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]      2887.415  208.366  2484.422  2746.145  2885.442  3026.124  3302.663</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]     2751.235  207.891  2343.517  2611.320  2749.842  2889.875  3163.045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]     2755.960  261.105  2254.244  2578.023  2754.211  2925.636  3278.103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]     2626.435  301.551  2054.402  2421.871  2617.986  2826.383  3234.788</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]     1311.203   73.273  1168.945  1261.812  1310.886  1360.306  1456.269</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]     1570.938   90.413  1392.626  1510.284  1570.689  1631.773  1748.795</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[15]     2394.487  151.500  2098.620  2292.305  2393.208  2496.723  2692.175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     17628.342 1749.497 14127.177 16477.078 17626.147 18815.766 21032.923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[2]      3877.939  497.609  2939.413  3532.063  3867.807  4206.319  4881.145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]      3332.164  387.247  2595.767  3065.740  3325.882  3590.591  4108.228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]      3029.488  429.109  2226.834  2731.695  3012.426  3304.324  3924.424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]      2672.947  326.409  2043.502  2449.650  2671.501  2892.976  3314.698</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]      3221.658  542.762  2244.574  2843.037  3190.896  3567.742  4363.613</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]      3749.076  665.783  2575.113  3283.165  3706.331  4164.941  5191.973</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]      3472.736  362.762  2775.785  3226.320  3469.065  3715.057  4200.518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]      2884.558  208.090  2485.878  2743.385  2880.110  3022.770  3301.356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]     2754.341  204.832  2357.380  2615.210  2751.522  2891.545  3161.784</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]     2760.163  255.511  2272.204  2584.904  2754.556  2932.807  3272.415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]     2635.338  297.107  2067.823  2430.387  2626.459  2834.928  3235.580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]     1310.147   73.758  1167.239  1259.853  1309.863  1360.313  1454.632</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]     1570.825   89.342  1397.673  1510.740  1570.105  1631.414  1748.812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[15]     2392.404  152.735  2093.923  2288.909  2392.196  2496.518  2691.311</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> meanr       -0.049    0.003    -0.054    -0.051    -0.049    -0.047    -0.043</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]        -0.217    0.022    -0.262    -0.232    -0.217    -0.202    -0.174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]        -0.149    0.070    -0.287    -0.197    -0.149    -0.102    -0.013</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]        -0.049    0.061    -0.168    -0.089    -0.048    -0.008     0.071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]        -0.026    0.034    -0.091    -0.049    -0.026    -0.003     0.040</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]         0.087    0.063    -0.040     0.044     0.087     0.130     0.213</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]         0.075    0.058    -0.040     0.036     0.074     0.113     0.188</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]        -0.018    0.052    -0.119    -0.053    -0.018     0.017     0.082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]        -0.091    0.050    -0.187    -0.125    -0.091    -0.058     0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]        -0.024    0.044    -0.112    -0.054    -0.024     0.006     0.061</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]        0.000    0.066    -0.132    -0.043     0.001     0.045     0.128</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]       -0.050    0.066    -0.181    -0.094    -0.050    -0.006     0.079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]       -0.086    0.016    -0.116    -0.097    -0.087    -0.076    -0.054</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]        0.090    0.036     0.020     0.066     0.090     0.114     0.160</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[14]        0.140    0.027     0.086     0.122     0.141     0.159     0.193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sdr          0.112    0.009     0.095     0.105     0.111     0.118     0.131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax       0.459    0.038     0.389     0.433     0.458     0.484     0.538</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> deviance   236.268    5.160   227.455   232.659   235.815   239.378   247.695</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]        -0.217    0.023    -0.260    -0.232    -0.217    -0.202    -0.172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]        -0.150    0.069    -0.286    -0.197    -0.150    -0.103    -0.015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]        -0.049    0.060    -0.168    -0.090    -0.049    -0.008     0.069</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]        -0.025    0.033    -0.090    -0.047    -0.024    -0.002     0.040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]         0.090    0.064    -0.035     0.046     0.090     0.133     0.220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]         0.075    0.058    -0.037     0.036     0.074     0.113     0.190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]        -0.022    0.051    -0.122    -0.056    -0.023     0.012     0.080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]        -0.091    0.050    -0.187    -0.125    -0.093    -0.058     0.011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]        -0.023    0.044    -0.109    -0.052    -0.023     0.006     0.062</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]        0.001    0.066    -0.131    -0.043     0.002     0.046     0.128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]       -0.048    0.066    -0.179    -0.092    -0.048    -0.003     0.080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]       -0.087    0.015    -0.116    -0.097    -0.087    -0.077    -0.056</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]        0.091    0.036     0.021     0.066     0.091     0.115     0.161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[14]        0.140    0.028     0.085     0.122     0.140     0.159     0.193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdr          0.112    0.009     0.094     0.105     0.111     0.118     0.130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax       0.460    0.038     0.388     0.434     0.459     0.484     0.537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deviance   236.071    5.179   227.367   232.374   235.648   239.250   247.494</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Rhat n.eff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     1.001  6600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     1.001  6200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> N[2]     1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]     1.002  1900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]     1.003   600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]     1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]     1.001  7800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]     1.001  4300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]     1.001  4700</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]     1.001 17000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]    1.001  5200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]    1.001  3600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]    1.002  2100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]    1.001 24000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]    1.001 15000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]     1.001 14000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]     1.001  8600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]     1.001 22000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]     1.001  3500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]     1.001 13000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]    1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]    1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]    1.001  4100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]    1.001 15000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]    1.001 21000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> N[15]    1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> meanr    1.001  9300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]     1.001  6300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]     1.002  1300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]     1.002  1500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]     1.003   840</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]     1.001  4800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]     1.001 21000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]     1.002  1300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]     1.002  2300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]     1.001  3100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]    1.001 15000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]    1.001  5000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]    1.002  1900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]    1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> meanr    1.001 11000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]     1.001 23000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]     1.001  9800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]     1.002  4300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]     1.002  2600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]     1.001  3800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]     1.001  4100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]     1.001 12000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]    1.001 10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]    1.002  2700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]    1.001  3000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]    1.001  6900</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> r[14]    1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sdr      1.001  3000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax   1.001  3000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> deviance 1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdr      1.002  2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax   1.002  2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deviance 1.002  2000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> For each parameter, n.eff is a crude measure of effective sample size,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> and Rhat is the potential scale reduction factor (at convergence, Rhat=1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DIC info (using the rule, pD = var(deviance)/2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pD = 13.3 and DIC = 249.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pD = 13.4 and DIC = 249.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DIC is an estimate of expected predictive error (lower deviance is better).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
@@ -219,79 +234,79 @@ been saved by the function <code><a href="fit_trend.html">fit_trend()</a></code>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2 chains, each with 50000 iterations (first 10000 discarded), n.thin = 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  n.sims = 26666 iterations saved</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mu.vect  sd.vect      2.5%       25%       50%       75%     97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     17653.374 1709.875 14293.416 16500.262 17670.895 18788.744 21013.284</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[2]      3877.572  507.906  2924.494  3526.800  3859.274  4215.326  4910.025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]      3334.692  393.875  2565.487  3064.603  3334.835  3602.807  4108.442</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]      3035.278  431.005  2235.066  2739.158  3021.576  3316.903  3922.510</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]      2658.386  328.199  2022.471  2434.520  2652.234  2879.177  3310.742</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]      3182.195  534.831  2234.229  2805.697  3143.962  3523.175  4328.668</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]      3700.213  662.011  2556.281  3232.193  3643.074  4113.770  5130.826</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]      3472.790  368.289  2773.647  3218.876  3466.432  3714.664  4210.885</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]      2887.415  208.366  2484.422  2746.145  2885.442  3026.124  3302.663</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]     2751.235  207.891  2343.517  2611.320  2749.842  2889.875  3163.045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]     2755.960  261.105  2254.244  2578.023  2754.211  2925.636  3278.103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]     2626.435  301.551  2054.402  2421.871  2617.986  2826.383  3234.788</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]     1311.203   73.273  1168.945  1261.812  1310.886  1360.306  1456.269</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]     1570.938   90.413  1392.626  1510.284  1570.689  1631.773  1748.795</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[15]     2394.487  151.500  2098.620  2292.305  2393.208  2496.723  2692.175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     17628.342 1749.497 14127.177 16477.078 17626.147 18815.766 21032.923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[2]      3877.939  497.609  2939.413  3532.063  3867.807  4206.319  4881.145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]      3332.164  387.247  2595.767  3065.740  3325.882  3590.591  4108.228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]      3029.488  429.109  2226.834  2731.695  3012.426  3304.324  3924.424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]      2672.947  326.409  2043.502  2449.650  2671.501  2892.976  3314.698</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]      3221.658  542.762  2244.574  2843.037  3190.896  3567.742  4363.613</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]      3749.076  665.783  2575.113  3283.165  3706.331  4164.941  5191.973</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]      3472.736  362.762  2775.785  3226.320  3469.065  3715.057  4200.518</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]      2884.558  208.090  2485.878  2743.385  2880.110  3022.770  3301.356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]     2754.341  204.832  2357.380  2615.210  2751.522  2891.545  3161.784</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]     2760.163  255.511  2272.204  2584.904  2754.556  2932.807  3272.415</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]     2635.338  297.107  2067.823  2430.387  2626.459  2834.928  3235.580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]     1310.147   73.758  1167.239  1259.853  1309.863  1360.313  1454.632</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]     1570.825   89.342  1397.673  1510.740  1570.105  1631.414  1748.812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[15]     2392.404  152.735  2093.923  2288.909  2392.196  2496.518  2691.311</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> meanr       -0.049    0.003    -0.054    -0.051    -0.049    -0.047    -0.043</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]        -0.217    0.022    -0.262    -0.232    -0.217    -0.202    -0.174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]        -0.149    0.070    -0.287    -0.197    -0.149    -0.102    -0.013</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]        -0.049    0.061    -0.168    -0.089    -0.048    -0.008     0.071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]        -0.026    0.034    -0.091    -0.049    -0.026    -0.003     0.040</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]         0.087    0.063    -0.040     0.044     0.087     0.130     0.213</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]         0.075    0.058    -0.040     0.036     0.074     0.113     0.188</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]        -0.018    0.052    -0.119    -0.053    -0.018     0.017     0.082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]        -0.091    0.050    -0.187    -0.125    -0.091    -0.058     0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]        -0.024    0.044    -0.112    -0.054    -0.024     0.006     0.061</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]        0.000    0.066    -0.132    -0.043     0.001     0.045     0.128</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]       -0.050    0.066    -0.181    -0.094    -0.050    -0.006     0.079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]       -0.086    0.016    -0.116    -0.097    -0.087    -0.076    -0.054</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]        0.090    0.036     0.020     0.066     0.090     0.114     0.160</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[14]        0.140    0.027     0.086     0.122     0.141     0.159     0.193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sdr          0.112    0.009     0.095     0.105     0.111     0.118     0.131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax       0.459    0.038     0.389     0.433     0.458     0.484     0.538</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> deviance   236.268    5.160   227.455   232.659   235.815   239.378   247.695</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]        -0.217    0.023    -0.260    -0.232    -0.217    -0.202    -0.172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]        -0.150    0.069    -0.286    -0.197    -0.150    -0.103    -0.015</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]        -0.049    0.060    -0.168    -0.090    -0.049    -0.008     0.069</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]        -0.025    0.033    -0.090    -0.047    -0.024    -0.002     0.040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]         0.090    0.064    -0.035     0.046     0.090     0.133     0.220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]         0.075    0.058    -0.037     0.036     0.074     0.113     0.190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]        -0.022    0.051    -0.122    -0.056    -0.023     0.012     0.080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]        -0.091    0.050    -0.187    -0.125    -0.093    -0.058     0.011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]        -0.023    0.044    -0.109    -0.052    -0.023     0.006     0.062</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]        0.001    0.066    -0.131    -0.043     0.002     0.046     0.128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]       -0.048    0.066    -0.179    -0.092    -0.048    -0.003     0.080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]       -0.087    0.015    -0.116    -0.097    -0.087    -0.077    -0.056</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]        0.091    0.036     0.021     0.066     0.091     0.115     0.161</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[14]        0.140    0.028     0.085     0.122     0.140     0.159     0.193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdr          0.112    0.009     0.094     0.105     0.111     0.118     0.130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax       0.460    0.038     0.388     0.434     0.459     0.484     0.537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deviance   236.071    5.179   227.367   232.374   235.648   239.250   247.494</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Rhat n.eff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     1.001  6600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[1]     1.001  6200</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> N[2]     1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]     1.002  1900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]     1.003   600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]     1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]     1.001  7800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]     1.001  4300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]     1.001  4700</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]     1.001 17000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]    1.001  5200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]    1.001  3600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]    1.002  2100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]    1.001 24000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]    1.001 15000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[3]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[4]     1.001 14000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[5]     1.001  8600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[6]     1.001 22000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[7]     1.001  3500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[8]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[9]     1.001 13000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[10]    1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[11]    1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[12]    1.001  4100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[13]    1.001 15000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> N[14]    1.001 21000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> N[15]    1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> meanr    1.001  9300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]     1.001  6300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]     1.002  1300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]     1.002  1500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]     1.003   840</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]     1.001  4800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]     1.001 21000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]     1.002  1300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]     1.002  2300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]     1.001  3100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]    1.001 15000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]    1.001  5000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]    1.002  1900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]    1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> meanr    1.001 11000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[1]     1.001 23000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[2]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[3]     1.001  9800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[4]     1.002  4300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[5]     1.002  2600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[6]     1.001  3800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[7]     1.001  4100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[8]     1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[9]     1.001 12000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[10]    1.001 10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[11]    1.002  2700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[12]    1.001  3000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> r[13]    1.001  6900</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> r[14]    1.001 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sdr      1.001  3000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax   1.001  3000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> deviance 1.001 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdr      1.002  2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vrrmax   1.002  2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deviance 1.002  2000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> For each parameter, n.eff is a crude measure of effective sample size,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> and Rhat is the potential scale reduction factor (at convergence, Rhat=1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DIC info (using the rule, pD = var(deviance)/2)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pD = 13.3 and DIC = 249.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pD = 13.4 and DIC = 249.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DIC is an estimate of expected predictive error (lower deviance is better).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="co"># }</span></span>

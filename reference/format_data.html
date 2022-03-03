@@ -22,7 +22,7 @@ order. When one is found valid (no missing value), a 95% CI is derived
 assuming a normal distribution.
 The field stat_method must be present in data to indicate
 if counts are total counts ('T'), sampling ('S'), or
-guesstimate ('G').
+guesstimate ('X').
 If a series mixes aerial and ground counts, a field field_method must
 also be present and must contain either 'A' (aerial counts), or 'G'
 (ground counts). As all counts must eventually refer to the same field
@@ -61,7 +61,7 @@ assumed to be obtained with one field method."><!-- mathjax --><script src="http
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">popbayes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@ assumed to be obtained with one field method."><!-- mathjax --><script src="http
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -129,7 +129,7 @@ order. When one is found valid (no missing value), a 95% CI is derived
 assuming a normal distribution.
 The field <code>stat_method</code> must be present in <code>data</code> to indicate
 if counts are <strong>total counts</strong> (<code>'T'</code>), <strong>sampling</strong> (<code>'S'</code>), or
-<strong>guesstimate</strong> (<code>'G'</code>).</p>
+<strong>guesstimate</strong> (<code>'X'</code>).</p>
 <p>If a series mixes aerial and ground counts, a field <code>field_method</code> must
 also be present and must contain either <code>'A'</code> (aerial counts), or <code>'G'</code>
 (ground counts). As all counts must eventually refer to the same field
@@ -167,10 +167,10 @@ assumed to be obtained with one field method.</p>
   sd <span class="op">=</span> <span class="cn">NULL</span>,
   var <span class="op">=</span> <span class="cn">NULL</span>,
   cv <span class="op">=</span> <span class="cn">NULL</span>,
-  field_method <span class="op">=</span> <span class="st">"field_method"</span>,
-  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,
-  conversion_A2G <span class="op">=</span> <span class="st">"conversion_A2G"</span>,
-  rmax <span class="op">=</span> <span class="st">"rmax"</span>,
+  field_method <span class="op">=</span> <span class="cn">NULL</span>,
+  pref_field_method <span class="op">=</span> <span class="cn">NULL</span>,
+  conversion_A2G <span class="op">=</span> <span class="cn">NULL</span>,
+  rmax <span class="op">=</span> <span class="cn">NULL</span>,
   path <span class="op">=</span> <span class="st">"."</span>,
   na_rm <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
@@ -182,7 +182,7 @@ assumed to be obtained with one field method.</p>
 <dd><p>a <code>data.frame</code> with at least five columns: <code>location</code>,
 <code>species</code>, <code>date</code>, <code>count</code>, and <code>stat_method</code>.</p>
 <p>The <code>stat_method</code> field indicates the method used to estimate counts. It
-can contain: <code>T</code> (total counts), <code>G</code> (guesstimate), and/or <code>S</code> (sampling).</p>
+can contain: <code>T</code> (total counts), <code>X</code> (guesstimate), and/or <code>S</code> (sampling).</p>
 <p>If individual counts were estimated by <strong>sampling</strong>, additional column(s)
 providing a measure of precision is also required (e.g. <code>lower_ci</code> and
 <code>upper_ci</code>, or <code>sd</code>, <code>cv</code>, <code>var</code>). Precision metrics can be different
@@ -226,7 +226,7 @@ Default is <code>'species'</code>.</p></dd>
 <dt>stat_method</dt>
 <dd><p>a <code>character</code> string. The column name in <code>data</code> of
 the method used to estimate individuals counts. It can contain <code>'T'</code>
-(total counts), <code>'G'</code> (guesstimate), and/or <code>'S'</code> (sampling). If some
+(total counts), <code>'X'</code> (guesstimate), and/or <code>'S'</code> (sampling). If some
 counts are coded as <code>'S'</code>, precision column(s) must also be provided (see
 below).
 Default is <code>'stat_method'</code>.</p></dd>
@@ -263,7 +263,7 @@ Default is <code>NULL</code>.</p></dd>
 counts (coded as <code>'G'</code>) or aerial counts (coded as <code>'A'</code>). This argument
 is optional if individuals have been counted by the same method. See above
 section <strong>Description</strong> for further information on the count conversion.
-Default is <code>'field_method'</code>.</p></dd>
+Default is <code>NULL</code>.</p></dd>
 <dt>pref_field_method</dt>
 <dd><p>(optional) a <code>character</code> string. The column name
 in <code>data</code> of the preferred field method of the species. This argument is
@@ -272,7 +272,7 @@ counted by different methods). Alternatively, this value can be passed in
 <code>info</code> (or internally retrieved if the species is listed in the package).
 See above section <strong>Description</strong> for further information on the count
 conversion.
-Default is <code>'pref_field_method'</code>.</p></dd>
+Default is <code>NULL</code>.</p></dd>
 <dt>conversion_A2G</dt>
 <dd><p>(optional) a <code>character</code> string. The column name
 in <code>data</code> of the count conversion factor of the species. This argument is
@@ -281,13 +281,13 @@ counted by different methods). Alternatively this value can be passed in
 <code>info</code> (or internally retrieved if the species is listed in the package).
 See above section <strong>Description</strong> for further information on the count
 conversion.
-Default is <code>'conversion_A2G'</code>.</p></dd>
+Default is <code>NULL</code>.</p></dd>
 <dt>rmax</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in <code>data</code> of
 the species demographic potential (i.e. the relative rate of increase of
 the population). This is the change in log population size between two
 dates and will be used later by <code><a href="fit_trend.html">fit_trend()</a></code>.
-Default is <code>'rmax'</code>.</p></dd>
+Default is <code>NULL</code>.</p></dd>
 <dt>path</dt>
 <dd><p>a <code>character</code> string. The directory to save formatted data.
 This directory must exist and can be an absolute or a relative path.
@@ -342,8 +342,23 @@ series contains only a few dates (&lt; 4 dates).</p>
 <span class="r-in"><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Format dataset ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">format_data</span><span class="op">(</span><span class="va">garamba</span>, path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Conversion data found in 'data'.</span>
+<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">format_data</span><span class="op">(</span></span>
+<span class="r-in">  data              <span class="op">=</span> <span class="va">garamba</span>, </span>
+<span class="r-in">  path              <span class="op">=</span> <span class="va">temp_path</span>,</span>
+<span class="r-in">  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span>
+<span class="r-in">  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span>
+<span class="r-in">  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span>
+<span class="r-in">  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>the condition has length &gt; 1 and only the first element will be used</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Number of count series ----</span></span>
@@ -367,73 +382,105 @@ series contains only a few dates (&lt; 4 dates).</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Print original data ----</span></span>
 <span class="r-in"><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="st">"data_original"</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    location               species date stat_method field_method count_orig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A       7750</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A       1932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Garamba Alcelaphus buselaphus 1984           S            A       1224</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Garamba Alcelaphus buselaphus 1986           S            A       1705</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Garamba Alcelaphus buselaphus 1991           S            A        987</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Garamba Alcelaphus buselaphus 1993           S            A       3444</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Garamba Alcelaphus buselaphus 1995           S            A       2819</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   Garamba Alcelaphus buselaphus 1998           S            A       1685</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   Garamba Alcelaphus buselaphus 2000           S            A       1169</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  Garamba Alcelaphus buselaphus 2002           S            A       1139</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  Garamba Alcelaphus buselaphus 2003           S            A       1595</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  Garamba Alcelaphus buselaphus 2004           S            A       1204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  Garamba Alcelaphus buselaphus 2012           T            A        552</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  Garamba Alcelaphus buselaphus 2014           T            A        698</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15  Garamba Alcelaphus buselaphus 2017           T            A       1051</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    lower_ci_orig upper_ci_orig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1           6280          9220</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2           1120          2744</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            782          1666</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4           1116          2294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            663          1311</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6           1290          5598</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7           1620          4018</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8           1287          2083</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9            945          1393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10           907          1371</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11          1142          2048</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12           811          1597</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13            NA            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14            NA            NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15            NA            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    location               species date stat_method field_method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Garamba Alcelaphus buselaphus 1984           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Garamba Alcelaphus buselaphus 1986           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Garamba Alcelaphus buselaphus 1991           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Garamba Alcelaphus buselaphus 1993           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Garamba Alcelaphus buselaphus 1995           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   Garamba Alcelaphus buselaphus 1998           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   Garamba Alcelaphus buselaphus 2000           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  Garamba Alcelaphus buselaphus 2002           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  Garamba Alcelaphus buselaphus 2003           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  Garamba Alcelaphus buselaphus 2004           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  Garamba Alcelaphus buselaphus 2012           T            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  Garamba Alcelaphus buselaphus 2014           T            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  Garamba Alcelaphus buselaphus 2017           T            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pref_field_method conversion_A2G   rmax count_orig lower_ci_orig</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                  G          2.302 0.2748       7750          6280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                  G          2.302 0.2748       1932          1120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                  G          2.302 0.2748       1224           782</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                  G          2.302 0.2748       1705          1116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                  G          2.302 0.2748        987           663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  G          2.302 0.2748       3444          1290</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                  G          2.302 0.2748       2819          1620</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                  G          2.302 0.2748       1685          1287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                  G          2.302 0.2748       1169           945</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                 G          2.302 0.2748       1139           907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                 G          2.302 0.2748       1595          1142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                 G          2.302 0.2748       1204           811</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                 G          2.302 0.2748        552            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                 G          2.302 0.2748        698            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                 G          2.302 0.2748       1051            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    upper_ci_orig</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1           9220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           2744</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3           1666</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           2294</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           1311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           5598</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           4018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8           2083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9           1393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10          1371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11          2048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12          1597</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15            NA</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Print converted data ----</span></span>
 <span class="r-in"><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="st">"data_converted"</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    location               species date stat_method field_method count_conv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A  17840.500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A   4447.464</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Garamba Alcelaphus buselaphus 1984           S            A   2817.648</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Garamba Alcelaphus buselaphus 1986           S            A   3924.910</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Garamba Alcelaphus buselaphus 1991           S            A   2272.074</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Garamba Alcelaphus buselaphus 1993           S            A   7928.088</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Garamba Alcelaphus buselaphus 1995           S            A   6489.338</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   Garamba Alcelaphus buselaphus 1998           S            A   3878.870</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   Garamba Alcelaphus buselaphus 2000           S            A   2691.038</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  Garamba Alcelaphus buselaphus 2002           S            A   2621.978</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  Garamba Alcelaphus buselaphus 2003           S            A   3671.690</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  Garamba Alcelaphus buselaphus 2004           S            A   2771.608</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  Garamba Alcelaphus buselaphus 2012           T            A   1270.704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  Garamba Alcelaphus buselaphus 2014           T            A   1606.796</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15  Garamba Alcelaphus buselaphus 2017           T            A   2419.402</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    lower_ci_conv upper_ci_conv field_method_conv</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      14456.560     21224.440                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2578.240      6316.688                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       1800.164      3835.132                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       2569.032      5280.788                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       1526.226      3017.922                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       2969.580     12886.596                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       3729.240      9249.436                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       2962.674      4795.066                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       2175.390      3206.686                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      2087.914      3156.042                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11      2628.884      4714.496                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      1866.922      3676.294                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      1207.169      1524.845                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14      1526.456      1928.155                 G</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15      2298.432      2903.282                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    location               species date stat_method field_method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   Garamba Alcelaphus buselaphus 1984           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   Garamba Alcelaphus buselaphus 1986           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   Garamba Alcelaphus buselaphus 1991           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   Garamba Alcelaphus buselaphus 1993           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   Garamba Alcelaphus buselaphus 1995           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   Garamba Alcelaphus buselaphus 1998           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   Garamba Alcelaphus buselaphus 2000           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  Garamba Alcelaphus buselaphus 2002           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  Garamba Alcelaphus buselaphus 2003           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  Garamba Alcelaphus buselaphus 2004           S            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  Garamba Alcelaphus buselaphus 2012           T            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  Garamba Alcelaphus buselaphus 2014           T            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  Garamba Alcelaphus buselaphus 2017           T            A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pref_field_method conversion_A2G   rmax count_conv lower_ci_conv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                  G          2.302 0.2748  17840.500     14456.560</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                  G          2.302 0.2748   4447.464      2578.240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                  G          2.302 0.2748   2817.648      1800.164</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                  G          2.302 0.2748   3924.910      2569.032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                  G          2.302 0.2748   2272.074      1526.226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  G          2.302 0.2748   7928.088      2969.580</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                  G          2.302 0.2748   6489.338      3729.240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                  G          2.302 0.2748   3878.870      2962.674</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                  G          2.302 0.2748   2691.038      2175.390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                 G          2.302 0.2748   2621.978      2087.914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                 G          2.302 0.2748   3671.690      2628.884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                 G          2.302 0.2748   2771.608      1866.922</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13                 G          2.302 0.2748   1270.704      1207.169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14                 G          2.302 0.2748   1606.796      1526.456</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15                 G          2.302 0.2748   2419.402      2298.432</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    upper_ci_conv field_method_conv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      21224.440                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       6316.688                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3835.132                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       5280.788                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       3017.922                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      12886.596                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       9249.436                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       4795.066                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       3206.686                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      3156.042                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      4714.496                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      3676.294                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13      1524.845                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14      1928.155                 G</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15      2903.282                 G</span>
 </code></pre></div>
     </div>
   </div>
