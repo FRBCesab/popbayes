@@ -1168,6 +1168,47 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
+  # ZERO COUNTS ----
+  
+  for (i in seq_along(count_series)) {
+    
+    count_series[[i]] <- zero_counts(count_series[[i]], na_rm)
+  }
+  
+  n_rows <- unlist(lapply(count_series, function(x) nrow(x)))
+  n_rows <- n_rows[n_rows == 0]
+  
+  if (length(n_rows)) {
+    
+    series_to_del <- names(n_rows)
+    count_series <- count_series[-which(names(count_series) %in% series_to_del)]
+    
+    if (length(n_rows) < length(count_series)) {
+      usethis::ui_oops(paste0("Removing the following series without valid ", 
+                              "precision measures: ", 
+                              usethis::ui_value(paste0(series_to_del, 
+                                                       collapse = ", "))))
+    }
+  }
+  
+  if (length(count_series) == 0) {
+    stop("All your series have been removed. Please check your data.")
+  }
+  
+  
+  # FINAL CHECKS ----
+  
+  for (i in seq_along(count_series)) {
+    
+    if (any(count_series[[i]][ , "lower_ci_conv"] ==
+            count_series[[i]][ , "upper_ci_conv"])) {
+      stop(paste0("Lower and upper CI bounds cannot be strictly equal for ", 
+                  "the series.", 
+                  usethis::ui_value(names(count_series)[i])))
+    }
+  }
+  
+  
   # CREATE FINAL LIST ----
   
   data_series    <- list()
@@ -1400,14 +1441,6 @@ is_na_precision <- function(data, precision_cols, na_rm) {
         
         if (length(pos)) {
           stop("Upper CI values must be positive.")
-        }
-        
-        
-        if ("upper_ci_orig" %in% colnames(data)) {
-          if (data[sampling_rows, "lower_ci_orig"] ==
-              data[sampling_rows, "upper_ci_orig"]) {
-            stop("Lower and upper CI bounds cannot be strictly equal.")
-          }
         }
       }
     }
