@@ -1401,6 +1401,14 @@ is_na_precision <- function(data, precision_cols, na_rm) {
         if (length(pos)) {
           stop("Upper CI values must be positive.")
         }
+        
+        
+        if ("upper_ci_orig" %in% colnames(data)) {
+          if (data[sampling_rows, "lower_ci_orig"] ==
+              data[sampling_rows, "upper_ci_orig"]) {
+            stop("Lower and upper CI bounds cannot be strictly equal.")
+          }
+        }
       }
     }
   }
