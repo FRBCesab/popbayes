@@ -539,7 +539,7 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
              "(except for count with stat_method = 'X').")
       } 
       
-      if (any(!(data[ , field_method] %in% valid_field_methods))) {
+      if (any(!(data_not_x[ , field_method] %in% valid_field_methods))) {
         stop("Invalid value(s) for 'field_method' in 'data'. ",
              "Allowed values are: ", valid_field_methods_msg, ".")
       }
