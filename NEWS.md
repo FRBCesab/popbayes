@@ -1,3 +1,5 @@
+# popbayes (development version)
+
 # popbayes 1.1
 
 * Change `stat_method` category `G` by `X` (eXpert knowledge) to avoid confusion
