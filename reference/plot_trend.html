@@ -79,7 +79,7 @@ date. Dark bars are real estimated r.</p></li>
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_trend</span><span class="op">(</span><span class="va">series</span>, title <span class="op">=</span> <span class="cn">TRUE</span>, path <span class="op">=</span> <span class="st">"."</span>, path_fig <span class="op">=</span> <span class="st">"."</span>, save <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_trend</span><span class="op">(</span><span class="va">series</span>, title <span class="op">=</span> <span class="cn">TRUE</span>, path <span class="op">=</span> <span class="st">"."</span>, path_fig <span class="op">=</span> <span class="st">"."</span>, save <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,55 +87,66 @@ date. Dark bars are real estimated r.</p></li>
     <dl><dt>series</dt>
 <dd><p>a <code>character</code> string. The count series name (can be
 retrieved by running <code><a href="list_series.html">list_series()</a></code>).</p></dd>
+
+
 <dt>title</dt>
 <dd><p>a <code>logical</code>. If <code>TRUE</code> (default) a title (series name) is
 added.</p></dd>
+
+
 <dt>path</dt>
 <dd><p>a <code>character</code> string. The directory in which count series (and
 BUGS outputs) have been saved by the function <code><a href="format_data.html">format_data()</a></code> (and by
 <code><a href="fit_trend.html">fit_trend()</a></code>).</p></dd>
+
+
 <dt>path_fig</dt>
 <dd><p>a <code>character</code> string. The directory where to save the plot
 (if <code>save = TRUE</code>). This directory must exist and can be an absolute or a
 relative path.</p></dd>
+
+
 <dt>save</dt>
 <dd><p>a <code>logical</code>. If <code>TRUE</code> (default is <code>FALSE</code>) the plot is saved in
 <code>path_fig</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>No return value.</p>
+    
+
+<p>No return value.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load Garamba raw dataset ----</span></span>
-<span class="r-in"><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span>
-<span class="r-in">                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span>
-<span class="r-in">                         </span>
-<span class="r-in"><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create temporary folder ----</span></span>
-<span class="r-in"><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Format dataset ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span></span>
-<span class="r-in">  data              <span class="op">=</span> <span class="va">garamba</span>, </span>
-<span class="r-in">  path              <span class="op">=</span> <span class="va">temp_path</span>,</span>
-<span class="r-in">  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span>
-<span class="r-in">  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span>
-<span class="r-in">  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span>
-<span class="r-in">  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load Garamba raw dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span></span>
+<span class="r-in"><span>                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                         </span></span>
+<span class="r-in"><span><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create temporary folder ----</span></span></span>
+<span class="r-in"><span><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Format dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data              <span class="op">=</span> <span class="va">garamba</span>, </span></span>
+<span class="r-in"><span>  path              <span class="op">=</span> <span class="va">temp_path</span>,</span></span>
+<span class="r-in"><span>  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span></span>
+<span class="r-in"><span>  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span></span>
+<span class="r-in"><span>  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span></span>
+<span class="r-in"><span>  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Select one serie ----</span></span>
-<span class="r-in"><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="filter_series.html">filter_series</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, </span>
-<span class="r-in">                                        location <span class="op">=</span> <span class="st">"Garamba"</span>,</span>
-<span class="r-in">                                        species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Select one serie ----</span></span></span>
+<span class="r-in"><span><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="filter_series.html">filter_series</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, </span></span>
+<span class="r-in"><span>                                        location <span class="op">=</span> <span class="st">"Garamba"</span>,</span></span>
+<span class="r-in"><span>                                        species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">'Alcelaphus buselaphus'</span> and <span style="color: #0000BB;">'Garamba'</span>.</span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co">## Fit population trends (requires JAGS) ----</span></span>
-<span class="r-in"><span class="va">a_buselaphus_mod</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">## Fit population trends (requires JAGS) ----</span></span></span>
+<span class="r-in"><span><span class="va">a_buselaphus_mod</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Compiling data graph</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Resolving undeclared variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Allocating nodes</span>
@@ -151,12 +162,12 @@ relative path.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Initializing model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Plot estimated population trend ----</span></span>
-<span class="r-in"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu">plot_trend</span><span class="op">(</span>series <span class="op">=</span> <span class="st">"garamba__alcelaphus_buselaphus"</span>, </span>
-<span class="r-in">                     path   <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Plot estimated population trend ----</span></span></span>
+<span class="r-in"><span><span class="fu">popbayes</span><span class="fu">::</span><span class="fu">plot_trend</span><span class="op">(</span>series <span class="op">=</span> <span class="st">"garamba__alcelaphus_buselaphus"</span>, </span></span>
+<span class="r-in"><span>                     path   <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_trend-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -171,7 +182,7 @@ relative path.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

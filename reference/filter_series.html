@@ -74,70 +74,77 @@ to the specified criterion (species or location) are extracted.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filter_series</span><span class="op">(</span><span class="va">data</span>, species <span class="op">=</span> <span class="cn">NULL</span>, location <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_series</span><span class="op">(</span><span class="va">data</span>, species <span class="op">=</span> <span class="cn">NULL</span>, location <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>a named <code>list</code>. The output of function <code><a href="format_data.html">format_data()</a></code>.</p></dd>
+
+
 <dt>species</dt>
 <dd><p>a <code>character</code> string. A species name.</p></dd>
+
+
 <dt>location</dt>
 <dd><p>a <code>character</code> string. A site name.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A subset of <code>data</code>, i.e. a named <code>list</code>.</p>
+    
+
+<p>A subset of <code>data</code>, i.e. a named <code>list</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load Garamba raw dataset ----</span></span>
-<span class="r-in"><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span>
-<span class="r-in">                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span>
-<span class="r-in">                         </span>
-<span class="r-in"><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create temporary folder ----</span></span>
-<span class="r-in"><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Format dataset ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span></span>
-<span class="r-in">  data              <span class="op">=</span> <span class="va">garamba</span>, </span>
-<span class="r-in">  path              <span class="op">=</span> <span class="va">temp_path</span>,</span>
-<span class="r-in">  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span>
-<span class="r-in">  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span>
-<span class="r-in">  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span>
-<span class="r-in">  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load Garamba raw dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span></span>
+<span class="r-in"><span>                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                         </span></span>
+<span class="r-in"><span><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create temporary folder ----</span></span></span>
+<span class="r-in"><span><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Format dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data              <span class="op">=</span> <span class="va">garamba</span>, </span></span>
+<span class="r-in"><span>  path              <span class="op">=</span> <span class="va">temp_path</span>,</span></span>
+<span class="r-in"><span>  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span></span>
+<span class="r-in"><span>  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span></span>
+<span class="r-in"><span>  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span></span>
+<span class="r-in"><span>  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Number of count series ----</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Number of count series ----</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Retrieve count series names ----</span></span>
-<span class="r-in"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="list_series.html">list_series</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Retrieve count series names ----</span></span></span>
+<span class="r-in"><span><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="list_series.html">list_series</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "garamba__alcelaphus_buselaphus"  "garamba__giraffa_camelopardalis"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "garamba__hippotragus_equinus"    "garamba__kobus_ellipsiprymnus"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "garamba__kobus_kob"              "garamba__loxodonta_africana"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "garamba__ourebia_ourebi"         "garamba__redunca_redunca"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"  </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Get data for Alcelaphus buselaphus (at all sites) ----</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">filter_series</span><span class="op">(</span><span class="va">garamba_formatted</span>, </span>
-<span class="r-in">                             species <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Get data for Alcelaphus buselaphus (at all sites) ----</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">filter_series</span><span class="op">(</span><span class="va">garamba_formatted</span>, </span></span>
+<span class="r-in"><span>                             species <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">'Alcelaphus buselaphus'</span>.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Get data at Garamba (for all species) ----</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">filter_series</span><span class="op">(</span><span class="va">garamba_formatted</span>, </span>
-<span class="r-in">                             location <span class="op">=</span> <span class="st">"Garamba"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Get data at Garamba (for all species) ----</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">filter_series</span><span class="op">(</span><span class="va">garamba_formatted</span>, </span></span>
+<span class="r-in"><span>                             location <span class="op">=</span> <span class="st">"Garamba"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">10</span> series with <span style="color: #0000BB;">'Garamba'</span>.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Get data for Alcelaphus buselaphus at Garamba only ----</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">filter_series</span><span class="op">(</span><span class="va">garamba_formatted</span>, </span>
-<span class="r-in">                             location <span class="op">=</span> <span class="st">"Garamba"</span>,</span>
-<span class="r-in">                             species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Get data for Alcelaphus buselaphus at Garamba only ----</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">filter_series</span><span class="op">(</span><span class="va">garamba_formatted</span>, </span></span>
+<span class="r-in"><span>                             location <span class="op">=</span> <span class="st">"Garamba"</span>,</span></span>
+<span class="r-in"><span>                             species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">'Alcelaphus buselaphus'</span> and <span style="color: #0000BB;">'Garamba'</span>.</span>
 </code></pre></div>
     </div>
@@ -153,7 +160,7 @@ to the specified criterion (species or location) are extracted.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -72,7 +72,7 @@ useful for users.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bugs_to_df</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bugs_to_df</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -80,41 +80,44 @@ useful for users.</p>
     <dl><dt>data</dt>
 <dd><p>a named <code>list</code> of BUGS outputs. The output of <code><a href="fit_trend.html">fit_trend()</a></code> or
 <code><a href="read_bugs.html">read_bugs()</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>data.frame</code>.</p>
+    
+
+<p>A <code>data.frame</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load Garamba raw dataset ----</span></span>
-<span class="r-in"><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span>
-<span class="r-in">                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span>
-<span class="r-in">                         </span>
-<span class="r-in"><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create temporary folder ----</span></span>
-<span class="r-in"><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Format dataset ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span></span>
-<span class="r-in">  data              <span class="op">=</span> <span class="va">garamba</span>, </span>
-<span class="r-in">  path              <span class="op">=</span> <span class="va">temp_path</span>,</span>
-<span class="r-in">  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span>
-<span class="r-in">  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span>
-<span class="r-in">  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span>
-<span class="r-in">  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load Garamba raw dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span></span>
+<span class="r-in"><span>                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                         </span></span>
+<span class="r-in"><span><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create temporary folder ----</span></span></span>
+<span class="r-in"><span><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Format dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="format_data.html">format_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data              <span class="op">=</span> <span class="va">garamba</span>, </span></span>
+<span class="r-in"><span>  path              <span class="op">=</span> <span class="va">temp_path</span>,</span></span>
+<span class="r-in"><span>  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span></span>
+<span class="r-in"><span>  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span></span>
+<span class="r-in"><span>  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span></span>
+<span class="r-in"><span>  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span>
-<span class="r-in">                                        </span>
-<span class="r-in"><span class="co">## Select one serie ----</span></span>
-<span class="r-in"><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="filter_series.html">filter_series</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, </span>
-<span class="r-in">                                        location <span class="op">=</span> <span class="st">"Garamba"</span>,</span>
-<span class="r-in">                                        species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span>
+<span class="r-in"><span>                                        </span></span>
+<span class="r-in"><span><span class="co">## Select one serie ----</span></span></span>
+<span class="r-in"><span><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="filter_series.html">filter_series</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, </span></span>
+<span class="r-in"><span>                                        location <span class="op">=</span> <span class="st">"Garamba"</span>,</span></span>
+<span class="r-in"><span>                                        species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">'Alcelaphus buselaphus'</span> and <span style="color: #0000BB;">'Garamba'</span>.</span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co">## Fit population trends (requires JAGS) ----</span></span>
-<span class="r-in"><span class="va">a_buselaphus_mod</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">## Fit population trends (requires JAGS) ----</span></span></span>
+<span class="r-in"><span><span class="va">a_buselaphus_mod</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> module glm loaded</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Compiling data graph</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Resolving undeclared variables</span>
@@ -131,116 +134,116 @@ useful for users.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Initializing model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Import BUGS outputs for one count series ----</span></span>
-<span class="r-in"><span class="va">bugs</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="read_bugs.html">read_bugs</a></span><span class="op">(</span>series <span class="op">=</span> <span class="st">"garamba__alcelaphus_buselaphus"</span>, </span>
-<span class="r-in">                            path   <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Extract estimated parameters ----</span></span>
-<span class="r-in"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu">bugs_to_df</span><span class="op">(</span><span class="va">bugs</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Import BUGS outputs for one count series ----</span></span></span>
+<span class="r-in"><span><span class="va">bugs</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="read_bugs.html">read_bugs</a></span><span class="op">(</span>series <span class="op">=</span> <span class="st">"garamba__alcelaphus_buselaphus"</span>, </span></span>
+<span class="r-in"><span>                            path   <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Extract estimated parameters ----</span></span></span>
+<span class="r-in"><span><span class="fu">popbayes</span><span class="fu">::</span><span class="fu">bugs_to_df</span><span class="op">(</span><span class="va">bugs</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            series parameter          mean           sd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  garamba__alcelaphus_buselaphus      N[1]  1.769757e+04 1.715986e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  garamba__alcelaphus_buselaphus      N[2]  3.854049e+03 5.069602e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  garamba__alcelaphus_buselaphus      N[3]  3.315485e+03 3.955942e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  garamba__alcelaphus_buselaphus      N[4]  3.004617e+03 4.333322e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  garamba__alcelaphus_buselaphus      N[5]  2.668183e+03 3.262732e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  garamba__alcelaphus_buselaphus      N[6]  3.217097e+03 5.389246e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  garamba__alcelaphus_buselaphus      N[7]  3.759764e+03 6.621152e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  garamba__alcelaphus_buselaphus      N[8]  3.481737e+03 3.669948e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  garamba__alcelaphus_buselaphus      N[9]  2.891152e+03 2.049130e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 garamba__alcelaphus_buselaphus     N[10]  2.748560e+03 2.052168e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 garamba__alcelaphus_buselaphus     N[11]  2.749171e+03 2.582281e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 garamba__alcelaphus_buselaphus     N[12]  2.618486e+03 2.971933e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 garamba__alcelaphus_buselaphus     N[13]  1.311381e+03 7.305071e+01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 garamba__alcelaphus_buselaphus     N[14]  1.571147e+03 8.938998e+01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 garamba__alcelaphus_buselaphus     N[15]  2.393225e+03 1.526323e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 garamba__alcelaphus_buselaphus  deviance  2.361517e+02 5.082676e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 garamba__alcelaphus_buselaphus     meanr -4.873317e-02 2.852448e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 garamba__alcelaphus_buselaphus      r[1] -2.183311e-01 2.331481e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 garamba__alcelaphus_buselaphus      r[2] -1.489669e-01 6.923065e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 garamba__alcelaphus_buselaphus      r[3] -5.086269e-02 6.093916e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 garamba__alcelaphus_buselaphus      r[4] -2.317323e-02 3.420436e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 garamba__alcelaphus_buselaphus      r[5]  9.026802e-02 6.366620e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 garamba__alcelaphus_buselaphus      r[6]  7.721343e-02 5.732820e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 garamba__alcelaphus_buselaphus      r[7] -2.227439e-02 5.066794e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 garamba__alcelaphus_buselaphus      r[8] -9.139404e-02 4.963649e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 garamba__alcelaphus_buselaphus      r[9] -2.542938e-02 4.377403e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 garamba__alcelaphus_buselaphus     r[10] -1.415547e-03 6.706724e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 garamba__alcelaphus_buselaphus     r[11] -5.075215e-02 6.592402e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 garamba__alcelaphus_buselaphus     r[12] -8.582269e-02 1.536893e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 garamba__alcelaphus_buselaphus     r[13]  9.032886e-02 3.549082e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 garamba__alcelaphus_buselaphus     r[14]  1.401382e-01 2.726677e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 garamba__alcelaphus_buselaphus       sdr  1.121081e-01 9.459160e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 garamba__alcelaphus_buselaphus    vrrmax  4.617506e-01 3.896037e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  garamba__alcelaphus_buselaphus      N[1]  1.770394e+04 1.689934e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  garamba__alcelaphus_buselaphus      N[2]  3.877210e+03 4.995747e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  garamba__alcelaphus_buselaphus      N[3]  3.330376e+03 3.856682e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  garamba__alcelaphus_buselaphus      N[4]  3.023502e+03 4.260470e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  garamba__alcelaphus_buselaphus      N[5]  2.660810e+03 3.271819e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  garamba__alcelaphus_buselaphus      N[6]  3.195998e+03 5.381139e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  garamba__alcelaphus_buselaphus      N[7]  3.733133e+03 6.690583e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  garamba__alcelaphus_buselaphus      N[8]  3.481116e+03 3.719717e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  garamba__alcelaphus_buselaphus      N[9]  2.887251e+03 2.087973e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 garamba__alcelaphus_buselaphus     N[10]  2.746761e+03 2.066950e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 garamba__alcelaphus_buselaphus     N[11]  2.750350e+03 2.584917e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 garamba__alcelaphus_buselaphus     N[12]  2.626607e+03 2.983531e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 garamba__alcelaphus_buselaphus     N[13]  1.312022e+03 7.325871e+01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 garamba__alcelaphus_buselaphus     N[14]  1.571240e+03 8.898860e+01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 garamba__alcelaphus_buselaphus     N[15]  2.391846e+03 1.531082e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 garamba__alcelaphus_buselaphus  deviance  2.361202e+02 5.101276e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 garamba__alcelaphus_buselaphus     meanr -4.876041e-02 2.818530e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 garamba__alcelaphus_buselaphus      r[1] -2.174931e-01 2.250177e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 garamba__alcelaphus_buselaphus      r[2] -1.504488e-01 6.878735e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 garamba__alcelaphus_buselaphus      r[3] -4.992907e-02 6.046641e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 garamba__alcelaphus_buselaphus      r[4] -2.509974e-02 3.296270e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 garamba__alcelaphus_buselaphus      r[5]  8.836254e-02 6.285826e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 garamba__alcelaphus_buselaphus      r[6]  7.680618e-02 5.740910e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 garamba__alcelaphus_buselaphus      r[7] -1.988829e-02 5.145812e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 garamba__alcelaphus_buselaphus      r[8] -9.195962e-02 5.046634e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 garamba__alcelaphus_buselaphus      r[9] -2.505114e-02 4.365723e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 garamba__alcelaphus_buselaphus     r[10] -2.907562e-04 6.638954e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 garamba__alcelaphus_buselaphus     r[11] -4.807591e-02 6.569891e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 garamba__alcelaphus_buselaphus     r[12] -8.615049e-02 1.543252e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 garamba__alcelaphus_buselaphus     r[13]  9.012514e-02 3.543248e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 garamba__alcelaphus_buselaphus     r[14]  1.399167e-01 2.759360e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 garamba__alcelaphus_buselaphus       sdr  1.117220e-01 9.305733e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33 garamba__alcelaphus_buselaphus    vrrmax  4.601603e-01 3.832843e-02</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             2.5%           25%           50%           75%         97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1.435574e+04  1.653650e+04  1.770004e+04  1.885836e+04  2.104751e+04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2.889816e+03  3.503972e+03  3.844744e+03  4.194204e+03  4.877134e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   2.560779e+03  3.047450e+03  3.313861e+03  3.577874e+03  4.109986e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   2.200359e+03  2.705013e+03  2.985939e+03  3.288805e+03  3.895386e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2.033615e+03  2.444458e+03  2.668020e+03  2.888285e+03  3.314380e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2.235543e+03  2.833302e+03  3.193701e+03  3.576157e+03  4.344781e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   2.554514e+03  3.300682e+03  3.722126e+03  4.183733e+03  5.151924e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   2.777568e+03  3.233860e+03  3.477206e+03  3.724547e+03  4.216081e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   2.494052e+03  2.752155e+03  2.889006e+03  3.029072e+03  3.297718e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2.353817e+03  2.607954e+03  2.745458e+03  2.888370e+03  3.154882e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  2.254020e+03  2.572588e+03  2.746084e+03  2.917785e+03  3.264276e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  2.060239e+03  2.413686e+03  2.611428e+03  2.815548e+03  3.223803e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1.169620e+03  1.261346e+03  1.310616e+03  1.360644e+03  1.454978e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  1.399489e+03  1.510125e+03  1.570278e+03  1.631411e+03  1.747530e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15  2.096424e+03  2.290400e+03  2.392392e+03  2.495919e+03  2.693121e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16  2.274136e+02  2.325706e+02  2.357016e+02  2.392550e+02  2.473808e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -5.412770e-02 -5.068452e-02 -4.881268e-02 -4.687664e-02 -4.294045e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 -2.650012e-01 -2.338906e-01 -2.179155e-01 -2.023277e-01 -1.736178e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 -2.856353e-01 -1.952777e-01 -1.485627e-01 -1.026708e-01 -1.335796e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -1.715664e-01 -9.139352e-02 -5.030394e-02 -9.823699e-03  6.773943e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 -9.014478e-02 -4.634489e-02 -2.314167e-02 -6.475543e-05  4.341364e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -3.724746e-02  4.797344e-02  9.126400e-02  1.333869e-01  2.153870e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 -3.509444e-02  3.879096e-02  7.709560e-02  1.161250e-01  1.894352e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 -1.192151e-01 -5.752819e-02 -2.265334e-02  1.161154e-02  7.807073e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 -1.863307e-01 -1.249900e-01 -9.221350e-02 -5.870893e-02  1.038627e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 -1.109091e-01 -5.498999e-02 -2.551916e-02  4.037859e-03  6.035053e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 -1.341791e-01 -4.563389e-02 -1.363323e-03  4.429776e-02  1.284138e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 -1.807526e-01 -9.503232e-02 -5.065001e-02 -5.708815e-03  7.775517e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 -1.148293e-01 -9.636451e-02 -8.620968e-02 -7.561473e-02 -5.488129e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30  2.113129e-02  6.641528e-02  9.016921e-02  1.143489e-01  1.606374e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31  8.675481e-02  1.219774e-01  1.403236e-01  1.584646e-01  1.932494e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32  9.432416e-02  1.056502e-01  1.118658e-01  1.181673e-01  1.316041e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33  3.885021e-01  4.351518e-01  4.607525e-01  4.867073e-01  5.420507e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1.444794e+04  1.657110e+04  1.768926e+04  1.882024e+04  2.111345e+04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2.937368e+03  3.536571e+03  3.860427e+03  4.203473e+03  4.892703e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   2.591831e+03  3.068473e+03  3.325357e+03  3.589804e+03  4.093508e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   2.235342e+03  2.728305e+03  3.007591e+03  3.297434e+03  3.904440e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2.027761e+03  2.440023e+03  2.657702e+03  2.878642e+03  3.310030e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2.227815e+03  2.825249e+03  3.165628e+03  3.538474e+03  4.325648e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   2.577516e+03  3.253735e+03  3.687659e+03  4.163070e+03  5.161630e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   2.769470e+03  3.224591e+03  3.473892e+03  3.728378e+03  4.229246e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   2.481486e+03  2.746587e+03  2.884743e+03  3.027866e+03  3.300515e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2.344193e+03  2.606336e+03  2.744255e+03  2.885325e+03  3.158574e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  2.261500e+03  2.569838e+03  2.746556e+03  2.923225e+03  3.266526e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  2.065090e+03  2.418605e+03  2.618872e+03  2.821467e+03  3.237422e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1.169443e+03  1.263151e+03  1.311645e+03  1.361228e+03  1.457103e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  1.397527e+03  1.511464e+03  1.570650e+03  1.631539e+03  1.745491e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  2.092516e+03  2.288307e+03  2.391107e+03  2.495405e+03  2.690988e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  2.272822e+02  2.325460e+02  2.356776e+02  2.392150e+02  2.473076e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -5.412293e-02 -5.068507e-02 -4.880917e-02 -4.689058e-02 -4.314051e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 -2.627074e-01 -2.323108e-01 -2.171356e-01 -2.025915e-01 -1.740448e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 -2.849186e-01 -1.967173e-01 -1.509974e-01 -1.041563e-01 -1.591651e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -1.695069e-01 -9.044734e-02 -4.869500e-02 -8.861568e-03  6.791408e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 -8.943982e-02 -4.700153e-02 -2.522936e-02 -2.919491e-03  4.004274e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -3.504364e-02  4.627838e-02  8.872897e-02  1.299463e-01  2.157789e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 -3.424577e-02  3.780511e-02  7.623948e-02  1.152893e-01  1.912410e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 -1.179436e-01 -5.518164e-02 -2.016080e-02  1.531213e-02  8.089899e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 -1.900159e-01 -1.258033e-01 -9.251870e-02 -5.821968e-02  9.737293e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 -1.110464e-01 -5.443286e-02 -2.486540e-02  4.720267e-03  5.985197e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 -1.316154e-01 -4.499001e-02  3.906769e-04  4.423027e-02  1.293029e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 -1.777781e-01 -9.216480e-02 -4.829191e-02 -3.544291e-03  7.963723e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 -1.156549e-01 -9.672267e-02 -8.628076e-02 -7.579640e-02 -5.538163e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  2.113326e-02  6.602223e-02  9.037171e-02  1.141632e-01  1.595543e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  8.454274e-02  1.215671e-01  1.401311e-01  1.582947e-01  1.936868e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  9.433232e-02  1.053110e-01  1.115195e-01  1.178212e-01  1.306404e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  3.885358e-01  4.337546e-01  4.593262e-01  4.852817e-01  5.380812e-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Rhat n.eff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.003527   590</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1.002379  1100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1.002796  1200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1.001863  1700</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1.001894  1600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1.001375  3600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1.001498  2800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.002282  1100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1.001156  7700</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 1.001817  1800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1.003104   700</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1.004408   440</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1.001197  6400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1.001030 22000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 1.000962 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1.001151  7900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1.002807   810</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1.004660   410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 1.001039 19000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 1.000961 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 1.000973 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 1.000969 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 1.000996 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 1.000964 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 1.001798  1800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 1.002287  1100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 1.002017  1400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 1.002217  1200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 1.004752   400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 1.000990 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 1.000989 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 1.002945   760</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 1.002945   760</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.002847   940</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1.000963 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1.000971 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1.001476 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1.001030 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1.002012  3300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1.001281 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.001044 18000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1.001119  9500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 1.001020 25000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1.001034 20000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1.000993 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1.000981 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1.001014 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 1.001015 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1.002756   840</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1.002364  1100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1.001500  2800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 1.001030 22000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 1.001012 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 1.001603 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 1.003042  2300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 1.001877  1600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 1.001014 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 1.000961 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 1.000975 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 1.001402  3400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 1.000967 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 1.001013 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 1.001048 17000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 1.001022 25000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 1.000985 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33 1.000985 27000</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -255,7 +258,7 @@ useful for users.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -78,7 +78,7 @@
 
       
 
-      </header><script src="generate_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Get species information</h1>
@@ -94,94 +94,130 @@
 <div class="section level2">
 <h2 id="calculating-rmax">Calculating rmax<a class="anchor" aria-label="anchor" href="#calculating-rmax"></a>
 </h2>
-<p>The demographic potential of a species is limited. The intrinsic rate of increase <span class="math inline">\(rmax\)</span> is the maximum increase in log population size that a species can attain in a year. According to Sinclair (2003), it is related to the body mass of adult females <span class="math inline">\(W\)</span> by the formula:</p>
-<p><span class="math display">\[ rmax = 1.375 \times W^{-0.315} \]</span></p>
-<p>Body masses are found in the literature in publications such as Kingdon &amp; Hoffman (2013), Cornelis <em>et al.</em> (2014), Illius &amp; Gordon (1992), Sinclair (1996), Suraud <em>et al.</em> (2012), or Foley &amp; Faust (2010). Alternatively, <span class="math inline">\(rmax\)</span> can be obtained from specific demographic analyses. In the following table, we have listed the <span class="math inline">\(rmax\)</span> values obtained with one or the other method giving precedence to specific analyses when available.</p>
+<p>The demographic potential of a species is limited. The intrinsic rate
+of increase <span class="math inline">\(rmax\)</span> is the maximum
+increase in log population size that a species can attain in a year.
+According to Sinclair (2003), it is related to the body mass of adult
+females <span class="math inline">\(W\)</span> by the formula:</p>
+<p><span class="math display">\[ rmax = 1.375 \times W^{-0.315}
+\]</span></p>
+<p>Body masses are found in the literature in publications such as
+Kingdon &amp; Hoffman (2013), Cornelis <em>et al.</em> (2014), Illius
+&amp; Gordon (1992), Sinclair (1996), Suraud <em>et al.</em> (2012), or
+Foley &amp; Faust (2010). Alternatively, <span class="math inline">\(rmax\)</span> can be obtained from specific
+demographic analyses. In the following table, we have listed the <span class="math inline">\(rmax\)</span> values obtained with one or the
+other method giving precedence to specific analyses when available.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">species_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Impala"</span>, <span class="st">"Tiang"</span>, <span class="st">"Blue wildebeest"</span>, <span class="st">"Roan"</span>, <span class="st">"Buffalo"</span>, 
-                  <span class="st">"Eland"</span>, <span class="st">"Giraffe"</span>, <span class="st">"Elephant"</span><span class="op">)</span>
-
-<span class="va">adult_female_body_mass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span>, <span class="fl">127</span>, <span class="fl">230</span>, <span class="fl">250</span>, <span class="fl">400</span>, <span class="fl">450</span>, <span class="fl">702</span>, <span class="fl">2873</span><span class="op">)</span>
-
-<span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">adult_female_body_mass</span>, row.names <span class="op">=</span> <span class="va">species_name</span><span class="op">)</span>
-
-<span class="va">species</span><span class="op">$</span><span class="va">rmax</span> <span class="op">&lt;-</span> <span class="fl">1.375</span> <span class="op">*</span> <span class="va">adult_female_body_mass</span> <span class="op">^</span> <span class="op">(</span><span class="op">-</span><span class="fl">0.315</span><span class="op">)</span>
-<span class="va">species</span><span class="op">[</span><span class="st">"Eland"</span>, <span class="st">"rmax"</span><span class="op">]</span>    <span class="op">&lt;-</span> <span class="fl">0.150</span>                 <span class="co"># Sinclair (1996)</span>
-<span class="va">species</span><span class="op">[</span><span class="st">"Elephant"</span>, <span class="st">"rmax"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.07</span>                  <span class="co"># Foley &amp; Faust (2010)</span>
-<span class="va">species</span><span class="op">[</span><span class="st">"Giraffe"</span>, <span class="st">"rmax"</span><span class="op">]</span>  <span class="op">&lt;-</span> <span class="fl">0.125</span>                 <span class="co"># Suraud et al. (2012)</span>
-
-<span class="va">species</span>
-<span class="co">#&gt;                 adult_female_body_mass      rmax</span>
-<span class="co">#&gt; Impala                              55 0.3891244</span>
-<span class="co">#&gt; Tiang                              127 0.2989541</span>
-<span class="co">#&gt; Blue wildebeest                    230 0.2479468</span>
-<span class="co">#&gt; Roan                               250 0.2415192</span>
-<span class="co">#&gt; Buffalo                            400 0.2082830</span>
-<span class="co">#&gt; Eland                              450 0.1500000</span>
-<span class="co">#&gt; Giraffe                            702 0.1250000</span>
-<span class="co">#&gt; Elephant                          2873 0.0700000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">species_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Impala"</span>, <span class="st">"Tiang"</span>, <span class="st">"Blue wildebeest"</span>, <span class="st">"Roan"</span>, <span class="st">"Buffalo"</span>, </span>
+<span>                  <span class="st">"Eland"</span>, <span class="st">"Giraffe"</span>, <span class="st">"Elephant"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">adult_female_body_mass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span>, <span class="fl">127</span>, <span class="fl">230</span>, <span class="fl">250</span>, <span class="fl">400</span>, <span class="fl">450</span>, <span class="fl">702</span>, <span class="fl">2873</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">adult_female_body_mass</span>, row.names <span class="op">=</span> <span class="va">species_name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">species</span><span class="op">$</span><span class="va">rmax</span> <span class="op">&lt;-</span> <span class="fl">1.375</span> <span class="op">*</span> <span class="va">adult_female_body_mass</span> <span class="op">^</span> <span class="op">(</span><span class="op">-</span><span class="fl">0.315</span><span class="op">)</span></span>
+<span><span class="va">species</span><span class="op">[</span><span class="st">"Eland"</span>, <span class="st">"rmax"</span><span class="op">]</span>    <span class="op">&lt;-</span> <span class="fl">0.150</span>                 <span class="co"># Sinclair (1996)</span></span>
+<span><span class="va">species</span><span class="op">[</span><span class="st">"Elephant"</span>, <span class="st">"rmax"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.07</span>                  <span class="co"># Foley &amp; Faust (2010)</span></span>
+<span><span class="va">species</span><span class="op">[</span><span class="st">"Giraffe"</span>, <span class="st">"rmax"</span><span class="op">]</span>  <span class="op">&lt;-</span> <span class="fl">0.125</span>                 <span class="co"># Suraud et al. (2012)</span></span>
+<span></span>
+<span><span class="va">species</span></span>
+<span><span class="co">#&gt;                 adult_female_body_mass      rmax</span></span>
+<span><span class="co">#&gt; Impala                              55 0.3891244</span></span>
+<span><span class="co">#&gt; Tiang                              127 0.2989541</span></span>
+<span><span class="co">#&gt; Blue wildebeest                    230 0.2479468</span></span>
+<span><span class="co">#&gt; Roan                               250 0.2415192</span></span>
+<span><span class="co">#&gt; Buffalo                            400 0.2082830</span></span>
+<span><span class="co">#&gt; Eland                              450 0.1500000</span></span>
+<span><span class="co">#&gt; Giraffe                            702 0.1250000</span></span>
+<span><span class="co">#&gt; Elephant                          2873 0.0700000</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="building-conversion-table">Building conversion table<a class="anchor" aria-label="anchor" href="#building-conversion-table"></a>
 </h2>
-<p>Aerial and ground counts are not directly comparable because some species are better detected from the ground and others from the air. It is generally considered that small light species are better detected from the ground while large dark species are better detected from the air. We took advantage of series of counts carried out in parallel using the two field methods to calculate conversion factors to be applied to aerial counts to obtain ground count equivalents. This permits reconciling the two types of counts within a mixed series. We also specify the preferred field method for each category of species.</p>
+<p>Aerial and ground counts are not directly comparable because some
+species are better detected from the ground and others from the air. It
+is generally considered that small light species are better detected
+from the ground while large dark species are better detected from the
+air. We took advantage of series of counts carried out in parallel using
+the two field methods to calculate conversion factors to be applied to
+aerial counts to obtain ground count equivalents. This permits
+reconciling the two types of counts within a mixed series. We also
+specify the preferred field method for each category of species.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">categories</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Medium light and brown species (20-150kg)"</span>,
-                <span class="st">"Large light and brown species (&gt;150kg)"</span>,
-                <span class="st">"Large dark (&gt;150kg)"</span>, <span class="st">"Giraffe"</span>, <span class="st">"Elephant"</span><span class="op">)</span>
-
-<span class="va">short_names</span>        <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MLB"</span>, <span class="st">"LLB"</span>, <span class="st">"LD"</span>, <span class="st">"Giraffe"</span>, <span class="st">"Elephant"</span><span class="op">)</span>
-<span class="va">conversion_facts</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6.747</span>, <span class="fl">2.302</span>, <span class="fl">0.561</span>, <span class="fl">3.011</span>, <span class="fl">0.659</span><span class="op">)</span>
-<span class="va">pref_field_methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"G"</span>, <span class="st">"G"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span><span class="op">)</span>
-
-<span class="va">category_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"category"</span>          <span class="op">=</span> <span class="va">categories</span>,
-                            <span class="st">"acronym"</span>           <span class="op">=</span> <span class="va">short_names</span>,
-                            <span class="st">"conversion_fact"</span>   <span class="op">=</span> <span class="va">conversion_facts</span>, 
-                            <span class="st">"pref_field_method"</span> <span class="op">=</span> <span class="va">pref_field_methods</span><span class="op">)</span>
-<span class="va">category_info</span>
-<span class="co">#&gt;                                    category  acronym conversion_fact</span>
-<span class="co">#&gt; 1 Medium light and brown species (20-150kg)      MLB           6.747</span>
-<span class="co">#&gt; 2    Large light and brown species (&gt;150kg)      LLB           2.302</span>
-<span class="co">#&gt; 3                       Large dark (&gt;150kg)       LD           0.561</span>
-<span class="co">#&gt; 4                                   Giraffe  Giraffe           3.011</span>
-<span class="co">#&gt; 5                                  Elephant Elephant           0.659</span>
-<span class="co">#&gt;   pref_field_method</span>
-<span class="co">#&gt; 1                 G</span>
-<span class="co">#&gt; 2                 G</span>
-<span class="co">#&gt; 3                 A</span>
-<span class="co">#&gt; 4                 A</span>
-<span class="co">#&gt; 5                 A</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">categories</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Medium light and brown species (20-150kg)"</span>,</span>
+<span>                <span class="st">"Large light and brown species (&gt;150kg)"</span>,</span>
+<span>                <span class="st">"Large dark (&gt;150kg)"</span>, <span class="st">"Giraffe"</span>, <span class="st">"Elephant"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">short_names</span>        <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MLB"</span>, <span class="st">"LLB"</span>, <span class="st">"LD"</span>, <span class="st">"Giraffe"</span>, <span class="st">"Elephant"</span><span class="op">)</span></span>
+<span><span class="va">conversion_facts</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6.747</span>, <span class="fl">2.302</span>, <span class="fl">0.561</span>, <span class="fl">3.011</span>, <span class="fl">0.659</span><span class="op">)</span></span>
+<span><span class="va">pref_field_methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"G"</span>, <span class="st">"G"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">category_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"category"</span>          <span class="op">=</span> <span class="va">categories</span>,</span>
+<span>                            <span class="st">"acronym"</span>           <span class="op">=</span> <span class="va">short_names</span>,</span>
+<span>                            <span class="st">"conversion_fact"</span>   <span class="op">=</span> <span class="va">conversion_facts</span>, </span>
+<span>                            <span class="st">"pref_field_method"</span> <span class="op">=</span> <span class="va">pref_field_methods</span><span class="op">)</span></span>
+<span><span class="va">category_info</span></span>
+<span><span class="co">#&gt;                                    category  acronym conversion_fact</span></span>
+<span><span class="co">#&gt; 1 Medium light and brown species (20-150kg)      MLB           6.747</span></span>
+<span><span class="co">#&gt; 2    Large light and brown species (&gt;150kg)      LLB           2.302</span></span>
+<span><span class="co">#&gt; 3                       Large dark (&gt;150kg)       LD           0.561</span></span>
+<span><span class="co">#&gt; 4                                   Giraffe  Giraffe           3.011</span></span>
+<span><span class="co">#&gt; 5                                  Elephant Elephant           0.659</span></span>
+<span><span class="co">#&gt;   pref_field_method</span></span>
+<span><span class="co">#&gt; 1                 G</span></span>
+<span><span class="co">#&gt; 2                 G</span></span>
+<span><span class="co">#&gt; 3                 A</span></span>
+<span><span class="co">#&gt; 4                 A</span></span>
+<span><span class="co">#&gt; 5                 A</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="categorizing-species">Categorizing species<a class="anchor" aria-label="anchor" href="#categorizing-species"></a>
 </h2>
 <p>Here we relate the species to a color/size category.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">species</span><span class="op">$</span><span class="st">"category"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MLB"</span>, <span class="st">"MLB"</span>, <span class="st">"LLB"</span>, <span class="st">"LLB"</span>, <span class="st">"LD"</span>, <span class="st">"LLB"</span>, <span class="st">"Giraffe"</span>, 
-                        <span class="st">"Elephant"</span><span class="op">)</span>
-<span class="va">species</span>
-<span class="co">#&gt;                 adult_female_body_mass      rmax category</span>
-<span class="co">#&gt; Impala                              55 0.3891244      MLB</span>
-<span class="co">#&gt; Tiang                              127 0.2989541      MLB</span>
-<span class="co">#&gt; Blue wildebeest                    230 0.2479468      LLB</span>
-<span class="co">#&gt; Roan                               250 0.2415192      LLB</span>
-<span class="co">#&gt; Buffalo                            400 0.2082830       LD</span>
-<span class="co">#&gt; Eland                              450 0.1500000      LLB</span>
-<span class="co">#&gt; Giraffe                            702 0.1250000  Giraffe</span>
-<span class="co">#&gt; Elephant                          2873 0.0700000 Elephant</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">species</span><span class="op">$</span><span class="st">"category"</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MLB"</span>, <span class="st">"MLB"</span>, <span class="st">"LLB"</span>, <span class="st">"LLB"</span>, <span class="st">"LD"</span>, <span class="st">"LLB"</span>, <span class="st">"Giraffe"</span>, </span>
+<span>                        <span class="st">"Elephant"</span><span class="op">)</span></span>
+<span><span class="va">species</span></span>
+<span><span class="co">#&gt;                 adult_female_body_mass      rmax category</span></span>
+<span><span class="co">#&gt; Impala                              55 0.3891244      MLB</span></span>
+<span><span class="co">#&gt; Tiang                              127 0.2989541      MLB</span></span>
+<span><span class="co">#&gt; Blue wildebeest                    230 0.2479468      LLB</span></span>
+<span><span class="co">#&gt; Roan                               250 0.2415192      LLB</span></span>
+<span><span class="co">#&gt; Buffalo                            400 0.2082830       LD</span></span>
+<span><span class="co">#&gt; Eland                              450 0.1500000      LLB</span></span>
+<span><span class="co">#&gt; Giraffe                            702 0.1250000  Giraffe</span></span>
+<span><span class="co">#&gt; Elephant                          2873 0.0700000 Elephant</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <ul>
-<li><p>Cornelis D <em>et al.</em> (2014) Species account: African buffalo (<em>Syncerus caffer</em>). In: <em>Ecology, Evolution and Behaviour of Wild Cattle: Implications for Conservation</em> (Eds M Melletti &amp; J Burton). Cambridge University Press, Cambridge. DOI: <a href="https://doi.org/10.1017/CBO9781139568098" class="external-link">10.1017/CBO9781139568098</a>.</p></li>
-<li><p>Foley CAH &amp; Faust LJ (2010) Rapid population growth in an elephant <em>Loxodonta africana</em> population recovering from poaching in Tarangire National Park, Tanzania. <em>Oryx</em>, <strong>44</strong>, 205-212. DOI: <a href="https://doi.org/10.1017/S0030605309990706" class="external-link">10.1017/S0030605309990706</a>.</p></li>
-<li><p>Illius AW &amp; Gordon IJ (1992) Modelling the nutritional ecology of ungulate herbivores: evolution of body size and competitive interactions. <em>Oecologia</em>, <strong>89</strong>, 428-434. DOI: <a href="https://doi.org/10.1007/BF00317422" class="external-link">10.1017/S0030605309990706</a>.</p></li>
-<li><p>Kingdon J &amp; Hoffman M (2013) <em>Mammals of Africa. Volume VI: Pigs, Hippopotamuses, Chevrotain, Giraffes, Deer and Bovids</em>. Bloomsbury Publishing, London, United Kingdom, 680 pp.</p></li>
-<li><p>Sinclair ARE (1996) Mammal populations: fluctuation, regulation, life history theory, and their implications for conservation. In: <em>Frontiers of population ecology</em> (Eds RB Floyd &amp; AW Sheppard), pp. 127–154. CSIRO: Melbourne, Australia.</p></li>
-<li><p>Sinclair (2003) Mammal population regulation, keystone processes and ecosystem dynamics. <em>Philosophical Transactions: Biological Sciences</em>, <strong>358</strong>, 1729-1740. DOI: <a href="https://doi.org/10.1098/rstb.2003.1359" class="external-link">10.1098/rstb.2003.1359</a>.</p></li>
-<li><p>Suraud JP <em>et al.</em> (2012) Higher than expected growth rate of the endangered West African giraffe <em>Giraffa camelopardalis peralta</em>: a successful human–wildlife cohabitation. <em>Oryx</em>, <strong>46</strong>, 577-583. DOI: <a href="https://doi.org/10.1017/S0030605311000639" class="external-link">10.1017/S0030605311000639</a>.</p></li>
+<li><p>Cornelis D <em>et al.</em> (2014) Species account: African
+buffalo (<em>Syncerus caffer</em>). In: <em>Ecology, Evolution and
+Behaviour of Wild Cattle: Implications for Conservation</em> (Eds M
+Melletti &amp; J Burton). Cambridge University Press, Cambridge. DOI: <a href="https://doi.org/10.1017/CBO9781139568098" class="external-link">10.1017/CBO9781139568098</a>.</p></li>
+<li><p>Foley CAH &amp; Faust LJ (2010) Rapid population growth in an
+elephant <em>Loxodonta africana</em> population recovering from poaching
+in Tarangire National Park, Tanzania. <em>Oryx</em>,
+<strong>44</strong>, 205-212. DOI: <a href="https://doi.org/10.1017/S0030605309990706" class="external-link">10.1017/S0030605309990706</a>.</p></li>
+<li><p>Illius AW &amp; Gordon IJ (1992) Modelling the nutritional
+ecology of ungulate herbivores: evolution of body size and competitive
+interactions. <em>Oecologia</em>, <strong>89</strong>, 428-434. DOI: <a href="https://doi.org/10.1007/BF00317422" class="external-link">10.1017/S0030605309990706</a>.</p></li>
+<li><p>Kingdon J &amp; Hoffman M (2013) <em>Mammals of Africa. Volume
+VI: Pigs, Hippopotamuses, Chevrotain, Giraffes, Deer and Bovids</em>.
+Bloomsbury Publishing, London, United Kingdom, 680 pp.</p></li>
+<li><p>Sinclair ARE (1996) Mammal populations: fluctuation, regulation,
+life history theory, and their implications for conservation. In:
+<em>Frontiers of population ecology</em> (Eds RB Floyd &amp; AW
+Sheppard), pp. 127–154. CSIRO: Melbourne, Australia.</p></li>
+<li><p>Sinclair (2003) Mammal population regulation, keystone processes
+and ecosystem dynamics. <em>Philosophical Transactions: Biological
+Sciences</em>, <strong>358</strong>, 1729-1740. DOI: <a href="https://doi.org/10.1098/rstb.2003.1359" class="external-link">10.1098/rstb.2003.1359</a>.</p></li>
+<li><p>Suraud JP <em>et al.</em> (2012) Higher than expected growth rate
+of the endangered West African giraffe <em>Giraffa camelopardalis
+peralta</em>: a successful human–wildlife cohabitation. <em>Oryx</em>,
+<strong>46</strong>, 577-583. DOI: <a href="https://doi.org/10.1017/S0030605311000639" class="external-link">10.1017/S0030605311000639</a>.</p></li>
 </ul>
 </div>
   </div>
@@ -203,7 +239,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

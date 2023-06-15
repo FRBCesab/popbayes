@@ -154,26 +154,26 @@ assumed to be obtained with one field method.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">format_data</span><span class="op">(</span>
-  <span class="va">data</span>,
-  info <span class="op">=</span> <span class="cn">NULL</span>,
-  date <span class="op">=</span> <span class="st">"date"</span>,
-  count <span class="op">=</span> <span class="st">"count"</span>,
-  location <span class="op">=</span> <span class="st">"location"</span>,
-  species <span class="op">=</span> <span class="st">"species"</span>,
-  stat_method <span class="op">=</span> <span class="st">"stat_method"</span>,
-  lower_ci <span class="op">=</span> <span class="st">"lower_ci"</span>,
-  upper_ci <span class="op">=</span> <span class="st">"upper_ci"</span>,
-  sd <span class="op">=</span> <span class="cn">NULL</span>,
-  var <span class="op">=</span> <span class="cn">NULL</span>,
-  cv <span class="op">=</span> <span class="cn">NULL</span>,
-  field_method <span class="op">=</span> <span class="cn">NULL</span>,
-  pref_field_method <span class="op">=</span> <span class="cn">NULL</span>,
-  conversion_A2G <span class="op">=</span> <span class="cn">NULL</span>,
-  rmax <span class="op">=</span> <span class="cn">NULL</span>,
-  path <span class="op">=</span> <span class="st">"."</span>,
-  na_rm <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">format_data</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  info <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  date <span class="op">=</span> <span class="st">"date"</span>,</span>
+<span>  count <span class="op">=</span> <span class="st">"count"</span>,</span>
+<span>  location <span class="op">=</span> <span class="st">"location"</span>,</span>
+<span>  species <span class="op">=</span> <span class="st">"species"</span>,</span>
+<span>  stat_method <span class="op">=</span> <span class="st">"stat_method"</span>,</span>
+<span>  lower_ci <span class="op">=</span> <span class="st">"lower_ci"</span>,</span>
+<span>  upper_ci <span class="op">=</span> <span class="st">"upper_ci"</span>,</span>
+<span>  sd <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  var <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cv <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  field_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pref_field_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  conversion_A2G <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rmax <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  path <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  na_rm <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -196,6 +196,8 @@ confident interval of estimates.</p>
 and/or <code>A</code> (aerial counts). See above section <strong>Description</strong> for further
 information on the counts conversion.</p>
 <p>Others fields can be present either in <code>data</code> or <code>info</code> (see below).</p></dd>
+
+
 <dt>info</dt>
 <dd><p>(optional) a <code>data.frame</code> with species in rows and the following
 columns: <code>species</code> (species name), <code>pref_field_method</code>,
@@ -203,26 +205,36 @@ columns: <code>species</code> (species name), <code>pref_field_method</code>,
 further information on these fields.
 Default is <code>NULL</code> (i.e. these information must be present in <code>data</code>
 if not available in <code>popbayes</code>).</p></dd>
+
+
 <dt>date</dt>
 <dd><p>a <code>character</code> string. The column name in <code>data</code> of the date.
 This column <code>date</code> must be in a numerical form with possibly a decimal
 part.
 Default is <code>'date'</code>.</p></dd>
+
+
 <dt>count</dt>
 <dd><p>a <code>character</code> string. The column name in <code>data</code> of the
 number of individuals. This column must be numerical.
 Default is <code>'count'</code>.</p></dd>
+
+
 <dt>location</dt>
 <dd><p>a <code>character</code> string. The column name in <code>data</code> of the
 site. This field is used to distinguish count series from different sites
 (if required) and to create an unique series name.
 Default is <code>'location'</code>.</p></dd>
+
+
 <dt>species</dt>
 <dd><p>a <code>character</code> string. The column name in <code>data</code> (and
 in <code>info</code> if provided) of the species. This field is used to distinguish
 count series for different species (if required) and to create an unique
 series name.
 Default is <code>'species'</code>.</p></dd>
+
+
 <dt>stat_method</dt>
 <dd><p>a <code>character</code> string. The column name in <code>data</code> of
 the method used to estimate individuals counts. It can contain <code>'T'</code>
@@ -230,6 +242,8 @@ the method used to estimate individuals counts. It can contain <code>'T'</code>
 counts are coded as <code>'S'</code>, precision column(s) must also be provided (see
 below).
 Default is <code>'stat_method'</code>.</p></dd>
+
+
 <dt>lower_ci</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in <code>data</code>
 of the lower boundary of the 95% CI of the estimate (i.e. <code>count</code>). If
@@ -239,24 +253,34 @@ estimated by a sampling method. But user may prefer use other precision
 measures, e.g. standard deviation (argument <code>sd</code>), variance (argument
 <code>var</code>), or coefficient of variation (argument <code>cv</code>).
 Default is <code>'lower_ci'</code>.</p></dd>
+
+
 <dt>upper_ci</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in <code>data</code>
 of the upper boundary of the 95% CI of the estimate (i.e. <code>count</code>). If
 provided, the lower boundary of the 95% CI (argument <code>lower_ci</code>) must be
 also provided.
 Default is <code>'upper_ci'</code>.</p></dd>
+
+
 <dt>sd</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in <code>data</code> of
 the standard deviation of the estimate.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>var</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in <code>data</code> of
 the variance of the estimate.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>cv</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in <code>data</code> of
 the coefficient of variation of the estimate.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>field_method</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in
 <code>data</code> of the field method used to count individuals. Counts can be ground
@@ -264,6 +288,8 @@ counts (coded as <code>'G'</code>) or aerial counts (coded as <code>'A'</code>).
 is optional if individuals have been counted by the same method. See above
 section <strong>Description</strong> for further information on the count conversion.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>pref_field_method</dt>
 <dd><p>(optional) a <code>character</code> string. The column name
 in <code>data</code> of the preferred field method of the species. This argument is
@@ -273,6 +299,8 @@ counted by different methods). Alternatively, this value can be passed in
 See above section <strong>Description</strong> for further information on the count
 conversion.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>conversion_A2G</dt>
 <dd><p>(optional) a <code>character</code> string. The column name
 in <code>data</code> of the count conversion factor of the species. This argument is
@@ -282,24 +310,33 @@ counted by different methods). Alternatively this value can be passed in
 See above section <strong>Description</strong> for further information on the count
 conversion.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>rmax</dt>
 <dd><p>(optional) a <code>character</code> string. The column name in <code>data</code> of
 the species demographic potential (i.e. the relative rate of increase of
 the population). This is the change in log population size between two
 dates and will be used later by <code><a href="fit_trend.html">fit_trend()</a></code>.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>path</dt>
 <dd><p>a <code>character</code> string. The directory to save formatted data.
 This directory must exist and can be an absolute or a relative path.
 Default is the current working directory.</p></dd>
+
+
 <dt>na_rm</dt>
 <dd><p>a <code>logical.</code> If <code>TRUE</code>, counts with <code>NA</code> values will be
 removed.
 Default is <code>FALSE</code> (returns an error to inform user if <code>NA</code> are detected).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An n-elements <code>list</code> (where <code>n</code> is the number of count series). The
+    
+
+<p>An n-elements <code>list</code> (where <code>n</code> is the number of count series). The
 name of each element of this list is a combination of location and
 species. Each element of the list is a <code>list</code> with the following content:</p><ul><li><p><code>location</code> a <code>character</code> string. The name of the series site.</p></li>
 <li><p><code>species</code> a <code>character</code> string. The name of the series species.</p></li>
@@ -332,46 +369,46 @@ series contains only a few dates (&lt; 4 dates).</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">## Load Garamba raw dataset ----</span></span>
-<span class="r-in"><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span>
-<span class="r-in">                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span>
-<span class="r-in">                         </span>
-<span class="r-in"><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create temporary folder ----</span></span>
-<span class="r-in"><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Format dataset ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">format_data</span><span class="op">(</span></span>
-<span class="r-in">  data              <span class="op">=</span> <span class="va">garamba</span>, </span>
-<span class="r-in">  path              <span class="op">=</span> <span class="va">temp_path</span>,</span>
-<span class="r-in">  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span>
-<span class="r-in">  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span>
-<span class="r-in">  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span>
-<span class="r-in">  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Load Garamba raw dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"garamba_survey.csv"</span>, </span></span>
+<span class="r-in"><span>                         package <span class="op">=</span> <span class="st">"popbayes"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                         </span></span>
+<span class="r-in"><span><span class="va">garamba</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file <span class="op">=</span> <span class="va">file_path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create temporary folder ----</span></span></span>
+<span class="r-in"><span><span class="va">temp_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Format dataset ----</span></span></span>
+<span class="r-in"><span><span class="va">garamba_formatted</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu">format_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data              <span class="op">=</span> <span class="va">garamba</span>, </span></span>
+<span class="r-in"><span>  path              <span class="op">=</span> <span class="va">temp_path</span>,</span></span>
+<span class="r-in"><span>  field_method      <span class="op">=</span> <span class="st">"field_method"</span>,</span></span>
+<span class="r-in"><span>  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span></span>
+<span class="r-in"><span>  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span></span>
+<span class="r-in"><span>  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Number of count series ----</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Number of count series ----</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Retrieve count series names ----</span></span>
-<span class="r-in"><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="list_series.html">list_series</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Retrieve count series names ----</span></span></span>
+<span class="r-in"><span><span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="list_series.html">list_series</a></span><span class="op">(</span>path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "garamba__alcelaphus_buselaphus"  "garamba__giraffa_camelopardalis"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "garamba__hippotragus_equinus"    "garamba__kobus_ellipsiprymnus"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "garamba__kobus_kob"              "garamba__loxodonta_africana"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "garamba__ourebia_ourebi"         "garamba__redunca_redunca"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "garamba__syncerus_caffer"        "garamba__tragelaphus_scriptus"  </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Print content of the first count series ----</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print content of the first count series ----</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "location"          "species"           "dates"            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "n_dates"           "stat_methods"      "field_methods"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "pref_field_method" "conversion_A2G"    "rmax"             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10] "data_original"     "data_converted"   </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Print original data ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="st">"data_original"</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print original data ----</span></span></span>
+<span class="r-in"><span><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="st">"data_original"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    location               species date stat_method field_method</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A</span>
@@ -420,9 +457,9 @@ series contains only a few dates (&lt; 4 dates).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13            NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14            NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15            NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Print converted data ----</span></span>
-<span class="r-in"><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="st">"data_converted"</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print converted data ----</span></span></span>
+<span class="r-in"><span><span class="va">garamba_formatted</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="st">"data_converted"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    location               species date stat_method field_method</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   Garamba Alcelaphus buselaphus 1976           S            A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   Garamba Alcelaphus buselaphus 1983           S            A</span>
@@ -485,7 +522,7 @@ series contains only a few dates (&lt; 4 dates).</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
