@@ -283,6 +283,11 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
   }
   
   
+  ## Coerce to data.frame (tibble) ----
+  
+  data <- as.data.frame(data)
+  
+  
   ## Check argument 'location' ----
   
   if (!is.character(location) || length(location) != 1) {
