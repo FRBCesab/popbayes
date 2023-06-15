@@ -6,7 +6,7 @@
 \alias{popbayes-package}
 \title{popbayes: Bayesian Model to Estimate Population Trends from Counts Series}
 \description{
-Infers the trends of one or several animal populations over time from series of counts. It does so by accounting for count precision (provided or inferred based on expert knowledge, e.g. guesstimates), smoothing the population rate of increase over time, and accounting for the maximum demographic potential of species. Inference is carried out in a Bayesian framework. This work is part of the FRB-CESAB working group AfroBioDrivers <https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/>.
+Infers the trends of one or several animal populations over time from series of counts. It does so by accounting for count precision (provided or inferred based on expert knowledge, e.g. guesstimates), smoothing the population rate of increase over time, and accounting for the maximum demographic potential of species. Inference is carried out in a Bayesian framework. This work is part of the FRB-CESAB working group AfroBioDrivers \url{https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/}.
 }
 \seealso{
 Useful links:
