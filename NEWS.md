@@ -1,4 +1,4 @@
-# popbayes 1.2.0
+# popbayes (development version)
 
 # popbayes 1.2
 
