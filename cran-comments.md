@@ -10,8 +10,7 @@
   * Arch Linux 6.3.7-arch1-1, R 4.3.0
   * Ubuntu 20.04.6 LTS install, R 4.3.0
 * GitHub Actions
-  * macOS 12.6.5, R-release (R 4.3.0)
-  * Windows Server 2022, R-release (R 4.3.0)
+  * macOS 12.6.5, R-release, R-devel, R-release (R 4.3.0), R-oldrel
   * Ubuntu 22.04.2 LTS, R-devel, R-release (R 4.3.0), R-oldrel
 * WinBuilder
   * r-devel
