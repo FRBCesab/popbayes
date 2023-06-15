@@ -1,35 +1,30 @@
 ## Resubmit comments
 
-* Improve the main function `format_data()` to give more flexibility to the user
-* Implement additional checks
+* Fix issue in `format_data()` when user imports a `tibble`
 * Fix some typos in documentation
 
 
 ## Test environments
 
 * Local
-  * macOS 11.6 install, R 4.1.2
-  * Windows 10 install, R 4.1.2
+  * Arch Linux 6.3.7-arch1-1, R 4.3.0
+  * Ubuntu 20.04.6 LTS install, R 4.3.0
 * GitHub Actions
-  * macOS 11.6.4, r-devel, r-release (R 4.1.2), r-oldrel
-  * Ubuntu 20.04.4 LTS, r-devel, r-release (R 4.1.2), r-oldrel
+  * macOS 12.6.5, R-release (R 4.3.0)
+  * Windows Server 2022, R-release (R 4.3.0)
+  * Ubuntu 22.04.2 LTS, R-devel, R-release (R 4.3.0), R-oldrel
 * WinBuilder
   * r-devel
   * r-release
   * r-oldrel
-* R-hub
-  * Windows Server 2022, R-devel 64 bit
-  * Ubuntu Linux 20.04.1 LTS, R-release, GCC
-  * Fedora Linux, R-devel, clang, gfortran - ERROR: the system requirement 'JAGS' is not available on this platform.
 
 
 ## R CMD check results
 
-0 error | 0 warning | 0 note
+0 error | 0 warning | 1 note
 
-* checking CRAN incoming feasibility
-  
-  Maintainer: 'Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>'
+  * checking CRAN incoming feasibility ... NOTE
+  * Maintainer: 'Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>'
 
 
 ## Downstream dependencies
