@@ -701,14 +701,14 @@ diagnostic <- function(data, threshold = 1.1) {
   if (length(pos)) {
     
     no_converged <- names(bugs)[pos]
-    
-    usethis::ui_oops(paste0("Some parameters have not converged for the ", 
-                            "following count series: ", 
-                            "{usethis::ui_value(no_converged)}."))
+    cli::cli_alert_danger(c(
+      "Some parameters have not converged for the following count series: ",
+      "{.val {no_converged}}."
+    ))
     
   } else {
     
-    usethis::ui_done("All models have converged.")
+    cli::cli_alert_success("All models have converged.")
   }
   
   invisible(NULL)
