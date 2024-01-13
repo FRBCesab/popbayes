@@ -207,7 +207,7 @@ filter_series <- function(data, species = NULL, location = NULL) {
     series_match <- location_detected
     
     cli::cli_alert_success(
-      "Found {.val {sum(locations_detected)}} series with {.val {location}}."
+      "Found {.val {sum(location_detected)}} series with {.val {location}}."
     )
   }
   
