@@ -1,5 +1,7 @@
 # popbayes (development version)
 
+* popbayes now uses cli instead of usethis for error messages (@olivroy, #33).
+
 # popbayes 1.2
 
 * Fix issue in `format_data()` when user imports a `tibble`

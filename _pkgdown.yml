@@ -1,5 +1,10 @@
 url: https://frbcesab.github.io/popbayes
 
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#2b4370"
+
 reference:
 - title: Datasets
   contents:
