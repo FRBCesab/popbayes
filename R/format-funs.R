@@ -1118,10 +1118,10 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     count_series <- count_series[-which(names(count_series) %in% series_to_del)]
     
     if (length(n_rows) < length(count_series)) {
-      usethis::ui_oops(paste0("Removing the following series without valid ", 
-                              "precision measures: ", 
-                              usethis::ui_value(paste0(series_to_del, 
-                                                       collapse = ", "))))
+      cli::cli_alert_danger(c(
+        "Removing the following series without valid precision measures: ",
+        "{.val {series_to_del}}"
+      ))
     }
   }
   
@@ -1135,10 +1135,11 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     
     if (!na_rm) {
       
-      stop("The following count series have not enough data (< 4):\n", 
-           usethis::ui_value(paste0(series_to_del, 
-                                    collapse = ", ")),
-           "\nRemove these count series or use 'na_rm = TRUE'.")
+      cli::cli_abort(c(
+        "The following count series have not enough data (< 4):", 
+        "{.val {series_to_del}}",
+        i = "Remove these count series or use 'na_rm = TRUE'."
+      ))
       
     } else {
       
@@ -1147,10 +1148,10 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     }
     
     if (length(n_rows) < length(count_series)) {
-      usethis::ui_oops(paste0("Removing the following series without enough ", 
-                              "data (< 4) ", 
-                              usethis::ui_value(paste0(series_to_del, 
-                                                       collapse = ", "))))
+      cli::cli_alert_danger(c(
+        "Removing the following series without enough data (< 4) ",
+        "{.val {series_to_del}}"
+      ))
     }
   }
   
@@ -1191,10 +1192,10 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     count_series <- count_series[-which(names(count_series) %in% series_to_del)]
     
     if (length(n_rows) < length(count_series)) {
-      usethis::ui_oops(paste0("Removing the following series without valid ", 
-                              "precision measures: ", 
-                              usethis::ui_value(paste0(series_to_del, 
-                                                       collapse = ", "))))
+      cli::cli_alert_danger(c(
+        "Removing the following series without valid precision measures: ",
+        "{.val {series_to_del}}"
+      ))
     }
   }
   
@@ -1209,9 +1210,10 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
     
     if (any(count_series[[i]][ , "lower_ci_conv"] ==
             count_series[[i]][ , "upper_ci_conv"])) {
-      stop(paste0("Lower and upper CI bounds cannot be strictly equal for ", 
-                  "the series.", 
-                  usethis::ui_value(names(count_series)[i])))
+      cli::cli_abort(c(
+        "Lower and upper CI bounds cannot be strictly equal for the series.",
+        "{.val {names(count_series)[i]}}"
+      ))
     }
   }
   
@@ -1270,9 +1272,10 @@ format_data <- function(data, info = NULL, date = "date", count = "count",
                                           paste0(id, "_data.RData")))
   }
   
-    
-  usethis::ui_done(paste0("Detecting {usethis::ui_value(length(", 
-                          "data_series))} count series"))
+  
+  cli::cli_alert_success(
+    "Detecting {.val {length(data_series)}} count series."
+  )
   
   data_series
 }
@@ -1302,8 +1305,10 @@ is_na_counts <- function(data, col, na_rm) {
     } else {
       
       pos <- which(is.na(data[ , col]))
-      usethis::ui_info(paste0("Removing {usethis::ui_value(length(pos))} ",
-                              "rows with NA values in '", col, "' field."))
+      
+      cli::cli_alert_info(c(
+        "Removing {.val {length(pos)}} rows with NA values in {.field {col}} field."
+      ))
       
       data <- data[-pos, ]
     }

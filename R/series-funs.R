@@ -34,11 +34,12 @@ get_series <- function(data, quiet = TRUE) {
   series_infos$"id" <- gsub("[[:punct:]]", "_", series_infos$"id")
   
   if (!quiet)
-    usethis::ui_done(paste0("Detecting {usethis::ui_value(nrow(series_infos))}",
-                            " series with {usethis::ui_value(length(unique(",
-                            "series_infos$location)))} location(s) and ",
-                            "{usethis::ui_value(length(unique(",
-                            "series_infos$species)))} species"))
+    
+    cli::cli_alert_success(c(
+      "Detecting {.val {nrow(series_infos)}} series with ",
+      "{.val {length(unique(series_infos$location))}} location{?s}  and ",
+      "{.val {length(unique(series_infos$species))}} species."
+    ))
   
   series_infos
 }
@@ -117,8 +118,9 @@ filter_series <- function(data, species = NULL, location = NULL) {
   
   if (is.null(species) && is.null(location)) {
     
-    usethis::ui_oops(paste0("No species nor location provided to filter ", 
-                            "series."))
+    cli::cli_alert_danger(
+      "No species nor location provided to filter series"
+    )
     
     return(NULL)
   }
@@ -173,15 +175,16 @@ filter_series <- function(data, species = NULL, location = NULL) {
     series_match <- which(species_detected & location_detected)
     
     if (length(series_match)) {
-      usethis::ui_done(paste0("Found {usethis::ui_value(length(", 
-                              "series_match))} series with ", 
-                              "{usethis::ui_value(species)} and ", 
-                              "{usethis::ui_value(location)}."))
+      
+      cli::cli_alert_success(c(
+        "Found {.val {length(series_match)}} series with ",
+        "{.val {species}} and {.val {location}}."
+      ))
     } else {
       
-      usethis::ui_oops(paste0("No series found with ", 
-                              "{usethis::ui_value(species)} and ", 
-                              "{usethis::ui_value(location)}."))
+      cli::cli_alert_danger(
+        "No series found with {.val {species}} and {.val {location}}."
+      )
       
       return(NULL)
     }
@@ -194,18 +197,18 @@ filter_series <- function(data, species = NULL, location = NULL) {
     
     series_match <- species_detected
     
-    usethis::ui_done(paste0("Found {usethis::ui_value(",
-                            "sum(species_detected))} ",
-                            "series with {usethis::ui_value(species)}."))
+    cli::cli_alert_success(
+      "Found {.val {sum(species_detected)}} series with {.val {species}}."
+    )
   }
   
   if (is.null(species) && !is.null(location)) {
     
     series_match <- location_detected
     
-    usethis::ui_done(paste0("Found {usethis::ui_value(",
-                            "sum(location_detected))} ",
-                            "series with {usethis::ui_value(location)}."))
+    cli::cli_alert_success(
+      "Found {.val {sum(location_detected)}} series with {.val {location}}."
+    )
   }
   
   data[series_match]
