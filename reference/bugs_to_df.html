@@ -108,13 +108,13 @@ useful for users.</p>
 <span class="r-in"><span>  pref_field_method <span class="op">=</span> <span class="st">"pref_field_method"</span>,</span></span>
 <span class="r-in"><span>  conversion_A2G    <span class="op">=</span> <span class="st">"conversion_A2G"</span>,</span></span>
 <span class="r-in"><span>  rmax              <span class="op">=</span> <span class="st">"rmax"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Detecting <span style="color: #0000BB;">10</span> count series.</span>
 <span class="r-in"><span>                                        </span></span>
 <span class="r-in"><span><span class="co">## Select one serie ----</span></span></span>
 <span class="r-in"><span><span class="va">a_buselaphus</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="filter_series.html">filter_series</a></span><span class="op">(</span><span class="va">garamba_formatted</span>, </span></span>
 <span class="r-in"><span>                                        location <span class="op">=</span> <span class="st">"Garamba"</span>,</span></span>
 <span class="r-in"><span>                                        species  <span class="op">=</span> <span class="st">"Alcelaphus buselaphus"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">'Alcelaphus buselaphus'</span> and <span style="color: #0000BB;">'Garamba'</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Found <span style="color: #0000BB;">1</span> series with <span style="color: #0000BB;">"Alcelaphus buselaphus"</span> and <span style="color: #0000BB;">"Garamba"</span>.</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">## Fit population trends (requires JAGS) ----</span></span></span>
 <span class="r-in"><span><span class="va">a_buselaphus_mod</span> <span class="op">&lt;-</span> <span class="fu">popbayes</span><span class="fu">::</span><span class="fu"><a href="fit_trend.html">fit_trend</a></span><span class="op">(</span><span class="va">a_buselaphus</span>, path <span class="op">=</span> <span class="va">temp_path</span><span class="op">)</span></span></span>
@@ -142,107 +142,107 @@ useful for users.</p>
 <span class="r-in"><span><span class="co">## Extract estimated parameters ----</span></span></span>
 <span class="r-in"><span><span class="fu">popbayes</span><span class="fu">::</span><span class="fu">bugs_to_df</span><span class="op">(</span><span class="va">bugs</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            series parameter          mean           sd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  garamba__alcelaphus_buselaphus      N[1]  1.761075e+04 1.709280e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  garamba__alcelaphus_buselaphus      N[2]  3.874749e+03 4.988588e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  garamba__alcelaphus_buselaphus      N[3]  3.334011e+03 3.899195e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  garamba__alcelaphus_buselaphus      N[4]  3.027561e+03 4.276523e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  garamba__alcelaphus_buselaphus      N[5]  2.666755e+03 3.294460e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  garamba__alcelaphus_buselaphus      N[6]  3.217075e+03 5.599882e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  garamba__alcelaphus_buselaphus      N[7]  3.752146e+03 6.956296e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  garamba__alcelaphus_buselaphus      N[8]  3.466295e+03 3.698617e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  garamba__alcelaphus_buselaphus      N[9]  2.888401e+03 2.087466e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 garamba__alcelaphus_buselaphus     N[10]  2.749395e+03 2.085408e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 garamba__alcelaphus_buselaphus     N[11]  2.751830e+03 2.621859e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 garamba__alcelaphus_buselaphus     N[12]  2.620509e+03 3.016493e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 garamba__alcelaphus_buselaphus     N[13]  1.311487e+03 7.371201e+01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 garamba__alcelaphus_buselaphus     N[14]  1.570769e+03 8.942068e+01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 garamba__alcelaphus_buselaphus     N[15]  2.393759e+03 1.508344e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 garamba__alcelaphus_buselaphus  deviance  2.362198e+02 5.106496e+00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 garamba__alcelaphus_buselaphus     meanr -4.860618e-02 2.857257e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 garamba__alcelaphus_buselaphus      r[1] -2.168073e-01 2.256925e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 garamba__alcelaphus_buselaphus      r[2] -1.488359e-01 6.872589e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 garamba__alcelaphus_buselaphus      r[3] -4.975592e-02 6.001320e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 garamba__alcelaphus_buselaphus      r[4] -2.492544e-02 3.307010e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 garamba__alcelaphus_buselaphus      r[5]  9.009711e-02 6.556166e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 garamba__alcelaphus_buselaphus      r[6]  7.599606e-02 5.767396e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 garamba__alcelaphus_buselaphus      r[7] -2.264469e-02 5.266008e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 garamba__alcelaphus_buselaphus      r[8] -8.963426e-02 5.031824e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 garamba__alcelaphus_buselaphus      r[9] -2.479495e-02 4.423504e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 garamba__alcelaphus_buselaphus     r[10] -7.911919e-04 6.698691e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 garamba__alcelaphus_buselaphus     r[11] -5.100580e-02 6.569253e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 garamba__alcelaphus_buselaphus     r[12] -8.588961e-02 1.563172e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 garamba__alcelaphus_buselaphus     r[13]  9.018223e-02 3.560808e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 garamba__alcelaphus_buselaphus     r[14]  1.403095e-01 2.725782e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 garamba__alcelaphus_buselaphus       sdr  1.116467e-01 9.339163e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 garamba__alcelaphus_buselaphus    vrrmax  4.598502e-01 3.846612e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  garamba__alcelaphus_buselaphus      N[1]  1.766876e+04 1.732687e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  garamba__alcelaphus_buselaphus      N[2]  3.868190e+03 4.950652e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  garamba__alcelaphus_buselaphus      N[3]  3.321916e+03 3.835206e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  garamba__alcelaphus_buselaphus      N[4]  3.009409e+03 4.204610e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  garamba__alcelaphus_buselaphus      N[5]  2.668722e+03 3.309877e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  garamba__alcelaphus_buselaphus      N[6]  3.217873e+03 5.610725e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  garamba__alcelaphus_buselaphus      N[7]  3.735252e+03 6.924271e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  garamba__alcelaphus_buselaphus      N[8]  3.471791e+03 3.702456e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  garamba__alcelaphus_buselaphus      N[9]  2.890118e+03 2.100132e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 garamba__alcelaphus_buselaphus     N[10]  2.750291e+03 2.057725e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 garamba__alcelaphus_buselaphus     N[11]  2.754862e+03 2.577432e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 garamba__alcelaphus_buselaphus     N[12]  2.625179e+03 2.966592e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 garamba__alcelaphus_buselaphus     N[13]  1.311406e+03 7.330904e+01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 garamba__alcelaphus_buselaphus     N[14]  1.570153e+03 9.000925e+01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 garamba__alcelaphus_buselaphus     N[15]  2.394076e+03 1.522665e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 garamba__alcelaphus_buselaphus  deviance  2.362559e+02 5.168261e+00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 garamba__alcelaphus_buselaphus     meanr -4.868165e-02 2.875668e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 garamba__alcelaphus_buselaphus      r[1] -2.174860e-01 2.245718e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 garamba__alcelaphus_buselaphus      r[2] -1.507311e-01 6.807379e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 garamba__alcelaphus_buselaphus      r[3] -5.094199e-02 5.896102e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 garamba__alcelaphus_buselaphus      r[4] -2.363385e-02 3.276309e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 garamba__alcelaphus_buselaphus      r[5]  8.986191e-02 6.502580e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 garamba__alcelaphus_buselaphus      r[6]  7.353936e-02 5.712509e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 garamba__alcelaphus_buselaphus      r[7] -2.053112e-02 5.277901e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 garamba__alcelaphus_buselaphus      r[8] -9.014437e-02 5.105310e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 garamba__alcelaphus_buselaphus      r[9] -2.487572e-02 4.353264e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 garamba__alcelaphus_buselaphus     r[10]  7.341258e-05 6.648781e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 garamba__alcelaphus_buselaphus     r[11] -5.024788e-02 6.554160e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 garamba__alcelaphus_buselaphus     r[12] -8.614843e-02 1.532538e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 garamba__alcelaphus_buselaphus     r[13]  8.999505e-02 3.541111e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 garamba__alcelaphus_buselaphus     r[14]  1.404805e-01 2.745530e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 garamba__alcelaphus_buselaphus       sdr  1.117399e-01 9.357909e-03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33 garamba__alcelaphus_buselaphus    vrrmax  4.602342e-01 3.854333e-02</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             2.5%           25%           50%           75%         97.5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1.423553e+04  1.645476e+04  1.762263e+04  1.877947e+04  2.093425e+04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2.926436e+03  3.532358e+03  3.866150e+03  4.206636e+03  4.885801e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   2.590185e+03  3.068311e+03  3.328744e+03  3.596687e+03  4.116348e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   2.255217e+03  2.723562e+03  3.007658e+03  3.307523e+03  3.913179e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2.023902e+03  2.443381e+03  2.663613e+03  2.885146e+03  3.325154e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2.207909e+03  2.832146e+03  3.177301e+03  3.570044e+03  4.425559e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   2.531979e+03  3.273284e+03  3.697373e+03  4.168876e+03  5.294162e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   2.766918e+03  3.211297e+03  3.458138e+03  3.713790e+03  4.215596e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   2.485763e+03  2.745621e+03  2.885363e+03  3.029002e+03  3.303674e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2.350536e+03  2.605899e+03  2.746771e+03  2.890196e+03  3.162603e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  2.253857e+03  2.571335e+03  2.747820e+03  2.926799e+03  3.279032e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  2.053450e+03  2.412660e+03  2.611055e+03  2.820778e+03  3.227485e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1.167160e+03  1.261200e+03  1.311674e+03  1.361178e+03  1.456139e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14  1.397184e+03  1.510624e+03  1.569597e+03  1.630200e+03  1.748739e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15  2.097310e+03  2.291678e+03  2.394321e+03  2.494036e+03  2.688811e+03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16  2.274549e+02  2.325905e+02  2.357653e+02  2.394297e+02  2.473513e+02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -5.395486e-02 -5.054692e-02 -4.870131e-02 -4.673904e-02 -4.272777e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 -2.621938e-01 -2.318271e-01 -2.164685e-01 -2.011909e-01 -1.742481e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 -2.841187e-01 -1.950867e-01 -1.486203e-01 -1.018334e-01 -1.578548e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -1.662057e-01 -9.051892e-02 -4.967126e-02 -9.174997e-03  6.772013e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 -9.032499e-02 -4.714832e-02 -2.491441e-02 -2.331523e-03  3.825759e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -3.814802e-02  4.597781e-02  8.965755e-02  1.343834e-01  2.241578e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 -3.658484e-02  3.755379e-02  7.586636e-02  1.137245e-01  1.922704e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 -1.261607e-01 -5.771901e-02 -2.260832e-02  1.275586e-02  8.165697e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 -1.861537e-01 -1.239817e-01 -9.064447e-02 -5.627934e-02  1.131357e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 -1.116549e-01 -5.480898e-02 -2.436179e-02  4.923051e-03  6.166546e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 -1.332184e-01 -4.597424e-02 -3.923085e-04  4.439835e-02  1.295681e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 -1.805149e-01 -9.539975e-02 -5.085824e-02 -6.437103e-03  7.638800e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 -1.156404e-01 -9.665407e-02 -8.622841e-02 -7.546261e-02 -5.459347e-02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30  2.033792e-02  6.614763e-02  9.044087e-02  1.144462e-01  1.593912e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31  8.660462e-02  1.220979e-01  1.403098e-01  1.587746e-01  1.930701e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32  9.442027e-02  1.051959e-01  1.112187e-01  1.177201e-01  1.310404e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33  3.888980e-01  4.332805e-01  4.580874e-01  4.848653e-01  5.397290e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1.425499e+04  1.649536e+04  1.768775e+04  1.885041e+04  2.106372e+04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   2.946645e+03  3.526714e+03  3.854742e+03  4.195451e+03  4.873512e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   2.587523e+03  3.060542e+03  3.318975e+03  3.580645e+03  4.087599e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   2.234749e+03  2.716120e+03  2.994371e+03  3.285734e+03  3.882234e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   2.022238e+03  2.447826e+03  2.667699e+03  2.889417e+03  3.319439e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   2.231214e+03  2.823920e+03  3.177502e+03  3.574881e+03  4.412752e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   2.513325e+03  3.249231e+03  3.688613e+03  4.169092e+03  5.218382e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   2.768847e+03  3.214230e+03  3.465080e+03  3.719922e+03  4.213138e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   2.485045e+03  2.747630e+03  2.888352e+03  3.030931e+03  3.309755e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  2.351598e+03  2.610004e+03  2.745996e+03  2.888241e+03  3.158348e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  2.260796e+03  2.578564e+03  2.750655e+03  2.924496e+03  3.277553e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  2.062065e+03  2.421953e+03  2.618927e+03  2.820414e+03  3.226336e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1.168830e+03  1.261684e+03  1.311219e+03  1.361047e+03  1.455553e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  1.392979e+03  1.509500e+03  1.570033e+03  1.631416e+03  1.746758e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  2.095996e+03  2.291806e+03  2.393498e+03  2.497033e+03  2.690581e+03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  2.273887e+02  2.326038e+02  2.358264e+02  2.394228e+02  2.476852e+02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 -5.411739e-02 -5.064958e-02 -4.875013e-02 -4.681505e-02 -4.283875e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 -2.622146e-01 -2.324258e-01 -2.174463e-01 -2.021481e-01 -1.745303e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 -2.823776e-01 -1.969748e-01 -1.509089e-01 -1.041587e-01 -1.845114e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -1.673703e-01 -9.065833e-02 -5.018659e-02 -1.027185e-02  6.126073e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 -8.887553e-02 -4.479852e-02 -2.378034e-02 -2.016179e-03  4.071413e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -3.724660e-02  4.553097e-02  8.997656e-02  1.342054e-01  2.208335e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 -3.789698e-02  3.551783e-02  7.381667e-02  1.114390e-01  1.865237e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 -1.216256e-01 -5.617739e-02 -2.149588e-02  1.418600e-02  8.638359e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 -1.881290e-01 -1.250879e-01 -9.087387e-02 -5.600884e-02  1.149711e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 -1.101028e-01 -5.416846e-02 -2.493623e-02  4.696288e-03  6.011980e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 -1.326436e-01 -4.420328e-02  7.208492e-04  4.504956e-02  1.279577e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 -1.785402e-01 -9.444219e-02 -5.018834e-02 -6.558930e-03  7.931141e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 -1.155597e-01 -9.643746e-02 -8.644155e-02 -7.625294e-02 -5.525184e-02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  1.935788e-02  6.645344e-02  9.026568e-02  1.137344e-01  1.585421e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  8.658533e-02  1.219607e-01  1.405941e-01  1.589051e-01  1.944844e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32  9.441631e-02  1.053100e-01  1.113443e-01  1.178236e-01  1.312345e-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  3.888817e-01  4.337506e-01  4.586047e-01  4.852914e-01  5.405281e-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Rhat n.eff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.000996 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1.001036 20000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  1.001061 15000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  1.000961 27000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  1.000961 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1.000979 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1.001619  2300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1.003650   560</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1.003246   660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.000979 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1.001054 16000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 1.000968 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1.001543  2600</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1.002179  1200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1.000984 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1.001035 20000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 1.000963 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1.001651  2200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1.000993 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1.000973 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 1.001217  5900</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 1.000989 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 1.001211  6000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 1.002940   760</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 1.000964 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 1.005340   530</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 1.001091 12000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 1.001065 14000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 1.001953  1500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 1.001659  2200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 1.002153  1300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 1.000971 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 1.001013 27000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 1.001084 12000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 1.001084 12000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  1.001857  1700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  1.001204  6200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  1.002256  1200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  1.002765   830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  1.001107 10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  1.000965 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 1.001182  6800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 1.001357  3800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 1.001437  3200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1.001157  7700</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1.000978 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 1.001256  5100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1.001042 18000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 1.001276  4800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 1.001000 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 1.000961 27000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 1.002233  1200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 1.002392  1100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 1.002079  1300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 1.001163  7400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 1.002723   850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 1.001090 12000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 1.001170  7200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 1.001089 12000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 1.001048 17000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29 1.001671  2100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 1.001020 25000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31 1.001071 14000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 1.001110 10000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33 1.001110 10000</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
