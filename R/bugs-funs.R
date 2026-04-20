@@ -341,11 +341,11 @@ fit_trend <- function(data, model_opts = list(100, TRUE),
   ## Check MCMC options ----
   
   if (!is.list(mcmc_opts)) {
-    stop("Argument 'model_opts' must be a list.")
+    stop("Argument 'mcmc_opts' must be a list.")
   }
   
   if (length(mcmc_opts) != 4) {
-    stop("Argument 'model_opts' must be a list of length 4.")
+    stop("Argument 'mcmc_opts' must be a list of length 4.")
   }
   
   valid_mcmc_opts_names <- c("ni", "nt", "nb", "nc")
