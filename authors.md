@@ -12,14 +12,14 @@
 Source:
 [`inst/CITATION`](https://github.com/frbcesab/popbayes/blob/master/inst/CITATION)
 
-Casajus Nicolas, Pradel Roger (2023). *popbayes: Bayesian model to
-estimate population trends from counts series*. R package version 1.2.0,
+Casajus Nicolas, Pradel Roger (2026). *popbayes: Bayesian model to
+estimate population trends from counts series*. R package version 1.3,
 <https://frbcesab.github.io/popbayes/>.
 
     @Manual{,
       title = {popbayes: Bayesian model to estimate population trends from counts series},
       author = {{Casajus Nicolas} and {Pradel Roger}},
-      year = {2023},
-      note = {R package version 1.2.0},
+      year = {2026},
+      note = {R package version 1.3},
       url = {https://frbcesab.github.io/popbayes/},
     }
