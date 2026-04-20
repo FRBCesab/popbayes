@@ -1,6 +1,8 @@
-# popbayes (development version)
+# popbayes 1.3
 
-* popbayes now uses cli instead of usethis for error messages (@olivroy, #33).
+* `popbayes` now uses `cli` instead of `usethis` for error messages ([@olivroy](https://github.com/olivroy), [#33](https://github.com/FRBCesab/popbayes/pull/33)).
+* Improve website ([@olivroy](https://github.com/olivroy), [#34](https://github.com/FRBCesab/popbayes/pull/34))
+* Fix error messages in `fit_trend()` ([@fjoyce](https://github.com/fjoyce), [#35](https://github.com/FRBCesab/popbayes/issues/35))
 
 # popbayes 1.2
 
