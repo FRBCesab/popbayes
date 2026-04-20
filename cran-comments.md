@@ -1,29 +1,29 @@
 ## Resubmit comments
 
-* Fix issue in `format_data()` when user imports a `tibble`
-* Fix some typos in documentation
+* Fix error messages in `fit_trend()`
+* Replace `usethis` dependency by `cli`
 
 
 ## Test environments
 
 * Local
-  * Arch Linux 6.3.7-arch1-1, R 4.3.0
-  * Ubuntu 20.04.6 LTS install, R 4.3.0
+  * Fedora Linux 6.19.12-200.fc43.x86_64 (R 4.5.3)
+  * Debian 13 Linux 6.12.74+deb13+1-amd64 (R 4.5.3)
+  
 * GitHub Actions
-  * macOS 12.6.5, R-release, R-devel, R-release (R 4.3.0), R-oldrel
-  * Ubuntu 22.04.2 LTS, R-devel, R-release (R 4.3.0), R-oldrel
-* WinBuilder
-  * r-devel
-  * r-release
-  * r-oldrel
+  * macOS 15.7.4 24G517, R-release (R 4.5.3)
+  * Windows Server 2025 10.0.26100, R-release (R 4.5.3)
+  * Ubuntu 24.04.4 LTS, R-devel, R-release (R 4.5.3), R-oldrel
 
 
 ## R CMD check results
 
-0 error | 0 warning | 1 note
+```
+0 errors | 0 warnings | 1 note
+```
 
-  * checking CRAN incoming feasibility ... NOTE
-  * Maintainer: 'Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>'
+* Checking CRAN incoming feasibility
+  Maintainer: 'Nicolas Casajus <nicolas.casajus@fondationbiodiversite.fr>'
 
 
 ## Downstream dependencies
