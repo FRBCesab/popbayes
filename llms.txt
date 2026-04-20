@@ -1,0 +1,114 @@
+# popbayes
+
+The goal of the R package `popbayes` is to infer trends of one or
+several populations over time from series of counts. It does so by
+accounting for count precision (provided or inferred based on expert
+knowledge, e.g. guesstimates), smoothing the population rate of increase
+over time, and accounting for the maximum demographic potential of
+species. Inference is carried out in a Bayesian framework. This work is
+part of the FRB-CESAB working group
+[AfroBioDrivers](https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/).
+
+## Installation
+
+**Before using this package, users need to install the freeware
+[JAGS](https://mcmc-jags.sourceforge.io/).**
+
+You can install the stable version of the package from the
+[CRAN](https://cran.r-project.org) with:
+
+``` r
+install.packages("popbayes")
+```
+
+Alternatively you can install the development version from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+
+remotes::install_github("frbcesab/popbayes", build_vignettes = TRUE)
+```
+
+## Overview
+
+![](articles/docs/popbayes-diagram.png)
+
+## Get started
+
+Please read the [Get
+started](https://frbcesab.github.io/popbayes/articles/popbayes.html)
+vignette.
+
+## Citation
+
+Please cite this package as:
+
+> Casajus N. & Pradel R. (2023) popbayes: Bayesian model to estimate
+> population trends from counts series. R package version 1.2.0. URL:
+> <https://frbcesab.github.io/popbayes/>.
+
+You can also run:
+
+``` r
+citation("popbayes")
+
+## A BibTeX entry for LaTeX users is:
+## 
+## @Manual{,
+##   title  = {{popbayes}: {B}ayesian model to estimate population trends from counts series,
+##   author = {{Casajus N.}, and {Pradel R.}},
+##   year   = {2023},
+##   note   = {R package version 1.2.0},
+##   url    = {https://frbcesab.github.io/popbayes/},
+## }
+```
+
+# Package index
+
+## Datasets
+
+- [`garamba`](https://frbcesab.github.io/popbayes/reference/garamba.md)
+  : African mammals survey in the Garamba National Park
+- [`species_info`](https://frbcesab.github.io/popbayes/reference/species_info.md)
+  : Species information dataset
+
+## Main functions
+
+- [`format_data()`](https://frbcesab.github.io/popbayes/reference/format_data.md)
+  : Format count series
+- [`filter_series()`](https://frbcesab.github.io/popbayes/reference/filter_series.md)
+  : Extract the count series corresponding to a location and/or a
+  species
+- [`plot_series()`](https://frbcesab.github.io/popbayes/reference/plot_series.md)
+  : Plot original vs converted counts
+- [`fit_trend()`](https://frbcesab.github.io/popbayes/reference/fit_trend.md)
+  : Fit a Bayesian model to estimate population size trend
+- [`diagnostic()`](https://frbcesab.github.io/popbayes/reference/diagnostic.md)
+  : Check if a BUGS model has converged
+- [`plot_trend()`](https://frbcesab.github.io/popbayes/reference/plot_trend.md)
+  : Plot estimated population trend
+
+## Additional functions
+
+- [`list_series()`](https://frbcesab.github.io/popbayes/reference/list_series.md)
+  : Retrieve the count series names
+- [`read_series()`](https://frbcesab.github.io/popbayes/reference/read_series.md)
+  : Import a list of count series previously exported
+- [`series_to_df()`](https://frbcesab.github.io/popbayes/reference/series_to_df.md)
+  : Extract original/converted count series data from a list
+- [`read_bugs()`](https://frbcesab.github.io/popbayes/reference/read_bugs.md)
+  : Import a list of BUGS outputs previously exported
+- [`bugs_to_df()`](https://frbcesab.github.io/popbayes/reference/bugs_to_df.md)
+  : Extract estimated parameters from a list of BUGS outputs
+- [`w_to_rmax()`](https://frbcesab.github.io/popbayes/reference/w_to_rmax.md)
+  : Compute rmax from adult female body mass
+
+# Articles
+
+### All vignettes
+
+- [Get species
+  information](https://frbcesab.github.io/popbayes/articles/generate_data.md):
+- [Get
+  started](https://frbcesab.github.io/popbayes/articles/popbayes.md):
