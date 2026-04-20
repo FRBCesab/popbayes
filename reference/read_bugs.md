@@ -84,7 +84,7 @@ popbayes::read_bugs(series = "garamba__alcelaphus_buselaphus",
 #> $garamba__alcelaphus_buselaphus
 #> Inference for Bugs model at "model.bug", fit using jags,
 #>  2 chains, each with 50000 iterations (first 10000 discarded), n.thin = 3
-#>  n.sims = 26666 iterations saved. Running time = 6.344 secs
+#>  n.sims = 26666 iterations saved. Running time = 6.351 secs
 #>            mu.vect  sd.vect      2.5%       25%       50%       75%     97.5%
 #> N[1]     17669.341 1698.331 14355.107 16554.160 17642.370 18790.382 20993.278
 #> N[2]      3866.780  500.377  2906.677  3527.571  3858.572  4192.570  4879.499
@@ -167,7 +167,7 @@ popbayes::read_bugs(path = temp_path)
 #> $garamba__alcelaphus_buselaphus
 #> Inference for Bugs model at "model.bug", fit using jags,
 #>  2 chains, each with 50000 iterations (first 10000 discarded), n.thin = 3
-#>  n.sims = 26666 iterations saved. Running time = 6.344 secs
+#>  n.sims = 26666 iterations saved. Running time = 6.351 secs
 #>            mu.vect  sd.vect      2.5%       25%       50%       75%     97.5%
 #> N[1]     17669.341 1698.331 14355.107 16554.160 17642.370 18790.382 20993.278
 #> N[2]      3866.780  500.377  2906.677  3527.571  3858.572  4192.570  4879.499
