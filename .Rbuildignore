@@ -8,6 +8,7 @@
 ^popbayes\.Rproj$
 ^_pkgdown\.yml$
 ^cran-comments\.md$
-^_pkgdown\.yml$
 ^popbayes-manual\.*$
 ^CRAN-RELEASE$
+^codemeta\.json$
+^CITATION\.cff$

@@ -1,0 +1,156 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "popbayes",
+  "description": "Infers the trends of one or several animal populations over time from series of counts. It does so by accounting for count precision (provided or inferred based on expert knowledge, e.g. guesstimates), smoothing the population rate of increase over time, and accounting for the maximum demographic potential of species. Inference is carried out in a Bayesian framework. This work is part of the FRB-CESAB working group AfroBioDrivers <https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/>.",
+  "name": "popbayes: Bayesian Model to Estimate Population Trends from Counts Series",
+  "relatedLink": ["https://frbcesab.github.io/popbayes/", "https://CRAN.R-project.org/package=popbayes"],
+  "codeRepository": "https://github.com/frbcesab/popbayes",
+  "issueTracker": "https://github.com/frbcesab/popbayes/issues",
+  "license": "https://spdx.org/licenses/GPL-2.0",
+  "version": "1.2.0.9000",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.5.3 (2026-03-11)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Nicolas",
+      "familyName": "Casajus",
+      "email": "nicolas.casajus@fondationbiodiversite.fr",
+      "@id": "https://orcid.org/0000-0002-5537-5294"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Roger",
+      "familyName": "Pradel",
+      "email": "roger.pradel@cefe.cnrs.fr",
+      "@id": "https://orcid.org/0000-0002-2684-9251"
+    }
+  ],
+  "copyrightHolder": [
+    {
+      "@type": "Person",
+      "givenName": "Nicolas",
+      "familyName": "Casajus",
+      "email": "nicolas.casajus@fondationbiodiversite.fr",
+      "@id": "https://orcid.org/0000-0002-5537-5294"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Nicolas",
+      "familyName": "Casajus",
+      "email": "nicolas.casajus@fondationbiodiversite.fr",
+      "@id": "https://orcid.org/0000-0002-5537-5294"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    }
+  ],
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "graphics",
+      "name": "graphics"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
+      "identifier": "grDevices",
+      "name": "grDevices"
+    },
+    "4": {
+      "@type": "SoftwareApplication",
+      "identifier": "R2jags",
+      "name": "R2jags",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=R2jags"
+    },
+    "5": {
+      "@type": "SoftwareApplication",
+      "identifier": "stats",
+      "name": "stats"
+    },
+    "6": {
+      "@type": "SoftwareApplication",
+      "identifier": "cli",
+      "name": "cli",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=cli"
+    },
+    "SystemRequirements": "JAGS (>= 4.1)"
+  },
+  "fileSize": "1493.449KB",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2026",
+      "author": [
+        {
+          "@type": "Organization",
+          "name": "Casajus Nicolas"
+        },
+        {
+          "@type": "Organization",
+          "name": "Pradel Roger"
+        }
+      ],
+      "name": "popbayes: Bayesian model to estimate population trends from counts series",
+      "url": "https://frbcesab.github.io/popbayes/",
+      "description": "R package version 1.3"
+    }
+  ],
+  "releaseNotes": "https://github.com/frbcesab/popbayes/blob/main/NEWS.md",
+  "readme": "https://github.com/FRBCesab/popbayes/blob/master/README.md",
+  "contIntegration": ["https://github.com/frbcesab/popbayes/actions/workflows/R-CMD-check.yaml", "https://github.com/frbcesab/popbayes/actions/workflows/pkgdown.yaml"],
+  "keywords": ["r", "population", "bayesian", "temporal-trend", "animal", "precision", "counts"]
+}

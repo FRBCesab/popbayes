@@ -1,0 +1,182 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "popbayes" in publications use:'
+type: software
+license: GPL-2.0-or-later
+title: 'popbayes: Bayesian Model to Estimate Population Trends from Counts Series'
+version: 1.2.0.9000
+identifiers:
+- type: doi
+  value: 10.32614/CRAN.package.popbayes
+abstract: Infers the trends of one or several animal populations over time from series
+  of counts. It does so by accounting for count precision (provided or inferred based
+  on expert knowledge, e.g. guesstimates), smoothing the population rate of increase
+  over time, and accounting for the maximum demographic potential of species. Inference
+  is carried out in a Bayesian framework. This work is part of the FRB-CESAB working
+  group AfroBioDrivers <https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/afrobiodrivers/>.
+authors:
+- family-names: Casajus
+  given-names: Nicolas
+  email: nicolas.casajus@fondationbiodiversite.fr
+  orcid: https://orcid.org/0000-0002-5537-5294
+- family-names: Pradel
+  given-names: Roger
+  email: roger.pradel@cefe.cnrs.fr
+  orcid: https://orcid.org/0000-0002-2684-9251
+preferred-citation:
+  type: manual
+  title: 'popbayes: Bayesian model to estimate population trends from counts series'
+  authors:
+  - name: Casajus Nicolas
+  - name: Pradel Roger
+  year: '2026'
+  notes: R package version 1.3
+  url: https://frbcesab.github.io/popbayes/
+repository: https://CRAN.R-project.org/package=popbayes
+repository-code: https://github.com/frbcesab/popbayes
+url: https://frbcesab.github.io/popbayes/
+contact:
+- family-names: Casajus
+  given-names: Nicolas
+  email: nicolas.casajus@fondationbiodiversite.fr
+  orcid: https://orcid.org/0000-0002-5537-5294
+keywords:
+- animal
+- bayesian
+- counts
+- population
+- precision
+- r
+- temporal-trend
+references:
+- type: software
+  title: 'R: A Language and Environment for Statistical Computing'
+  notes: Depends
+  url: https://www.R-project.org/
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2026'
+  version: '>= 3.5'
+- type: software
+  title: graphics
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2026'
+- type: software
+  title: grDevices
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2026'
+- type: software
+  title: R2jags
+  abstract: 'R2jags: Using R to Run ''JAGS'''
+  notes: Imports
+  url: https://github.com/suyusung/R2jags/issues/
+  repository: https://CRAN.R-project.org/package=R2jags
+  authors:
+  - family-names: Su
+    given-names: Yu-Sung
+    email: suyusung@tsinghua.edu.cn
+    orcid: https://orcid.org/0000-0001-5021-8209
+  - family-names: Yajima
+    given-names: Masanao
+    email: yajima@bu.edu
+  year: '2026'
+  doi: 10.32614/CRAN.package.R2jags
+- type: software
+  title: stats
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  institution:
+    name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2026'
+- type: software
+  title: cli
+  abstract: 'cli: Helpers for Developing Command Line Interfaces'
+  notes: Imports
+  url: https://cli.r-lib.org
+  repository: https://CRAN.R-project.org/package=cli
+  authors:
+  - family-names: Csárdi
+    given-names: Gábor
+    email: gabor@posit.co
+  year: '2026'
+  doi: 10.32614/CRAN.package.cli
+- type: software
+  title: knitr
+  abstract: 'knitr: A General-Purpose Package for Dynamic Report Generation in R'
+  notes: Suggests
+  url: https://yihui.org/knitr/
+  repository: https://CRAN.R-project.org/package=knitr
+  authors:
+  - family-names: Xie
+    given-names: Yihui
+    email: xie@yihui.name
+    orcid: https://orcid.org/0000-0003-0645-5666
+  year: '2026'
+  doi: 10.32614/CRAN.package.knitr
+- type: software
+  title: rmarkdown
+  abstract: 'rmarkdown: Dynamic Documents for R'
+  notes: Suggests
+  url: https://pkgs.rstudio.com/rmarkdown/
+  repository: https://CRAN.R-project.org/package=rmarkdown
+  authors:
+  - family-names: Allaire
+    given-names: JJ
+    email: jj@posit.co
+  - family-names: Xie
+    given-names: Yihui
+    email: xie@yihui.name
+    orcid: https://orcid.org/0000-0003-0645-5666
+  - family-names: Dervieux
+    given-names: Christophe
+    email: cderv@posit.co
+    orcid: https://orcid.org/0000-0003-4474-2498
+  - family-names: McPherson
+    given-names: Jonathan
+    email: jonathan@posit.co
+  - family-names: Luraschi
+    given-names: Javier
+  - family-names: Ushey
+    given-names: Kevin
+    email: kevin@posit.co
+  - family-names: Atkins
+    given-names: Aron
+    email: aron@posit.co
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@posit.co
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@posit.co
+  - family-names: Chang
+    given-names: Winston
+    email: winston@posit.co
+  - family-names: Iannone
+    given-names: Richard
+    email: rich@posit.co
+    orcid: https://orcid.org/0000-0003-3925-190X
+  year: '2026'
+  doi: 10.32614/CRAN.package.rmarkdown
+
