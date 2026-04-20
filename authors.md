@@ -10,7 +10,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/frbcesab/popbayes/blob/v1.3/inst/CITATION)
+[`inst/CITATION`](https://github.com/frbcesab/popbayes/blob/master/inst/CITATION)
 
 Casajus Nicolas, Pradel Roger (2026). *popbayes: Bayesian model to
 estimate population trends from counts series*. R package version 1.3,
